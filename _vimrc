@@ -14,3 +14,20 @@ set showmatch
 set number
 set smarttab
 set backspace=indent,eol,start
+set clipboard+=unnamed
+
+set nocompatible
+filetype off
+
+set rtp+=~/dotfiles/vimfiles/vundle.git/        "vundleのディレクトリ
+call vundle#rc()
+Bundle 'derekwyatt/vim-scala'
+Bundle 'scrooloose/nerdtree'
+Bundle 'vim-scripts/javacomplete'
+Bundle 'Shougo/unite.vim'
+filetype plugin indent on     " required!
+
+autocmd vimenter * if !argc() | NERDTree | endif
+
+autocmd Filetype java :setlocal omnifunc=javacomplete#Complete
+autocmd FileType java :setlocal completefunc=javacomplete#CompleteParamsInfo
