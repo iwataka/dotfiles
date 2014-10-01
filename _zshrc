@@ -23,11 +23,13 @@ setopt auto_param_slash
 setopt auto_menu
 # Enables case insensitive completion.
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
 #---------------------------------------------------------------
 # Current directory view setttings
 #---------------------------------------------------------------
 export PS1="
 %K{blue} [%n] %k%K{cyan} %~ %k%% "
+
 #---------------------------------------------------------------
 # History settings
 #---------------------------------------------------------------
@@ -129,6 +131,7 @@ fi
 #---------------------------------------------------------------
 # Enables extended-glob.
 setopt extended_glob
+unsetopt case_glob
 
 #---------------------------------------------------------------
 # IO settings
@@ -153,6 +156,7 @@ autoload zed
 #---------------------------------------------------------------
 # Enables open command like Mac.
 alias open=cygstart
+alias sudo='cygstart --action=runas'
 # Enables to display result in human-readable format.
 alias df='df -h'
 alias du='du -h'
@@ -185,6 +189,12 @@ alias mv='mv -i'
 # Alias settings
 #---------------------------------------------------------------
 PATH="$PATH":/cygdrive/c/Program\ Files/erl6.1/bin
+PATH="$PATH":/cygdrive/c/Program\ Files\ (x86)/Skype/Phone
+PATH="$PATH":/cygdrive/c/Users/Takatoshi/AppData/Local/Android/android-studio/bin
+PATH="$PATH":/cygdrive/c/Program\ Files/GIMP\ 2/bin
+PATH="$PATH":/cygdrive/c/Program\ Files/Genymobile/Genymotion
+PATH="$PATH":/cygdrive/c/Program\ Files/Oracle/VirtualBox
+PATH="$PATH":/cygdrive/c/Program\ Files/Easy\ 7-Zip
 
 #---------------------------------------------------------------
 # Initial working directory settings
@@ -196,3 +206,4 @@ cd ~
 #---------------------------------------------------------------
 # Changes code page to UTF-8.
 chcp 65001
+
