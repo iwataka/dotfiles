@@ -123,8 +123,7 @@ set infercase
 set showmatch
 set wildmenu
 set wildmode=list:longest,list:full
-set wildignore+=*/.git/*,*/out/*,*/libs/*,*/.gradle/*,*/build/*,*.exe,*.zip,*.swp,*/tmp/*,*.dll,*/project/*,*/target/*
-set wildignore+=*/assets/*,*/action_log/*
+set wildignore+=*.exe,*.zip,*.swp,*.dll
 
 "----------------------------------------------------------------
 " Other settings
@@ -168,6 +167,8 @@ nnoremap <c-l> <c-w>l
 "inoremap <c-l> <Right>
 nnoremap ; :
 nnoremap : ;
+vnoremap ; :
+vnoremap : ;
 
 "----------------------------------------------------------------
 " User difined
@@ -211,6 +212,7 @@ call neobundle#begin(expand('~/.vim/bundle'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Enumerates several plugins.
+NeoBundle 'majutsushi/tagbar'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/nerdcommenter'
@@ -239,6 +241,11 @@ filetype plugin indent on
 NeoBundleCheck
 
 "----------------------------------------------------------------
+" tagbar settings
+"----------------------------------------------------------------
+nnoremap <Leader>gb :TagbarToggle<CR>
+
+"----------------------------------------------------------------
 " colorscheme settings
 "----------------------------------------------------------------
 "set background=dark
@@ -259,6 +266,10 @@ nnoremap <Leader>gu :GundoToggle<CR>
 "----------------------------------------------------------------
 "nnoremap <Leader>cp :CtrlP
 nnoremap <Leader>cb :CtrlPBuffer<CR>
+"project bes settings
+let g:ctrlp_custom_ignore = {
+\ 'dir': 'assets$\|action_log$\|\.gradle$\|build$\|project$\|target$\|out$\|libs$\|\.git$'
+\ }
 
 "----------------------------------------------------------------
 " indent-guides settings

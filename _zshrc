@@ -188,11 +188,8 @@ alias mv='mv -i'
 #---------------------------------------------------------------
 # Alias settings
 #---------------------------------------------------------------
-PATH="$PATH":/cygdrive/c/Program\ Files/erl6.1/bin
 PATH="$PATH":/cygdrive/c/Program\ Files\ (x86)/Skype/Phone
 PATH="$PATH":/cygdrive/c/Users/Takatoshi/AppData/Local/Android/android-studio/bin
-PATH="$PATH":/cygdrive/c/Program\ Files/GIMP\ 2/bin
-PATH="$PATH":/cygdrive/c/Program\ Files/Genymobile/Genymotion
 PATH="$PATH":/cygdrive/c/Program\ Files/Oracle/VirtualBox
 PATH="$PATH":/cygdrive/c/Program\ Files/Easy\ 7-Zip
 

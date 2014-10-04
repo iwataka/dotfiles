@@ -1,0 +1,11 @@
+[user]
+    name = Takatoshi
+    email = email
+[core]
+    autocrlf = false
+[paper]
+    log = diff-highlight | less
+    show = diff-highlight | less
+    diff = diff-highlight | less
+[color]
+    ui=auto
