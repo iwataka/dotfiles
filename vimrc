@@ -80,6 +80,7 @@ augroup PatchDiffHighlight
     autocmd!
     autocmd FileType diff syntax enable
 augroup END
+set cursorline
 
 "----------------------------------------------------------------
 " Edit settings
@@ -116,7 +117,6 @@ nnoremap <Up> gk
 "----------------------------------------------------------------
 set smartcase
 set history=100
-set hlsearch
 set incsearch
 set ignorecase
 set infercase
@@ -169,6 +169,7 @@ nnoremap ; :
 nnoremap : ;
 vnoremap ; :
 vnoremap : ;
+nnoremap aa ggvG$
 
 "----------------------------------------------------------------
 " User difined
@@ -211,27 +212,49 @@ call neobundle#begin(expand('~/.vim/bundle'))
 " Enables to manage neobundle itself.
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-" Enumerates several plugins.
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'sjl/gundo.vim'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'Raimondi/delimitMate'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'derekwyatt/vim-scala'
-NeoBundle 'elzr/vim-json'
-NeoBundle 'godlygeek/tabular'
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'Shougo/neosnippet.vim'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'tpope/vim-abolish'
+
+NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Shougo/neosnippet.vim'
+NeoBundle 'Shougo/neosnippet-snippets'
+
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'scrooloose/nerdcommenter'
+
+NeoBundle 'benmills/vimux'
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'Raimondi/delimitMate'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'kien/ctrlp.vim'
+
+" for various syntax
+NeoBundleLazy 'plasticboy/vim-markdown', {
+    \ 'autoload' : {
+    \     'filetypes' : ['markdown', 'mdown', 'mkdn', 'mkd', 'mdwn', 'md'],
+    \ }
+    \ }
+NeoBundleLazy 'derekwyatt/vim-scala', {
+    \ 'autoload' : {
+    \     'filetypes' : ['scala'],
+    \ }
+    \ }
+NeoBundleLazy 'elzr/vim-json', {
+    \ 'autoload' : {
+    \     'filetypes' : ['json'],
+    \ }
+    \ }
+NeoBundleLazy 'dag/vim2hs', {
+    \ 'autoload' : {
+    \     'filetypes' : ['hs', 'lhs'],
+    \ }
+    \ }
 
 call neobundle#end()
 
@@ -244,22 +267,50 @@ NeoBundleCheck
 " tagbar settings
 "----------------------------------------------------------------
 nnoremap <Leader>gb :TagbarToggle<CR>
+let g:tagbar_type_scala = {
+    \ 'ctagstype' : 'Scala',
+    \ 'kinds'     : [
+        \ 'p:packages:1',
+        \ 'V:values',
+        \ 'v:variables',
+        \ 'T:types',
+        \ 't:traits',
+        \ 'o:objects',
+        \ 'a:aclasses',
+        \ 'c:classes',
+        \ 'r:cclasses',
+        \ 'm:methods'
+    \ ]
+\ }
 
 "----------------------------------------------------------------
 " colorscheme settings
 "----------------------------------------------------------------
-"set background=dark
-colorscheme pablo
+set background=dark
+let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+let g:solarized_visibility='high'
+colorscheme solarized
+
+"----------------------------------------------------------------
+" vimux settings
+"----------------------------------------------------------------
+nnoremap <Leader>vp :VimuxPromptCommand<CR>
+nnoremap <Leader>vl :VimuxRunLastCommand<CR>
+nnoremap <Leader>vi :VimuxInspectRunner<CR>
+nnoremap <Leader>vq :VimuxCloseRunner<CR>
+nnoremap <Leader>vs :VimuxInterruptRunner<CR>
+nnoremap <Leader>vz :VimuxZoomRunner<CR>
+
+"----------------------------------------------------------------
+" vim-scala settings
+"----------------------------------------------------------------
+nnoremap <Leader>ss :SortScalaImports<CR>
 
 "----------------------------------------------------------------
 " nerdtree settings
 "----------------------------------------------------------------
 nnoremap <Leader>nt :NERDTreeToggle<CR>
-
-"----------------------------------------------------------------
-" gundo settings
-"----------------------------------------------------------------
-nnoremap <Leader>gu :GundoToggle<CR>
 
 "----------------------------------------------------------------
 " ctrlp settings
@@ -276,7 +327,7 @@ let g:ctrlp_custom_ignore = {
 "----------------------------------------------------------------
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 2
+let g:indent_guides_guide_size = 1
 
 "----------------------------------------------------------------
 " easymotion settings

@@ -97,12 +97,12 @@ ls_abbrev() {
             fi
             ;;
     esac
- 
+
     local ls_result
     ls_result=$(CLICOLOR_FORCE=1 COLUMNS=$COLUMNS command $cmd_ls ${opt_ls[@]} | sed $'/^\e\[[0-9;]*m$/d')
- 
+
     local ls_lines=$(echo "$ls_result" | wc -l | tr -d ' ')
- 
+
     if [ $ls_lines -gt 10 ]; then
         echo "$ls_result" | head -n 5
         echo '...'
@@ -119,8 +119,8 @@ ls_abbrev() {
 if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
     autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
     add-zsh-hook chpwd chpwd_recent_dirs
-    zstyle ':completion:*' recent-dirs-insert both
-    zstyle ':chpwd:*' recent-dirs-max 50
+    zstyle ':completion:*' recent-dirs-insert always
+    zstyle ':chpwd:*' recent-dirs-max 20
     zstyle ':chpwd:*' recent-dirs-default true
     zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/shell/chpwd-recent-dirs"
     zstyle ':chpwd:*' recent-dirs-pushd true
@@ -186,12 +186,18 @@ alias cp='cp -i'
 alias mv='mv -i'
 
 #---------------------------------------------------------------
-# Alias settings
+# Path settings
 #---------------------------------------------------------------
 PATH="$PATH":/cygdrive/c/Program\ Files\ (x86)/Skype/Phone
 PATH="$PATH":/cygdrive/c/Users/Takatoshi/AppData/Local/Android/android-studio/bin
 PATH="$PATH":/cygdrive/c/Program\ Files/Oracle/VirtualBox
 PATH="$PATH":/cygdrive/c/Program\ Files/Easy\ 7-Zip
+PATH="$PATH":/cygdrive/c/Langs/haskell/bin
+
+#---------------------------------------------------------------
+# Environment variables settings
+#---------------------------------------------------------------
+SHELL=/bin/zsh
 
 #---------------------------------------------------------------
 # Initial working directory settings
@@ -203,4 +209,3 @@ cd ~
 #---------------------------------------------------------------
 # Changes code page to UTF-8.
 chcp 65001
-
