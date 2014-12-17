@@ -1,3 +1,0 @@
-[submodule "vimfiles/bundle/ctrlp-py-matcher"]
-	path = vimfiles/bundle/ctrlp-py-matcher
-	url = ./vimfiles/bundle/ctrlp-funky/
