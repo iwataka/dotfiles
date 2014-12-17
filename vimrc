@@ -22,32 +22,19 @@ set smartindent
 "----------------------------------------------------------------
 " Visual settings
 "----------------------------------------------------------------
-" Visualizes TAB space at the head of a rank.
-"highlight TabString ctermbg=red guibg=red
-"au BufWinEnter * let w:m2 = matchadd("TabString", '^\t+')
-"au WinEnter * let w:m2 = matchadd("TabString", '^\t+')
-
-" Visualizes full-size space
-"highlight ZenkakuSpace cterm=underline ctermbg=red guibg=#666666
-"au BufWinEnter * let w:m3 = matchadd("ZenkakuSpace", '　')
-"au WinEnter * let w:m3 = matchadd("ZenkakuSpace", '　')
-
 set title
 " Disables to display 'Thanks to using vim!'
 set notitle
 syntax on
-set number
+"use relative number for moving cursor.
+set relativenumber
 set showcmd
 set cmdheight=2
 set ruler
 set showmode
 set laststatus=2
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-"make the 81st column stand out
-highlight ColorColumn ctermbg=magenta
-call matchadd('ColorColumn', '\%81v', 100)
-"emphasize comments
-highlight Comment term=bold ctermfg=white
+"set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+
 "highligh matches when jumping to next
 "nnoremap <silent>n n:call HLNext(0.4)<CR>
 "nnoremap <silent>N N:call HLNext(0.4)<CR>
@@ -58,37 +45,39 @@ highlight Comment term=bold ctermfg=white
     "set invcursorline
     "redraw
 "endfunction
-"set listchars=tab:>~,nbsp:_,trail:.
-"make naughty characters stand out
-exec "set lcs=tab:\uBB\uBB,trail:\uB7,nbsp:~"
-augroup VisibleNaughtiness
-    autocmd!
-    autocmd BufEnter * set list
-    autocmd BufEnter *.txt set nolist
-    autocmd BufEnter *.vp* set nolist
-    autocmd BufEnter * if !&modifiable
-    autocmd BufEnter * set nolist
-    autocmd BufEnter * endif
-augroup END
-"enable syntax highlight when open diff files
+
+filetype on
+
 "augroup PatchDiffHighlight
     "autocmd!
-    "autocmd bufEnter *.pacht,*.rej,*.diff syntax enable
+    "autocmd FileType diff syntax enable
 "augroup END
-filetype on
-augroup PatchDiffHighlight
-    autocmd!
-    autocmd FileType diff syntax enable
-augroup END
-set cursorline
+
+"set cursorline
+set lazyredraw
+set linebreak
+set visualbell
+
+"hide menubar and toolbar when running gui
+set guioptions-=m
+set guioptions-=T
+
+"hide scrollbars
+set guioptions-=L
+set guioptions-=r
+
+"default font for gui
+set guifont=Inconsolata\ Medium\ 12
 
 "----------------------------------------------------------------
 " Edit settings
 "----------------------------------------------------------------
 " Enables to share clipboard.
 set clipboard+=unnamed
+
 " delete a character without adding it to default register
 nnoremap x "_x
+
 "make 'O' the default when trying to edit the file simultaneously
 augroup NoSimultaneousEdits
     autocmd!
@@ -98,15 +87,27 @@ augroup NoSimultaneousEdits
     autocmd SwapExists * echohl None
 augroup END
 
+"Automatically save before commands like :next and :make
+set autowrite
+"Automatically read when a file is modified from outside
+set autoread
+
+"write comments easily
+autocmd BufRead,BufNewFile * set formatoptions+=ro
+
 "----------------------------------------------------------------
 " Move settings
 "----------------------------------------------------------------
-nnoremap h <Left>
+"more intuitive movement
 nnoremap j gj
 nnoremap k gk
-nnoremap l <Right>
 nnoremap <Down> gj
 nnoremap <Up> gk
+
+"move to marks efficiently
+nnoremap ' `
+nnoremap ` '
+
 " Enables to use mouse on Vim.
 "set mouse=a
 "set guioptions+=a
@@ -118,12 +119,22 @@ nnoremap <Up> gk
 set smartcase
 set history=100
 set incsearch
+"set hlsearch
 set ignorecase
 set infercase
 set showmatch
 set wildmenu
 set wildmode=list:longest,list:full
 set wildignore+=*.exe,*.zip,*.swp,*.dll
+set magic
+set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
+" use ag for grep
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor\ --column
+    if &grepformat !~# '%c'
+        set grepformat^=%f:%l:%c:%m
+    endif
+endif
 
 "----------------------------------------------------------------
 " Other settings
@@ -134,7 +145,6 @@ set noeb vb t_vb=
 set browsedir=buffer
 set scrolloff=3
 set hidden
-set autoread
 set nobackup
 set noswapfile
 set backspace=indent,eol,start
@@ -144,38 +154,45 @@ set backspace=indent,eol,start
 "----------------------------------------------------------------
 "define leader key
 let mapleader=","
+"alternative key-bind of ,
+nnoremap <Leader>, ,
 "define local leader key
 let maplocalleader="\\"
+
 "edit .vimrc file
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ev :e $MYVIMRC<CR>
 "source .vimrc file
-nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>sv :wa<CR>:source $MYVIMRC<CR>
+
+"edit build file
+nnoremap <Leader>eb :vert sf build*<CR>
+
 "escape from insert mode more easier
-inoremap jk <esc>
-"remove search highlight more easier
-nnoremap <Leader>hs :nohlsearch<CR>
+inoremap jk <Esc>
+
 "move between splitted panes more easier
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-"move cursor even in isert mode
-"but don't perform properly
-"inoremap <c-j> <Down>
-"inoremap <c-k> <Up>
-"inoremap <c-h> <Left>
-"inoremap <c-l> <Right>
+
+"more useful command prefix
 nnoremap ; :
 nnoremap : ;
 vnoremap ; :
 vnoremap : ;
-nnoremap aa ggvG$
+
+"easily highlight all texts
+nnoremap <Leader>aa ggvG$
 
 "----------------------------------------------------------------
-" User difined
+" User defined
 "----------------------------------------------------------------
 "treat gradle file as a groovy one
 autocmd BufRead,BufNewFile *.gradle set filetype=groovy
+"set sbt filetype
+autocmd BufRead,BufNewFile *.sbt set filetype=sbt
+
 "automatically align html files
 autocmd BufWritePre,BufRead *.html :normal gg=G
 
@@ -190,13 +207,35 @@ if has('persistent_undo')
     set undofile
 endif
 
-"double-delete toremove trailing whitespace
-nnoremap <silent> <BS><BS> :call TrimTrailingWS()<CR>
-function! TrimTrailingWS ()
-    if search('\s\+$', 'cnw')
-        :%s/\s\+$//g
+function! OpenURL(url)
+    if has("win32unix")
+        exe "normal! :!cygstart " . a:url . "\<CR>"
+    elseif has("win32")
+        exe "normal! :!start " . a:url . "\<CR>"
     endif
+    redraw!
 endfunction
+command! -nargs=1 OpenURL :call OpenURL(<q-args>)
+"open URL under cursor in browser
+nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
+nnoremap gW :OpenURL http://en.wikipedia.org/wiki/Special:Search?search=<cword><CR>
+
+"----------------------------------------------------------------
+" Abbreviations
+"----------------------------------------------------------------
+abbrev ijm jp.ac.keio.ae.iijima
+abbrev ijmb jp.ac.keio.ae.iijima.bes
+abbrev cvj com.vividsolutions.jts
+abbrev cvjg com.vividsolutions.jts.geom
+abbrev cvja com.vividsolutions.jts.algorithm
+abbrev cvjm com.vividsolutions.jts.math
+abbrev cvjgu com.vividsolutions.jts.geom.util
+abbrev sfn sim.field.network
+abbrev oij openifctools.com.openifcjavatoolbox
+abbrev jvec javax.vecmath
+abbrev jcon scala.collection.JavaConversions._
+abbrev factroy factory
+abbrev reutrn return
 
 "----------------------------------------------------------------
 " NeoBundle settings
@@ -204,59 +243,157 @@ endfunction
 " Sets neobundle path.
 if has('vim_starting')
     set nocompatible
-    set rtp+=~/dotfiles/vimfiles/bundle/neobundle.vim/
+    set rtp+=~/.vim/bundle/neobundle.vim/
 endif
 
+call neobundle#begin(expand('~/.vim.local/bundle'))
+
+if has('unix')
+    NeoBundle 'Valloric/YouCompleteMe'
+endif
+
+NeoBundle 'Shougo/vimproc.vim', {
+\ 'build' : {
+\     'windows' : 'tools\\update-dll-mingw',
+\     'cygwin' : 'make -f make_cygwin.mak',
+\     'mac' : 'make -f make_mac.mak',
+\     'linux' : 'make',
+\     'unix' : 'gmake',
+\    },
+\ }
+
+call neobundle#end()
+
 call neobundle#begin(expand('~/.vim/bundle'))
+
+if has('neovim')
+    NeoBundle 'ervandew/supertab'
+    NeoBundle 'vim-scripts/AutoComplPop'
+elseif has("win32") || has("win64") || has("win32unix")
+    NeoBundle 'Shougo/neocomplete.vim'
+    NeoBundle 'Shougo/neosnippet.vim'
+    NeoBundle 'Shougo/neosnippet-snippets'
+elseif has('unix')
+    NeoBundle 'SirVer/ultisnips'
+    NeoBundle 'honza/vim-snippets'
+endif
 
 " Enables to manage neobundle itself.
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 NeoBundle 'tpope/vim-fugitive'
+
 NeoBundle 'tpope/vim-repeat'
+
 NeoBundle 'tpope/vim-surround'
+
 NeoBundle 'tpope/vim-unimpaired'
-NeoBundle 'tpope/vim-abolish'
 
-NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'Shougo/neosnippet.vim'
-NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundle 'tpope/vim-eunuch'
 
-NeoBundle 'scrooloose/nerdtree'
+NeoBundleLazy 'tpope/vim-fireplace', {
+    \ 'autoload' : {
+    \  'filetypes' : ['clojure']
+    \ }}
+
+NeoBundleLazy 'ctrlpvim/ctrlp.vim', {
+    \ 'depends' : ['FelikZ/ctrlp-py-matcher'],
+    \ 'autoload' : {
+    \  'commands' : ['CtrlP', 'CtrlPBuffer', 'CtrlPMRU', 'CtrlPLine', 'CtrlPUndo']
+    \ }}
+
+NeoBundleLazy 'tacahiroy/ctrlp-funky', {
+    \ 'depends' : ['ctrlpvim/ctrlp.vim'],
+    \ 'autoload' : {
+    \  'commands' : ['CtrlPFunky']
+    \ }}
+
+NeoBundleLazy 'FelikZ/ctrlp-py-matcher'
+
+"NeoBundleLazy 'Shougo/unite.vim', {
+    "\ 'depends' : ['Shougo/neomru.vim', 'Shougo/unite-outline'],
+    "\ 'autoload' : {
+    "\  'commands' : ['Unite']
+    "\ }}
+"let bundle = neobundle#get('unite.vim')
+"function! bundle.hooks.on_source(bundle)
+    "call unite#filters#matcher_default#use(['matcher_fuzzy'])
+    "call unite#filters#sorter_default#use(['sorter_rank'])
+"endfunction
+
+"NeoBundleLazy 'Shougo/neomru.vim'
+
+"NeoBundleLazy 'Shougo/unite-outline'
+
+NeoBundleLazy 'scrooloose/syntastic'
+
 NeoBundle 'scrooloose/nerdcommenter'
 
-NeoBundle 'benmills/vimux'
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'Raimondi/delimitMate'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'godlygeek/tabular'
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'kien/ctrlp.vim'
+NeoBundleLazy 'scrooloose/nerdtree', {
+    \ 'autoload' : {
+    \  'commands' : ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeFromBookmark', 'NERDTreeCWD']
+    \ }}
 
-" for various syntax
+if has('gui_running')
+    NeoBundle 'Shougo/vimshell.vim'
+else
+    NeoBundle 'benmills/vimux'
+endif
+
+NeoBundle 'Raimondi/delimitMate'
+
+NeoBundle 'Lokaltog/vim-easymotion'
+
+NeoBundle 'nathanaelkane/vim-indent-guides'
+
+NeoBundleLazy 'godlygeek/tabular', {
+    \ 'autoload' : {
+    \  'commands' : ['Tabularize']
+    \ }}
+
+NeoBundleLazy 'majutsushi/tagbar', {
+    \ 'autoload' : {
+        \ 'commands' : ['TagbarToggle']
+    \ }}
+
+"NeoBundle 'itchyny/lightline.vim'
+
+NeoBundle 'bling/vim-airline'
+
+NeoBundle 'terryma/vim-multiple-cursors'
+
+NeoBundle 'airblade/vim-gitgutter'
+
+"syntax highlight
 NeoBundleLazy 'plasticboy/vim-markdown', {
     \ 'autoload' : {
-    \     'filetypes' : ['markdown', 'mdown', 'mkdn', 'mkd', 'mdwn', 'md'],
-    \ }
-    \ }
+    \  'filetypes' : ['mkd']
+    \ }}
+
 NeoBundleLazy 'derekwyatt/vim-scala', {
     \ 'autoload' : {
-    \     'filetypes' : ['scala'],
-    \ }
-    \ }
-NeoBundleLazy 'elzr/vim-json', {
+    \  'filetypes' : ['scala'],
+    \  'commands' : ['SortScalaImports']
+    \ }}
+
+NeoBundleLazy 'derekwyatt/vim-sbt', {
+    \ 'depends' : ['derekwyatt/vim-scala'],
     \ 'autoload' : {
-    \     'filetypes' : ['json'],
-    \ }
-    \ }
+    \  'filetypes' : ['sbt']
+    \ }}
+
 NeoBundleLazy 'dag/vim2hs', {
     \ 'autoload' : {
-    \     'filetypes' : ['hs', 'lhs'],
-    \ }
-    \ }
+    \  'filetypes' : ['haskell']
+    \ }}
+
+"colorschemes
+"NeoBundle 'tomasr/molokai'
+NeoBundle 'altercation/vim-colors-solarized'
 
 call neobundle#end()
+
+call neobundle#local(expand('~/.vim.local/bundle'))
 
 filetype plugin indent on
 
@@ -264,9 +401,126 @@ filetype plugin indent on
 NeoBundleCheck
 
 "----------------------------------------------------------------
+" fugitive settings
+"----------------------------------------------------------------
+autocmd QuickFixCmdPost *grep* cwindow
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gg :call FugitivePromptGrep()<CR>
+function! FugitivePromptGrep()
+    let l:pattern = input("Pattern? ")
+    exe "normal! :Ggrep " . pattern . "\<CR>"
+endfunction
+nnoremap <Leader>gw :Gwrite<CR>
+nnoremap <Leader>gl :Glog<CR>
+
+"----------------------------------------------------------------
+" ctrlp settings
+"----------------------------------------------------------------
+if has('python')
+    let g:ctrlp_match_func = {'match': 'pymatcher#PyMatch'}
+endif
+let g:ctrlp_cmd = 'CtrlP .'
+let g:ctrlp_working_path_mode='ra'
+if executable('ag')
+    let g:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
+elseif executable('git')
+    let g:ctrlp_user_command = 'git ls-files . --cached --exclude-standard --others'
+else
+    let g:ctrlp_custom_ignore = {
+        \ 'dir': 'assets$\|action_log$\|\.gradle$\|build$\|project$\|target$\|out$\|libs$\|\.git$',
+        \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
+    \ }
+endif
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+nnoremap <Space>p :CtrlP .<CR>
+nnoremap <Space>b :CtrlPBuffer<CR>
+nnoremap <Space>m :CtrlPMRU<CR>
+nnoremap <Space>l :CtrlPLine %<CR>
+nnoremap <Space>u :CtrlPUndo<CR>
+nnoremap <Space>r :CtrlPFunky<CR>
+
+"----------------------------------------------------------------
+" unite settings
+"----------------------------------------------------------------
+"let g:unite_enable_start_insert = 1
+"let g:unite_source_history_yank_enable = 1
+"let g:unite_source_file_mru_limit = 200
+"if executable('ag')
+    "let g:unite_source_rec_async_command =
+    "\ 'ag --follow --nocolor --nogroup --hidden -g ""'
+"elseif executable('git')
+    "let g:unite_source_rec_async_command =
+    "\ 'git ls-files . --cached --exclude-standard --others'
+"endif
+"nnoremap <Space>p :Unite file_rec/git:--cached:--others:--exclude-standard<CR>
+""nnoremap <Space>p :Unite file_rec/async<CR>
+"nnoremap <Space>b :Unite buffer<CR>
+"nnoremap <Space>c :Unite command<CR>
+"nnoremap <Space>s :Unite source<CR>
+"nnoremap <Space>f :Unite function<CR>
+"nnoremap <Space>m :Unite file_mru<CR>
+"nnoremap <Space>l :Unite line<CR>
+"nnoremap <Space>y :Unite history/yank<CR>
+"nnoremap <Space>h :Unite change<CR>
+"nnoremap <Space>n :Unite neobundle<CR>
+"nnoremap <Space>r :Unite outline<CR>
+"nnoremap <Space>j :Unite jump<CR>
+"nnoremap <Space>k :Unite mapping<CR>
+
+"----------------------------------------------------------------
+" syntastic settings
+"----------------------------------------------------------------
+let g:syntastic_mode_map = { "mode": "passive",
+                        \ "active_filetypes": [],
+                        \ "passive_filetypes": [] }
+let g:syntastic_check_on_open = 1
+let g:syntastic_enable_signs = 1
+nnoremap <Leader>si :SyntasticInfo<CR>
+nnoremap <Leader>sc :SyntasticCheck<CR>
+
+"----------------------------------------------------------------
+" nerdtree settings
+"----------------------------------------------------------------
+nnoremap <Leader>nt :NERDTreeToggle<CR>
+nnoremap <Leader>nf :NERDTreeFind<CR>
+nnoremap <Leader>nm :NERDTreeMirror<CR>
+nnoremap <Leader>nb :NERDTreeFromBookmark<CR>
+nnoremap <Leader>nc :NERDTreeCWD<CR>
+
+"----------------------------------------------------------------
+" vimux settings
+"----------------------------------------------------------------
+nnoremap <Leader>vp :wa<CR>:VimuxPromptCommand<CR>
+nnoremap <Leader>vl :wa<CR>:VimuxRunLastCommand<CR>
+nnoremap <Leader>vi :VimuxInspectRunner<CR>
+nnoremap <Leader>vq :VimuxCloseRunner<CR>
+nnoremap <Leader>vs :VimuxInterruptRunner<CR>
+nnoremap <Leader>vz :VimuxZoomRunner<CR>
+nnoremap <Leader>vo :call VimuxOpenRunnerAtCWD()<CR>
+nnoremap <Leader>vh :silent !tmux resize-pane -Z<CR>
+function! VimuxOpenRunnerAtCWD()
+    let cwd = getcwd()
+    exe "normal! :VimuxRunCommand(\"" . cwd . "\")\<CR>"
+endfunction
+
+"----------------------------------------------------------------
+" easymotion settings
+"----------------------------------------------------------------
+map s <Plug>(easymotion-prefix)
+let g:EasyMotion_smartcase = 1
+
+"----------------------------------------------------------------
+" indent-guides settings
+"----------------------------------------------------------------
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+
+"----------------------------------------------------------------
 " tagbar settings
 "----------------------------------------------------------------
-nnoremap <Leader>gb :TagbarToggle<CR>
 let g:tagbar_type_scala = {
     \ 'ctagstype' : 'Scala',
     \ 'kinds'     : [
@@ -282,70 +536,190 @@ let g:tagbar_type_scala = {
         \ 'm:methods'
     \ ]
 \ }
+nnoremap <Leader>tb :TagbarToggle<CR>
 
 "----------------------------------------------------------------
-" colorscheme settings
+" lightline settings
 "----------------------------------------------------------------
-set background=dark
+"let g:lightline = {
+      "\ 'colorscheme': 'solarized',
+      "\ 'active': {
+      "\   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
+      "\   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      "\ },
+      "\ 'component_function': {
+      "\   'fugitive': 'MyFugitive',
+      "\   'filename': 'MyFilename',
+      "\   'fileformat': 'MyFileformat',
+      "\   'filetype': 'MyFiletype',
+      "\   'fileencoding': 'MyFileencoding',
+      "\   'mode': 'MyMode',
+      "\   'ctrlpmark': 'CtrlPMark',
+      "\ },
+      "\ 'component_expand': {
+      "\   'syntastic': 'SyntasticStatuslineFlag',
+      "\ },
+      "\ 'component_type': {
+      "\   'syntastic': 'error',
+      "\ },
+      "\ 'subseparator': { 'left': '|', 'right': '|' }
+      "\ }
+
+"function! MyModified()
+  "return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+"endfunction
+
+"function! MyReadonly()
+  "return &ft !~? 'help' && &readonly ? 'RO' : ''
+"endfunction
+
+"function! MyFilename()
+  "let fname = expand('%:t')
+  "return fname == 'ControlP' ? g:lightline.ctrlp_item :
+        "\ fname == '__Tagbar__' ? g:lightline.fname :
+        "\ fname =~ '__Gundo\|NERD_tree' ? '' :
+        "\ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+        "\ &ft == 'unite' ? unite#get_status_string() :
+        "\ &ft == 'vimshell' ? vimshell#get_status_string() :
+        "\ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+        "\ ('' != fname ? fname : '[No Name]') .
+        "\ ('' != MyModified() ? ' ' . MyModified() : '')
+"endfunction
+
+"function! MyFugitive()
+  "try
+    "if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+      "let mark = ''  " edit here for cool mark
+      "let _ = fugitive#head()
+      "return strlen(_) ? mark._ : ''
+    "endif
+  "catch
+  "endtry
+  "return ''
+"endfunction
+
+"function! MyFileformat()
+  "return winwidth(0) > 70 ? &fileformat : ''
+"endfunction
+
+"function! MyFiletype()
+  "return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+"endfunction
+
+"function! MyFileencoding()
+  "return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+"endfunction
+
+"function! MyMode()
+  "let fname = expand('%:t')
+  "return fname == '__Tagbar__' ? 'Tagbar' :
+        "\ fname == 'ControlP' ? 'CtrlP' :
+        "\ fname == '__Gundo__' ? 'Gundo' :
+        "\ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+        "\ fname =~ 'NERD_tree' ? 'NERDTree' :
+        "\ &ft == 'unite' ? 'Unite' :
+        "\ &ft == 'vimfiler' ? 'VimFiler' :
+        "\ &ft == 'vimshell' ? 'VimShell' :
+        "\ winwidth(0) > 60 ? lightline#mode() : ''
+"endfunction
+
+"function! CtrlPMark()
+  "if expand('%:t') =~ 'ControlP'
+    "call lightline#link('iR'[g:lightline.ctrlp_regex])
+    "return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
+          "\ , g:lightline.ctrlp_next], 0)
+  "else
+    "return ''
+  "endif
+"endfunction
+
+"let g:ctrlp_status_func = {
+  "\ 'main': 'CtrlPStatusFunc_1',
+  "\ 'prog': 'CtrlPStatusFunc_2',
+  "\ }
+
+"function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
+  "let g:lightline.ctrlp_regex = a:regex
+  "let g:lightline.ctrlp_prev = a:prev
+  "let g:lightline.ctrlp_item = a:item
+  "let g:lightline.ctrlp_next = a:next
+  "return lightline#statusline(0)
+"endfunction
+
+"function! CtrlPStatusFunc_2(str)
+  "return lightline#statusline(0)
+"endfunction
+
+"let g:tagbar_status_func = 'TagbarStatusFunc'
+
+"function! TagbarStatusFunc(current, sort, fname, ...) abort
+    "let g:lightline.fname = a:fname
+  "return lightline#statusline(0)
+"endfunction
+
+"augroup AutoSyntastic
+  "autocmd!
+  "autocmd BufWritePost *.c,*.cpp call s:syntastic()
+"augroup END
+"function! s:syntastic()
+  "SyntasticCheck
+  "call lightline#update()
+"endfunction
+
+"let g:unite_force_overwrite_statusline = 0
+"let g:vimfiler_force_overwrite_statusline = 0
+"let g:vimshell_force_overwrite_statusline = 0
+
+"----------------------------------------------------------------
+" airline settings
+"----------------------------------------------------------------
+let g:airline_theme = "solarized"
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#show_buffers = 1
+"let g:airline#extensions#tabline#shor_tab_nr = 1
+"let g:airline#extensions#tabline#shor_close_button = 0
+"let g:airline#extensions#tabline#buffer_idx_mode = 1
+
+"----------------------------------------------------------------
+" multiple-cursors settings
+"----------------------------------------------------------------
+function! Multiple_cursors_before()
+    if exists(':NeoCompleteLock')==2
+        exe 'NeoCompleteLock'
+    endif
+endfunction
+function! Multiple_cursors_after()
+    if exists(':NeoCompleteUnlock')==2
+        exe 'NeoCompleteUnlock'
+    endif
+endfunction
+
+"----------------------------------------------------------------
+" solarized settings
+"----------------------------------------------------------------
 let g:solarized_termcolors=256
-let g:solarized_termtrans=1
 let g:solarized_visibility='high'
-colorscheme solarized
+let g:solarized_hitrail=1
+let g:solarized_termtrans=0
 
 "----------------------------------------------------------------
-" vimux settings
-"----------------------------------------------------------------
-nnoremap <Leader>vp :VimuxPromptCommand<CR>
-nnoremap <Leader>vl :VimuxRunLastCommand<CR>
-nnoremap <Leader>vi :VimuxInspectRunner<CR>
-nnoremap <Leader>vq :VimuxCloseRunner<CR>
-nnoremap <Leader>vs :VimuxInterruptRunner<CR>
-nnoremap <Leader>vz :VimuxZoomRunner<CR>
-
-"----------------------------------------------------------------
-" vim-scala settings
+" scala settings
 "----------------------------------------------------------------
 nnoremap <Leader>ss :SortScalaImports<CR>
-
-"----------------------------------------------------------------
-" nerdtree settings
-"----------------------------------------------------------------
-nnoremap <Leader>nt :NERDTreeToggle<CR>
-
-"----------------------------------------------------------------
-" ctrlp settings
-"----------------------------------------------------------------
-"nnoremap <Leader>cp :CtrlP
-nnoremap <Leader>cb :CtrlPBuffer<CR>
-"project bes settings
-let g:ctrlp_custom_ignore = {
-\ 'dir': 'assets$\|action_log$\|\.gradle$\|build$\|project$\|target$\|out$\|libs$\|\.git$'
-\ }
-
-"----------------------------------------------------------------
-" indent-guides settings
-"----------------------------------------------------------------
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-
-"----------------------------------------------------------------
-" easymotion settings
-"----------------------------------------------------------------
-map <Leader> <Plug>(easymotion-prefix)
-let g:EasyMotion_startofline = 0
-
-"----------------------------------------------------------------
-" vim-scala settings
-"----------------------------------------------------------------
 let g:scala_sort_across_groups=0
 
 "----------------------------------------------------------------
-" vimfiler settings
+" neocomplete settings
 "----------------------------------------------------------------
-let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_safe_mode_by_default = 0
-let g:vimfiler_enable_auto_cd = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_auto_delimiter = 0
+let g:neocomplete#sources#syntax#min_keyword_length = 4
+let g:neocomplete#auto_completion_start_length = 2
+if !exists('g:neocomplete#sources')
+    let g:neocomplete#sources = {}
+endif
+let g:neocomplete#sources._ = ['buffer', 'neosnippet']
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 "----------------------------------------------------------------
 " neosnippet settings
@@ -353,26 +727,187 @@ let g:vimfiler_enable_auto_cd = 0
 imap <c-k> <Plug>(neosnippet_expand_or_jump)
 smap <c-k> <Plug>(neosnippet_expand_or_jump)
 xmap <c-k> <Plug>(neosnippet_expand_target)
-
-imap <expr><tab> neosnippet#expandable_or_jumpable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)"
-            \: pumvisible() ? "\<c-n>" : "\<tab>"
-smap <expr><tab> neosnippet#expandable_or_jumpable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)"
-            \: "\<tab>"
-
-"----------------------------------------------------------------
-" neocomplete settings
-"----------------------------------------------------------------
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_auto_delimiter = 1
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+let g:neosnippet#snippets_directory = '~/.vim/bundle/neosnippet-snippets/neosnippets'
+"imap <expr><tab> neosnippet#expandable_or_jumpable() ?
+            "\ "\<Plug>(neosnippet_expand_or_jump)"
+            "\: pumvisible() ? "\<c-n>" : "\<tab>"
+"smap <expr><tab> neosnippet#expandable_or_jumpable() ?
+            "\ "\<Plug>(neosnippet_expand_or_jump)"
+            "\: "\<tab>"
 
 "----------------------------------------------------------------
-" fugitive settings
+" ultisnips settings
 "----------------------------------------------------------------
-autocmd QuickFixCmdPost *grep* cwindow
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <leader>gg :Ggrep<Space>
+let g:UltiSnipsExpandTrigger="<c-cr>"
+let g:UltiSnipsListSnippets="<c-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsSnippetsDir="~/.vim.local/bundle/vim-snippets/UltiSnips"
 
+"----------------------------------------------------------------
+" autoEdit settings
+"----------------------------------------------------------------
+"double-delete to remove trailing whitespace
+nnoremap <silent> <BS><BS> :call TrimTrailingWS()<CR>
+function! TrimTrailingWS()
+    let l:save_cursor = getpos(".")
+    if search("　")
+        :%s/　/  /g
+    endif
+    if search("\\t")
+        let l:count = 0
+        let l:spaces = ""
+        while l:count < &tabstop
+            let l:spaces = l:spaces . " "
+            let l:count = l:count + 1
+        endwhile
+        exe "normal! :%s/\\t/" . l:spaces . "/g\<CR>"
+    endif
+    if search('\s\+$')
+        :%s/\s\+$//g
+    endif
+    call setpos(".", l:save_cursor)
+endfunction
+
+function! ChangeSpaceNum(m, n)
+    let l:save_cursor = getpos(".")
+    let l:before = ""
+    let l:count = 0
+    while l:count < a:m
+        let l:before = l:before . " "
+        let l:count = l:count + 1
+    endwhile
+    if search(l:before)
+        let l:after = ""
+        let l:count = 0
+        while l:count < a:n
+            let l:after = l:after . " "
+            let l:count = l:count + 1
+        endwhile
+        exe "normal! :%s/" . l:before . "/" . l:after . "/g\<CR>"
+    endif
+    call setpos(".", l:save_cursor)
+endfunction
+
+"a function to convert java code into scala one
+nnoremap <leader>js :call ConvertJavaIntoScala()<CR>
+function! ConvertJavaIntoScala()
+    let l:save_cursor = getpos(".")
+    if search(";\\n")
+        :%s/;\n/\r/g
+    endif
+    if search("()")
+        :%s/()//g
+    endif
+    if search("public ")
+        :%s/public //g
+    endif
+    call ChangeSpaceNum(4, 2)
+    call setpos(".", l:save_cursor)
+endfunction
+
+
+"----------------------------------------------------------------
+" visualize settings
+"----------------------------------------------------------------
+"emphasize comments
+augroup EmphasizedComments
+    autocmd!
+    autocmd BufRead,BufNew * highlight Comment term=bold
+augroup END
+
+"make the 81st column stand out
+augroup VisibleLongLines
+    autocmd!
+    autocmd BufRead,BufNew * highlight ColorColumn ctermbg=red guibg=#666666
+    autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%101v')
+augroup END
+
+" Visualizes full-size space
+augroup VisibleFullWidthSpaces
+    autocmd!
+    autocmd BufRead,BufNew * highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
+    autocmd BufRead,BufNew * match FullWidthSpace /　/
+augroup END
+
+"make naughty characters stand out
+exec "set lcs=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+augroup VisibleNaughtiness
+    autocmd!
+    autocmd BufEnter * set list
+    autocmd BufEnter *.txt set nolist
+    autocmd BufEnter *.vp* set nolist
+    autocmd BufEnter * if !&modifiable
+    autocmd BufEnter * set nolist
+    autocmd BufEnter * endif
+augroup END
+
+"----------------------------------------------------------------
+" foldElse settings
+"----------------------------------------------------------------
+let s:pattern = ""
+"useful unfolding mapping
+nnoremap <Leader>fu zE
+
+nnoremap <Leader>fl :call FoldElseLastPattern()<CR>
+function! FoldElseLastPattern()
+    exe ":normal! :call FoldElse(\"" . s:pattern . "\")\<CR>"
+endfunction
+
+nnoremap <Leader>fc :call FoldElseClass()<CR>
+function! FoldElseClass()
+    let l:pattern = "\\\\sclass\\\\s"
+    let s:pattern = l:pattern
+    exe ":normal! :call FoldElse(\"" . l:pattern . "\")\<CR>"
+endfunction
+
+nnoremap <Leader>ff :call FoldElseFunc()<CR>
+function! FoldElseFunc()
+    let l:pattern = "\\\\sdef\\\\s"
+    let s:pattern = l:pattern
+    exe ":normal! :call FoldElse(\"" .l:pattern . "\")\<CR>"
+endfunction
+
+nnoremap <Leader>fp :call FoldElsePrompt()<CR>
+function! FoldElsePrompt()
+    let l:pattern = input("Pattern? ")
+    let s:pattern = l:pattern
+    exe "normal! :call FoldElse(\"" . l:pattern . "\")\<CR>"
+endfunction
+
+function! FoldElse(pattern)
+    set foldopen-=search
+    if search(a:pattern)
+        exe "normal! zEgg"
+        let l:flag = 0
+        let l:start_line_number = 0
+        while 1
+            let l:line_number = search(a:pattern, 'W')
+            if l:line_number == 0
+                let l:line_number = line('$') + 1
+                let l:flag = 1
+            endif
+            let l:end_line_number = l:line_number - 1
+            exe "normal! :" . l:start_line_number . "," . l:end_line_number . "fold\<CR>"
+            let l:start_line_number = l:line_number + 1
+            exe "normal! j"
+            if l:flag
+                break
+            endif
+        endwhile
+        exe "normal! /" . a:pattern . "\<CR>"
+    endif
+endfunction
+
+"----------------------------------------------------------------
+" colorscheme settings
+"----------------------------------------------------------------
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
+if has("gui_running")
+    set background=dark
+else
+    set background=dark
+endif
+colorscheme solarized

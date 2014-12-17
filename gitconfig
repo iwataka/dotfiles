@@ -3,9 +3,13 @@
     email = email
 [core]
     autocrlf = false
+    filemode = false
+    bare = false
+[push]
+    default = simple
 [paper]
     log = diff-highlight | less
     show = diff-highlight | less
     diff = diff-highlight | less
 [color]
-    ui=auto
+    ui = auto

@@ -25,10 +25,18 @@ setopt auto_menu
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 #---------------------------------------------------------------
-# Current directory view setttings
+# Prompt settings
 #---------------------------------------------------------------
-export PS1="
-%K{blue} [%n] %k%K{cyan} %~ %k%% "
+#export PS1="%K{blue} [%n] %k%K{cyan} %~ %k%% "
+#export PS1="%F{red}%n%f in %F{green}%~%f %% "
+if [ -e $HOME/.zsh.theme/zsh-git-prompt ]; then
+    source $HOME/.zsh.theme/zsh-git-prompt/zshrc.sh
+    PROMPT='%B%m%~%b$(git_super_status) %# '
+else
+    autoload -U promptinit
+    promptinit
+    prompt fade
+fi
 
 #---------------------------------------------------------------
 # History settings
@@ -120,7 +128,7 @@ if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]
     autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
     add-zsh-hook chpwd chpwd_recent_dirs
     zstyle ':completion:*' recent-dirs-insert always
-    zstyle ':chpwd:*' recent-dirs-max 20
+    zstyle ':chpwd:*' recent-dirs-max 100
     zstyle ':chpwd:*' recent-dirs-default true
     zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/shell/chpwd-recent-dirs"
     zstyle ':chpwd:*' recent-dirs-pushd true
@@ -154,9 +162,14 @@ autoload zed
 #---------------------------------------------------------------
 # Alias settings
 #---------------------------------------------------------------
-# Enables open command like Mac.
-alias open=cygstart
-alias sudo='cygstart --action=runas'
+if [[ "$OSTYPE" == "cygwin" ]]; then
+    # Enables open command like Mac.
+    alias open=cygstart
+    alias sudo='cygstart --action=runas'
+    # For cygport
+    alias cpon='apt-cyg update -m ftp://ftp.cygwinports.org/pub/cygwinports'
+    alias cpoff='apt-cyg update -m http://ftp.yz.yamagata-u.ac.jp/pub/cygwin'
+fi
 # Enables to display result in human-readable format.
 alias df='df -h'
 alias du='du -h'
@@ -175,29 +188,20 @@ alias vdir='ls --color=auto --format=long'
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
-# For cygport
-alias cpon='apt-cyg update -m ftp://ftp.cygwinports.org/pub/cygwinports'
-alias cpoff='apt-cyg update -m http://ftp.yz.yamagata-u.ac.jp/pub/cygwin'
 # raw control character
 alias less='less -r'
 # Interactive operation
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-
-#---------------------------------------------------------------
-# Path settings
-#---------------------------------------------------------------
-PATH="$PATH":/cygdrive/c/Program\ Files\ (x86)/Skype/Phone
-PATH="$PATH":/cygdrive/c/Users/Takatoshi/AppData/Local/Android/android-studio/bin
-PATH="$PATH":/cygdrive/c/Program\ Files/Oracle/VirtualBox
-PATH="$PATH":/cygdrive/c/Program\ Files/Easy\ 7-Zip
-PATH="$PATH":/cygdrive/c/Langs/haskell/bin
+# Reload the shell
+alias reload='exec "$SHELL" -l'
 
 #---------------------------------------------------------------
 # Environment variables settings
 #---------------------------------------------------------------
 SHELL=/bin/zsh
+EDITOR=vim
 
 #---------------------------------------------------------------
 # Initial working directory settings
@@ -208,4 +212,13 @@ cd ~
 # Windows command language settings
 #---------------------------------------------------------------
 # Changes code page to UTF-8.
-chcp 65001
+if [[ "$OSTYPE" == "cygwin" ]]; then
+    chcp 65001
+fi
+
+#---------------------------------------------------------------
+# Source profile file
+#---------------------------------------------------------------
+if [[ "$OSTYPE" == "cygwin" ]]; then
+    source $HOME/.profile
+fi
