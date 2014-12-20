@@ -27,16 +27,19 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 #---------------------------------------------------------------
 # Prompt settings
 #---------------------------------------------------------------
-#export PS1="%K{blue} [%n] %k%K{cyan} %~ %k%% "
+export PS1="%K{blue} [%n] %k%K{cyan} %~ %k%% "
 #export PS1="%F{red}%n%f in %F{green}%~%f %% "
-if [ -e $HOME/.zsh.theme/zsh-git-prompt ]; then
-    source $HOME/.zsh.theme/zsh-git-prompt/zshrc.sh
-    PROMPT='%B%m%~%b$(git_super_status) %# '
-else
-    autoload -U promptinit
-    promptinit
-    prompt fade
-fi
+# if [ -e $HOME/.zsh.theme/zsh-git-prompt ]; then
+#     source $HOME/.zsh.theme/zsh-git-prompt/zshrc.sh
+#     PROMPT='%B%m%~%b$(git_super_status) %# '
+# else
+#     autoload -U promptinit
+#     promptinit
+#     prompt fade
+# fi
+# autoload -U promptinit
+# promptinit
+# prompt fade
 
 #---------------------------------------------------------------
 # History settings
@@ -196,6 +199,8 @@ alias cp='cp -i'
 alias mv='mv -i'
 # Reload the shell
 alias reload='exec "$SHELL" -l'
+
+alias j='jobs'
 
 #---------------------------------------------------------------
 # Environment variables settings

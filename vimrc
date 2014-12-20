@@ -4,6 +4,8 @@
 let $LANG='ja'
 set encoding=utf-8
 set fileencodings=utf-8,sjis
+
+" Use Unix as the standard file type
 set fileformats=unix,dos,mac
 
 "----------------------------------------------------------------
@@ -15,6 +17,7 @@ set smarttab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+
 " indent settings
 set autoindent
 set smartindent
@@ -22,20 +25,41 @@ set smartindent
 "----------------------------------------------------------------
 " Visual settings
 "----------------------------------------------------------------
+" no error notify
+set noerrorbells
+set novisualbell
+
+" set default title
 set title
-" Disables to display 'Thanks to using vim!'
 set notitle
+
+" enable syntax highlight
 syntax on
+
 "use relative number for moving cursor.
-set relativenumber
+" set number
+if exists("&relativenumber")
+    set relativenumber
+    au BufReadPost * set relativenumber
+endif
+
+" cmd settings
 set showcmd
 set cmdheight=2
-set ruler
-set showmode
-set laststatus=2
-"set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
-"highligh matches when jumping to next
+" show the line and column number of the cursor position
+set ruler
+
+" enable to show mode
+set showmode
+
+" Always show the status line
+set laststatus=2
+
+" default status line
+" set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+
+"highlight matches when jumping to next
 "nnoremap <silent>n n:call HLNext(0.4)<CR>
 "nnoremap <silent>N N:call HLNext(0.4)<CR>
 "function! HLNext(blinktime)
@@ -46,28 +70,40 @@ set laststatus=2
     "redraw
 "endfunction
 
+" detects filetype
 filetype on
 
+" if the filetype is diff, enables syntax highlight
 "augroup PatchDiffHighlight
     "autocmd!
     "autocmd FileType diff syntax enable
 "augroup END
 
-"set cursorline
+" highlight cursor line position
+set cursorline
+
+" Don't redraw while executing macros (good performance config)
 set lazyredraw
-set linebreak
-set visualbell
 
-"hide menubar and toolbar when running gui
-set guioptions-=m
-set guioptions-=T
+" linebreak on 500 characters
+set lbr
+set tw=500
 
-"hide scrollbars
-set guioptions-=L
-set guioptions-=r
+if has("gui_running")
+    "hide menubar and toolbar when running gui
+    set guioptions-=m
+    set guioptions-=T
 
-"default font for gui
-set guifont=Inconsolata\ Medium\ 12
+    "hide scrollbars
+    set guioptions-=L
+    set guioptions-=r
+
+    "default font for gui
+    set guifont=Inconsolata\ Medium\ 12
+endif
+
+" Don't show the intro message when starting vim
+set shortmess=atI
 
 "----------------------------------------------------------------
 " Edit settings
@@ -92,8 +128,12 @@ set autowrite
 "Automatically read when a file is modified from outside
 set autoread
 
-"write comments easily
+"writes comments easily
 autocmd BufRead,BufNewFile * set formatoptions+=ro
+
+" Don't add empty newlines at the end of files
+" set binary
+" set noeol
 
 "----------------------------------------------------------------
 " Move settings
@@ -104,14 +144,14 @@ nnoremap k gk
 nnoremap <Down> gj
 nnoremap <Up> gk
 
-"move to marks efficiently
+" move to marks efficiently
 nnoremap ' `
 nnoremap ` '
 
-" Enables to use mouse on Vim.
-"set mouse=a
-"set guioptions+=a
-"set ttymouse=xterm2
+" In many terminal emulators the mouse works just fine, thus enable it.
+if has('mouse')
+    set mouse=a
+endif
 
 "----------------------------------------------------------------
 " Search settings
@@ -136,6 +176,9 @@ if executable('ag')
     endif
 endif
 
+" Add the g flag to search/replace by default
+set gdefault
+
 "----------------------------------------------------------------
 " Other settings
 "----------------------------------------------------------------
@@ -149,28 +192,103 @@ set nobackup
 set noswapfile
 set backspace=indent,eol,start
 
+" Optimize for fast terminal connections
+set ttyfast
+
 "----------------------------------------------------------------
 " key mappings
 "----------------------------------------------------------------
 "define leader key
 let mapleader=","
+
 "alternative key-bind of ,
 nnoremap <Leader>, ,
+
 "define local leader key
 let maplocalleader="\\"
 
-"edit .vimrc file
+" define special leader
+nnoremap [Leader] <Nop>
+nmap <Space> [Leader]
+
+" edit .vimrc file
 nnoremap <leader>ev :e $MYVIMRC<CR>
-"source .vimrc file
+
+" source .vimrc file
 nnoremap <leader>sv :wa<CR>:source $MYVIMRC<CR>
 
-"edit build file
-nnoremap <Leader>eb :vert sf build*<CR>
+" edit build file
+nnoremap <Leader>eb :find build*<CR>
 
-"escape from insert mode more easier
+" Fast saving
+nnoremap <Leader>w :w!<CR>
+
+" Fast quitting
+nnoremap <Leader>q :q<CR>
+
+" insert blank line more easily
+nnoremap ]<Space> o<Esc>k
+nnoremap [<Space> O<Esc>j
+
+" nnoremap S :%s//g<Left><Left>
+
+" escape from insert mode more easier
 inoremap jk <Esc>
 
-"move between splitted panes more easier
+" escape from command line mode more easier
+cnoremap jk <C-C>
+
+" Bash like keys for the command line
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
+cnoremap <C-K> <C-U>
+
+" Scrolls in command line
+cnoremap <C-P> <Up>
+cnoremap <C-N> <Down>
+
+cnoremap <expr> %% expand("%")
+
+" $q is super usefulwhen browsing on the command line
+" it deletes everything until the last slash
+cnoremap $q <C-\>eDeleteTillSlash()<CR>
+
+nnoremap <Leader>bd :bdelete
+nnoremap <Leader>bn :bnext<CR>
+nnoremap <Leader>bp :bprevious<CR>
+
+" Switch CWD to the directory of the open buffer
+noremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
+
+" aliases for quickfix operations
+nnoremap <Leader>cc :cclose<CR>
+nnoremap <Leader>cn :cnext<CR>
+nnoremap <Leader>cp :cprevious<CR>
+
+" an alias for a ctags operation
+nnoremap <Leader>ct :!ctags -R .<CR>
+
+" aliases for fold operations
+nnoremap <Leader>fo :foldopen<CR>
+nnoremap <Leader>fO :%foldopen!<CR>
+nnoremap <Leader>fc :foldclose<CR>
+nnoremap <Leader>fC :%foldclose!<CR>
+
+" quickly executing macros
+nnoremap Q @q
+
+" aliases for tab operations
+nnoremap <Leader>to :tabonly<CR>
+nnoremap <Leader>tn :tabnext<CR>
+nnoremap <Leader>tp :tabprevious<CR>
+nnoremap <Leader>tc :tabclose<CR>
+nnoremap <Leader>tm :tabmove
+
+let g:lasttab = 1
+nnoremap <Leader>tl :exe "tabn " . g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
+
+" move between splitted panes more easier
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
@@ -182,8 +300,54 @@ nnoremap : ;
 vnoremap ; :
 vnoremap : ;
 
-"easily highlight all texts
-nnoremap <Leader>aa ggvG$
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+" vnoremap <silent> * :call VisualSelection('f', '')<CR>
+" vnoremap <silent> # :call VisualSelection('b', '')<CR>
+
+"----------------------------------------------------------------
+" Helper function settings
+"----------------------------------------------------------------
+func! DeleteTillSlash()
+    let g:cmd = getcmdline()
+    if has("win16") || has("win32")
+        let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
+    else
+        let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
+    endif
+    if g:cmd == g:cmd_edited
+        if has("win16") || has("win32")
+            let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
+        else
+            let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
+        endif
+    endif
+    return g:cmd_edited
+endfunc
+
+" function! CmdLine(str)
+"     exe "menu Foo.Bar :" . a:str
+"     emenu Foo.Bar
+"     unmenu Foo
+" endfunction
+
+" function! VisualSelection(direction, extra_filter) range
+"     let l:saved_reg = @"
+"     execute "normal! vgvy"
+"     let l:pattern = escape(@", '\\/.*$^~[]')
+"     let l:pattern = substitute(l:pattern, "\n$", "", "")
+"     if a:direction == 'b'
+"         execute "normal ?" . l:pattern . "^M"
+"     elseif a:direction == 'gv'
+"         call CmdLine("Ack \"" . l:pattern . "\" " )
+"     elseif a:direction == 'replace'
+"         call CmdLine("%s" . '/'. l:pattern . '/')
+"     elseif a:direction == 'f'
+"         execute "normal /" . l:pattern . "^M"
+"     endif
+"     let @/ = l:pattern
+"     let @" = l:saved_reg
+" endfunction
 
 "----------------------------------------------------------------
 " User defined
@@ -238,7 +402,7 @@ abbrev factroy factory
 abbrev reutrn return
 
 "----------------------------------------------------------------
-" NeoBundle settings
+" Loading Plugins settings
 "----------------------------------------------------------------
 " Sets neobundle path.
 if has('vim_starting')
@@ -252,7 +416,7 @@ if has('unix')
     NeoBundle 'Valloric/YouCompleteMe'
 endif
 
-NeoBundle 'Shougo/vimproc.vim', {
+NeoBundleLazy 'Shougo/vimproc.vim', {
 \ 'build' : {
 \     'windows' : 'tools\\update-dll-mingw',
 \     'cygwin' : 'make -f make_cygwin.mak',
@@ -287,7 +451,7 @@ NeoBundle 'tpope/vim-repeat'
 
 NeoBundle 'tpope/vim-surround'
 
-NeoBundle 'tpope/vim-unimpaired'
+" NeoBundle 'tpope/vim-unimpaired'
 
 NeoBundle 'tpope/vim-eunuch'
 
@@ -302,11 +466,11 @@ NeoBundleLazy 'ctrlpvim/ctrlp.vim', {
     \  'commands' : ['CtrlP', 'CtrlPBuffer', 'CtrlPMRU', 'CtrlPLine', 'CtrlPUndo']
     \ }}
 
-NeoBundleLazy 'tacahiroy/ctrlp-funky', {
-    \ 'depends' : ['ctrlpvim/ctrlp.vim'],
-    \ 'autoload' : {
-    \  'commands' : ['CtrlPFunky']
-    \ }}
+" NeoBundleLazy 'tacahiroy/ctrlp-funky', {
+"     \ 'depends' : ['ctrlpvim/ctrlp.vim'],
+"     \ 'autoload' : {
+"     \  'commands' : ['CtrlPFunky']
+"     \ }}
 
 NeoBundleLazy 'FelikZ/ctrlp-py-matcher'
 
@@ -321,13 +485,15 @@ NeoBundleLazy 'FelikZ/ctrlp-py-matcher'
     "call unite#filters#sorter_default#use(['sorter_rank'])
 "endfunction
 
-"NeoBundleLazy 'Shougo/neomru.vim'
+" NeoBundleLazy 'Shougo/neomru.vim'
 
-"NeoBundleLazy 'Shougo/unite-outline'
+" NeoBundleLazy 'Shougo/unite-outline'
 
 NeoBundleLazy 'scrooloose/syntastic'
 
-NeoBundle 'scrooloose/nerdcommenter'
+"NeoBundle 'scrooloose/nerdcommenter'
+
+NeoBundle 'tpope/vim-commentary'
 
 NeoBundleLazy 'scrooloose/nerdtree', {
     \ 'autoload' : {
@@ -342,14 +508,16 @@ endif
 
 NeoBundle 'Raimondi/delimitMate'
 
-NeoBundle 'Lokaltog/vim-easymotion'
+" NeoBundle 'mikewest/vimroom'
 
-NeoBundle 'nathanaelkane/vim-indent-guides'
+" NeoBundle 'Lokaltog/vim-easymotion'
 
-NeoBundleLazy 'godlygeek/tabular', {
-    \ 'autoload' : {
-    \  'commands' : ['Tabularize']
-    \ }}
+" NeoBundle 'nathanaelkane/vim-indent-guides'
+
+" NeoBundleLazy 'godlygeek/tabular', {
+"     \ 'autoload' : {
+"     \  'commands' : ['Tabularize']
+"     \ }}
 
 NeoBundleLazy 'majutsushi/tagbar', {
     \ 'autoload' : {
@@ -411,6 +579,7 @@ function! FugitivePromptGrep()
     let l:pattern = input("Pattern? ")
     exe "normal! :Ggrep " . pattern . "\<CR>"
 endfunction
+nnoremap <Leader>gc :Gcommit -m ''<Left>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gl :Glog<CR>
 
@@ -434,12 +603,12 @@ else
 endif
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
-nnoremap <Space>p :CtrlP .<CR>
-nnoremap <Space>b :CtrlPBuffer<CR>
-nnoremap <Space>m :CtrlPMRU<CR>
-nnoremap <Space>l :CtrlPLine %<CR>
-nnoremap <Space>u :CtrlPUndo<CR>
-nnoremap <Space>r :CtrlPFunky<CR>
+nnoremap <silent> [Leader]p :CtrlP .<CR>
+nnoremap <silent> [Leader]b :CtrlPBuffer<CR>
+nnoremap <silent> [Leader]m :CtrlPMRU<CR>
+nnoremap <silent> [Leader]l :CtrlPLine %<CR>
+nnoremap <silent> [Leader]u :CtrlPUndo<CR>
+" nnoremap <silent> [Leader]r :CtrlPFunky<CR>
 
 "----------------------------------------------------------------
 " unite settings
@@ -477,39 +646,43 @@ let g:syntastic_mode_map = { "mode": "passive",
                         \ "passive_filetypes": [] }
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
-nnoremap <Leader>si :SyntasticInfo<CR>
-nnoremap <Leader>sc :SyntasticCheck<CR>
+nnoremap <silent> <Leader>si :SyntasticInfo<CR>
+nnoremap <silent> <Leader>sc :SyntasticCheck<CR>
 
 "----------------------------------------------------------------
 " nerdtree settings
 "----------------------------------------------------------------
-nnoremap <Leader>nt :NERDTreeToggle<CR>
-nnoremap <Leader>nf :NERDTreeFind<CR>
-nnoremap <Leader>nm :NERDTreeMirror<CR>
-nnoremap <Leader>nb :NERDTreeFromBookmark<CR>
-nnoremap <Leader>nc :NERDTreeCWD<CR>
+nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
+nnoremap <silent> <Leader>nf :NERDTreeFind<CR>
+nnoremap <silent> <Leader>nm :NERDTreeMirror<CR>
+nnoremap <silent> <Leader>nb :NERDTreeFromBookmark<CR>
+nnoremap <silent> <Leader>nc :NERDTreeCWD<CR>
 
 "----------------------------------------------------------------
 " vimux settings
 "----------------------------------------------------------------
-nnoremap <Leader>vp :wa<CR>:VimuxPromptCommand<CR>
-nnoremap <Leader>vl :wa<CR>:VimuxRunLastCommand<CR>
-nnoremap <Leader>vi :VimuxInspectRunner<CR>
-nnoremap <Leader>vq :VimuxCloseRunner<CR>
-nnoremap <Leader>vs :VimuxInterruptRunner<CR>
-nnoremap <Leader>vz :VimuxZoomRunner<CR>
-nnoremap <Leader>vo :call VimuxOpenRunnerAtCWD()<CR>
-nnoremap <Leader>vh :silent !tmux resize-pane -Z<CR>
+nnoremap <silent> <Leader>vp :wa<CR>:VimuxPromptCommand<CR>
+nnoremap <silent> <Leader>vl :wa<CR>:VimuxRunLastCommand<CR>
+nnoremap <silent> <Leader>vi :VimuxInspectRunner<CR>
+nnoremap <silent> <Leader>vq :VimuxCloseRunner<CR>
+nnoremap <silent> <Leader>vs :VimuxInterruptRunner<CR>
+nnoremap <silent> <Leader>vz :VimuxZoomRunner<CR>
+nnoremap <silent> <Leader>vo :call VimuxOpenRunnerAtCWD()<CR>
+nnoremap <silent> <Leader>vh :silent !tmux resize-pane -Z<CR>
 function! VimuxOpenRunnerAtCWD()
     let cwd = getcwd()
     exe "normal! :VimuxRunCommand(\"" . cwd . "\")\<CR>"
 endfunction
 
+" aliases for sbt commands
+nnoremap <Leader>vc :wa<CR>:VimuxRunCommand("compile")<CR>
+nnoremap <Leader>vr :wa<CR>:VimuxRunCommand("run")<CR>
+
 "----------------------------------------------------------------
 " easymotion settings
 "----------------------------------------------------------------
-map s <Plug>(easymotion-prefix)
-let g:EasyMotion_smartcase = 1
+" map s <Plug>(easymotion-prefix)
+" let g:EasyMotion_smartcase = 1
 
 "----------------------------------------------------------------
 " indent-guides settings
@@ -536,7 +709,7 @@ let g:tagbar_type_scala = {
         \ 'm:methods'
     \ ]
 \ }
-nnoremap <Leader>tb :TagbarToggle<CR>
+nnoremap <F9> :TagbarToggle<CR>
 
 "----------------------------------------------------------------
 " lightline settings
@@ -700,12 +873,12 @@ endfunction
 let g:solarized_termcolors=256
 let g:solarized_visibility='high'
 let g:solarized_hitrail=1
-let g:solarized_termtrans=0
+let g:solarized_termtrans=1
 
 "----------------------------------------------------------------
 " scala settings
 "----------------------------------------------------------------
-nnoremap <Leader>ss :SortScalaImports<CR>
+nnoremap <silent> <Leader>ss :SortScalaImports<CR>
 let g:scala_sort_across_groups=0
 
 "----------------------------------------------------------------
@@ -751,8 +924,8 @@ let g:UltiSnipsSnippetsDir="~/.vim.local/bundle/vim-snippets/UltiSnips"
 nnoremap <silent> <BS><BS> :call TrimTrailingWS()<CR>
 function! TrimTrailingWS()
     let l:save_cursor = getpos(".")
-    if search("　")
-        :%s/　/  /g
+    if search("  ")
+        :%s/  /  /g
     endif
     if search("\\t")
         let l:count = 0
@@ -790,7 +963,6 @@ function! ChangeSpaceNum(m, n)
 endfunction
 
 "a function to convert java code into scala one
-nnoremap <leader>js :call ConvertJavaIntoScala()<CR>
 function! ConvertJavaIntoScala()
     let l:save_cursor = getpos(".")
     if search(";\\n")
@@ -845,59 +1017,59 @@ augroup END
 "----------------------------------------------------------------
 " foldElse settings
 "----------------------------------------------------------------
-let s:pattern = ""
-"useful unfolding mapping
-nnoremap <Leader>fu zE
+" let s:pattern = ""
+" "useful unfolding mapping
+" nnoremap <Leader>fu zE
 
-nnoremap <Leader>fl :call FoldElseLastPattern()<CR>
-function! FoldElseLastPattern()
-    exe ":normal! :call FoldElse(\"" . s:pattern . "\")\<CR>"
-endfunction
+" nnoremap <Leader>fl :call FoldElseLastPattern()<CR>
+" function! FoldElseLastPattern()
+"     exe ":normal! :call FoldElse(\"" . s:pattern . "\")\<CR>"
+" endfunction
 
-nnoremap <Leader>fc :call FoldElseClass()<CR>
-function! FoldElseClass()
-    let l:pattern = "\\\\sclass\\\\s"
-    let s:pattern = l:pattern
-    exe ":normal! :call FoldElse(\"" . l:pattern . "\")\<CR>"
-endfunction
+" nnoremap <Leader>fc :call FoldElseClass()<CR>
+" function! FoldElseClass()
+"     let l:pattern = "\\\\sclass\\\\s"
+"     let s:pattern = l:pattern
+"     exe ":normal! :call FoldElse(\"" . l:pattern . "\")\<CR>"
+" endfunction
 
-nnoremap <Leader>ff :call FoldElseFunc()<CR>
-function! FoldElseFunc()
-    let l:pattern = "\\\\sdef\\\\s"
-    let s:pattern = l:pattern
-    exe ":normal! :call FoldElse(\"" .l:pattern . "\")\<CR>"
-endfunction
+" nnoremap <Leader>ff :call FoldElseFunc()<CR>
+" function! FoldElseFunc()
+"     let l:pattern = "\\\\sdef\\\\s"
+"     let s:pattern = l:pattern
+"     exe ":normal! :call FoldElse(\"" .l:pattern . "\")\<CR>"
+" endfunction
 
-nnoremap <Leader>fp :call FoldElsePrompt()<CR>
-function! FoldElsePrompt()
-    let l:pattern = input("Pattern? ")
-    let s:pattern = l:pattern
-    exe "normal! :call FoldElse(\"" . l:pattern . "\")\<CR>"
-endfunction
+" nnoremap <Leader>fp :call FoldElsePrompt()<CR>
+" function! FoldElsePrompt()
+"     let l:pattern = input("Pattern? ")
+"     let s:pattern = l:pattern
+"     exe "normal! :call FoldElse(\"" . l:pattern . "\")\<CR>"
+" endfunction
 
-function! FoldElse(pattern)
-    set foldopen-=search
-    if search(a:pattern)
-        exe "normal! zEgg"
-        let l:flag = 0
-        let l:start_line_number = 0
-        while 1
-            let l:line_number = search(a:pattern, 'W')
-            if l:line_number == 0
-                let l:line_number = line('$') + 1
-                let l:flag = 1
-            endif
-            let l:end_line_number = l:line_number - 1
-            exe "normal! :" . l:start_line_number . "," . l:end_line_number . "fold\<CR>"
-            let l:start_line_number = l:line_number + 1
-            exe "normal! j"
-            if l:flag
-                break
-            endif
-        endwhile
-        exe "normal! /" . a:pattern . "\<CR>"
-    endif
-endfunction
+" function! FoldElse(pattern)
+"     set foldopen-=search
+"     if search(a:pattern)
+"         exe "normal! zEgg"
+"         let l:flag = 0
+"         let l:start_line_number = 0
+"         while 1
+"             let l:line_number = search(a:pattern, 'W')
+"             if l:line_number == 0
+"                 let l:line_number = line('$') + 1
+"                 let l:flag = 1
+"             endif
+"             let l:end_line_number = l:line_number - 1
+"             exe "normal! :" . l:start_line_number . "," . l:end_line_number . "fold\<CR>"
+"             let l:start_line_number = l:line_number + 1
+"             exe "normal! j"
+"             if l:flag
+"                 break
+"             endif
+"         endwhile
+"         exe "normal! /" . a:pattern . "\<CR>"
+"     endif
+" endfunction
 
 "----------------------------------------------------------------
 " colorscheme settings
