@@ -13,3 +13,8 @@
     diff = diff-highlight | less
 [color]
     ui = auto
+[alias]
+  aa = add --all
+  ca = commit --amend
+  co = checkout
+  st = status
