@@ -201,6 +201,7 @@ alias mv='mv -i'
 alias reload='exec "$SHELL" -l'
 
 alias j='jobs'
+alias g='git'
 
 #---------------------------------------------------------------
 # Environment variables settings

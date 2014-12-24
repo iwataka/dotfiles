@@ -115,12 +115,17 @@ set clipboard+=unnamed
 nnoremap x "_x
 
 "make 'O' the default when trying to edit the file simultaneously
-augroup NoSimultaneousEdits
+" augroup NoSimultaneousEdits
+"     autocmd!
+"     autocmd SwapExists * let v:swapchoice = 'o'
+"     autocmd SwapExists * echomsg ErrorMsg
+"     autocmd SwapExists * echo 'Duplicate edit session (readonly)'
+"     autocmd SwapExists * echohl None
+" augroup END
+
+augroup VimHelpKeybinds
     autocmd!
-    autocmd SwapExists * let v:swapchoice = 'o'
-    autocmd SwapExists * echomsg ErrorMsg
-    autocmd SwapExists * echo 'Duplicate edit session (readonly)'
-    autocmd SwapExists * echohl None
+    autocmd FileType help nnoremap q :q<CR>
 augroup END
 
 "Automatically save before commands like :next and :make
@@ -159,7 +164,7 @@ endif
 set smartcase
 set history=100
 set incsearch
-"set hlsearch
+set hlsearch
 set ignorecase
 set infercase
 set showmatch
@@ -226,11 +231,22 @@ nnoremap <Leader>w :w!<CR>
 " Fast quitting
 nnoremap <Leader>q :q<CR>
 
+" Fast hide other windows
+nnoremap <Leader>o :only<CR>
+
 " insert blank line more easily
 nnoremap ]<Space> o<Esc>k
 nnoremap [<Space> O<Esc>j
 
-" nnoremap S :%s//g<Left><Left>
+" exchange two lines more easily
+nnoremap ]e ddp
+nnoremap [e ddkP
+
+" Fast replace command
+nnoremap S :%s//g<Left><Left>
+
+" clears search highlight and redraw display
+nnoremap <silent> <Esc> :nohlsearch<CR>:redraw!<CR>
 
 " escape from insert mode more easier
 inoremap jk <Esc>
@@ -247,15 +263,21 @@ cnoremap <C-K> <C-U>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
+" alias for current buffer path
 cnoremap <expr> %% expand("%")
 
-" $q is super usefulwhen browsing on the command line
+" $q is super useful when browsing on the command line
 " it deletes everything until the last slash
-cnoremap $q <C-\>eDeleteTillSlash()<CR>
+" cnoremap $q <C-\>eDeleteTillSlash()<CR>
 
 nnoremap <Leader>bd :bdelete
 nnoremap <Leader>bn :bnext<CR>
 nnoremap <Leader>bp :bprevious<CR>
+
+let g:lastbuffer = 1
+nnoremap <Leader>bl :exe "buffer " . lastbuffer<CR>
+" au BufLeave * if &ft != "help" let g:lastbuffer = bufnr('%') endif
+au BufLeave * let g:lastbuffer = bufnr('%')
 
 " Switch CWD to the directory of the open buffer
 noremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
@@ -284,6 +306,16 @@ nnoremap <Leader>tp :tabprevious<CR>
 nnoremap <Leader>tc :tabclose<CR>
 nnoremap <Leader>tm :tabmove
 
+" Fast scroll vertically
+nnoremap <c-y> 3<c-y>
+nnoremap <c-e> 3<c-e>
+
+" Fast scroll horizontally
+nnoremap zl zL
+nnoremap zh zH
+nnoremap zL zl
+nnoremap zH zh
+
 let g:lasttab = 1
 nnoremap <Leader>tl :exe "tabn " . g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
@@ -304,6 +336,49 @@ vnoremap : ;
 " Super useful! From an idea by Michael Naumann
 " vnoremap <silent> * :call VisualSelection('f', '')<CR>
 " vnoremap <silent> # :call VisualSelection('b', '')<CR>
+
+"----------------------------------------------------------------
+" autocmd settings
+"----------------------------------------------------------------
+"treat gradle file as a groovy one
+autocmd BufRead,BufNewFile *.gradle set filetype=groovy
+"set sbt filetype
+autocmd BufRead,BufNewFile *.sbt set filetype=sbt
+
+"automatically align html files
+" autocmd BufWritePre,BufRead *.html :normal gg=G
+
+"emphasize comments
+augroup EmphasizedComments
+    autocmd!
+    autocmd BufRead,BufNew * highlight Comment term=bold
+augroup END
+
+"make the 81st column stand out
+augroup VisibleLongLines
+    autocmd!
+    autocmd BufRead,BufNew * highlight ColorColumn ctermbg=red guibg=#666666
+    autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%101v')
+augroup END
+
+" Visualizes full-size space
+augroup VisibleFullWidthSpaces
+    autocmd!
+    autocmd BufRead,BufNew * highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
+    autocmd BufRead,BufNew * match FullWidthSpace /　/
+augroup END
+
+"make naughty characters stand out
+exec "set lcs=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+augroup VisibleNaughtiness
+    autocmd!
+    autocmd BufEnter * set list
+    autocmd BufEnter *.txt set nolist
+    autocmd BufEnter *.vp* set nolist
+    autocmd BufEnter * if !&modifiable
+    autocmd BufEnter * set nolist
+    autocmd BufEnter * endif
+augroup END
 
 "----------------------------------------------------------------
 " Helper function settings
@@ -352,14 +427,6 @@ endfunc
 "----------------------------------------------------------------
 " User defined
 "----------------------------------------------------------------
-"treat gradle file as a groovy one
-autocmd BufRead,BufNewFile *.gradle set filetype=groovy
-"set sbt filetype
-autocmd BufRead,BufNewFile *.sbt set filetype=sbt
-
-"automatically align html files
-autocmd BufWritePre,BufRead *.html :normal gg=G
-
 
 "enable persistent undo
 if has('persistent_undo')
@@ -445,7 +512,7 @@ endif
 " Enables to manage neobundle itself.
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-fugitive', {'rev': '8258025'}
 
 NeoBundle 'tpope/vim-repeat'
 
@@ -532,6 +599,8 @@ NeoBundle 'terryma/vim-multiple-cursors'
 
 NeoBundle 'airblade/vim-gitgutter'
 
+" NeoBundle 'mhinz/vim-startify'
+
 "syntax highlight
 NeoBundleLazy 'plasticboy/vim-markdown', {
     \ 'autoload' : {
@@ -574,12 +643,9 @@ NeoBundleCheck
 autocmd QuickFixCmdPost *grep* cwindow
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <Leader>gg :call FugitivePromptGrep()<CR>
-function! FugitivePromptGrep()
-    let l:pattern = input("Pattern? ")
-    exe "normal! :Ggrep " . pattern . "\<CR>"
-endfunction
+nnoremap <Leader>gg :Ggrep<Space>
 nnoremap <Leader>gc :Gcommit -m ''<Left>
+nnoremap <Leader>gr :Gread<CR>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gl :Glog<CR>
 
@@ -591,6 +657,7 @@ if has('python')
 endif
 let g:ctrlp_cmd = 'CtrlP .'
 let g:ctrlp_working_path_mode='ra'
+let g:ctrlp_by_filename = 1
 if executable('ag')
     let g:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
 elseif executable('git')
@@ -675,8 +742,24 @@ function! VimuxOpenRunnerAtCWD()
 endfunction
 
 " aliases for sbt commands
-nnoremap <Leader>vc :wa<CR>:VimuxRunCommand("compile")<CR>
-nnoremap <Leader>vr :wa<CR>:VimuxRunCommand("run")<CR>
+nnoremap <silent> <Leader>vc :wa<CR>:VimuxRunCommand("compile")<CR>
+nnoremap <silent> <Leader>vr :wa<CR>:VimuxRunCommand("run")<CR>
+nnoremap <silent> <Leader>vt :call VimuxRunTest()<CR>
+
+let g:lasttest = ""
+
+function! VimuxRunTest()
+    exe "normal! :wa\<CR>"
+    let l:name = expand("%:t:r")
+    let l:command = ""
+    if l:name =~# "\.\*Test"
+        let g:lasttest = l:name
+        let l:command = "test:testOnly *" . l:name
+    else
+        let l:command = "test:testOnly *" . g:lasttest
+    endif
+    exe "normal! :call VimuxRunCommand(\"" . l:command . "\")\<CR>"
+endfunction
 
 "----------------------------------------------------------------
 " easymotion settings
@@ -847,11 +930,21 @@ nnoremap <F9> :TagbarToggle<CR>
 " airline settings
 "----------------------------------------------------------------
 let g:airline_theme = "solarized"
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#show_buffers = 1
-"let g:airline#extensions#tabline#shor_tab_nr = 1
-"let g:airline#extensions#tabline#shor_close_button = 0
-"let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_tab_nr = 1
+let g:airline#extensions#tabline#tab_nr_type = 1
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
 
 "----------------------------------------------------------------
 " multiple-cursors settings
@@ -918,15 +1011,62 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsSnippetsDir="~/.vim.local/bundle/vim-snippets/UltiSnips"
 
 "----------------------------------------------------------------
+" startify settings
+"----------------------------------------------------------------
+" let g:startify_enable_special         = 0
+" let g:startify_files_number           = 8
+" let g:startify_relative_path          = 1
+" let g:startify_change_to_dir          = 0
+" let g:startify_session_autoload       = 1
+" let g:startify_session_persistence    = 1
+" let g:startify_session_delete_buffers = 1
+
+" let g:startify_list_order = [
+"   \ ['   LRU within this dir:'],
+"   \ 'dir',
+"   \ ['   LRU:'],
+"   \ 'files',
+"   \ ['   Sessions:'],
+"   \ 'sessions',
+"   \ ['   Bookmarks:'],
+"   \ 'bookmarks',
+"   \ ]
+
+" let g:startify_skiplist = [
+"             \ 'COMMIT_EDITMSG',
+"             \ $VIMRUNTIME .'/doc',
+"             \ 'bundle/.*/doc',
+"             \ '\.vimgolf',
+"             \ ]
+
+" let g:startify_bookmarks = [
+"             \ '~/.vimrc',
+"             \ ]
+
+" " let g:startify_custom_footer =
+" "       \ ['', "   Vim is charityware. Please read ':help uganda'.", '']
+
+" let g:startify_custom_header =
+"       \ map(split(system('tips | cowsay -f apt'), '\n'), '"   ". v:val') + ['']
+
+" hi StartifyBracket ctermfg=240
+" hi StartifyFile    ctermfg=147
+" hi StartifyFooter  ctermfg=240
+" hi StartifyHeader  ctermfg=114
+" hi StartifyNumber  ctermfg=215
+" hi StartifyPath    ctermfg=245
+" hi StartifySlash   ctermfg=240
+" hi StartifySpecial ctermfg=240
+
+" nnoremap [Leader]s :Startify<CR>
+
+"----------------------------------------------------------------
 " autoEdit settings
 "----------------------------------------------------------------
 "double-delete to remove trailing whitespace
 nnoremap <silent> <BS><BS> :call TrimTrailingWS()<CR>
 function! TrimTrailingWS()
     let l:save_cursor = getpos(".")
-    if search("  ")
-        :%s/  /  /g
-    endif
     if search("\\t")
         let l:count = 0
         let l:spaces = ""
@@ -978,41 +1118,6 @@ function! ConvertJavaIntoScala()
     call setpos(".", l:save_cursor)
 endfunction
 
-
-"----------------------------------------------------------------
-" visualize settings
-"----------------------------------------------------------------
-"emphasize comments
-augroup EmphasizedComments
-    autocmd!
-    autocmd BufRead,BufNew * highlight Comment term=bold
-augroup END
-
-"make the 81st column stand out
-augroup VisibleLongLines
-    autocmd!
-    autocmd BufRead,BufNew * highlight ColorColumn ctermbg=red guibg=#666666
-    autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%101v')
-augroup END
-
-" Visualizes full-size space
-augroup VisibleFullWidthSpaces
-    autocmd!
-    autocmd BufRead,BufNew * highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
-    autocmd BufRead,BufNew * match FullWidthSpace /　/
-augroup END
-
-"make naughty characters stand out
-exec "set lcs=tab:\uBB\uBB,trail:\uB7,nbsp:~"
-augroup VisibleNaughtiness
-    autocmd!
-    autocmd BufEnter * set list
-    autocmd BufEnter *.txt set nolist
-    autocmd BufEnter *.vp* set nolist
-    autocmd BufEnter * if !&modifiable
-    autocmd BufEnter * set nolist
-    autocmd BufEnter * endif
-augroup END
 
 "----------------------------------------------------------------
 " foldElse settings
