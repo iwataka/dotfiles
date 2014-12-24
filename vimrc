@@ -471,77 +471,46 @@ abbrev reutrn return
 "----------------------------------------------------------------
 " Loading Plugins settings
 "----------------------------------------------------------------
-" Sets neobundle path.
-if has('vim_starting')
-    set nocompatible
-    set rtp+=~/.vim/bundle/neobundle.vim/
-endif
+call plug#begin('~/.vim/bundle')
 
-call neobundle#begin(expand('~/.vim.local/bundle'))
-
-if has('unix')
-    NeoBundle 'Valloric/YouCompleteMe'
-endif
-
-NeoBundleLazy 'Shougo/vimproc.vim', {
-\ 'build' : {
-\     'windows' : 'tools\\update-dll-mingw',
-\     'cygwin' : 'make -f make_cygwin.mak',
-\     'mac' : 'make -f make_mac.mak',
-\     'linux' : 'make',
-\     'unix' : 'gmake',
-\    },
-\ }
-
-call neobundle#end()
-
-call neobundle#begin(expand('~/.vim/bundle'))
-
+" auto completion
 if has('neovim')
-    NeoBundle 'ervandew/supertab'
-    NeoBundle 'vim-scripts/AutoComplPop'
+    Plug 'ervandew/supertab'
+    Plug 'vim-scripts/AutoComplPop'
 elseif has("win32") || has("win64") || has("win32unix")
-    NeoBundle 'Shougo/neocomplete.vim'
-    NeoBundle 'Shougo/neosnippet.vim'
-    NeoBundle 'Shougo/neosnippet-snippets'
+    Plug 'Shougo/neocomplete.vim'
+    Plug 'Shougo/vimproc.vim', {'dir': '~/.vim.local/bundle/vimproc.vim'}
+    Plug 'Shougo/neosnippet.vim'
+    Plug 'Shougo/neosnippet-snippets'
 elseif has('unix')
-    NeoBundle 'SirVer/ultisnips'
-    NeoBundle 'honza/vim-snippets'
+    Plug 'Valloric/YouCompleteMe', {'dir': '~/.vim.local/bundle/YouCompleteMe'}
+    Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
 endif
 
-" Enables to manage neobundle itself.
-NeoBundleFetch 'Shougo/neobundle.vim'
+Plug 'tpope/vim-fugitive', {'branch/tag': 'master/v2.0'}
 
-NeoBundle 'tpope/vim-fugitive', {'rev': '8258025'}
+Plug 'tpope/vim-repeat'
 
-NeoBundle 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
 
-NeoBundle 'tpope/vim-surround'
+" Plug 'tpope/vim-unimpaired'
 
-" NeoBundle 'tpope/vim-unimpaired'
+Plug 'tpope/vim-eunuch'
 
-NeoBundle 'tpope/vim-eunuch'
+Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 
-NeoBundleLazy 'tpope/vim-fireplace', {
-    \ 'autoload' : {
-    \  'filetypes' : ['clojure']
-    \ }}
+Plug 'ctrlpvim/ctrlp.vim'
 
-NeoBundleLazy 'ctrlpvim/ctrlp.vim', {
-    \ 'depends' : ['FelikZ/ctrlp-py-matcher'],
-    \ 'autoload' : {
-    \  'commands' : ['CtrlP', 'CtrlPBuffer', 'CtrlPMRU', 'CtrlPLine', 'CtrlPUndo']
-    \ }}
-
-" NeoBundleLazy 'tacahiroy/ctrlp-funky', {
+" Plug 'tacahiroy/ctrlp-funky', {
 "     \ 'depends' : ['ctrlpvim/ctrlp.vim'],
 "     \ 'autoload' : {
 "     \  'commands' : ['CtrlPFunky']
 "     \ }}
 
-NeoBundleLazy 'FelikZ/ctrlp-py-matcher'
+Plug 'FelikZ/ctrlp-py-matcher'
 
-"NeoBundleLazy 'Shougo/unite.vim', {
+"Plug 'Shougo/unite.vim', {
     "\ 'depends' : ['Shougo/neomru.vim', 'Shougo/unite-outline'],
     "\ 'autoload' : {
     "\  'commands' : ['Unite']
@@ -552,90 +521,65 @@ NeoBundleLazy 'FelikZ/ctrlp-py-matcher'
     "call unite#filters#sorter_default#use(['sorter_rank'])
 "endfunction
 
-" NeoBundleLazy 'Shougo/neomru.vim'
+" Plug 'Shougo/neomru.vim'
 
-" NeoBundleLazy 'Shougo/unite-outline'
+" Plug 'Shougo/unite-outline'
 
-NeoBundleLazy 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 
-"NeoBundle 'scrooloose/nerdcommenter'
+"Plug 'scrooloose/nerdcommenter'
 
-NeoBundle 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary'
 
-NeoBundleLazy 'scrooloose/nerdtree', {
-    \ 'autoload' : {
-    \  'commands' : ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeFromBookmark', 'NERDTreeCWD']
-    \ }}
+Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeFromBookmark', 'NERDTreeCWD']}
 
 if has('gui_running')
-    NeoBundle 'Shougo/vimshell.vim'
+    Plug 'Shougo/vimshell.vim'
 else
-    NeoBundle 'benmills/vimux'
+    Plug 'benmills/vimux'
 endif
 
-NeoBundle 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 
-" NeoBundle 'mikewest/vimroom'
+" Plug 'mikewest/vimroom'
 
-" NeoBundle 'Lokaltog/vim-easymotion'
+" Plug 'Lokaltog/vim-easymotion'
 
-" NeoBundle 'nathanaelkane/vim-indent-guides'
+" Plug 'nathanaelkane/vim-indent-guides'
 
-" NeoBundleLazy 'godlygeek/tabular', {
+" Plug 'godlygeek/tabular', {
 "     \ 'autoload' : {
 "     \  'commands' : ['Tabularize']
 "     \ }}
 
-NeoBundleLazy 'majutsushi/tagbar', {
-    \ 'autoload' : {
-        \ 'commands' : ['TagbarToggle']
-    \ }}
+Plug 'majutsushi/tagbar'
 
-"NeoBundle 'itchyny/lightline.vim'
+"Plug 'itchyny/lightline.vim'
 
-NeoBundle 'bling/vim-airline'
+Plug 'bling/vim-airline'
 
-NeoBundle 'terryma/vim-multiple-cursors'
+Plug 'terryma/vim-multiple-cursors'
 
-NeoBundle 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 
-" NeoBundle 'mhinz/vim-startify'
+" Plug 'mhinz/vim-startify'
 
 "syntax highlight
-NeoBundleLazy 'plasticboy/vim-markdown', {
-    \ 'autoload' : {
-    \  'filetypes' : ['mkd']
-    \ }}
+Plug 'plasticboy/vim-markdown', {'for': 'mkd'}
 
-NeoBundleLazy 'derekwyatt/vim-scala', {
-    \ 'autoload' : {
-    \  'filetypes' : ['scala'],
-    \  'commands' : ['SortScalaImports']
-    \ }}
+Plug 'derekwyatt/vim-scala', {'for': 'scala', 'on': 'SortScalaImports'}
 
-NeoBundleLazy 'derekwyatt/vim-sbt', {
-    \ 'depends' : ['derekwyatt/vim-scala'],
-    \ 'autoload' : {
-    \  'filetypes' : ['sbt']
-    \ }}
+Plug 'derekwyatt/vim-sbt', {'for': 'sbt'}
 
-NeoBundleLazy 'dag/vim2hs', {
-    \ 'autoload' : {
-    \  'filetypes' : ['haskell']
-    \ }}
+Plug 'dag/vim2hs', {'for': 'haskell'}
 
 "colorschemes
-"NeoBundle 'tomasr/molokai'
-NeoBundle 'altercation/vim-colors-solarized'
+Plug 'tomasr/molokai'
+Plug 'altercation/vim-colors-solarized'
 
-call neobundle#end()
-
-call neobundle#local(expand('~/.vim.local/bundle'))
+call plug#end()
 
 filetype plugin indent on
-
-" Check if there are any plugins left not installed.
-NeoBundleCheck
 
 "----------------------------------------------------------------
 " fugitive settings
