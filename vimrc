@@ -57,7 +57,7 @@ set showmode
 set laststatus=2
 
 " default status line
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+" set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 "highlight matches when jumping to next
 "nnoremap <silent>n n:call HLNext(0.4)<CR>
