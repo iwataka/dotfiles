@@ -13,6 +13,11 @@ if [ -L ~/.bashrc ]; then
 fi
 ln -s $DOT_FILES/bashrc ~/.bashrc
 
+if [ -L ~/.ctags ]; then
+    rm ~/.ctags
+fi
+ln -s $DOT_FILES/ctags ~/.ctags
+
 if [ -L ~/.gitconfig ]; then
     rm ~/.gitconfig
 fi
@@ -32,6 +37,11 @@ if [ -L ~/.vimrc ]; then
     rm ~/.vimrc
 fi
 ln -s $DOT_FILES/vimrc ~/.vimrc
+
+if [ -L ~/.vimrc.bundles ]; then
+    rm ~/.vimrc.bundles
+fi
+ln -s $DOT_FILES/vimrc.bundles ~/.vimrc.bundles
 
 if [ -L ~/.zshrc ]; then
     rm ~/.zshrc

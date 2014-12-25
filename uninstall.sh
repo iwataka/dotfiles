@@ -8,6 +8,10 @@ if [ -L ~/.bashrc ]; then
     rm ~/.bashrc
 fi
 
+if [ -L ~/.ctags ]; then
+    rm ~/.ctags
+fi
+
 if [ -L ~/.gitconfig ]; then
     rm ~/.gitconfig
 fi
@@ -22,6 +26,10 @@ fi
 
 if [ -L ~/.vimrc ]; then
     rm ~/.vimrc
+fi
+
+if [ -L ~/.vimrc.bundles ]; then
+    rm ~/.vimrc.bundles
 fi
 
 if [ -L ~/.zshrc ]; then
