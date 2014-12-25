@@ -2,5 +2,5 @@
 
 set THIS_DIRECTORY=%~dp0
 
-if exist %USERPROFILE%\_vimrc del %USERPROFILE%\_vimrc
-mklink %USERPROFILE%\_vimrc %THIS_DIRECTORY%vimrc
+if exist %USERPROFILE%\.vimrc del %USERPROFILE%\.vimrc
+mklink %USERPROFILE%\.vimrc %THIS_DIRECTORY%vimrc
