@@ -142,12 +142,12 @@ else
 endif
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
-nnoremap <silent> [Leader]p :CtrlP .<CR>
-nnoremap <silent> [Leader]b :CtrlPBuffer<CR>
-nnoremap <silent> [Leader]m :CtrlPMRU<CR>
-nnoremap <silent> [Leader]l :CtrlPLine %<CR>
-nnoremap <silent> [Leader]u :CtrlPUndo<CR>
-" nnoremap <silent> [Leader]r :CtrlPFunky<CR>
+nnoremap <silent> <Space>p :CtrlP .<CR>
+nnoremap <silent> <Space>b :CtrlPBuffer<CR>
+nnoremap <silent> <Space>m :CtrlPMRU<CR>
+nnoremap <silent> <Space>l :CtrlPLine %<CR>
+nnoremap <silent> <Space>u :CtrlPUndo<CR>
+" nnoremap <silent> <Space>r :CtrlPFunky<CR>
 
 "----------------------------------------------------------------
 " unite settings

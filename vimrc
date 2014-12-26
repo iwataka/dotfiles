@@ -261,8 +261,9 @@ nnoremap <Leader>, ,
 let maplocalleader="\\"
 
 " define special leader
-nnoremap [Leader] <Nop>
-nmap <Space> [Leader]
+" Deprecated because of the compatibility with Vi.
+" nnoremap [Leader] <Nop>
+" nmap <Space> [Leader]
 
 " delete a character without adding it to default register
 nnoremap x "_x
@@ -277,13 +278,16 @@ nnoremap <leader>sv :wa<CR>:source $MYVIMRC<CR>
 nnoremap <Leader>eb :find build*<CR>
 
 " Fast saving
-nnoremap <Leader>w :w!<CR>
+" deprecated
+" nnoremap <Leader>w :w!<CR>
 
 " Fast quitting
-nnoremap <Leader>q :q<CR>
+" deprecated
+" nnoremap <Leader>q :q<CR>
 
 " Fast hide other windows
-nnoremap <Leader>o :only<CR>
+" deprecated
+" nnoremap <Leader>o :only<CR>
 
 " insert blank line more easily
 nnoremap ]<Space> o<Esc>k
