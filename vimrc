@@ -14,16 +14,17 @@ endif
 "when using Vim, english is better choice than japanese
 let $LANG='en'
 
+" set encoding to utf-8
 set encoding=utf-8
 set fileencodings=utf-8,sjis
 
-" Use Unix as the standard file type
+" use unix as the standard file type
 set fileformats=unix,dos,mac
 
 "----------------------------------------------------------------
 " Indentation settings
 "----------------------------------------------------------------
-" tab settings
+" use tab as 4 spaces
 set expandtab
 set smarttab
 set tabstop=4
@@ -343,11 +344,12 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-"more useful command prefix
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
+" more useful command prefix
+" This setting is deprecated because of the compatibility of vi.
+" nnoremap ; :
+" nnoremap : ;
+" vnoremap ; :
+" vnoremap : ;
 
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
