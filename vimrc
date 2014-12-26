@@ -261,11 +261,6 @@ nnoremap <Leader>, ,
 "define local leader key
 let maplocalleader="\\"
 
-" define special leader
-" Deprecated because of the compatibility with Vi.
-" nnoremap [Leader] <Nop>
-" nmap <Space> [Leader]
-
 " delete a character without adding it to default register
 nnoremap x "_x
 
@@ -277,18 +272,6 @@ nnoremap <leader>sv :wa<CR>:source $MYVIMRC<CR>
 
 " edit build file
 nnoremap <Leader>eb :find build*<CR>
-
-" Fast saving
-" deprecated
-" nnoremap <Leader>w :w!<CR>
-
-" Fast quitting
-" deprecated
-" nnoremap <Leader>q :q<CR>
-
-" Fast hide other windows
-" deprecated
-" nnoremap <Leader>o :only<CR>
 
 " insert blank line more easily
 " This mapping is the imitation of the plugin 'unimpaired'.
@@ -302,15 +285,6 @@ nnoremap <Leader>eb :find build*<CR>
 
 " Fast replace command
 nnoremap S :%s//g<Left><Left>
-
-" clears search highlight and redraw display
-nnoremap <silent> <Esc> :nohlsearch<CR>:redraw!<CR>
-
-" escape from insert mode more easier
-inoremap jk <Esc>
-
-" escape from command line mode more easier
-cnoremap jk <C-C>
 
 " Bash like keys for the command line
 cnoremap <C-A> <Home>
@@ -328,10 +302,12 @@ cnoremap <expr> %% expand("%")
 " it deletes everything until the last slash
 " cnoremap $q <C-\>eDeleteTillSlash()<CR>
 
+" aliases for buffeer operations
 nnoremap <Leader>bd :bdelete
 nnoremap <Leader>bn :bnext<CR>
 nnoremap <Leader>bp :bprevious<CR>
 
+" move last open buffer easily
 let g:lastbuffer = 1
 nnoremap <Leader>bl :exe "buffer " . lastbuffer<CR>
 " au BufLeave * if &ft != "help" let g:lastbuffer = bufnr('%') endif
@@ -345,7 +321,7 @@ nnoremap <Leader>cc :cclose<CR>
 nnoremap <Leader>cn :cnext<CR>
 nnoremap <Leader>cp :cprevious<CR>
 
-" an alias for a ctags operation
+" alias for ctags operations
 nnoremap <Leader>ct :!ctags -R .<CR>
 
 " aliases for fold operations
@@ -354,9 +330,6 @@ nnoremap <Leader>fO :%foldopen!<CR>
 nnoremap <Leader>fc :foldclose<CR>
 nnoremap <Leader>fC :%foldclose!<CR>
 
-" quickly executing macros
-nnoremap Q @q
-
 " aliases for tab operations
 nnoremap <Leader>to :tabonly<CR>
 nnoremap <Leader>tn :tabnext<CR>
@@ -364,6 +337,7 @@ nnoremap <Leader>tp :tabprevious<CR>
 nnoremap <Leader>tc :tabclose<CR>
 nnoremap <Leader>tm :tabmove
 
+" move last open tab easily
 let g:lasttab = 1
 nnoremap <Leader>tl :exe "tabn " . g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
@@ -384,13 +358,6 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-" more useful command prefix
-" This setting is deprecated because of the compatibility of vi.
-" nnoremap ; :
-" nnoremap : ;
-" vnoremap ; :
-" vnoremap : ;
-
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 " vnoremap <silent> * :call VisualSelection('f', '')<CR>
@@ -398,6 +365,38 @@ nnoremap <c-l> <c-w>l
 
 "double-delete to remove trailing whitespace
 nnoremap <silent> <BS><BS> :call TrimTrailingWS()<CR>
+
+======================deprecated because of the compatibility with Vi===========================
+" Fast saving
+" nnoremap <Leader>w :w!<CR>
+
+" Fast quitting
+" nnoremap <Leader>q :q<CR>
+
+" Fast hide other windows
+" nnoremap <Leader>o :only<CR>
+
+" define special leader
+" nnoremap [Leader] <Nop>
+" nmap <Space> [Leader]
+
+" clears search highlight and redraw display
+" nnoremap <silent> <Esc> :nohlsearch<CR>:redraw!<CR>
+
+" escape from insert mode more easier
+" inoremap jk <Esc>
+
+" escape from command line mode more easier
+" cnoremap jk <C-C>
+
+" more useful command prefix
+" nnoremap ; :
+" nnoremap : ;
+" vnoremap ; :
+" vnoremap : ;
+
+" quickly executing macros
+" nnoremap Q @q
 
 "----------------------------------------------------------------
 " Auto commands
