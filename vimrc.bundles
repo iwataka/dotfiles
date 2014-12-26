@@ -1,15 +1,13 @@
 "----------------------------------------------------------------
-" Loading Plugins settings
+" Loading plugins
 "----------------------------------------------------------------
 call plug#begin('~/.vim/bundle')
 
-" auto completion
+" auto completion (depending on OS type)
 if has('neovim')
     Plug 'ervandew/supertab'
-    Plug 'vim-scripts/AutoComplPop'
 elseif has("win32") || has("win64") || has("win32unix")
     Plug 'Shougo/neocomplete.vim'
-    Plug 'Shougo/vimproc.vim', {'dir': '~/.vim.local/bundle/vimproc.vim'}
     Plug 'Shougo/neosnippet.vim'
     Plug 'Shougo/neosnippet-snippets'
 elseif has('unix')
@@ -18,19 +16,34 @@ elseif has('unix')
     Plug 'honza/vim-snippets'
 endif
 
+" cooperation with vimux (in gui only)
+if !has('gui_running')
+    Plug 'benmills/vimux'
+endif
+
 Plug 'tpope/vim-fugitive', {'branch/tag': 'master/v2.0'}
-
 Plug 'tpope/vim-repeat'
-
 Plug 'tpope/vim-surround'
-
-" Plug 'tpope/vim-unimpaired'
-
+Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
-
-Plug 'tpope/vim-fireplace', {'for': 'clojure'}
-
+Plug 'tpope/vim-commentary'
+Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeFromBookmark', 'NERDTreeCWD']}
+Plug 'airblade/vim-gitgutter'
+Plug 'bling/vim-airline'
+Plug 'majutsushi/tagbar'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'scrooloose/syntastic'
+
+" depending on filetypes
+Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+Plug 'plasticboy/vim-markdown', {'for': 'mkd'}
+Plug 'derekwyatt/vim-scala', {'for': 'scala', 'on': 'SortScalaImports'}
+Plug 'derekwyatt/vim-sbt', {'for': 'sbt'}
+Plug 'dag/vim2hs', {'for': 'haskell'}
+
+" colorschemes
+Plug 'altercation/vim-colors-solarized'
 
 " Plug 'tacahiroy/ctrlp-funky', {
 "     \ 'depends' : ['ctrlpvim/ctrlp.vim'],
@@ -38,38 +51,16 @@ Plug 'ctrlpvim/ctrlp.vim'
 "     \  'commands' : ['CtrlPFunky']
 "     \ }}
 
-Plug 'FelikZ/ctrlp-py-matcher'
-
-"Plug 'Shougo/unite.vim', {
-    "\ 'depends' : ['Shougo/neomru.vim', 'Shougo/unite-outline'],
-    "\ 'autoload' : {
-    "\  'commands' : ['Unite']
-    "\ }}
-"let bundle = neobundle#get('unite.vim')
-"function! bundle.hooks.on_source(bundle)
-    "call unite#filters#matcher_default#use(['matcher_fuzzy'])
-    "call unite#filters#sorter_default#use(['sorter_rank'])
-"endfunction
-
+" Plug 'Shougo/unite.vim'
 " Plug 'Shougo/neomru.vim'
-
 " Plug 'Shougo/unite-outline'
+" Plug 'Shougo/vimproc.vim', {'dir': '~/.vim.local/bundle/vimproc.vim'}
 
-Plug 'scrooloose/syntastic'
+" Plug 'vim-scripts/AutoComplPop'
 
-"Plug 'scrooloose/nerdcommenter'
+" Plug 'scrooloose/nerdcommenter'
 
-Plug 'tpope/vim-commentary'
-
-Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeFromBookmark', 'NERDTreeCWD']}
-
-if has('gui_running')
-    Plug 'Shougo/vimshell.vim'
-else
-    Plug 'benmills/vimux'
-endif
-
-Plug 'Raimondi/delimitMate'
+" Plug 'Raimondi/delimitMate'
 
 " Plug 'mikewest/vimroom'
 
@@ -82,30 +73,13 @@ Plug 'Raimondi/delimitMate'
 "     \  'commands' : ['Tabularize']
 "     \ }}
 
-Plug 'majutsushi/tagbar'
+" Plug 'itchyny/lightline.vim'
 
-"Plug 'itchyny/lightline.vim'
-
-Plug 'bling/vim-airline'
-
-Plug 'terryma/vim-multiple-cursors'
-
-Plug 'airblade/vim-gitgutter'
+" Plug 'terryma/vim-multiple-cursors'
 
 " Plug 'mhinz/vim-startify'
 
-"syntax highlight
-Plug 'plasticboy/vim-markdown', {'for': 'mkd'}
-
-Plug 'derekwyatt/vim-scala', {'for': 'scala', 'on': 'SortScalaImports'}
-
-Plug 'derekwyatt/vim-sbt', {'for': 'sbt'}
-
-Plug 'dag/vim2hs', {'for': 'haskell'}
-
-"colorschemes
-Plug 'tomasr/molokai'
-Plug 'altercation/vim-colors-solarized'
+" Plug 'tomasr/molokai'
 
 call plug#end()
 
@@ -242,9 +216,9 @@ endfunction
 "----------------------------------------------------------------
 " indent-guides settings
 "----------------------------------------------------------------
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
+" let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_start_level = 2
+" let g:indent_guides_guide_size = 1
 
 "----------------------------------------------------------------
 " tagbar settings
@@ -421,16 +395,16 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 "----------------------------------------------------------------
 " multiple-cursors settings
 "----------------------------------------------------------------
-function! Multiple_cursors_before()
-    if exists(':NeoCompleteLock')==2
-        exe 'NeoCompleteLock'
-    endif
-endfunction
-function! Multiple_cursors_after()
-    if exists(':NeoCompleteUnlock')==2
-        exe 'NeoCompleteUnlock'
-    endif
-endfunction
+" function! Multiple_cursors_before()
+"     if exists(':NeoCompleteLock')==2
+"         exe 'NeoCompleteLock'
+"     endif
+" endfunction
+" function! Multiple_cursors_after()
+"     if exists(':NeoCompleteUnlock')==2
+"         exe 'NeoCompleteUnlock'
+"     endif
+" endfunction
 
 "----------------------------------------------------------------
 " solarized settings
