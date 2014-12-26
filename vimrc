@@ -36,7 +36,8 @@ set notitle
 " enable syntax highlight
 syntax on
 
-"use relative number for moving cursor.
+" use relative number for moving cursor.
+" set number is not necessary because of goto line function.
 " set number
 if exists("&relativenumber")
     set relativenumber
@@ -57,7 +58,9 @@ set showmode
 set laststatus=2
 
 " default status line
-" set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+if has("fugitive#statusline")
+    set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+endif
 
 "highlight matches when jumping to next
 "nnoremap <silent>n n:call HLNext(0.4)<CR>
