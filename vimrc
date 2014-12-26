@@ -13,7 +13,7 @@ set fileencodings=utf-8,sjis
 set fileformats=unix,dos,mac
 
 "----------------------------------------------------------------
-" Arrangement settings
+" Indentation settings
 "----------------------------------------------------------------
 " tab settings
 set expandtab
@@ -81,6 +81,7 @@ endif
 filetype on
 
 " if the filetype is diff, enables syntax highlight
+" it is useful when syntax highlight is off by default
 "augroup PatchDiffHighlight
     "autocmd!
     "autocmd FileType diff syntax enable
@@ -109,8 +110,12 @@ if has("gui_running")
     set guifont=Inconsolata\ Medium\ 12
 endif
 
+" apply all of the abbreviations
+set shortmess+=a
+" truncate file message at the start
+set shortmess+=t
 " Don't show the intro message when starting vim
-set shortmess=atI
+set shortmess+=I
 
 "----------------------------------------------------------------
 " Edit settings
