@@ -395,6 +395,9 @@ nnoremap <c-l> <c-w>l
 " vnoremap <silent> * :call VisualSelection('f', '')<CR>
 " vnoremap <silent> # :call VisualSelection('b', '')<CR>
 
+"double-delete to remove trailing whitespace
+nnoremap <silent> <BS><BS> :call TrimTrailingWS()<CR>
+
 "----------------------------------------------------------------
 " Auto commands
 "----------------------------------------------------------------
@@ -472,6 +475,61 @@ augroup END
 "----------------------------------------------------------------
 " Helper function settings
 "----------------------------------------------------------------
+" Trim trailing white spaces and expand tab to some spaces.
+function! TrimTrailingWS()
+    let l:save_cursor = getpos(".")
+    if search("\\t")
+        let l:count = 0
+        let l:spaces = ""
+        while l:count < &tabstop
+            let l:spaces = l:spaces . " "
+            let l:count = l:count + 1
+        endwhile
+        exe "normal! :%s/\\t/" . l:spaces . "/g\<CR>"
+    endif
+    if search('\s\+$')
+        :%s/\s\+$//g
+    endif
+    call setpos(".", l:save_cursor)
+endfunction
+
+" Change the number of spaces.
+function! ChangeSpaceNum(m, n)
+    let l:save_cursor = getpos(".")
+    let l:before = ""
+    let l:count = 0
+    while l:count < a:m
+        let l:before = l:before . " "
+        let l:count = l:count + 1
+    endwhile
+    if search(l:before)
+        let l:after = ""
+        let l:count = 0
+        while l:count < a:n
+            let l:after = l:after . " "
+            let l:count = l:count + 1
+        endwhile
+        exe "normal! :%s/" . l:before . "/" . l:after . "/g\<CR>"
+    endif
+    call setpos(".", l:save_cursor)
+endfunction
+
+"a function to convert java code into scala one
+function! ConvertJavaIntoScala()
+    let l:save_cursor = getpos(".")
+    if search(";\\n")
+        :%s/;\n/\r/g
+    endif
+    if search("()")
+        :%s/()//g
+    endif
+    if search("public ")
+        :%s/public //g
+    endif
+    call ChangeSpaceNum(4, 2)
+    call setpos(".", l:save_cursor)
+endfunction
+
 " func! DeleteTillSlash()
 "     let g:cmd = getcmdline()
 "     if has("win16") || has("win32")
