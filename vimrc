@@ -2,10 +2,18 @@
 " possible, as it has side effects.
 set nocompatible
 
+" Switch syntax highlighting on, when the terminal has colors.
+" Also switch on highlighting the last used search pattern.
+if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
+    syntax on
+endif
+
 "----------------------------------------------------------------
 " Language settings
 "----------------------------------------------------------------
+"when using Vim, english is better choice than japanese
 let $LANG='en'
+
 set encoding=utf-8
 set fileencodings=utf-8,sjis
 
@@ -36,9 +44,6 @@ set novisualbell
 " set default title
 set title
 set notitle
-
-" enable syntax highlight
-syntax on
 
 " use relative number for moving cursor.
 " set number is not necessary because of goto line function.
