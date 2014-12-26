@@ -358,6 +358,9 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
+" Ctrl-B has no function, so mapped to this.
+nnoremap <silent> <c-b> :redraw!<cr>:nohlsearch<cr>
+
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 " vnoremap <silent> * :call VisualSelection('f', '')<CR>
@@ -366,7 +369,7 @@ nnoremap <c-l> <c-w>l
 "double-delete to remove trailing whitespace
 nnoremap <silent> <BS><BS> :call TrimTrailingWS()<CR>
 
-======================deprecated because of the compatibility with Vi===========================
+" ======================deprecated because of the compatibility with Vi===========================
 " Fast saving
 " nnoremap <Leader>w :w!<CR>
 
