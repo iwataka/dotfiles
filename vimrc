@@ -9,6 +9,10 @@ if filereadable(expand('~/.vimrc.bundles'))
     source ~/.vimrc.bundles
 endif
 
+if filereadable(expand('~/.vimrc.bundles'))
+    source ~/.vimrc.bundles
+endif
+
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
