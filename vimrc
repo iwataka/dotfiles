@@ -145,10 +145,11 @@ nnoremap x "_x
 "     autocmd SwapExists * echohl None
 " augroup END
 
-augroup VimHelpKeybinds
-    autocmd!
-    autocmd FileType help nnoremap q :q<CR>
-augroup END
+" For the compatibility with Vi, it is deprecated.
+" augroup VimHelpKeybinds
+"     autocmd!
+"     autocmd FileType help nnoremap q :q<CR>
+" augroup END
 
 "Automatically save before commands like :next and :make
 set autowrite
