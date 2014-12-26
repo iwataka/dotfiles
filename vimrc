@@ -172,7 +172,7 @@ set wildignore+=*.exe,*.zip,*.swp,*.dll
 "----------------------------------------------------------------
 " Editting files
 "----------------------------------------------------------------
-" Enables to share clipboard.
+" Enable to share clipboard.
 set clipboard+=unnamed
 
 " Automatically save before commands like :next and :make
@@ -213,7 +213,7 @@ set smartcase
 " When preceded with a backslash, some characters get a special meanings in search mode.
 set magic
 
-" Enables incremental search
+" Enable incremental search
 set incsearch
 
 " highlight all matches
@@ -363,6 +363,10 @@ nnoremap <Leader>tp :tabprevious<CR>
 nnoremap <Leader>tc :tabclose<CR>
 nnoremap <Leader>tm :tabmove
 
+let g:lasttab = 1
+nnoremap <Leader>tl :exe "tabn " . g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
+
 " Fast scroll vertically
 nnoremap <c-y> 3<c-y>
 nnoremap <c-e> 3<c-e>
@@ -372,10 +376,6 @@ nnoremap zl zL
 nnoremap zh zH
 nnoremap zL zl
 nnoremap zH zh
-
-let g:lasttab = 1
-nnoremap <Leader>tl :exe "tabn " . g:lasttab<CR>
-au TabLeave * let g:lasttab = tabpagenr()
 
 " move between splitted panes more easier
 nnoremap <c-j> <c-w>j
@@ -396,19 +396,34 @@ nnoremap <c-l> <c-w>l
 " vnoremap <silent> # :call VisualSelection('b', '')<CR>
 
 "----------------------------------------------------------------
-" autocmd settings
+" Auto commands
 "----------------------------------------------------------------
-"treat gradle file as a groovy one
-autocmd BufRead,BufNewFile *.gradle set filetype=groovy
-"set sbt filetype
-autocmd BufRead,BufNewFile *.sbt set filetype=sbt
-
-"automatically align html files
-" autocmd BufWritePre,BufRead *.html :normal gg=G
-
-"emphasize comments
-augroup EmphasizedComments
+" This group includes non-named auto commands.
+augroup vimrcEx
     autocmd!
+
+    " Enable spellchecking for Markdown
+    autocmd FileType markdown setlocal spell
+
+    " Automatically wrap at 80 characters for Markdown
+    autocmd BufRead,BufNewFile *.md setlocal textwidth=80
+
+    " Automatically wrap at 72 characters and spell check git commit messages
+    autocmd FileType gitcommit setlocal textwidth=72
+    autocmd FileType gitcommit setlocal spell
+
+    " set groovy filetype to gradle file
+    autocmd BufRead,BufNewFile *.gradle set filetype=groovy
+    " set scala filetype to sbt file
+    autocmd BufRead,BufNewFile *.sbt set filetype=scala
+
+    " automatically align html files
+    " autocmd BufWritePre,BufRead *.html :normal gg=G
+
+    " write comments easily for any files
+    autocmd BufRead,BufNewFile * set formatoptions+=ro
+
+    " emphasize comments
     autocmd BufRead,BufNew * highlight Comment term=bold
 augroup END
 
@@ -426,17 +441,17 @@ augroup VisibleFullWidthSpaces
     autocmd BufRead,BufNew * match FullWidthSpace /　/
 augroup END
 
-"make naughty characters stand out
-exec "set lcs=tab:\uBB\uBB,trail:\uB7,nbsp:~"
-augroup VisibleNaughtiness
-    autocmd!
-    autocmd BufEnter * set list
-    autocmd BufEnter *.txt set nolist
-    autocmd BufEnter *.vp* set nolist
-    autocmd BufEnter * if !&modifiable
-    autocmd BufEnter * set nolist
-    autocmd BufEnter * endif
-augroup END
+" make naughty characters stand out
+" exec "set lcs=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+" augroup VisibleNaughtiness
+"     autocmd!
+"     autocmd BufEnter * set list
+"     autocmd BufEnter *.txt set nolist
+"     autocmd BufEnter *.vp* set nolist
+"     autocmd BufEnter * if !&modifiable
+"     autocmd BufEnter * set nolist
+"     autocmd BufEnter * endif
+" augroup END
 
 " make 'O' the default when trying to edit the file simultaneously
 " This paragraph is introduced by Demian Conway.
@@ -453,9 +468,6 @@ augroup END
 "     autocmd!
 "     autocmd FileType help nnoremap q :q<CR>
 " augroup END
-
-"writes comments easily
-autocmd BufRead,BufNewFile * set formatoptions+=ro
 
 "----------------------------------------------------------------
 " Helper function settings
