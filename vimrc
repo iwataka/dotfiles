@@ -70,6 +70,8 @@ endif
 " When a bracket is inserted, briefly jump to the matching one.
 set showmatch
 
+" set textwidth
+set textwidth=0
 "----------------------------------------------------------------
 " Indentation
 "----------------------------------------------------------------
@@ -178,6 +180,18 @@ set autowrite
 " Automatically read when a file is modified from outside
 set autoread
 
+" Make no backup before overwriting a file.
+set nobackup
+set nowritebackup
+" Make no swap file.
+set noswapfile
+
+" Enable backspace to delete indent, eol and start.
+set backspace=indent,eol,start
+
+" Enable to edit multiple files.
+set hidden
+
 "----------------------------------------------------------------
 " Search
 "----------------------------------------------------------------
@@ -219,16 +233,8 @@ set gdefault
 "endfunction
 
 "----------------------------------------------------------------
-" Other settings
+" Connection
 "----------------------------------------------------------------
-set textwidth=0
-" Disables beeping and flashing.
-set browsedir=buffer
-set hidden
-set nobackup
-set noswapfile
-set backspace=indent,eol,start
-
 " Optimize for fast terminal connections
 set ttyfast
 
