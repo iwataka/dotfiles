@@ -1,7 +1,7 @@
 "----------------------------------------------------------------
 " Loading plugins
 "----------------------------------------------------------------
-" If Windows Vim, you manually add .vim directory to runtime path.
+" If using Windows Vim, you manually add .vim directory to runtime path.
 if has("win32") || has("win64")
     set runtimepath+=~/.vim/
 endif
