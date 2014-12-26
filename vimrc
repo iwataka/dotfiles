@@ -122,6 +122,9 @@ if has('mouse')
     set mouse=a
 endif
 
+" set three lines
+set scrolloff=3
+
 "----------------------------------------------------------------
 " Command Line and something around it
 "----------------------------------------------------------------
@@ -144,40 +147,15 @@ if has("fugitive#statusline")
 endif
 
 "----------------------------------------------------------------
-" Edit settings
+" Editting files
 "----------------------------------------------------------------
 " Enables to share clipboard.
 set clipboard+=unnamed
-
-" delete a character without adding it to default register
-nnoremap x "_x
-
-"make 'O' the default when trying to edit the file simultaneously
-" augroup NoSimultaneousEdits
-"     autocmd!
-"     autocmd SwapExists * let v:swapchoice = 'o'
-"     autocmd SwapExists * echomsg ErrorMsg
-"     autocmd SwapExists * echo 'Duplicate edit session (readonly)'
-"     autocmd SwapExists * echohl None
-" augroup END
-
-" For the compatibility with Vi, it is deprecated.
-" augroup VimHelpKeybinds
-"     autocmd!
-"     autocmd FileType help nnoremap q :q<CR>
-" augroup END
 
 "Automatically save before commands like :next and :make
 set autowrite
 "Automatically read when a file is modified from outside
 set autoread
-
-"writes comments easily
-autocmd BufRead,BufNewFile * set formatoptions+=ro
-
-" Don't add empty newlines at the end of files
-" set binary
-" set noeol
 
 "----------------------------------------------------------------
 " Search settings
@@ -222,7 +200,6 @@ set gdefault
 set textwidth=0
 " Disables beeping and flashing.
 set browsedir=buffer
-set scrolloff=3
 set hidden
 set nobackup
 set noswapfile
@@ -246,6 +223,9 @@ let maplocalleader="\\"
 " define special leader
 nnoremap [Leader] <Nop>
 nmap <Space> [Leader]
+
+" delete a character without adding it to default register
+nnoremap x "_x
 
 " edit .vimrc file
 nnoremap <leader>ev :e $MYVIMRC<CR>
@@ -411,6 +391,25 @@ augroup VisibleNaughtiness
     autocmd BufEnter * set nolist
     autocmd BufEnter * endif
 augroup END
+
+" make 'O' the default when trying to edit the file simultaneously
+" This paragraph is introduced by Demian Conway.
+" augroup NoSimultaneousEdits
+"     autocmd!
+"     autocmd SwapExists * let v:swapchoice = 'o'
+"     autocmd SwapExists * echomsg ErrorMsg
+"     autocmd SwapExists * echo 'Duplicate edit session (readonly)'
+"     autocmd SwapExists * echohl None
+" augroup END
+
+" For the compatibility with Vi, it is deprecated.
+" augroup VimHelpKeybinds
+"     autocmd!
+"     autocmd FileType help nnoremap q :q<CR>
+" augroup END
+
+"writes comments easily
+autocmd BufRead,BufNewFile * set formatoptions+=ro
 
 "----------------------------------------------------------------
 " Helper function settings
