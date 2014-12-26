@@ -67,6 +67,9 @@ if has("gui_running")
     set guifont=Inconsolata\ Medium\ 12
 endif
 
+" When a bracket is inserted, briefly jump to the matching one.
+set showmatch
+
 "----------------------------------------------------------------
 " Indentation
 "----------------------------------------------------------------
@@ -150,31 +153,48 @@ if has("fugitive#statusline")
     set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 endif
 
+" set the amount of the command-line history
+set history=100
+
+" Command-line completion operates in an enhanced mode.
+set wildmenu
+
+" When more than one match, list all matches and complete first match.
+set wildmode+=list:full
+" When more than one match, list all matches and complete till longest common string.
+set wildmode+=list:longest
+
+" The patterns which is ignored when expanding wildcards.
+set wildignore+=*.exe,*.zip,*.swp,*.dll
+
 "----------------------------------------------------------------
 " Editting files
 "----------------------------------------------------------------
 " Enables to share clipboard.
 set clipboard+=unnamed
 
-"Automatically save before commands like :next and :make
+" Automatically save before commands like :next and :make
 set autowrite
-"Automatically read when a file is modified from outside
+" Automatically read when a file is modified from outside
 set autoread
 
 "----------------------------------------------------------------
-" Search settings
+" Search
 "----------------------------------------------------------------
-set smartcase
-set history=100
-set incsearch
-set hlsearch
+" The case of normal letters is ignored.
 set ignorecase
-set infercase
-set showmatch
-set wildmenu
-set wildmode=list:longest,list:full
-set wildignore+=*.exe,*.zip,*.swp,*.dll
+" Override the 'ignorecase' option if the search pattern contains upper case characters.
+set smartcase
+
+" When preceded with a backslash, some characters get a special meanings in search mode.
 set magic
+
+" Enables incremental search
+set incsearch
+
+" highlight all matches
+set hlsearch
+
 set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
 " use ag for grep
 if executable('ag')
