@@ -1,6 +1,11 @@
 "----------------------------------------------------------------
 " Loading plugins
 "----------------------------------------------------------------
+" If Windows Vim, you manually add .vim directory to runtime path.
+if has("win32") || has("win64")
+    set runtimepath+=~/.vim/
+endif
+
 call plug#begin('~/.vim/bundle')
 
 " auto completion (depending on OS type)
