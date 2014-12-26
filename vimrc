@@ -8,6 +8,10 @@ if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
     syntax on
 endif
 
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
 "----------------------------------------------------------------
 " Language settings
 "----------------------------------------------------------------
