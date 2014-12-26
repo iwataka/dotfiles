@@ -1,3 +1,6 @@
+"----------------------------------------------------------------
+" Preparations
+"----------------------------------------------------------------
 " Use Vim settings, rather than Vi settings. This setting must be as early as
 " possible, as it has side effects.
 set nocompatible
@@ -17,7 +20,7 @@ filetype plugin on
 filetype indent on
 
 "----------------------------------------------------------------
-" Language settings
+" Language
 "----------------------------------------------------------------
 "when using Vim, english is better choice than japanese
 let $LANG='en'
@@ -30,7 +33,7 @@ set fileencodings=utf-8,sjis
 set fileformats=unix,dos,mac
 
 "----------------------------------------------------------------
-" Indentation settings
+" Indentation
 "----------------------------------------------------------------
 " use tab as 4 spaces
 set expandtab
@@ -44,18 +47,22 @@ set autoindent
 set smartindent
 
 "----------------------------------------------------------------
-" Visual settings
+" Notification
 "----------------------------------------------------------------
 " no error notification
 set noerrorbells
-set novisualbell
+set vb t_vb=
 
-" set default title
-set title
-set notitle
+" set filename to title bar
+if has("title")
+    set title
+endif
 
+"----------------------------------------------------------------
+" Visual settings
+"----------------------------------------------------------------
 " use relative number for moving cursor.
-" set number is not necessary because of goto line function.
+" set number is not necessary because of Vim's goto line function.
 " set number
 if exists("&relativenumber")
     set relativenumber
@@ -216,7 +223,6 @@ set gdefault
 "----------------------------------------------------------------
 set textwidth=0
 " Disables beeping and flashing.
-set noeb vb t_vb=
 set browsedir=buffer
 set scrolloff=3
 set hidden
