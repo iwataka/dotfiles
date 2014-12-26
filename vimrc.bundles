@@ -9,16 +9,20 @@ endif
 call plug#begin('~/.vim/bundle')
 
 " auto completion (depending on OS type)
-if has('neovim')
-    Plug 'ervandew/supertab'
-elseif has("win32") || has("win64") || has("win32unix")
-    Plug 'Shougo/neocomplete.vim'
-    Plug 'Shougo/neosnippet.vim'
-    Plug 'Shougo/neosnippet-snippets'
-elseif has('unix')
+if (has("win32") || has("win64") || has("win32unix")) && has("lua")
+    if has("lua")
+        Plug 'Shougo/neocomplete.vim'
+        Plug 'Shougo/neosnippet.vim'
+        Plug 'Shougo/neosnippet-snippets'
+    else
+        Plug 'ervandew/supertab'
+    endif
+elseif has('unix') && has("python")
     Plug 'Valloric/YouCompleteMe', {'dir': '~/.vim.local/bundle/YouCompleteMe'}
     Plug 'SirVer/ultisnips'
     Plug 'honza/vim-snippets'
+else
+    Plug 'ervandew/supertab'
 endif
 
 " cooperation with vimux (in gui only)
