@@ -454,22 +454,22 @@ autocmd BufRead,BufNewFile * set formatoptions+=ro
 "----------------------------------------------------------------
 " Helper function settings
 "----------------------------------------------------------------
-func! DeleteTillSlash()
-    let g:cmd = getcmdline()
-    if has("win16") || has("win32")
-        let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
-    else
-        let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
-    endif
-    if g:cmd == g:cmd_edited
-        if has("win16") || has("win32")
-            let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
-        else
-            let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
-        endif
-    endif
-    return g:cmd_edited
-endfunc
+" func! DeleteTillSlash()
+"     let g:cmd = getcmdline()
+"     if has("win16") || has("win32")
+"         let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
+"     else
+"         let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
+"     endif
+"     if g:cmd == g:cmd_edited
+"         if has("win16") || has("win32")
+"             let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
+"         else
+"             let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
+"         endif
+"     endif
+"     return g:cmd_edited
+" endfunc
 
 " function! CmdLine(str)
 "     exe "menu Foo.Bar :" . a:str
