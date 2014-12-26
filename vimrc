@@ -195,9 +195,9 @@ set hidden
 " enable persistent undo
 if has('persistent_undo')
     " Save all undo files in a single location (less messy, more risky)...
-    set undodir=$HOME/tmp/.VIM_UNDO_FILES
+    set undodir=~/.vim/undo
     " Save a lot of back-history...
-    set undolevels=5000
+    set undolevels=100
     " Actually switch on persistent undo
     set undofile
 endif
