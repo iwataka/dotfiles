@@ -58,6 +58,13 @@ if has("title")
     set title
 endif
 
+" apply all of the abbreviations
+set shortmess+=a
+" truncate file message at the start
+set shortmess+=t
+" Don't show the intro message when starting vim
+set shortmess+=I
+
 "----------------------------------------------------------------
 " Cursor Moving
 "----------------------------------------------------------------
@@ -108,17 +115,6 @@ endif
 "----------------------------------------------------------------
 " Visual settings
 "----------------------------------------------------------------
-"highlight matches when jumping to next
-"nnoremap <silent>n n:call HLNext(0.4)<CR>
-"nnoremap <silent>N N:call HLNext(0.4)<CR>
-"function! HLNext(blinktime)
-    "set invcursorline
-    "redraw
-    "exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
-    "set invcursorline
-    "redraw
-"endfunction
-
 " if the filetype is diff, enables syntax highlight
 " it is useful when syntax highlight is off by default
 "augroup PatchDiffHighlight
@@ -132,10 +128,6 @@ set cursorline
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
 
-" linebreak on 500 characters
-set lbr
-set tw=500
-
 if has("gui_running")
     "hide menubar and toolbar when running gui
     set guioptions-=m
@@ -148,13 +140,6 @@ if has("gui_running")
     "default font for gui
     set guifont=Inconsolata\ Medium\ 12
 endif
-
-" apply all of the abbreviations
-set shortmess+=a
-" truncate file message at the start
-set shortmess+=t
-" Don't show the intro message when starting vim
-set shortmess+=I
 
 "----------------------------------------------------------------
 " Edit settings
@@ -217,6 +202,17 @@ endif
 
 " Add the g flag to search/replace by default
 set gdefault
+
+"highlight matches when jumping to next
+"nnoremap <silent>n n:call HLNext(0.4)<CR>
+"nnoremap <silent>N N:call HLNext(0.4)<CR>
+"function! HLNext(blinktime)
+    "set invcursorline
+    "redraw
+    "exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+    "set invcursorline
+    "redraw
+"endfunction
 
 "----------------------------------------------------------------
 " Other settings
@@ -461,7 +457,6 @@ endfunc
 "----------------------------------------------------------------
 " User defined
 "----------------------------------------------------------------
-
 "enable persistent undo
 if has('persistent_undo')
     " Save all undo files in a single location (less messy, more risky)...
@@ -502,7 +497,9 @@ abbrev jcon scala.collection.JavaConversions._
 abbrev factroy factory
 abbrev reutrn return
 
-" load local vimrc finally
+"----------------------------------------------------------------
+" Loading local configurations
+"----------------------------------------------------------------
 if filereadable(expand('~/.vimrc.local'))
     source ~/.vimrc.local
 endif
