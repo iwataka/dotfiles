@@ -59,17 +59,35 @@ if has("title")
 endif
 
 "----------------------------------------------------------------
-" Visual settings
+" Cursor Moving
 "----------------------------------------------------------------
-" use relative number for moving cursor.
-" set number is not necessary because of Vim's goto line function.
+"more intuitive movement
+nnoremap j gj
+nnoremap k gk
+nnoremap <Down> gj
+nnoremap <Up> gk
+
+" move to marks efficiently
+nnoremap ' `
+nnoremap ` '
+
+" use relative number for moving cursor
+" Set number is not necessary because of Vim's goto line function.
 " set number
 if exists("&relativenumber")
     set relativenumber
     au BufReadPost * set relativenumber
 endif
 
-" cmd settings
+" In many terminal emulators the mouse works just fine, thus enable it.
+if has('mouse')
+    set mouse=a
+endif
+
+"----------------------------------------------------------------
+" Command Line and something around it
+"----------------------------------------------------------------
+" command line itself
 set showcmd
 set cmdheight=2
 
@@ -87,6 +105,9 @@ if has("fugitive#statusline")
     set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 endif
 
+"----------------------------------------------------------------
+" Visual settings
+"----------------------------------------------------------------
 "highlight matches when jumping to next
 "nnoremap <silent>n n:call HLNext(0.4)<CR>
 "nnoremap <silent>N N:call HLNext(0.4)<CR>
@@ -97,9 +118,6 @@ endif
     "set invcursorline
     "redraw
 "endfunction
-
-" detects filetype
-filetype on
 
 " if the filetype is diff, enables syntax highlight
 " it is useful when syntax highlight is off by default
@@ -173,24 +191,6 @@ autocmd BufRead,BufNewFile * set formatoptions+=ro
 " Don't add empty newlines at the end of files
 " set binary
 " set noeol
-
-"----------------------------------------------------------------
-" Move settings
-"----------------------------------------------------------------
-"more intuitive movement
-nnoremap j gj
-nnoremap k gk
-nnoremap <Down> gj
-nnoremap <Up> gk
-
-" move to marks efficiently
-nnoremap ' `
-nnoremap ` '
-
-" In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-    set mouse=a
-endif
 
 "----------------------------------------------------------------
 " Search settings
