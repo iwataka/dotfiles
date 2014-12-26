@@ -8,6 +8,10 @@ if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
     syntax on
 endif
 
+if filereadable(expand('~/.vimrc.bundles'))
+    source ~/.vimrc.bundles
+endif
+
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
@@ -491,10 +495,6 @@ abbrev jvec javax.vecmath
 abbrev jcon scala.collection.JavaConversions._
 abbrev factroy factory
 abbrev reutrn return
-
-if filereadable(expand('~/.vimrc.bundles'))
-    source ~/.vimrc.bundles
-endif
 
 if filereadable(expand('~/.vimrc.local'))
     source ~/.vimrc.local
