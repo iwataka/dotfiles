@@ -192,6 +192,16 @@ set backspace=indent,eol,start
 " Enable to edit multiple files.
 set hidden
 
+" enable persistent undo
+if has('persistent_undo')
+    " Save all undo files in a single location (less messy, more risky)...
+    set undodir=$HOME/tmp/.VIM_UNDO_FILES
+    " Save a lot of back-history...
+    set undolevels=5000
+    " Actually switch on persistent undo
+    set undofile
+endif
+
 "----------------------------------------------------------------
 " Search
 "----------------------------------------------------------------
@@ -484,19 +494,6 @@ endfunc
 "     let @/ = l:pattern
 "     let @" = l:saved_reg
 " endfunction
-
-"----------------------------------------------------------------
-" User defined
-"----------------------------------------------------------------
-"enable persistent undo
-if has('persistent_undo')
-    " Save all undo files in a single location (less messy, more risky)...
-    set undodir=$HOME/tmp/.VIM_UNDO_FILES
-    " Save a lot of back-history...
-    set undolevels=5000
-    " Actually switch on persistent undo
-    set undofile
-endif
 
 "----------------------------------------------------------------
 " Abbreviations
