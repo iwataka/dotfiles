@@ -1,7 +1,7 @@
 "----------------------------------------------------------------
 " Language settings
 "----------------------------------------------------------------
-let $LANG='ja'
+let $LANG='en'
 set encoding=utf-8
 set fileencodings=utf-8,sjis
 
