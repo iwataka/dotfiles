@@ -5,9 +5,14 @@
 " possible, as it has side effects.
 set nocompatible
 
-if filereadable(expand('~/.vimrc.bundles'))
-    source ~/.vimrc.bundles
-endif
+"define leader key
+let mapleader=","
+
+"alternative key-bind of ,
+nnoremap <Leader>, ,
+
+"define local leader key
+let maplocalleader="\\"
 
 if filereadable(expand('~/.vimrc.bundles'))
     source ~/.vimrc.bundles
@@ -123,7 +128,7 @@ nnoremap ` '
 " set number
 if exists("&relativenumber")
     set relativenumber
-    au BufReadPost * set relativenumber
+    autocmd BufReadPost * set relativenumber
 endif
 
 " In many terminal emulators the mouse works just fine, thus enable it.
@@ -252,15 +257,6 @@ set ttyfast
 "----------------------------------------------------------------
 " Key mappings
 "----------------------------------------------------------------
-"define leader key
-let mapleader=","
-
-"alternative key-bind of ,
-nnoremap <Leader>, ,
-
-"define local leader key
-let maplocalleader="\\"
-
 " delete a character without adding it to default register
 nnoremap x "_x
 
