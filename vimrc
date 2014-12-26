@@ -5,12 +5,6 @@
 " possible, as it has side effects.
 set nocompatible
 
-" Switch syntax highlighting on, when the terminal has colors.
-" Also switch on highlighting the last used search pattern.
-if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
-    syntax on
-endif
-
 if filereadable(expand('~/.vimrc.bundles'))
     source ~/.vimrc.bundles
 endif
@@ -31,6 +25,43 @@ set fileencodings=utf-8,sjis
 
 " use unix as the standard file type
 set fileformats=unix,dos,mac
+
+"----------------------------------------------------------------
+" Display
+"----------------------------------------------------------------
+" Switch syntax highlighting on, when the terminal has colors.
+" Also switch on highlighting the last used search pattern.
+if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
+    syntax on
+endif
+
+" If the filetype is diff, enables syntax highlight
+" It is useful when syntax highlight is off by default.
+" But I always enables syntax highlight, comment out this.
+"augroup PatchDiffHighlight
+    "autocmd!
+    "autocmd FileType diff syntax enable
+"augroup END
+
+" highlight cursor line position
+set cursorline
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+
+" Set below options if gui_running.
+if has("gui_running")
+    "hide menubar and toolbar when running gui
+    set guioptions-=m
+    set guioptions-=T
+
+    "hide scrollbars
+    set guioptions-=L
+    set guioptions-=r
+
+    "default font for gui
+    set guifont=Inconsolata\ Medium\ 12
+endif
 
 "----------------------------------------------------------------
 " Indentation
@@ -110,35 +141,6 @@ set laststatus=2
 " default status line
 if has("fugitive#statusline")
     set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-endif
-
-"----------------------------------------------------------------
-" Visual settings
-"----------------------------------------------------------------
-" if the filetype is diff, enables syntax highlight
-" it is useful when syntax highlight is off by default
-"augroup PatchDiffHighlight
-    "autocmd!
-    "autocmd FileType diff syntax enable
-"augroup END
-
-" highlight cursor line position
-set cursorline
-
-" Don't redraw while executing macros (good performance config)
-set lazyredraw
-
-if has("gui_running")
-    "hide menubar and toolbar when running gui
-    set guioptions-=m
-    set guioptions-=T
-
-    "hide scrollbars
-    set guioptions-=L
-    set guioptions-=r
-
-    "default font for gui
-    set guifont=Inconsolata\ Medium\ 12
 endif
 
 "----------------------------------------------------------------
