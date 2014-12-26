@@ -219,13 +219,14 @@ set incsearch
 " highlight all matches
 set hlsearch
 
-set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
 " use ag for grep
 if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor\ --column
     if &grepformat !~# '%c'
         set grepformat^=%f:%l:%c:%m
     endif
+else
+    set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
 endif
 
 " Add the g flag to search/replace by default
@@ -249,7 +250,7 @@ set gdefault
 set ttyfast
 
 "----------------------------------------------------------------
-" key mappings
+" Key mappings
 "----------------------------------------------------------------
 "define leader key
 let mapleader=","
