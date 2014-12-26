@@ -84,7 +84,7 @@ Plug 'altercation/vim-colors-solarized'
 call plug#end()
 
 "----------------------------------------------------------------
-" fugitive settings
+" fugitive
 "----------------------------------------------------------------
 autocmd QuickFixCmdPost *grep* cwindow
 nnoremap <Leader>gs :Gstatus<CR>
@@ -96,7 +96,7 @@ nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gl :Glog<CR>
 
 "----------------------------------------------------------------
-" ctrlp settings
+" ctrlp
 "----------------------------------------------------------------
 if has('python')
     let g:ctrlp_match_func = {'match': 'pymatcher#PyMatch'}
@@ -124,7 +124,7 @@ nnoremap <silent> <Space>u :CtrlPUndo<CR>
 " nnoremap <silent> <Space>r :CtrlPFunky<CR>
 
 "----------------------------------------------------------------
-" unite settings
+" unite
 "----------------------------------------------------------------
 "let g:unite_enable_start_insert = 1
 "let g:unite_source_history_yank_enable = 1
@@ -152,7 +152,7 @@ nnoremap <silent> <Space>u :CtrlPUndo<CR>
 "nnoremap <Space>k :Unite mapping<CR>
 
 "----------------------------------------------------------------
-" syntastic settings
+" syntastic
 "----------------------------------------------------------------
 let g:syntastic_mode_map = { "mode": "passive",
                         \ "active_filetypes": [],
@@ -163,7 +163,7 @@ nnoremap <silent> <Leader>si :SyntasticInfo<CR>
 nnoremap <silent> <Leader>sc :SyntasticCheck<CR>
 
 "----------------------------------------------------------------
-" nerdtree settings
+" nerdtree
 "----------------------------------------------------------------
 nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>nf :NERDTreeFind<CR>
@@ -172,7 +172,7 @@ nnoremap <silent> <Leader>nb :NERDTreeFromBookmark<CR>
 nnoremap <silent> <Leader>nc :NERDTreeCWD<CR>
 
 "----------------------------------------------------------------
-" vimux settings
+" vimux
 "----------------------------------------------------------------
 nnoremap <silent> <Leader>vp :wa<CR>:VimuxPromptCommand<CR>
 nnoremap <silent> <Leader>vl :wa<CR>:VimuxRunLastCommand<CR>
@@ -208,20 +208,20 @@ function! VimuxRunTest()
 endfunction
 
 "----------------------------------------------------------------
-" easymotion settings
+" easymotion
 "----------------------------------------------------------------
 " map s <Plug>(easymotion-prefix)
 " let g:EasyMotion_smartcase = 1
 
 "----------------------------------------------------------------
-" indent-guides settings
+" indent-guides
 "----------------------------------------------------------------
 " let g:indent_guides_enable_on_vim_startup = 1
 " let g:indent_guides_start_level = 2
 " let g:indent_guides_guide_size = 1
 
 "----------------------------------------------------------------
-" tagbar settings
+" tagbar
 "----------------------------------------------------------------
 let g:tagbar_type_scala = {
     \ 'ctagstype' : 'Scala',
@@ -241,7 +241,7 @@ let g:tagbar_type_scala = {
 nnoremap <F9> :TagbarToggle<CR>
 
 "----------------------------------------------------------------
-" lightline settings
+" lightline
 "----------------------------------------------------------------
 "let g:lightline = {
       "\ 'colorscheme': 'solarized',
@@ -373,7 +373,7 @@ nnoremap <F9> :TagbarToggle<CR>
 "let g:vimshell_force_overwrite_statusline = 0
 
 "----------------------------------------------------------------
-" airline settings
+" airline
 "----------------------------------------------------------------
 let g:airline_theme = "solarized"
 let g:airline#extensions#tabline#enabled = 1
@@ -393,7 +393,7 @@ nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 
 "----------------------------------------------------------------
-" multiple-cursors settings
+" multiple-cursors
 "----------------------------------------------------------------
 " function! Multiple_cursors_before()
 "     if exists(':NeoCompleteLock')==2
@@ -407,7 +407,7 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 " endfunction
 
 "----------------------------------------------------------------
-" solarized settings
+" solarized
 "----------------------------------------------------------------
 let g:solarized_termcolors=256
 let g:solarized_visibility='high'
@@ -415,13 +415,13 @@ let g:solarized_hitrail=1
 let g:solarized_termtrans=1
 
 "----------------------------------------------------------------
-" scala settings
+" vim-scala
 "----------------------------------------------------------------
 nnoremap <silent> <Leader>ss :SortScalaImports<CR>
 let g:scala_sort_across_groups=0
 
 "----------------------------------------------------------------
-" neocomplete settings
+" neocomplete
 "----------------------------------------------------------------
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_auto_delimiter = 0
@@ -434,7 +434,7 @@ let g:neocomplete#sources._ = ['buffer', 'neosnippet']
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 "----------------------------------------------------------------
-" neosnippet settings
+" neosnippet
 "----------------------------------------------------------------
 imap <c-k> <Plug>(neosnippet_expand_or_jump)
 smap <c-k> <Plug>(neosnippet_expand_or_jump)
@@ -448,7 +448,7 @@ let g:neosnippet#snippets_directory = '~/.vim/bundle/neosnippet-snippets/neosnip
             "\: "\<tab>"
 
 "----------------------------------------------------------------
-" ultisnips settings
+" ultisnips
 "----------------------------------------------------------------
 let g:UltiSnipsExpandTrigger="<c-cr>"
 let g:UltiSnipsListSnippets="<c-tab>"
@@ -457,7 +457,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsSnippetsDir="~/.vim.local/bundle/vim-snippets/UltiSnips"
 
 "----------------------------------------------------------------
-" startify settings
+" startify
 "----------------------------------------------------------------
 " let g:startify_enable_special         = 0
 " let g:startify_files_number           = 8
@@ -507,7 +507,7 @@ let g:UltiSnipsSnippetsDir="~/.vim.local/bundle/vim-snippets/UltiSnips"
 " nnoremap [Leader]s :Startify<CR>
 
 "----------------------------------------------------------------
-" foldElse settings
+" foldElse (original plugin)
 "----------------------------------------------------------------
 " let s:pattern = ""
 " "useful unfolding mapping
@@ -564,7 +564,7 @@ let g:UltiSnipsSnippetsDir="~/.vim.local/bundle/vim-snippets/UltiSnips"
 " endfunction
 
 "----------------------------------------------------------------
-" colorscheme settings
+" colorscheme
 "----------------------------------------------------------------
 if $COLORTERM == 'gnome-terminal'
     set t_Co=256
