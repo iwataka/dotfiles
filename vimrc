@@ -290,12 +290,14 @@ nnoremap <Leader>eb :find build*<CR>
 " nnoremap <Leader>o :only<CR>
 
 " insert blank line more easily
-nnoremap ]<Space> o<Esc>k
-nnoremap [<Space> O<Esc>j
+" This mapping is the imitation of the plugin 'unimpaired'.
+" nnoremap ]<Space> o<Esc>k
+" nnoremap [<Space> O<Esc>j
 
 " exchange two lines more easily
-nnoremap ]e ddp
-nnoremap [e ddkP
+" This mapping is the imitation of the plugin 'unimpaired'.
+" nnoremap ]e ddp
+" nnoremap [e ddkP
 
 " Fast replace command
 nnoremap S :%s//g<Left><Left>
