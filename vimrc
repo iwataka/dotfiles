@@ -498,19 +498,6 @@ if has('persistent_undo')
     set undofile
 endif
 
-function! OpenURL(url)
-    if has("win32unix")
-        exe "normal! :!cygstart " . a:url . "\<CR>"
-    elseif has("win32")
-        exe "normal! :!start " . a:url . "\<CR>"
-    endif
-    redraw!
-endfunction
-command! -nargs=1 OpenURL :call OpenURL(<q-args>)
-"open URL under cursor in browser
-nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
-nnoremap gW :OpenURL http://en.wikipedia.org/wiki/Special:Search?search=<cword><CR>
-
 "----------------------------------------------------------------
 " Abbreviations
 "----------------------------------------------------------------
