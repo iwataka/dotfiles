@@ -1,3 +1,7 @@
+" Use Vim settings, rather than Vi settings. This setting must be as early as
+" possible, as it has side effects.
+set nocompatible
+
 "----------------------------------------------------------------
 " Language settings
 "----------------------------------------------------------------
