@@ -5,11 +5,12 @@
 " possible, as it has side effects.
 set nocompatible
 
-"define leader key
-let mapleader=","
+" define leader key
+let mapleader=" "
 
-"alternative key-bind of ,
-nnoremap <Leader>, ,
+" alternative key-bind of ,
+" This is used when mapleader is ','.
+" nnoremap <Leader>, ,
 
 "define local leader key
 let maplocalleader="\\"
@@ -292,6 +293,8 @@ cnoremap <expr> %% expand("%")
 " cnoremap $q <C-\>eDeleteTillSlash()<CR>
 
 " aliases for fold operations
+" If the space key is mapleader, this mapping is useful
+" to be alternative way to fold and unfold.
 nnoremap <Leader>fo :foldopen<CR>
 nnoremap <Leader>fO :%foldopen!<CR>
 nnoremap <Leader>fc :foldclose<CR>
