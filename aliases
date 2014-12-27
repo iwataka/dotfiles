@@ -28,6 +28,7 @@ alias gcm="git commit -m"
 alias gca="git commit --amend"
 alias gl="git log"
 alias gst="git status"
+alias gdf="git diff"
 
 # Enables to display result in human-readable format.
 alias df='df -h'
