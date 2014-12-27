@@ -2,8 +2,14 @@ vim/bundle
 vim/.netrwhist
 zsh.theme/
 
-#backup files
+# backup files
 *~
 
-#swap files
+# swap files
 *.swp
+
+# sbt
+sbt/0.13/staging
+sbt/0.13/plugins/project
+sbt/0.13/plugins/target
+sbt/boot/
