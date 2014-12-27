@@ -313,16 +313,16 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-" Ctrl-B has no function, so mapped to this.
-nnoremap <silent> <c-b> :redraw!<cr>:nohlsearch<cr>
+" Fast redrawing and switching off highlight search.
+nnoremap <silent> <c-h> :redraw!<cr>:nohlsearch<cr>
 
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 " vnoremap <silent> * :call VisualSelection('f', '')<CR>
 " vnoremap <silent> # :call VisualSelection('b', '')<CR>
 
-"double-delete to remove trailing whitespace
-nnoremap <silent> <BS><BS> :call TrimTrailingWS()<CR>
+" typing backspace once to normalize spaces
+nnoremap <silent> <BS> :call NormalizeSpaces()<CR>
 
 " ======================deprecated because they have same function as unimpaired===========================
 " insert blank line more easily
@@ -483,7 +483,7 @@ augroup END
 " Helper function settings
 "----------------------------------------------------------------
 " Trim trailing white spaces and expand tab to some spaces.
-function! TrimTrailingWS()
+function! NormalizeSpaces()
     let l:save_cursor = getpos(".")
     if search("\\t")
         let l:count = 0
