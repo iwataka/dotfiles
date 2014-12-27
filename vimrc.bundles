@@ -2,7 +2,8 @@
 " Loading plugins
 "----------------------------------------------------------------
 " If using Windows Vim, you should manually add .vim directory to runtime path.
-if has("win32") || has("win64")
+" Neovim also need to add it manually.
+if has("win32") || has("win64") || has('neovim')
     set runtimepath+=~/.vim/
 endif
 
