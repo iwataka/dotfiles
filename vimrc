@@ -269,16 +269,6 @@ nnoremap <leader>sv :wa<CR>:source $MYVIMRC<CR>
 " edit build file
 nnoremap <Leader>eb :find build*<CR>
 
-" insert blank line more easily
-" This mapping is the imitation of the plugin 'unimpaired'.
-" nnoremap ]<Space> o<Esc>k
-" nnoremap [<Space> O<Esc>j
-
-" exchange two lines more easily
-" This mapping is the imitation of the plugin 'unimpaired'.
-" nnoremap ]e ddp
-" nnoremap [e ddkP
-
 " Fast replace command
 nnoremap S :%s//g<Left><Left>
 
@@ -298,24 +288,8 @@ cnoremap <expr> %% expand("%")
 " it deletes everything until the last slash
 " cnoremap $q <C-\>eDeleteTillSlash()<CR>
 
-" aliases for buffeer operations
-nnoremap <Leader>bd :bdelete
-nnoremap <Leader>bn :bnext<CR>
-nnoremap <Leader>bp :bprevious<CR>
-
-" move last open buffer easily
-let g:lastbuffer = 1
-nnoremap <Leader>bl :exe "buffer " . lastbuffer<CR>
-" au BufLeave * if &ft != "help" let g:lastbuffer = bufnr('%') endif
-au BufLeave * let g:lastbuffer = bufnr('%')
-
 " Switch CWD to the directory of the open buffer
 noremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
-
-" aliases for quickfix operations
-nnoremap <Leader>cc :cclose<CR>
-nnoremap <Leader>cn :cnext<CR>
-nnoremap <Leader>cp :cprevious<CR>
 
 " alias for ctags operations
 nnoremap <Leader>ct :!ctags -R .<CR>
@@ -325,18 +299,6 @@ nnoremap <Leader>fo :foldopen<CR>
 nnoremap <Leader>fO :%foldopen!<CR>
 nnoremap <Leader>fc :foldclose<CR>
 nnoremap <Leader>fC :%foldclose!<CR>
-
-" aliases for tab operations
-nnoremap <Leader>to :tabonly<CR>
-nnoremap <Leader>tn :tabnext<CR>
-nnoremap <Leader>tp :tabprevious<CR>
-nnoremap <Leader>tc :tabclose<CR>
-nnoremap <Leader>tm :tabmove
-
-" move last open tab easily
-let g:lasttab = 1
-nnoremap <Leader>tl :exe "tabn " . g:lasttab<CR>
-au TabLeave * let g:lasttab = tabpagenr()
 
 " Fast scroll vertically
 nnoremap <c-y> 3<c-y>
@@ -364,6 +326,44 @@ nnoremap <silent> <c-b> :redraw!<cr>:nohlsearch<cr>
 
 "double-delete to remove trailing whitespace
 nnoremap <silent> <BS><BS> :call TrimTrailingWS()<CR>
+
+" ======================deprecated because they have same function as unimpaired===========================
+" insert blank line more easily
+" This mapping is the imitation of the plugin 'unimpaired'.
+" nnoremap ]<Space> o<Esc>k
+" nnoremap [<Space> O<Esc>j
+
+" exchange two lines more easily
+" This mapping is the imitation of the plugin 'unimpaired'.
+" nnoremap ]e ddp
+" nnoremap [e ddkP
+
+" aliases for quickfix operations
+" nnoremap <Leader>cc :cclose<CR>
+" nnoremap <Leader>cn :cnext<CR>
+" nnoremap <Leader>cp :cprevious<CR>
+
+" aliases for buffeer operations
+" nnoremap <Leader>bd :bdelete
+" nnoremap <Leader>bn :bnext<CR>
+" nnoremap <Leader>bp :bprevious<CR>
+
+" move last open buffer easily
+" let g:lastbuffer = 1
+" nnoremap <Leader>bl :exe "buffer " . lastbuffer<CR>
+" au BufLeave * let g:lastbuffer = bufnr('%')
+
+" aliases for tab operations
+" nnoremap <Leader>to :tabonly<CR>
+" nnoremap <Leader>tn :tabnext<CR>
+" nnoremap <Leader>tp :tabprevious<CR>
+" nnoremap <Leader>tc :tabclose<CR>
+" nnoremap <Leader>tm :tabmove
+
+" move last open tab easily
+" let g:lasttab = 1
+" nnoremap <Leader>tl :exe "tabn " . g:lasttab<CR>
+" au TabLeave * let g:lasttab = tabpagenr()
 
 " ======================deprecated because of the compatibility with Vi===========================
 " Fast saving
