@@ -291,12 +291,6 @@ cnoremap <expr> %% expand("%")
 " it deletes everything until the last slash
 " cnoremap $q <C-\>eDeleteTillSlash()<CR>
 
-" Switch CWD to the directory of the open buffer
-noremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
-
-" alias for ctags operations
-nnoremap <Leader>ct :!ctags -R .<CR>
-
 " aliases for fold operations
 nnoremap <Leader>fo :foldopen<CR>
 nnoremap <Leader>fO :%foldopen!<CR>
@@ -340,6 +334,14 @@ nnoremap <silent> <BS><BS> :call TrimTrailingWS()<CR>
 " This mapping is the imitation of the plugin 'unimpaired'.
 " nnoremap ]e ddp
 " nnoremap [e ddkP
+
+" Switch CWD to the directory of the open buffer
+" This mapping is same prefix as quickfix operation mappings.
+" noremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
+
+" alias for ctags operations
+" This mapping is same prefix as quickfix operation mappings.
+" nnoremap <Leader>ct :!ctags -R .<CR>
 
 " aliases for quickfix operations
 " nnoremap <Leader>cc :cclose<CR>
