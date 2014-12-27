@@ -27,19 +27,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 #---------------------------------------------------------------
 # Prompt
 #---------------------------------------------------------------
-export PS1="%K{blue} [%n] %k%K{cyan} %~ %k%% "
-#export PS1="%F{red}%n%f in %F{green}%~%f %% "
-# if [ -e $HOME/.zsh.theme/zsh-git-prompt ]; then
-#     source $HOME/.zsh.theme/zsh-git-prompt/zshrc.sh
-#     PROMPT='%B%m%~%b$(git_super_status) %# '
-# else
-#     autoload -U promptinit
-#     promptinit
-#     prompt fade
-# fi
-# autoload -U promptinit
-# promptinit
-# prompt fade
+[[ -f ~/.zsh_prompt ]] && source ~/.zsh_prompt
 
 #---------------------------------------------------------------
 # History

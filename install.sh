@@ -7,16 +7,6 @@ if [ -L ~/.aliases ]; then
 fi
 ln -s $PWD/aliases ~/.aliases
 
-if [ -L ~/.bash_profile ]; then
-    rm ~/.bash_profile
-fi
-ln -s $PWD/bash_profile ~/.bash_profile
-
-if [ -L ~/.bashrc ]; then
-    rm ~/.bashrc
-fi
-ln -s $PWD/bashrc ~/.bashrc
-
 if [ -L ~/.ctags ]; then
     rm ~/.ctags
 fi
@@ -62,7 +52,17 @@ if [ -L ~/.vimperatorrc ]; then
 fi
 ln -s $PWD/vimperatorrc ~/.vimperatorrc
 
+if [ -L ~/.zshenv ]; then
+    rm ~/.zshenv
+fi
+ln -s $PWD/zshenv ~/.zshenv
+
 if [ -L ~/.zshrc ]; then
     rm ~/.zshrc
 fi
 ln -s $PWD/zshrc ~/.zshrc
+
+if [ -L ~/.zsh_prompt ]; then
+    rm ~/.zsh_prompt
+fi
+ln -s $PWD/zsh_prompt ~/.zsh_prompt
