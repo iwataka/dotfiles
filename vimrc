@@ -273,9 +273,6 @@ nnoremap <Leader>eb :e ~/.vimrc.bundles<CR>
 " source .vimrc.bundles file
 nnoremap <Leader>sb :wa<CR>:source ~/.vimrc.bundles<CR>
 
-" Fast replace command
-nnoremap S :%s//g<Left><Left>
-
 " Bash like keys for the command line
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
@@ -404,6 +401,9 @@ nnoremap <silent> <BS><BS> :call TrimTrailingWS()<CR>
 
 " quickly executing macros
 " nnoremap Q @q
+
+" Fast replace command
+" nnoremap S :%s//g<Left><Left>
 
 "----------------------------------------------------------------
 " Auto commands
