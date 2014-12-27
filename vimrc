@@ -305,15 +305,6 @@ nnoremap zh zH
 nnoremap zL zl
 nnoremap zH zh
 
-" move between splitted panes more easier
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
-
-" Fast redrawing and switching off highlight search.
-nnoremap <silent> <c-h> :redraw!<cr>:nohlsearch<cr>
-
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 " vnoremap <silent> * :call VisualSelection('f', '')<CR>
@@ -402,6 +393,15 @@ nnoremap <silent> <BS> :call NormalizeSpaces()<CR>
 
 " Fast replace command
 " nnoremap S :%s//g<Left><Left>
+
+" move between splitted panes more easier
+" nnoremap <c-j> <c-w>j
+" nnoremap <c-k> <c-w>k
+" nnoremap <c-h> <c-w>h
+" nnoremap <c-l> <c-w>l
+
+" Fast redrawing and switching off highlight search.
+" nnoremap <silent> <c-h> :redraw!<cr>:nohlsearch<cr>
 
 "----------------------------------------------------------------
 " Auto commands
