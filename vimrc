@@ -266,8 +266,11 @@ nnoremap <leader>ev :e $MYVIMRC<CR>
 " source .vimrc file
 nnoremap <leader>sv :wa<CR>:source $MYVIMRC<CR>
 
-" edit build file
-nnoremap <Leader>eb :find build*<CR>
+" edit .vimrc.bundles file
+nnoremap <Leader>eb :e ~/.vimrc.bundles<CR>
+
+" source .vimrc.bundles file
+nnoremap <Leader>sb :wa<CR>:source ~/.vimrc.bundles<CR>
 
 " Fast replace command
 nnoremap S :%s//g<Left><Left>
