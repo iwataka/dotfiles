@@ -21,6 +21,14 @@ alias g="git"
 alias h="history"
 alias j="jobs"
 
+# Git
+alias gaa="git add --all"
+alias gc="git commit"
+alias gcm="git commit -m"
+alias gca="git commit --amend"
+alias gl="git log"
+alias gst="git status"
+
 # Enables to display result in human-readable format.
 alias df='df -h'
 alias du='du -h'

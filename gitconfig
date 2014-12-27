@@ -14,9 +14,9 @@
 [color]
     ui = auto
 [alias]
-  aa = add --all
-  ca = commit --amend
-  cm = commit -m
-  co = checkout
-  cp = cherry-pick
-  st = status
+    aa = add --all
+    ca = commit --amend
+    cm = commit -m
+    co = checkout
+    cp = cherry-pick
+    st = status
