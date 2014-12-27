@@ -5,11 +5,12 @@
 " possible, as it has side effects.
 set nocompatible
 
-"define leader key
-let mapleader=","
+" define leader key
+let mapleader=" "
 
-"alternative key-bind of ,
-nnoremap <Leader>, ,
+" alternative key-bind of ,
+" This is used when mapleader is ','.
+" nnoremap <Leader>, ,
 
 "define local leader key
 let maplocalleader="\\"
@@ -264,21 +265,11 @@ nnoremap <leader>ev :e $MYVIMRC<CR>
 " source .vimrc file
 nnoremap <leader>sv :wa<CR>:source $MYVIMRC<CR>
 
-" edit build file
-nnoremap <Leader>eb :find build*<CR>
+" edit .vimrc.bundles file
+nnoremap <Leader>eb :e ~/.vimrc.bundles<CR>
 
-" insert blank line more easily
-" This mapping is the imitation of the plugin 'unimpaired'.
-" nnoremap ]<Space> o<Esc>k
-" nnoremap [<Space> O<Esc>j
-
-" exchange two lines more easily
-" This mapping is the imitation of the plugin 'unimpaired'.
-" nnoremap ]e ddp
-" nnoremap [e ddkP
-
-" Fast replace command
-nnoremap S :%s//g<Left><Left>
+" source .vimrc.bundles file
+nnoremap <Leader>sb :wa<CR>:source ~/.vimrc.bundles<CR>
 
 " Bash like keys for the command line
 cnoremap <C-A> <Home>
@@ -296,45 +287,13 @@ cnoremap <expr> %% expand("%")
 " it deletes everything until the last slash
 " cnoremap $q <C-\>eDeleteTillSlash()<CR>
 
-" aliases for buffeer operations
-nnoremap <Leader>bd :bdelete
-nnoremap <Leader>bn :bnext<CR>
-nnoremap <Leader>bp :bprevious<CR>
-
-" move last open buffer easily
-let g:lastbuffer = 1
-nnoremap <Leader>bl :exe "buffer " . lastbuffer<CR>
-" au BufLeave * if &ft != "help" let g:lastbuffer = bufnr('%') endif
-au BufLeave * let g:lastbuffer = bufnr('%')
-
-" Switch CWD to the directory of the open buffer
-noremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
-
-" aliases for quickfix operations
-nnoremap <Leader>cc :cclose<CR>
-nnoremap <Leader>cn :cnext<CR>
-nnoremap <Leader>cp :cprevious<CR>
-
-" alias for ctags operations
-nnoremap <Leader>ct :!ctags -R .<CR>
-
 " aliases for fold operations
+" If the space key is mapleader, this mapping is useful
+" to be alternative way to fold and unfold.
 nnoremap <Leader>fo :foldopen<CR>
 nnoremap <Leader>fO :%foldopen!<CR>
 nnoremap <Leader>fc :foldclose<CR>
 nnoremap <Leader>fC :%foldclose!<CR>
-
-" aliases for tab operations
-nnoremap <Leader>to :tabonly<CR>
-nnoremap <Leader>tn :tabnext<CR>
-nnoremap <Leader>tp :tabprevious<CR>
-nnoremap <Leader>tc :tabclose<CR>
-nnoremap <Leader>tm :tabmove
-
-" move last open tab easily
-let g:lasttab = 1
-nnoremap <Leader>tl :exe "tabn " . g:lasttab<CR>
-au TabLeave * let g:lasttab = tabpagenr()
 
 " Fast scroll vertically
 nnoremap <c-y> 3<c-y>
@@ -352,16 +311,62 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-" Ctrl-B has no function, so mapped to this.
-nnoremap <silent> <c-b> :redraw!<cr>:nohlsearch<cr>
+" Fast redrawing and switching off highlight search.
+nnoremap <silent> <c-h> :redraw!<cr>:nohlsearch<cr>
 
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 " vnoremap <silent> * :call VisualSelection('f', '')<CR>
 " vnoremap <silent> # :call VisualSelection('b', '')<CR>
 
-"double-delete to remove trailing whitespace
-nnoremap <silent> <BS><BS> :call TrimTrailingWS()<CR>
+" typing backspace once to normalize spaces
+nnoremap <silent> <BS> :call NormalizeSpaces()<CR>
+
+" ======================deprecated because they have same function as unimpaired===========================
+" insert blank line more easily
+" This mapping is the imitation of the plugin 'unimpaired'.
+" nnoremap ]<Space> o<Esc>k
+" nnoremap [<Space> O<Esc>j
+
+" exchange two lines more easily
+" This mapping is the imitation of the plugin 'unimpaired'.
+" nnoremap ]e ddp
+" nnoremap [e ddkP
+
+" Switch CWD to the directory of the open buffer
+" This mapping is same prefix as quickfix operation mappings.
+" noremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
+
+" alias for ctags operations
+" This mapping is same prefix as quickfix operation mappings.
+" nnoremap <Leader>ct :!ctags -R .<CR>
+
+" aliases for quickfix operations
+" nnoremap <Leader>cc :cclose<CR>
+" nnoremap <Leader>cn :cnext<CR>
+" nnoremap <Leader>cp :cprevious<CR>
+
+" aliases for buffeer operations
+" nnoremap <Leader>bd :bdelete
+" nnoremap <Leader>bn :bnext<CR>
+" nnoremap <Leader>bp :bprevious<CR>
+
+" move last open buffer easily
+" let g:lastbuffer = 1
+" nnoremap <Leader>bl :exe "buffer " . lastbuffer<CR>
+" au BufLeave * let g:lastbuffer = bufnr('%')
+
+" aliases for tab operations
+" nnoremap <Leader>to :tabonly<CR>
+" nnoremap <Leader>tn :tabnext<CR>
+" nnoremap <Leader>tp :tabprevious<CR>
+" nnoremap <Leader>tc :tabclose<CR>
+" nnoremap <Leader>tm :tabmove
+
+" move last open tab easily
+" let g:lasttab = 1
+" nnoremap <Leader>tl :exe "tabn " . g:lasttab<CR>
+" au TabLeave * let g:lasttab = tabpagenr()
 
 " ======================deprecated because of the compatibility with Vi===========================
 " Fast saving
@@ -394,6 +399,9 @@ nnoremap <silent> <BS><BS> :call TrimTrailingWS()<CR>
 
 " quickly executing macros
 " nnoremap Q @q
+
+" Fast replace command
+" nnoremap S :%s//g<Left><Left>
 
 "----------------------------------------------------------------
 " Auto commands
@@ -473,7 +481,7 @@ augroup END
 " Helper function settings
 "----------------------------------------------------------------
 " Trim trailing white spaces and expand tab to some spaces.
-function! TrimTrailingWS()
+function! NormalizeSpaces()
     let l:save_cursor = getpos(".")
     if search("\\t")
         let l:count = 0
