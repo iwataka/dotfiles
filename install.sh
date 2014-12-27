@@ -42,6 +42,11 @@ if [ -L ~/.vimrc ]; then
 fi
 ln -s $PWD/vimrc ~/.vimrc
 
+if [ -L ~/.nvimrc ]; then
+    rm ~/.nvimrc
+fi
+ln -s $PWD/vimrc ~/.nvimrc
+
 if [ -L ~/.vimrc.bundles ]; then
     rm ~/.vimrc.bundles
 fi
