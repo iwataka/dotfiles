@@ -271,6 +271,9 @@ nnoremap <Leader>eb :e ~/.vimrc.bundles<CR>
 " source .vimrc.bundles file
 nnoremap <Leader>sb :wa<CR>:source ~/.vimrc.bundles<CR>
 
+" Fast redrawing and switching off highlight search.
+nnoremap <silent> <c-l> :redraw!<cr>:nohlsearch<cr>
+
 " Bash like keys for the command line
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
