@@ -13,14 +13,14 @@ alias .............='cd ../../../../../../../../../../..'
 alias ..............='cd ../../../../../../../../../../../..'
 alias ...............='cd ../../../../../../../../../../../../..'
 
-if [[ "$OSTYPE" == "cygwin" ]]; then
-    # Enables open command like Mac.
-    alias open=cygstart
-    alias sudo='cygstart --action=runas'
-    # For cygport
-    alias cpon='apt-cyg update -m ftp://ftp.cygwinports.org/pub/cygwinports'
-    alias cpoff='apt-cyg update -m http://ftp.yz.yamagata-u.ac.jp/pub/cygwin'
-fi
+# Shortcuts (introduces by mathiasbynens's dotfiles)
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias p="cd ~/projects"
+alias g="git"
+alias h="history"
+alias j="jobs"
+
 # Enables to display result in human-readable format.
 alias df='df -h'
 alias du='du -h'
@@ -49,5 +49,12 @@ alias mv='mv -i'
 # Reload the shell
 alias reload='exec "$SHELL" -l'
 
-alias j='jobs'
-alias g='git'
+# only for windows's cygwin
+if [[ "$OSTYPE" == "cygwin" ]]; then
+    # Enables open command like Mac.
+    alias open=cygstart
+    alias sudo='cygstart --action=runas'
+    # For cygport
+    alias cpon='apt-cyg update -m ftp://ftp.cygwinports.org/pub/cygwinports'
+    alias cpoff='apt-cyg update -m http://ftp.yz.yamagata-u.ac.jp/pub/cygwin'
+fi
