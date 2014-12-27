@@ -6,10 +6,12 @@ git_prompt_info() {
     fi
 }
 setopt promptsubst
+#user name
+PS1='%K{blue} [%n@%m] %k'
 #current directory
-PS1='%{$fg_bold[blue]%}%K{blue} %~ %k'
-#branch
-PS1+='%{$reset_color%}%K{cyan}$(git_prompt_info)%k %# '
+PS1+='%K{cyan} %~ %k'
+#branch name
+PS1+='%K{magenta}$(git_prompt_info)%k %# '
 export PS1
 
 #sample prompt of thoughtbot
