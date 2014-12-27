@@ -38,6 +38,7 @@ alias vdir='ls --color=auto --format=long'
 # Shows long list.
 alias ll='ls -l'
 alias la='ls -A'
+alias lla='ls -l -A'
 alias l='ls -CF'
 # raw control character
 alias less='less -r'
