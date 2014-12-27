@@ -166,10 +166,8 @@ set history=100
 " Command-line completion operates in an enhanced mode.
 set wildmenu
 
-" When more than one match, list all matches and complete first match.
-set wildmode+=list:full
-" When more than one match, list all matches and complete till longest common string.
-set wildmode+=list:longest
+" List all matches without completing, then each full match.
+set wildmode=list,full
 
 " The patterns which is ignored when expanding wildcards.
 set wildignore+=*.exe,*.zip,*.swp,*.dll
