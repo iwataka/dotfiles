@@ -1,0 +1,8 @@
+" prevent from deleting a tab accidentlly
+nnoremap d <Nop>
+" prevent from creating old tab accidentlly
+nnoremap u <Nop>
+
+" scroll up and down
+nnoremap j 3j
+nnoremap k 3k

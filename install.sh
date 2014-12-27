@@ -57,6 +57,11 @@ if [ -L ~/.vimrc.bundles ]; then
 fi
 ln -s $PWD/vimrc.bundles ~/.vimrc.bundles
 
+if [ -L ~/.vimperatorrc ]; then
+    rm ~/.vimperatorrc
+fi
+ln -s $PWD/vimperatorrc ~/.vimperatorrc
+
 if [ -L ~/.zshrc ]; then
     rm ~/.zshrc
 fi
