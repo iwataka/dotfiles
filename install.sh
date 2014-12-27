@@ -27,6 +27,11 @@ if [ -L ~/.gitconfig ]; then
 fi
 ln -s $PWD/gitconfig ~/.gitconfig
 
+if [ -L ~/.sbt ]; then
+    rm ~/.sbt
+fi
+ln -s $PWD/sbt ~/.sbt
+
 if [ -L ~/.tmux.conf ]; then
     rm ~/.tmux.conf
 fi
