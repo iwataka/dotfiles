@@ -2,6 +2,11 @@
 
 cd `dirname $0`
 
+if [ -L ~/.aliases ]; then
+    rm ~/.aliases
+fi
+ln -s $PWD/aliases ~/.aliases
+
 if [ -L ~/.bash_profile ]; then
     rm ~/.bash_profile
 fi

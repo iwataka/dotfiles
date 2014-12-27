@@ -1,17 +1,17 @@
 #---------------------------------------------------------------
-# Encoding settings
+# Encoding
 #---------------------------------------------------------------
 # Defines encodings
 export LANG=en_US.UTF-8
 
 #---------------------------------------------------------------
-# Key-binding settings
+# Key-binding
 #---------------------------------------------------------------
 # Enables Vi-like operation.
 bindkey -v
 
 #---------------------------------------------------------------
-# Completion settings
+# Completion
 #---------------------------------------------------------------
 # Enables autocompletion.
 autoload -U compinit && compinit
@@ -25,7 +25,7 @@ setopt auto_menu
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 #---------------------------------------------------------------
-# Prompt settings
+# Prompt
 #---------------------------------------------------------------
 export PS1="%K{blue} [%n] %k%K{cyan} %~ %k%% "
 #export PS1="%F{red}%n%f in %F{green}%~%f %% "
@@ -42,7 +42,7 @@ export PS1="%K{blue} [%n] %k%K{cyan} %~ %k%% "
 # prompt fade
 
 #---------------------------------------------------------------
-# History settings
+# History
 #---------------------------------------------------------------
 # History file settings.
 HISTFILE=$HOME/.zsh-history
@@ -65,7 +65,7 @@ setopt inc_append_history
 setopt share_history
 
 #---------------------------------------------------------------
-# Changing directory settings
+# Changing directory
 #---------------------------------------------------------------
 # Automatizes changing directory
 setopt auto_cd
@@ -73,20 +73,7 @@ setopt auto_cd
 setopt auto_pushd
 # Does not push an overlapped directory.
 setopt pushd_ignore_dups
-# To move to an upper directory.
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-alias ......='cd ../../../../..'
-alias .......='cd ../../../../../..'
-alias ........='cd ../../../../../..'
-alias .........='cd ../../../../../../..'
-alias ..........='cd ../../../../../../../..'
-alias ...........='cd ../../../../../../../../..'
-alias ............='cd ../../../../../../../../../..'
-alias .............='cd ../../../../../../../../../../..'
-alias ..............='cd ../../../../../../../../../../../..'
-alias ...............='cd ../../../../../../../../../../../../..'
+
 # Automatizes ls after cd.
 chpwd() {
     ls_abbrev
@@ -125,7 +112,7 @@ ls_abbrev() {
 }
 
 #---------------------------------------------------------------
-# cdr settings
+# cdr
 #---------------------------------------------------------------
 if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
     autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
@@ -138,14 +125,14 @@ if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]
 fi
 
 #---------------------------------------------------------------
-# Glob settings
+# Glob
 #---------------------------------------------------------------
 # Enables extended-glob.
 setopt extended_glob
 unsetopt case_glob
 
 #---------------------------------------------------------------
-# IO settings
+# IO
 #---------------------------------------------------------------
 # Enables spell check for all words.
 setopt correct_all
@@ -157,65 +144,31 @@ setopt interactive_comments
 setopt mark_dirs
 
 #---------------------------------------------------------------
-# Zed settings
+# Zed
 #---------------------------------------------------------------
 # Enables to use zed.
 autoload zed
 
 #---------------------------------------------------------------
-# Alias settings
+# Alias
 #---------------------------------------------------------------
-if [[ "$OSTYPE" == "cygwin" ]]; then
-    # Enables open command like Mac.
-    alias open=cygstart
-    alias sudo='cygstart --action=runas'
-    # For cygport
-    alias cpon='apt-cyg update -m ftp://ftp.cygwinports.org/pub/cygwinports'
-    alias cpoff='apt-cyg update -m http://ftp.yz.yamagata-u.ac.jp/pub/cygwin'
+if [ -f ~/.aliases ]; then
+    source ~/.aliases
 fi
-# Enables to display result in human-readable format.
-alias df='df -h'
-alias du='du -h'
-# Shows diferences in color at doing 'grep'.
-alias grep='grep --color'
-# Shows differences in color at doing 'egrep'.
-alias egrep='egrep --color=auto'
-# Shows differences in color at doing 'fgrep'.
-alias fgrep='fgrep --color=auto'
-# Some shortcuts for different directory listings
-# Clasifies files in color
-alias ls='ls -hF --color=tty'
-alias dir='ls --color=auto --format=vertical'
-alias vdir='ls --color=auto --format=long'
-# Shows long list.
-alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
-# raw control character
-alias less='less -r'
-# Interactive operation
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-# Reload the shell
-alias reload='exec "$SHELL" -l'
-
-alias j='jobs'
-alias g='git'
 
 #---------------------------------------------------------------
-# Environment variables settings
+# Environment variables
 #---------------------------------------------------------------
 SHELL=/bin/zsh
 EDITOR=vim
 
 #---------------------------------------------------------------
-# Initial working directory settings
+# Initial working directory
 #---------------------------------------------------------------
 cd ~
 
 #---------------------------------------------------------------
-# Windows command language settings
+# Windows command language
 #---------------------------------------------------------------
 # Changes code page to UTF-8.
 if [[ "$OSTYPE" == "cygwin" ]]; then

@@ -78,48 +78,7 @@
 # export PROMPT_COMMAND="history -a"
 
 # Aliases
-#
-# Some people use a different file for aliases
-# if [ -f "${HOME}/.bash_aliases" ]; then
-#   source "${HOME}/.bash_aliases"
-# fi
-#
-# Some example alias instructions
-# If these are enabled they will be used instead of any instructions
-# they may mask.  For example, alias rm='rm -i' will mask the rm
-# application.  To override the alias instruction use a \ before, ie
-# \rm will call the real rm not the alias.
-#
-# Interactive operation...
-# alias rm='rm -i'
-# alias cp='cp -i'
-# alias mv='mv -i'
-#
-# Default to human readable figures
-alias df='df -h'
-alias du='du -h'
-#
-# Misc :)
-# alias less='less -r'                          # raw control characters
-# alias whence='type -a'                        # where, of a sort
-alias grep='grep --color'                     # show differences in colour
-alias egrep='egrep --color=auto'              # show differences in colour
-alias fgrep='fgrep --color=auto'              # show differences in colour
-#
-# Some shortcuts for different directory listings
-alias ls='ls -hF --color=tty'                 # classify files in colour
-alias dir='ls --color=auto --format=vertical'
-alias vdir='ls --color=auto --format=long'
-alias ll='ls -l'                              # long list
-alias la='ls -A'                              # all but . and ..
-alias l='ls -CF'                              #
-
-#User-defined
-alias open=cygstart
-alias nkf='nkf -w'
-alias cygporton='apt-cyg update -m ftp://ftp.cygwinports.org/pub/cygwinports'
-alias cygportoff='apt-cyg update -m http://ftp.yz.yamagata-u.ac.jp/pub/cygwin'
-alias tasklist='tasklist | nkf'
+[[ -f ~/.aliases ]] && source ~/.aliases
 
 # Umask
 #
@@ -150,6 +109,7 @@ alias tasklist='tasklist | nkf'
 # To use it, uncomment it, source this file and try 'cd --'.
 # acd_func 1.0.5, 10-nov-2004
 # Petar Marinov, http:/geocities.com/h2428, this is public domain
+alias cd=cd_func
 cd_func ()
 {
   local x2 the_new_dir adir index
@@ -202,57 +162,5 @@ cd_func ()
   return 0
 }
 
-alias cd=cd_func 
-export MAKE_MODE=UNIX 
-export TMPDIR=/tmp 
-export tmpdir=/tmp 
-export MATLAB=/cygdrive/c/Matlab 
-export matlab=$MATLAB 
-export DEV=/cygdrive/c/Dev
-export dev=/cygdrive/c/Dev
-export NETBEANS=$DEV/NetBeans
-export netbeans=$DEV/NetBeans
-export MAVEN=$DEV/maven
-export maven=$DEV/maven
-export GRADLE=$DEV/gradle
-export gradle=$DEV/gradle
-export TAKATOSHI=/cygdrive/c/Users/Takatoshi
-export takatoshi=$TAKATOSHI
-export DOWNLOADS=$TAKATOSHI/Downloads
-export downloads=$DOWNLOADS
-export PICTURES=$TAKATOSHI/Pictures
-export pictures=$PICTURES
-export VIDEOS=$TAKATOSHI/Videos
-export videos=$VIDEOS
-export DOCUMENTS=$TAKATOSHI/Documents
-export documents=$DOCUMENTS
-export DESKTOP=$TAKATOSHI/Desktop
-export desktop=$DESKTOP
-export PROGRAMS=/cygdrive/c/Programs
-export programs=/cygdrive/c/Programs
-export CPROJECT=$PROGRAMS/nb/BES
-export cproject=$PROGRAMS/nb/BES
-export UNIV=/cygdrive/c/Univ
-export univ=/cygdrive/c/Univ
-export PSLIDE=$UNIV/post/slide
-export pslide=$UNIV/post/slide
-export USLIDE=$UNIV/under/slide
-export USLIDE=$UNIV/under/slide
-export JAVA=/cygdrive/c/Java
-export java=/cygdrive/c/Java
-export JDK=$JAVA/jdk
-export jdk=$JAVA/jdk
-export MASON=$JAVA/mason
-export mason=$JAVA/mason
-export JTS=$JAVA/jts
-export jts=$JAVA/jts
-export TRASH=C:\\\$Recycle.Bin\\S-1-5-21-2969178817-3502937549-3212350085-1001
-export trash=C:\\\$Recycle.Bin\\S-1-5-21-2969178817-3502937549-3212350085-1001
-export WINHOME=/cygdrive/c
-export winhome=$WINHOME
-export LANGS=/cygdrive/c/Langs
-export langs=$LANGS
-export SCALA=$LANGS/scala
-export scala=$LANGS/scala
-
-cd
+# Initial current directory
+cd ~
