@@ -1,5 +1,27 @@
-export PS1="%K{blue} [%n] %k%K{cyan} %~ %k%% "
+# modify the prompt to contain git branch name if applicable
+git_prompt_info() {
+    ref=$(git symbolic-ref HEAD 2> /dev/null)
+    if [[ -n $ref ]]; then
+        echo " %{$fg_bold[green]%}${ref#refs/heads/}%{$reset_color%} "
+    fi
+}
+setopt promptsubst
+#current directory
+PS1='%{$fg_bold[blue]%}%K{blue} %~ %k'
+#branch
+PS1+='%{$reset_color%}%K{cyan}$(git_prompt_info)%k %# '
+export PS1
+
+#sample prompt of thoughtbot
+#export PS1='${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%c%{$reset_color%}$(git_prompt_info) %# '
+
+#simple prompt
+#export PS1="%K{blue} [%n] %k%K{cyan} %~ %k%% "
+
+#simple prompt
 #export PS1="%F{red}%n%f in %F{green}%~%f %% "
+
+#for zsh-git-prompt
 # if [ -e $HOME/.zsh.theme/zsh-git-prompt ]; then
 #     source $HOME/.zsh.theme/zsh-git-prompt/zshrc.sh
 #     PROMPT='%B%m%~%b$(git_super_status) %# '
@@ -8,6 +30,8 @@ export PS1="%K{blue} [%n] %k%K{cyan} %~ %k%% "
 #     promptinit
 #     prompt fade
 # fi
+
+#built-in prompts
 # autoload -U promptinit
 # promptinit
 # prompt fade
