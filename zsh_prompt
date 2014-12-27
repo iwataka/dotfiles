@@ -47,7 +47,7 @@ prompt_git() {
 
 		echo -e "${1}${branchName}${blue}${s}";
 	else
-		return;
+		echo '[Outside-Git-Repo]';
 	fi;
 }
 
@@ -60,12 +60,18 @@ prompt_git() {
 # }
 
 setopt promptsubst
+#newline
+PS1=$'\n'
 #user name
-PS1='%K{blue} [%n@%m] %k'
+PS1+='%K{blue}%F{black} [%n@%m] %f%k'
 #current directory
-PS1+='%K{cyan} %~ %k'
+PS1+='%K{cyan}%F{black} %~ %f%k'
 #branch name
-PS1+='%K{magenta} $(prompt_git) %k %# '
+PS1+='%K{magenta}%F{black} $(prompt_git) %f%k '
+#newline again
+PS1+=$'\n'
+#start mark
+PS1+='%# '
 export PS1
 
 #sample prompt of thoughtbot
