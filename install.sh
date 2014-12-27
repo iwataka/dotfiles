@@ -1,49 +1,48 @@
 #! /bin/bash
 
-THIS_SCRIPT=`realpath $0`
-DOT_FILES=`dirname $THIS_SCRIPT`
+cd `dirname $0`
 
 if [ -L ~/.bash_profile ]; then
     rm ~/.bash_profile
 fi
-ln -s $DOT_FILES/bash_profile ~/.bash_profile
+ln -s $PWD/bash_profile ~/.bash_profile
 
 if [ -L ~/.bashrc ]; then
     rm ~/.bashrc
 fi
-ln -s $DOT_FILES/bashrc ~/.bashrc
+ln -s $PWD/bashrc ~/.bashrc
 
 if [ -L ~/.ctags ]; then
     rm ~/.ctags
 fi
-ln -s $DOT_FILES/ctags ~/.ctags
+ln -s $PWD/ctags ~/.ctags
 
 if [ -L ~/.gitconfig ]; then
     rm ~/.gitconfig
 fi
-ln -s $DOT_FILES/gitconfig ~/.gitconfig
+ln -s $PWD/gitconfig ~/.gitconfig
 
 if [ -L ~/.tmux.conf ]; then
     rm ~/.tmux.conf
 fi
-ln -s $DOT_FILES/tmux.conf ~/.tmux.conf
+ln -s $PWD/tmux.conf ~/.tmux.conf
 
 if [ -L ~/.vim ]; then
     rm ~/.vim
 fi
-ln -s $DOT_FILES/vim ~/.vim
+ln -s $PWD/vim ~/.vim
 
 if [ -L ~/.vimrc ]; then
     rm ~/.vimrc
 fi
-ln -s $DOT_FILES/vimrc ~/.vimrc
+ln -s $PWD/vimrc ~/.vimrc
 
 if [ -L ~/.vimrc.bundles ]; then
     rm ~/.vimrc.bundles
 fi
-ln -s $DOT_FILES/vimrc.bundles ~/.vimrc.bundles
+ln -s $PWD/vimrc.bundles ~/.vimrc.bundles
 
 if [ -L ~/.zshrc ]; then
     rm ~/.zshrc
 fi
-ln -s $DOT_FILES/zshrc ~/.zshrc
+ln -s $PWD/zshrc ~/.zshrc
