@@ -81,14 +81,14 @@ call plug#end()
 "----------------------------------------------------------------
 " fugitive
 "----------------------------------------------------------------
-autocmd QuickFixCmdPost *grep* cwindow
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <Leader>gg :Ggrep<Space>
-nnoremap <Leader>gc :Gcommit<CR>
-nnoremap <Leader>gr :Gread<CR>
-nnoremap <Leader>gw :Gwrite<CR>
-nnoremap <Leader>gl :Glog<CR>
+" autocmd QuickFixCmdPost *grep* cwindow
+" nnoremap <Leader>gs :Gstatus<CR>
+" nnoremap <Leader>gd :Gdiff<CR>
+" nnoremap <Leader>gg :Ggrep<Space>
+" nnoremap <Leader>gc :Gcommit<CR>
+" nnoremap <Leader>gr :Gread<CR>
+" nnoremap <Leader>gw :Gwrite<CR>
+" nnoremap <Leader>gl :Glog<CR>
 
 "----------------------------------------------------------------
 " ctrlp
@@ -161,11 +161,11 @@ nnoremap <silent> <Leader>sc :SyntasticCheck<CR>
 "----------------------------------------------------------------
 " nerdtree
 "----------------------------------------------------------------
-nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
-nnoremap <silent> <Leader>nf :NERDTreeFind<CR>
-nnoremap <silent> <Leader>nm :NERDTreeMirror<CR>
-nnoremap <silent> <Leader>nb :NERDTreeFromBookmark<CR>
-nnoremap <silent> <Leader>nc :NERDTreeCWD<CR>
+" nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
+" nnoremap <silent> <Leader>nf :NERDTreeFind<CR>
+" nnoremap <silent> <Leader>nm :NERDTreeMirror<CR>
+" nnoremap <silent> <Leader>nb :NERDTreeFromBookmark<CR>
+" nnoremap <silent> <Leader>nc :NERDTreeCWD<CR>
 
 "----------------------------------------------------------------
 " vimux
