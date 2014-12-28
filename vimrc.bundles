@@ -586,11 +586,12 @@ if $COLORTERM == 'gnome-terminal'
 endif
 if has("gui_running")
     set background=dark
+    try
+        colorscheme solarized
+    catch
+        colorscheme desert
+    endtry
 else
     set background=dark
+    colorscheme desert
 endif
-try
-    colorscheme solarized
-catch
-    colorscheme elflord
-endtry
