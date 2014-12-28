@@ -27,7 +27,6 @@ if !has('gui_running')
     Plug 'benmills/vimux'
 endif
 
-Plug 'tpope/vim-fugitive', {'branch/tag': 'master/v2.1'}
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -50,6 +49,9 @@ Plug 'dag/vim2hs', {'for': 'haskell'}
 
 " colorschemes
 Plug 'altercation/vim-colors-solarized'
+
+" deprecated because it is temporarily unstable.
+" Plug 'tpope/vim-fugitive', {'branch/tag': 'master/v2.1'}
 
 " Plug 'Shougo/unite.vim'
 " Plug 'Shougo/neomru.vim'
