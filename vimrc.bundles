@@ -11,13 +11,9 @@ call plug#begin('~/.vim/bundle')
 
 " auto completion (depending on OS type)
 if (has("win32") || has("win64") || has("win32unix")) && has("lua")
-    if has("lua")
-        Plug 'Shougo/neocomplete.vim'
-        Plug 'Shougo/neosnippet.vim'
-        Plug 'Shougo/neosnippet-snippets'
-    else
-        Plug 'ervandew/supertab'
-    endif
+    Plug 'Shougo/neocomplete.vim'
+    Plug 'Shougo/neosnippet.vim'
+    Plug 'Shougo/neosnippet-snippets'
 elseif has('unix') && has("python")
     Plug 'Valloric/YouCompleteMe', {'dir': '~/.vim.local/bundle/YouCompleteMe'}
     Plug 'SirVer/ultisnips'
@@ -31,7 +27,7 @@ if !has('gui_running')
     Plug 'benmills/vimux'
 endif
 
-Plug 'tpope/vim-fugitive', {'branch/tag': 'master/v2.0'}
+Plug 'tpope/vim-fugitive', {'branch/tag': 'master/v2.1'}
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -55,40 +51,22 @@ Plug 'dag/vim2hs', {'for': 'haskell'}
 " colorschemes
 Plug 'altercation/vim-colors-solarized'
 
-" Plug 'tacahiroy/ctrlp-funky', {
-"     \ 'depends' : ['ctrlpvim/ctrlp.vim'],
-"     \ 'autoload' : {
-"     \  'commands' : ['CtrlPFunky']
-"     \ }}
-
 " Plug 'Shougo/unite.vim'
 " Plug 'Shougo/neomru.vim'
 " Plug 'Shougo/unite-outline'
 " Plug 'Shougo/vimproc.vim', {'dir': '~/.vim.local/bundle/vimproc.vim'}
 
+" Plug 'tacahiroy/ctrlp-funky'
 " Plug 'vim-scripts/AutoComplPop'
-
 " Plug 'scrooloose/nerdcommenter'
-
 " Plug 'Raimondi/delimitMate'
-
 " Plug 'mikewest/vimroom'
-
 " Plug 'Lokaltog/vim-easymotion'
-
 " Plug 'nathanaelkane/vim-indent-guides'
-
-" Plug 'godlygeek/tabular', {
-"     \ 'autoload' : {
-"     \  'commands' : ['Tabularize']
-"     \ }}
-
+" Plug 'godlygeek/tabular'
 " Plug 'itchyny/lightline.vim'
-
 " Plug 'terryma/vim-multiple-cursors'
-
 " Plug 'mhinz/vim-startify'
-
 " Plug 'tomasr/molokai'
 
 call plug#end()
