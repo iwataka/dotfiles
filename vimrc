@@ -177,7 +177,10 @@ set wildignore+=*.exe,*.zip,*.swp,*.dll
 " Editting files
 "----------------------------------------------------------------
 " Enable to share clipboard.
-set clipboard+=unnamed
+set clipboard=unnamed
+if has('unnamedplus')
+    set clipboard+=unnamedplus
+endif
 
 " Automatically save before commands like :next and :make
 set autowrite
