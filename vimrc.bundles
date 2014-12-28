@@ -32,13 +32,17 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
-Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeFromBookmark', 'NERDTreeCWD']}
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'majutsushi/tagbar'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'scrooloose/syntastic'
+" Unix is faster than Windows, so these plugins are useful.
+if !has('win32') && !has('win64') && !has('win32unix')
+    Plug 'terryma/vim-multiple-cursors'
+    Plug 'Lokaltog/vim-easymotion'
+endif
 
 " depending on filetypes
 Plug 'tpope/vim-fireplace', {'for': 'clojure'}
@@ -50,8 +54,11 @@ Plug 'dag/vim2hs', {'for': 'haskell'}
 " colorschemes
 Plug 'altercation/vim-colors-solarized'
 
-" deprecated because it is temporarily unstable.
+" This is temporarily unstable.
 " Plug 'tpope/vim-fugitive', {'branch/tag': 'master/v2.1'}
+
+" This doesn't fit into the strategy of new editors.
+" Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeFromBookmark', 'NERDTreeCWD']}
 
 " Plug 'Shougo/unite.vim'
 " Plug 'Shougo/neomru.vim'
@@ -63,11 +70,9 @@ Plug 'altercation/vim-colors-solarized'
 " Plug 'scrooloose/nerdcommenter'
 " Plug 'Raimondi/delimitMate'
 " Plug 'mikewest/vimroom'
-" Plug 'Lokaltog/vim-easymotion'
 " Plug 'nathanaelkane/vim-indent-guides'
 " Plug 'godlygeek/tabular'
 " Plug 'itchyny/lightline.vim'
-" Plug 'terryma/vim-multiple-cursors'
 " Plug 'mhinz/vim-startify'
 " Plug 'tomasr/molokai'
 
@@ -201,8 +206,8 @@ endfunction
 "----------------------------------------------------------------
 " easymotion
 "----------------------------------------------------------------
-" map s <Plug>(easymotion-prefix)
-" let g:EasyMotion_smartcase = 1
+map s <Plug>(easymotion-prefix)
+let g:EasyMotion_smartcase = 1
 
 "----------------------------------------------------------------
 " indent-guides
@@ -386,16 +391,16 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 "----------------------------------------------------------------
 " multiple-cursors
 "----------------------------------------------------------------
-" function! Multiple_cursors_before()
-"     if exists(':NeoCompleteLock')==2
-"         exe 'NeoCompleteLock'
-"     endif
-" endfunction
-" function! Multiple_cursors_after()
-"     if exists(':NeoCompleteUnlock')==2
-"         exe 'NeoCompleteUnlock'
-"     endif
-" endfunction
+function! Multiple_cursors_before()
+    if exists(':NeoCompleteLock')==2
+        exe 'NeoCompleteLock'
+    endif
+endfunction
+function! Multiple_cursors_after()
+    if exists(':NeoCompleteUnlock')==2
+        exe 'NeoCompleteUnlock'
+    endif
+endfunction
 
 "----------------------------------------------------------------
 " solarized
