@@ -15,7 +15,7 @@ if (has("win32") || has("win64") || has("win32unix")) && has("lua")
     Plug 'Shougo/neosnippet.vim'
     Plug 'Shougo/neosnippet-snippets'
 elseif has('unix') && has("python")
-    Plug 'Valloric/YouCompleteMe', {'dir': '~/.vim.local/bundle/YouCompleteMe'}
+    Plug 'Valloric/YouCompleteMe'
     Plug 'SirVer/ultisnips'
     Plug 'honza/vim-snippets'
 else
@@ -65,7 +65,7 @@ Plug 'altercation/vim-colors-solarized'
 " Plug 'Shougo/unite.vim'
 " Plug 'Shougo/neomru.vim'
 " Plug 'Shougo/unite-outline'
-" Plug 'Shougo/vimproc.vim', {'dir': '~/.vim.local/bundle/vimproc.vim'}
+" Plug 'Shougo/vimproc.vim'
 
 " Plug 'tacahiroy/ctrlp-funky'
 " Plug 'vim-scripts/AutoComplPop'
