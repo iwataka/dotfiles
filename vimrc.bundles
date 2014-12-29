@@ -27,6 +27,9 @@ if !has('gui_running')
     Plug 'benmills/vimux'
 endif
 
+" This plugin is unstable with nerdtree.
+Plug 'tpope/vim-fugitive'
+
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -40,7 +43,6 @@ Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'scrooloose/syntastic'
 " Unix is faster than Windows, so these plugins are useful.
 if !has('win32') && !has('win64') && !has('win32unix')
-    Plug 'terryma/vim-multiple-cursors'
     Plug 'Lokaltog/vim-easymotion'
 endif
 
@@ -48,17 +50,17 @@ endif
 Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 Plug 'plasticboy/vim-markdown', {'for': 'mkd'}
 Plug 'derekwyatt/vim-scala', {'for': 'scala', 'on': 'SortScalaImports'}
-Plug 'derekwyatt/vim-sbt', {'for': 'sbt'}
 Plug 'dag/vim2hs', {'for': 'haskell'}
 
 " colorschemes
 Plug 'altercation/vim-colors-solarized'
 
-" This is temporarily unstable.
-" Plug 'tpope/vim-fugitive', {'branch/tag': 'master/v2.1'}
-
 " This doesn't fit into the strategy of new editors.
 " Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeFromBookmark', 'NERDTreeCWD']}
+" This provides slower way to refactor than vim's built-in functions.
+" Plug 'terryma/vim-multiple-cursors'
+" The files *.sbt should be dealed as the files *.scala.
+" Plug 'derekwyatt/vim-sbt', {'for': 'sbt'}
 
 " Plug 'Shougo/unite.vim'
 " Plug 'Shougo/neomru.vim'
@@ -81,14 +83,14 @@ call plug#end()
 "----------------------------------------------------------------
 " fugitive
 "----------------------------------------------------------------
-" autocmd QuickFixCmdPost *grep* cwindow
-" nnoremap <Leader>gs :Gstatus<CR>
-" nnoremap <Leader>gd :Gdiff<CR>
-" nnoremap <Leader>gg :Ggrep<Space>
-" nnoremap <Leader>gc :Gcommit<CR>
-" nnoremap <Leader>gr :Gread<CR>
-" nnoremap <Leader>gw :Gwrite<CR>
-" nnoremap <Leader>gl :Glog<CR>
+autocmd QuickFixCmdPost *grep* cwindow
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gg :Ggrep<Space>
+nnoremap <Leader>gc :Gcommit<CR>
+nnoremap <Leader>gr :Gread<CR>
+nnoremap <Leader>gw :Gwrite<CR>
+nnoremap <Leader>gl :Glog<CR>
 
 "----------------------------------------------------------------
 " ctrlp
@@ -391,16 +393,16 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 "----------------------------------------------------------------
 " multiple-cursors
 "----------------------------------------------------------------
-function! Multiple_cursors_before()
-    if exists(':NeoCompleteLock')==2
-        exe 'NeoCompleteLock'
-    endif
-endfunction
-function! Multiple_cursors_after()
-    if exists(':NeoCompleteUnlock')==2
-        exe 'NeoCompleteUnlock'
-    endif
-endfunction
+" function! Multiple_cursors_before()
+"     if exists(':NeoCompleteLock')==2
+"         exe 'NeoCompleteLock'
+"     endif
+" endfunction
+" function! Multiple_cursors_after()
+"     if exists(':NeoCompleteUnlock')==2
+"         exe 'NeoCompleteUnlock'
+"     endif
+" endfunction
 
 "----------------------------------------------------------------
 " solarized
