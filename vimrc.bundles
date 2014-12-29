@@ -29,6 +29,8 @@ endif
 
 " This plugin is unstable with nerdtree.
 Plug 'tpope/vim-fugitive'
+" Save the time to add close brackets.
+Plug 'Raimondi/delimitMate'
 
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -70,7 +72,6 @@ Plug 'altercation/vim-colors-solarized'
 " Plug 'tacahiroy/ctrlp-funky'
 " Plug 'vim-scripts/AutoComplPop'
 " Plug 'scrooloose/nerdcommenter'
-" Plug 'Raimondi/delimitMate'
 " Plug 'mikewest/vimroom'
 " Plug 'nathanaelkane/vim-indent-guides'
 " Plug 'godlygeek/tabular'
