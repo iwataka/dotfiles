@@ -454,18 +454,12 @@ augroup vimrcEx
 
     " prevent from conflicting multiple edit
     autocmd SwapExists * let v:swapchoice = 'o'
-augroup END
 
-"make the 81st column stand out
-augroup VisibleLongLines
-    autocmd!
+    "make the 81st column stand out
     autocmd BufRead,BufNew * highlight ColorColumn ctermbg=red guibg=#666666
     autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%101v')
-augroup END
 
-" Visualizes full-size space
-augroup VisibleFullWidthSpaces
-    autocmd!
+    " Visualizes full-size space
     autocmd BufRead,BufNew * highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
     autocmd BufRead,BufNew * match FullWidthSpace /　/
 augroup END
