@@ -125,8 +125,8 @@ nnoremap ' `
 nnoremap ` '
 
 " use relative number for moving cursor
-" Set number is not necessary because of Vim's goto line function.
-" set number
+" Absolute number is somtimes useful.
+set number
 if exists("&relativenumber")
     set relativenumber
     autocmd BufReadPost * set relativenumber
