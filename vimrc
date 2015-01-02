@@ -193,11 +193,14 @@ set autowrite
 " Automatically read when a file is modified from outside
 set autoread
 
-" Make no backup before overwriting a file.
-set nobackup
-set nowritebackup
-" Make no swap file.
-set noswapfile
+" Backup files don't annoy you if they are aggregated in certain single directory.
+" set nobackup
+" set nowritebackup
+set backupdir=~/.vim/backups
+
+" Swap files are useful to prevent from conflicting multiple edit.
+" set noswapfile
+set directory=~/.vim/swaps
 
 " Enable backspace to delete indent, eol and start.
 set backspace=indent,eol,start
