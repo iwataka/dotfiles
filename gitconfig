@@ -5,6 +5,7 @@
     autocrlf = false
     filemode = false
     bare = false
+    editor = vi
 [push]
     default = simple
 [paper]

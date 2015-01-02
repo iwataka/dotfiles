@@ -104,8 +104,8 @@ let g:ctrlp_working_path_mode='ra'
 let g:ctrlp_by_filename = 1
 if executable('ag')
     let g:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
-elseif executable('git')
-    let g:ctrlp_user_command = 'git ls-files . --cached --exclude-standard --others'
+" elseif executable('git')
+    " let g:ctrlp_user_command = 'git ls-files %s --cached --exclude-standard --others'
 else
     let g:ctrlp_custom_ignore = {
         \ 'dir': 'assets$\|action_log$\|\.gradle$\|build$\|project$\|target$\|out$\|libs$\|\.git$',
