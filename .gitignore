@@ -8,6 +8,11 @@ zsh.theme/
 # swap files
 *.swp
 
+# the directories vim needs
+vim/backups
+vim/swaps
+vim/undo
+
 # sbt
 sbt/0.13/staging
 sbt/0.13/plugins/project
