@@ -75,6 +75,8 @@ endif
 
 " When a bracket is inserted, briefly jump to the matching one.
 set showmatch
+" Set the time to show matches to 0.1s.
+set matchtime=1
 
 " set textwidth
 set textwidth=0
