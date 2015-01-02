@@ -2,6 +2,12 @@
 
 cd `dirname $0`
 
+# Make directories vim needs
+mkdir vim/backups
+mkdir vim/swaps
+mkdir vim/undo
+
+# Below sentences make symbolic links in home directory.
 if [ -L ~/.aliases ]; then
     rm ~/.aliases
 fi
