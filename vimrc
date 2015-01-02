@@ -451,6 +451,9 @@ augroup vimrcEx
 
     " emphasize comments
     autocmd BufRead,BufNew * highlight Comment term=bold
+
+    " prevent from conflicting multiple edit
+    autocmd SwapExists * let v:swapchoice = 'o'
 augroup END
 
 "make the 81st column stand out
