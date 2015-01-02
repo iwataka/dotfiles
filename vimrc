@@ -78,6 +78,10 @@ set showmatch
 
 " set textwidth
 set textwidth=0
+
+" limit the height of popup menu when completing
+set pumheight=10
+
 "----------------------------------------------------------------
 " Indentation
 "----------------------------------------------------------------
