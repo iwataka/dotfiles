@@ -1,7 +1,12 @@
-" prevent from deleting a tab accidentlly
-nnoremap d <Nop>
-" prevent from creating old tab accidentlly
-nnoremap u <Nop>
+" scroll down more efficiently
+nnoremap d <c-d>
+" scroll up more efficiently
+nnoremap u <c-u>
+
+" prevent from deleting a tab accidentally
+nnoremap <c-d> d
+" prevent from creating old tab accidentally
+nnoremap <c-u> u
 
 " scroll up and down
 nnoremap j 3j
