@@ -274,6 +274,9 @@ nnoremap <Leader>eb :e ~/.vimrc.bundles<CR>
 " source .vimrc.bundles file
 nnoremap <Leader>sb :wa<CR>:source ~/.vimrc.bundles<CR>
 
+" for consistency with operators 'c' and 'd'.
+nnoremap Y y$
+
 " Fast redrawing and switching off highlight search.
 nnoremap <silent> <c-l> :redraw!<cr>:nohlsearch<cr>
 
