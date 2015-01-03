@@ -248,6 +248,18 @@ endif
 " Add the g flag to search/replace by default
 set gdefault
 
+" ctrlp
+" default ignored directories
+let g:ctrlp_custom_ignore = {
+    \ 'dir': '\.gradle$\|build$\|project$\|target$\|out$\|libs$\|\.git$',
+    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
+\ }
+let g:ctrlp_cmd = 'CtrlP .'
+let g:ctrlp_working_path_mode='ra'
+let g:ctrlp_by_filename = 0
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+
 "highlight matches when jumping to next
 "nnoremap <silent>n n:call HLNext(0.4)<CR>
 "nnoremap <silent>N N:call HLNext(0.4)<CR>
@@ -325,6 +337,15 @@ nnoremap <Leader>gc :Gcommit<CR>
 nnoremap <Leader>gr :Gread<CR>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gl :Glog<CR>
+
+" fast aliases for ctrlp
+nnoremap <silent> <Leader>p :CtrlP .<CR>
+nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
+nnoremap <silent> <Leader>m :CtrlPMRU<CR>
+" below three mappings is less frequently used
+" nnoremap <silent> <Leader>l :CtrlPLine %<CR>
+" nnoremap <silent> <Leader>u :CtrlPUndo<CR>
+" nnoremap <silent> <Leader>r :CtrlPFunky<CR>
 
 " Fast scroll vertically
 nnoremap <c-y> 3<c-y>
