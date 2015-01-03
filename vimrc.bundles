@@ -42,8 +42,11 @@ Plug 'bling/vim-airline'
 Plug 'majutsushi/tagbar'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/syntastic'
-" Unix is faster than Windows, so these plugins are useful.
-if !has('win32') && !has('win64') && !has('win32unix')
+
+" Unix is faster than Windows.
+if has('win32') || has('win64') || has('win32unix')
+    " Plug 'FelikZ/ctrlp-py-matcher'
+else
     Plug 'Lokaltog/vim-easymotion'
 endif
 
@@ -67,9 +70,6 @@ Plug 'altercation/vim-colors-solarized'
 " Plug 'Shougo/neomru.vim'
 " Plug 'Shougo/unite-outline'
 " Plug 'Shougo/vimproc.vim'
-
-" not needed
-" Plug 'FelikZ/ctrlp-py-matcher'
 
 " Plug 'tacahiroy/ctrlp-funky'
 " Plug 'vim-scripts/AutoComplPop'
@@ -171,12 +171,6 @@ function! VimuxRunTest()
     endif
     exe "normal! :call VimuxRunCommand(\"" . l:command . "\")\<CR>"
 endfunction
-
-"----------------------------------------------------------------
-" easymotion
-"----------------------------------------------------------------
-map s <Plug>(easymotion-prefix)
-let g:EasyMotion_smartcase = 1
 
 "----------------------------------------------------------------
 " indent-guides
