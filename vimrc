@@ -271,6 +271,10 @@ set ttyfast
 " delete a character without adding it to default register
 nnoremap x "_x
 
+" Very tired to use the little finger frequently.
+" escape from insert mode more easier
+inoremap jk <Esc>
+
 " edit .vimrc file
 nnoremap <leader>ev :e $MYVIMRC<CR>
 
@@ -384,6 +388,9 @@ nnoremap <silent> <BS> :call NormalizeSpaces()<CR>
 " Fast quitting
 " nnoremap <Leader>q :q<CR>
 
+" escape from command line mode more easier
+" cnoremap jk <C-C>
+
 " Fast hide other windows
 " nnoremap <Leader>o :only<CR>
 
@@ -393,12 +400,6 @@ nnoremap <silent> <BS> :call NormalizeSpaces()<CR>
 
 " clears search highlight and redraw display
 " nnoremap <silent> <Esc> :nohlsearch<CR>:redraw!<CR>
-
-" escape from insert mode more easier
-" inoremap jk <Esc>
-
-" escape from command line mode more easier
-" cnoremap jk <C-C>
 
 " more useful command prefix
 " nnoremap ; :
