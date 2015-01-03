@@ -41,7 +41,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'majutsushi/tagbar'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'scrooloose/syntastic'
 " Unix is faster than Windows, so these plugins are useful.
 if !has('win32') && !has('win64') && !has('win32unix')
@@ -69,6 +68,9 @@ Plug 'altercation/vim-colors-solarized'
 " Plug 'Shougo/unite-outline'
 " Plug 'Shougo/vimproc.vim'
 
+" not needed
+" Plug 'FelikZ/ctrlp-py-matcher'
+
 " Plug 'tacahiroy/ctrlp-funky'
 " Plug 'vim-scripts/AutoComplPop'
 " Plug 'scrooloose/nerdcommenter'
@@ -80,35 +82,6 @@ Plug 'altercation/vim-colors-solarized'
 " Plug 'tomasr/molokai'
 
 call plug#end()
-
-"----------------------------------------------------------------
-" ctrlp
-"----------------------------------------------------------------
-if has('python')
-    let g:ctrlp_match_func = {'match': 'pymatcher#PyMatch'}
-endif
-let g:ctrlp_cmd = 'CtrlP .'
-let g:ctrlp_working_path_mode='ra'
-let g:ctrlp_by_filename = 1
-if executable('ag')
-    let g:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
-" elseif executable('git')
-    " let g:ctrlp_user_command = 'git ls-files %s --cached --exclude-standard --others'
-else
-    let g:ctrlp_custom_ignore = {
-        \ 'dir': 'assets$\|action_log$\|\.gradle$\|build$\|project$\|target$\|out$\|libs$\|\.git$',
-        \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
-    \ }
-endif
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
-nnoremap <silent> <Leader>p :CtrlP .<CR>
-nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
-nnoremap <silent> <Leader>m :CtrlPMRU<CR>
-" below three mappings is less frequently used
-" nnoremap <silent> <Leader>l :CtrlPLine %<CR>
-" nnoremap <silent> <Leader>u :CtrlPUndo<CR>
-" nnoremap <silent> <Leader>r :CtrlPFunky<CR>
 
 "----------------------------------------------------------------
 " unite
