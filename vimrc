@@ -310,6 +310,15 @@ nnoremap <Leader>fO :%foldopen!<CR>
 nnoremap <Leader>fc :foldclose<CR>
 nnoremap <Leader>fC :%foldclose!<CR>
 
+" aliases for git
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gg :Ggrep<Space>
+nnoremap <Leader>gc :Gcommit<CR>
+nnoremap <Leader>gr :Gread<CR>
+nnoremap <Leader>gw :Gwrite<CR>
+nnoremap <Leader>gl :Glog<CR>
+
 " Fast scroll vertically
 nnoremap <c-y> 3<c-y>
 nnoremap <c-e> 3<c-e>
@@ -456,6 +465,9 @@ augroup vimrcEx
     " Visualizes full-size space
     autocmd BufRead,BufNew * highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
     autocmd BufRead,BufNew * match FullWidthSpace /　/
+
+    " Automatically open the quickfix window after :Ggrep of fugitive.
+    autocmd QuickFixCmdPost *grep* cwindow
 augroup END
 
 " make naughty characters stand out

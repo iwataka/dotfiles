@@ -82,18 +82,6 @@ Plug 'altercation/vim-colors-solarized'
 call plug#end()
 
 "----------------------------------------------------------------
-" fugitive
-"----------------------------------------------------------------
-autocmd QuickFixCmdPost *grep* cwindow
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <Leader>gg :Ggrep<Space>
-nnoremap <Leader>gc :Gcommit<CR>
-nnoremap <Leader>gr :Gread<CR>
-nnoremap <Leader>gw :Gwrite<CR>
-nnoremap <Leader>gl :Glog<CR>
-
-"----------------------------------------------------------------
 " ctrlp
 "----------------------------------------------------------------
 if has('python')
