@@ -228,13 +228,20 @@ set incsearch
 " highlight all matches
 set hlsearch
 
-" use ag for grep
+" external commands for search
 if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor\ --column
-    if &grepformat !~# '%c'
-        set grepformat^=%f:%l:%c:%m
-    endif
+    let g:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
+    " if &grepformat !~# '%c'
+    "     set grepformat^=%f:%l:%c:%m
+    " endif
+elseif executable('ack')
+    set grepprg=ack\ -H\ --nocolor\ --nogroup
+    let g:ctrlp_user_command = 'ack --follow --nocolor -g "" %s'
 else
+    if executable('git') && !has('win32') && !has('win64')
+        let g:ctrlp_user_command = 'git ls-files %s --cached --exclude-standard --others'
+    endif
     set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
 endif
 
