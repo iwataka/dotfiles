@@ -651,6 +651,24 @@ abbrev factroy factory
 abbrev reutrn return
 
 "----------------------------------------------------------------
+" colorscheme
+"----------------------------------------------------------------
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
+if has("gui_running")
+    set background=dark
+    try
+        colorscheme solarized
+    catch
+        colorscheme desert
+    endtry
+else
+    set background=dark
+    colorscheme desert
+endif
+
+"----------------------------------------------------------------
 " Loading local configurations
 "----------------------------------------------------------------
 if filereadable(expand('~/.vimrc.local'))
