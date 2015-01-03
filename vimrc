@@ -45,14 +45,6 @@ if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
     syntax on
 endif
 
-" If the filetype is diff, enables syntax highlight
-" It is useful when syntax highlight is off by default.
-" But I always enables syntax highlight, comment out this.
-"augroup PatchDiffHighlight
-    "autocmd!
-    "autocmd FileType diff syntax enable
-"augroup END
-
 " highlight cursor line position
 set cursorline
 
@@ -487,6 +479,14 @@ augroup END
 "     autocmd SwapExists * echo 'Duplicate edit session (readonly)'
 "     autocmd SwapExists * echohl None
 " augroup END
+
+" If the filetype is diff, enables syntax highlight
+" It is useful when syntax highlight is off by default.
+" But I always enables syntax highlight, so this is meaningless.
+"augroup PatchDiffHighlight
+    "autocmd!
+    "autocmd FileType diff syntax enable
+"augroup END
 
 " For the compatibility with Vi, it is deprecated.
 " augroup VimHelpKeybinds
