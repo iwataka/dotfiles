@@ -42,11 +42,10 @@ Plug 'bling/vim-airline'
 Plug 'majutsushi/tagbar'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/syntastic'
+Plug 'FelikZ/ctrlp-py-matcher'
 
 " Unix is faster than Windows.
-if has('win32') || has('win64') || has('win32unix')
-    " Plug 'FelikZ/ctrlp-py-matcher'
-else
+if !has('win32') && !has('win64') && !has('win32unix')
     Plug 'Lokaltog/vim-easymotion'
 endif
 

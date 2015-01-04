@@ -300,6 +300,12 @@ let g:ctrlp_working_path_mode='ra'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+" use pymatcher
+if !has('python')
+    echo 'In order to use pymatcher plugin, you need +python compiled vim'
+else
+    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endif
 
 "highlight matches when jumping to next
 "nnoremap <silent>n n:call HLNext(0.4)<CR>
