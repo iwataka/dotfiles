@@ -76,6 +76,10 @@ set textwidth=0
 " limit the height of popup menu when completing
 set pumheight=10
 
+" more natural way to split
+set splitright
+set splitbelow
+
 " folding
 let g:vim_markdown_folding_disabled=1
 
