@@ -642,6 +642,18 @@ function! ConvertJavaIntoScala()
     call setpos(".", l:save_cursor)
 endfunction
 
+" display markdown preview fast
+if executable('pandoc') && executable('xdg-open')
+    command! MarkdownPreview :call MarkdownPreview()
+    function! MarkdownPreview()
+        let l:name = expand("%:p")
+        let l:name_without_extension = expand("%:p:r")
+        silent execute '!pandoc ' . l:name . ' -o ' . l:name_without_extension . '.html'
+        silent execute '!xdg-open ' . l:name_without_extension . '.html'
+        redraw!
+    endfunction
+endif
+
 " func! DeleteTillSlash()
 "     let g:cmd = getcmdline()
 "     if has("win16") || has("win32")
