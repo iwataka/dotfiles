@@ -76,6 +76,9 @@ set textwidth=0
 " limit the height of popup menu when completing
 set pumheight=10
 
+" folding
+let g:vim_markdown_folding_disabled=1
+
 "----------------------------------------------------------------
 " Indentation
 "----------------------------------------------------------------
