@@ -357,7 +357,8 @@ nnoremap <Leader>sb :wa<CR>:source ~/.vimrc.bundles<CR>
 nnoremap Y y$
 
 " Fast redrawing and switching off highlight search.
-nnoremap <silent> <c-l> :redraw!<cr>:nohlsearch<cr>
+" This mapping key is used to move between windows.
+" nnoremap <silent> <c-l> :redraw!<cr>:nohlsearch<cr>
 
 " Bash like keys for the command line
 cnoremap <C-A> <Home>
@@ -403,9 +404,18 @@ nnoremap <silent> <Leader>m :CtrlPMRU<CR>
 " nnoremap <silent> <Leader>u :CtrlPUndo<CR>
 " nnoremap <silent> <Leader>r :CtrlPFunky<CR>
 
+" Fast redrawing and erasing highlight
+nnoremap <silent> <leader>r :redraw!<cr>:nohlsearch<cr>
+
 " Fast scroll vertically
 nnoremap <c-y> 3<c-y>
 nnoremap <c-e> 3<c-e>
+
+" move between splitted panes more easier
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
 
 " Fast scroll horizontally
 nnoremap zl zL
@@ -498,12 +508,6 @@ nnoremap <silent> <BS> :call NormalizeSpaces()<CR>
 
 " Fast replace command
 " nnoremap S :%s//g<Left><Left>
-
-" move between splitted panes more easier
-" nnoremap <c-j> <c-w>j
-" nnoremap <c-k> <c-w>k
-" nnoremap <c-h> <c-w>h
-" nnoremap <c-l> <c-w>l
 
 " Fast redrawing and switching off highlight search.
 " nnoremap <silent> <c-h> :redraw!<cr>:nohlsearch<cr>
