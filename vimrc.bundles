@@ -29,20 +29,26 @@ endif
 
 " This plugin is unstable with nerdtree.
 Plug 'tpope/vim-fugitive'
+
 " Save the time to add close brackets.
 Plug 'Raimondi/delimitMate'
 
+" ctrlp and fast matcher
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'FelikZ/ctrlp-py-matcher'
+
+" useful key-mappings
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
+
+" display useful information
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'majutsushi/tagbar'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/syntastic'
-Plug 'FelikZ/ctrlp-py-matcher'
 
 " Unix is faster than Windows.
 if !has('win32') && !has('win64') && !has('win32unix')
