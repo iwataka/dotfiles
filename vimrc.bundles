@@ -10,14 +10,15 @@ endif
 call plug#begin('~/.vim/bundle')
 
 " auto completion (depending on OS type)
+" snippets are not useful because you need to remembar keywords
 if (has("win32") || has("win64") || has("win32unix")) && has("lua")
     Plug 'Shougo/neocomplete.vim'
-    Plug 'Shougo/neosnippet.vim'
-    Plug 'Shougo/neosnippet-snippets'
+    " Plug 'Shougo/neosnippet.vim'
+    " Plug 'Shougo/neosnippet-snippets'
 elseif has('unix') && has("python")
     Plug 'Valloric/YouCompleteMe'
-    Plug 'SirVer/ultisnips'
-    Plug 'honza/vim-snippets'
+    " Plug 'SirVer/ultisnips'
+    " Plug 'honza/vim-snippets'
 else
     Plug 'ervandew/supertab'
 endif
@@ -418,10 +419,10 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 "----------------------------------------------------------------
 " neosnippet
 "----------------------------------------------------------------
-imap <c-k> <Plug>(neosnippet_expand_or_jump)
-smap <c-k> <Plug>(neosnippet_expand_or_jump)
-xmap <c-k> <Plug>(neosnippet_expand_target)
-let g:neosnippet#snippets_directory = '~/.vim/bundle/neosnippet-snippets/neosnippets'
+" imap <c-k> <Plug>(neosnippet_expand_or_jump)
+" smap <c-k> <Plug>(neosnippet_expand_or_jump)
+" xmap <c-k> <Plug>(neosnippet_expand_target)
+" let g:neosnippet#snippets_directory = '~/.vim/bundle/neosnippet-snippets/neosnippets'
 "imap <expr><tab> neosnippet#expandable_or_jumpable() ?
             "\ "\<Plug>(neosnippet_expand_or_jump)"
             "\: pumvisible() ? "\<c-n>" : "\<tab>"
@@ -432,11 +433,11 @@ let g:neosnippet#snippets_directory = '~/.vim/bundle/neosnippet-snippets/neosnip
 "----------------------------------------------------------------
 " ultisnips
 "----------------------------------------------------------------
-let g:UltiSnipsExpandTrigger="<c-cr>"
-let g:UltiSnipsListSnippets="<c-tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/UltiSnips"
+" let g:UltiSnipsExpandTrigger="<c-cr>"
+" let g:UltiSnipsListSnippets="<c-tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/UltiSnips"
 
 "----------------------------------------------------------------
 " startify
