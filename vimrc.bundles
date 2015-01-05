@@ -45,6 +45,9 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 
+" motion helper
+Plug 'haya14busa/incsearch.vim'
+
 " display useful information
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
@@ -123,6 +126,17 @@ call plug#end()
 "nnoremap <Space>r :Unite outline<CR>
 "nnoremap <Space>j :Unite jump<CR>
 "nnoremap <Space>k :Unite mapping<CR>
+
+"----------------------------------------------------------------
+" incsearch
+"----------------------------------------------------------------
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
 
 "----------------------------------------------------------------
 " syntastic
