@@ -219,7 +219,7 @@ let g:tagbar_type_scala = {
         \ 'm:methods'
     \ ]
 \ }
-nnoremap <F9> :TagbarToggle<CR>
+nnoremap <leader>t :TagbarToggle<CR>
 
 "----------------------------------------------------------------
 " lightline
