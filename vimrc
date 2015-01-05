@@ -721,6 +721,18 @@ abbrev reutrn return
 "----------------------------------------------------------------
 " colorscheme
 "----------------------------------------------------------------
+" solarized configuration
+let g:solarized_termcolors=256
+let g:solarized_visibility='high'
+" highlight trailing spaces
+let g:solarized_hitrail=1
+let g:solarized_termtrans=1
+" if solarized is not loaded, the exception is thrown
+try
+    call togglebg#map("<F5>")
+catch
+endtry
+
 if has("gui_running")
     try
         set background=light
