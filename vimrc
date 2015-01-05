@@ -412,10 +412,13 @@ nnoremap <c-y> 3<c-y>
 nnoremap <c-e> 3<c-e>
 
 " move between splitted panes more easier
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
+" If in GVim, tmux navigator is not loaded.
+if has('gui_running')
+    nnoremap <c-j> <c-w>j
+    nnoremap <c-k> <c-w>k
+    nnoremap <c-h> <c-w>h
+    nnoremap <c-l> <c-w>l
+endif
 
 " Fast scroll horizontally
 nnoremap zl zL
