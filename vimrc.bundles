@@ -46,7 +46,8 @@ Plug 'FelikZ/ctrlp-py-matcher'
 
 " Unix is faster than Windows.
 if !has('win32') && !has('win64') && !has('win32unix')
-    Plug 'Lokaltog/vim-easymotion'
+    " easymotion use unpredictable keys
+    " Plug 'Lokaltog/vim-easymotion'
 endif
 
 " depending on filetypes
