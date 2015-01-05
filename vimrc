@@ -721,19 +721,25 @@ abbrev reutrn return
 "----------------------------------------------------------------
 " colorscheme
 "----------------------------------------------------------------
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
 if has("gui_running")
-    set background=dark
     try
+        set background=light
         colorscheme solarized
     catch
         colorscheme desert
     endtry
 else
-    set background=dark
-    colorscheme desert
+    " Select colorscheme and background color depending on terminal type.
+    if $COLORTERM == 'gnome-terminal'
+        set t_Co=256
+        let g:default_colorscheme = "solarized"
+        let g:default_background = "light"
+    else
+        let g:default_colorscheme = "desert"
+        let g:default_background = "dark"
+    endif
+    silent exe 'normal! :colorscheme ' . g:default_colorscheme . "\<cr>"
+    silent exe 'normal! :set background=' . g:default_background . "\<cr>"
 endif
 
 "----------------------------------------------------------------

@@ -56,6 +56,7 @@ Plug 'derekwyatt/vim-scala', {'for': 'scala', 'on': 'SortScalaImports'}
 Plug 'dag/vim2hs', {'for': 'haskell'}
 
 " colorschemes
+" Solarized colorscheme is the only one I choose.
 Plug 'altercation/vim-colors-solarized'
 
 " This doesn't fit into the strategy of new editors.
@@ -334,7 +335,7 @@ nnoremap <F9> :TagbarToggle<CR>
 " airline
 "----------------------------------------------------------------
 " theme
-let g:airline_theme = "simple"
+let g:airline_theme = "solarized"
 
 " customization
 " let g:airline_powerline_fonts=1
