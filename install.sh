@@ -28,6 +28,11 @@ if [ -L ~/.sbt ]; then
 fi
 ln -s $PWD/sbt ~/.sbt
 
+if [ -L ~/.spacemacs ]; then
+    rm ~/.spacemacs
+fi
+ln -s $PWD/spacemacs ~/.spacemacs
+
 if [ -L ~/.tmux.conf ]; then
     rm ~/.tmux.conf
 fi
