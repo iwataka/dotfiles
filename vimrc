@@ -742,7 +742,7 @@ endtry
 
 if has("gui_running")
     try
-        set background=light
+        set background=dark
         colorscheme solarized
     catch
         colorscheme desert
@@ -752,7 +752,7 @@ else
     if $COLORTERM == 'gnome-terminal'
         set t_Co=256
         let g:default_colorscheme = "solarized"
-        let g:default_background = "light"
+        let g:default_background = "dark"
     else
         let g:default_colorscheme = "desert"
         let g:default_background = "dark"
