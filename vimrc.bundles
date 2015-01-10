@@ -52,8 +52,8 @@ Plug 'haya14busa/incsearch.vim'
 
 " display useful information
 Plug 'airblade/vim-gitgutter'
+Plug 'gregsexton/gitv'
 Plug 'bling/vim-airline'
-Plug 'majutsushi/tagbar'
 Plug 'scrooloose/syntastic'
 
 " Unix is faster than Windows.
@@ -84,6 +84,7 @@ Plug 'altercation/vim-colors-solarized'
 " Plug 'Shougo/unite-outline'
 " Plug 'Shougo/vimproc.vim'
 
+" Plug 'majutsushi/tagbar'
 " Plug 'tacahiroy/ctrlp-funky'
 " Plug 'vim-scripts/AutoComplPop'
 " Plug 'scrooloose/nerdcommenter'
