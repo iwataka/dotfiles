@@ -28,6 +28,11 @@ if [ -L ~/.sbt ]; then
 fi
 ln -s $PWD/sbt ~/.sbt
 
+if [ -L ~/.sbtrc ]; then
+    rm ~/.sbtrc
+fi
+ln -s $PWD/sbtrc ~/.sbtrc
+
 if [ -L ~/.spacemacs ]; then
     rm ~/.spacemacs
 fi

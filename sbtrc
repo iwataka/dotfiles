@@ -1,0 +1,7 @@
+alias co=console
+alias cq=consoleQuick
+alias r=run
+alias c=compile
+alias ~c=~compile
+alias t=test
+alias ~t=~test
