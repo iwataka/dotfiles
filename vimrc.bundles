@@ -164,8 +164,8 @@ nnoremap <silent> <Leader>sc :SyntasticCheck<CR>
 " vimux
 "----------------------------------------------------------------
 " Some pane configuration
-let g:VimuxHeight = "45"
-let g:VimuxOrientation = "h"
+" let g:VimuxHeight = "45"
+" let g:VimuxOrientation = "h"
 
 nnoremap <silent> <Leader>vp :wa<CR>:VimuxPromptCommand<CR>
 nnoremap <silent> <Leader>vl :wa<CR>:VimuxRunLastCommand<CR>
