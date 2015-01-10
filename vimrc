@@ -434,8 +434,9 @@ nnoremap zH zh
 " vnoremap <silent> * :call VisualSelection('f', '')<CR>
 " vnoremap <silent> # :call VisualSelection('b', '')<CR>
 
-" typing backspace once to normalize spaces
-nnoremap <silent> <BS> :call NormalizeSpaces()<CR>
+" typing backspace twice to normalize spaces
+" Typing twice prevents from calling accidentally.
+nnoremap <silent> <BS><BS> :call NormalizeSpaces()<CR>
 
 " ======================deprecated because they have same function as unimpaired===========================
 " insert blank line more easily
