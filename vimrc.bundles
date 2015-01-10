@@ -13,12 +13,12 @@ call plug#begin('~/.vim/bundle')
 " snippets are not useful because you need to remembar keywords
 if (has("win32") || has("win64") || has("win32unix")) && has("lua")
     Plug 'Shougo/neocomplete.vim'
-    " Plug 'Shougo/neosnippet.vim'
-    " Plug 'Shougo/neosnippet-snippets'
+    Plug 'Shougo/neosnippet.vim'
+    Plug 'Shougo/neosnippet-snippets'
 elseif has('unix') && has("python")
     Plug 'Valloric/YouCompleteMe'
-    " Plug 'SirVer/ultisnips'
-    " Plug 'honza/vim-snippets'
+    Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
 else
     Plug 'ervandew/supertab'
 endif
@@ -457,11 +457,11 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 "----------------------------------------------------------------
 " ultisnips
 "----------------------------------------------------------------
-" let g:UltiSnipsExpandTrigger="<c-cr>"
-" let g:UltiSnipsListSnippets="<c-tab>"
-" let g:UltiSnipsJumpForwardTrigger="<c-j>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-" let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/UltiSnips"
+let g:UltiSnipsListSnippets="<c-tab>"
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/UltiSnips"
 
 "----------------------------------------------------------------
 " startify
