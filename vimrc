@@ -712,19 +712,8 @@ endif
 " endfunction
 
 "----------------------------------------------------------------
-" Abbreviations
+" Abbreviations for Type
 "----------------------------------------------------------------
-abbrev ijm jp.ac.keio.ae.iijima
-abbrev ijmb jp.ac.keio.ae.iijima.bes
-abbrev cvj com.vividsolutions.jts
-abbrev cvjg com.vividsolutions.jts.geom
-abbrev cvja com.vividsolutions.jts.algorithm
-abbrev cvjm com.vividsolutions.jts.math
-abbrev cvjgu com.vividsolutions.jts.geom.util
-abbrev sfn sim.field.network
-abbrev oij openifctools.com.openifcjavatoolbox
-abbrev jvec javax.vecmath
-abbrev jcon scala.collection.JavaConversions._
 abbrev factroy factory
 abbrev reutrn return
 
