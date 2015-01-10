@@ -353,6 +353,9 @@ nnoremap <Leader>eb :e ~/.vimrc.bundles<CR>
 " source .vimrc.bundles file
 nnoremap <Leader>sb :wa<CR>:source ~/.vimrc.bundles<CR>
 
+" edit snippets file
+nnoremap <leader>es :UltiSnipsEdit<cr>
+
 " for consistency with operators 'c' and 'd'.
 nnoremap Y y$
 
