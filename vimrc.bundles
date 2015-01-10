@@ -18,7 +18,8 @@ if (has("win32") || has("win64") || has("win32unix")) && has("lua")
 elseif has('unix') && has("python")
     Plug 'Valloric/YouCompleteMe'
     Plug 'SirVer/ultisnips'
-    Plug 'honza/vim-snippets'
+    " my fork repository to power scala support.
+    Plug 'iwataka/vim-snippets'
 else
     Plug 'ervandew/supertab'
 endif
