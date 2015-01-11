@@ -215,7 +215,7 @@ set history=100
 set wildmenu
 
 " List all matches without completing, then each full match.
-set wildmode=list,full
+set wildmode=list:full
 
 " The patterns which is ignored when expanding wildcards.
 set wildignore+=*.exe,*.zip,*.swp,*.dll
