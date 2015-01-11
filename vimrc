@@ -438,6 +438,9 @@ nnoremap zH zh
 " Typing twice prevents from calling accidentally.
 nnoremap <silent> <BS><BS> :call NormalizeSpaces()<CR>
 
+" Show tree view of your project via terminal.
+command! TreeView exe "normal! :!tree src | less\<cr>"
+
 " ======================deprecated because they have same function as unimpaired===========================
 " insert blank line more easily
 " This mapping is the imitation of the plugin 'unimpaired'.
