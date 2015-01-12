@@ -36,6 +36,9 @@ set fileencodings=utf-8,sjis
 " use unix as the standard file type
 set fileformats=unix,dos,mac
 
+" Fix the input language to english.
+set imdisable
+
 "----------------------------------------------------------------
 " Display
 "----------------------------------------------------------------
