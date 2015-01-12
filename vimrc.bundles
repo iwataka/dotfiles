@@ -54,7 +54,10 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'gregsexton/gitv'
 Plug 'bling/vim-airline'
-Plug 'scrooloose/syntastic'
+Plug 'Yggdroot/indentLine'
+
+" Currently unused
+" Plug 'scrooloose/syntastic'
 
 " Unix is faster than Windows.
 if !has('win32') && !has('win64') && !has('win32unix')
