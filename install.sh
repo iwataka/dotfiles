@@ -48,6 +48,11 @@ if [ -L ~/.vim ]; then
 fi
 ln -s $PWD/vim ~/.vim
 
+if [ -L ~/.nvim ]; then
+    rm ~/.nvim
+fi
+ln -s $PWD/vim ~/.nvim
+
 if [ -L ~/.vimrc ]; then
     rm ~/.vimrc
 fi

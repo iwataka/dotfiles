@@ -3,7 +3,7 @@
 "----------------------------------------------------------------
 " If using Windows Vim, you should manually add .vim directory to runtime path.
 " Neovim also need to add it manually.
-if has("win32") || has("win64") || has('neovim')
+if has("win32") || has("win64")
     set runtimepath+=~/.vim/
 endif
 
