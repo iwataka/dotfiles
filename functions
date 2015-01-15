@@ -1,0 +1,14 @@
+# Removes specified files in a project.
+function project-rm() {
+    rm -f "$(ag --nocolor -g '' |peco)"
+}
+
+# Displays specified files in a project via less command.
+function project-less() {
+    less "$(ag --nocolor -g '' |peco)"
+}
+
+# Edits specified files in a project via vim editor.
+function project-vim() {
+    vim "$(ag --nocolor -g '' |peco)"
+}
