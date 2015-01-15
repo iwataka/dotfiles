@@ -3,6 +3,7 @@
 #---------------------------------------------------------------
 [[ -f ~/.zsh_prompt ]] && source ~/.zsh_prompt
 [[ -f ~/.aliases ]] && source ~/.aliases
+[[ -f ~/.functions ]] && source ~/.functions
 
 #---------------------------------------------------------------
 # Encoding
