@@ -723,6 +723,7 @@ endif
 "----------------------------------------------------------------
 abbrev factroy factory
 abbrev reutrn return
+abbrev netowrk network
 
 "----------------------------------------------------------------
 " colorscheme
