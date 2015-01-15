@@ -32,6 +32,11 @@ alias gst="git status"
 alias gdf="git diff"
 alias gco="git checkout"
 
+# Project-specific commands
+alias prm=project-rm
+alias pless=project-less
+alias pvim=project-vim
+
 # Vim
 alias v=vim
 
