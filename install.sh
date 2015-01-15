@@ -18,6 +18,11 @@ if [ -L ~/.ctags ]; then
 fi
 ln -s $PWD/ctags ~/.ctags
 
+if [ -L ~/.functions ]; then
+    rm ~/.functions
+fi
+ln -s $PWD/functions ~/.functions
+
 if [ -L ~/.gitconfig ]; then
     rm ~/.gitconfig
 fi
