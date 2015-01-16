@@ -52,7 +52,6 @@ Plug 'haya14busa/incsearch.vim'
 
 " display useful information
 Plug 'airblade/vim-gitgutter'
-Plug 'gregsexton/gitv'
 Plug 'bling/vim-airline'
 Plug 'Yggdroot/indentLine'
 
@@ -66,10 +65,8 @@ if !has('win32') && !has('win64') && !has('win32unix')
 endif
 
 " depending on filetypes
-Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 Plug 'plasticboy/vim-markdown', {'for': 'mkd'}
 Plug 'derekwyatt/vim-scala', {'for': 'scala', 'on': 'SortScalaImports'}
-Plug 'dag/vim2hs', {'for': 'haskell'}
 
 " colorschemes
 " Solarized colorscheme is the only one I choose.
@@ -77,10 +74,15 @@ Plug 'altercation/vim-colors-solarized'
 
 " This doesn't fit into the strategy of new editors.
 " Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeFromBookmark', 'NERDTreeCWD']}
+
 " This provides slower way to refactor than vim's built-in functions.
 " Plug 'terryma/vim-multiple-cursors'
+
 " The files *.sbt should be dealed as the files *.scala.
 " Plug 'derekwyatt/vim-sbt', {'for': 'sbt'}
+
+" It can't be an alternatie of git log command.
+" Plug 'gregsexton/gitv'
 
 " Plug 'Shougo/unite.vim'
 " Plug 'Shougo/neomru.vim'
@@ -97,6 +99,8 @@ Plug 'altercation/vim-colors-solarized'
 " Plug 'itchyny/lightline.vim'
 " Plug 'mhinz/vim-startify'
 " Plug 'tomasr/molokai'
+" Plug 'dag/vim2hs', {'for': 'haskell'}
+" Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 
 " local configuration for plugins
 if filereadable(expand('~/.vimrc.bundles.local'))

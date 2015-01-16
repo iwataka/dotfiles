@@ -399,7 +399,7 @@ nnoremap <Leader>gr :Gread<CR>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gl :Glog<CR>
 " 'h' is the abbreviation of 'history'
-nnoremap <Leader>gh :Gitv<CR>
+nnoremap <Leader>gh :!git log<cr>
 
 " fast aliases for ctrlp
 nnoremap <silent> <Leader>p :CtrlP .<CR>
