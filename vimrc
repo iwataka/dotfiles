@@ -677,6 +677,15 @@ if executable('pandoc') && executable('xdg-open')
     endfunction
 endif
 
+" clear buffers except for current one
+command! BufClear :call BufClear()
+function! BufClear()
+    let l:current_bufnr = bufnr("%")
+    let l:last_bufnr = bufnr("$")
+    silent! exe "normal! :0," . (l:current_bufnr - 1) . "bdelete\<cr>"
+    silent! exe "normal! :" . (l:current_bufnr + 1) . "," . l:last_bufnr . "bdelete\<cr>"
+endfunction
+
 " func! DeleteTillSlash()
 "     let g:cmd = getcmdline()
 "     if has("win16") || has("win32")
