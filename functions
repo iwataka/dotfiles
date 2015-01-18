@@ -8,9 +8,4 @@ function fast_file_search() {
     fi
 }
 
-export FFS_PATH=$HOME/lib/go/src
-export FFS_PATH=$FFS_PATH:$HOME/lib/jdk/src
-
-export FFS_COMMAND="ag --nocolor -g ''"
-
 alias ffs=fast_file_search
