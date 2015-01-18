@@ -1,37 +1,14 @@
 #! /bin/bash
 
-if [ -L ~/.bash_profile ]; then
-    rm ~/.bash_profile
-fi
+# Remove symbolic link to these files.
+shell="aliases functions zshenv zshrc zsh_prompt"
+vim="vim vimrc vimrc.bundles vimperatorrc"
+scala="sbt sbtrc"
+misc="agignore ctags gitconfig spacemacs tmux.conf"
+neovim="nvim nvimrc"
 
-if [ -L ~/.bashrc ]; then
-    rm ~/.bashrc
-fi
-
-if [ -L ~/.ctags ]; then
-    rm ~/.ctags
-fi
-
-if [ -L ~/.gitconfig ]; then
-    rm ~/.gitconfig
-fi
-
-if [ -L ~/.tmux.conf ]; then
-    rm ~/.tmux.conf
-fi
-
-if [ -L ~/.vim ]; then
-    rm ~/.vim
-fi
-
-if [ -L ~/.vimrc ]; then
-    rm ~/.vimrc
-fi
-
-if [ -L ~/.vimrc.bundles ]; then
-    rm ~/.vimrc.bundles
-fi
-
-if [ -L ~/.zshrc ]; then
-    rm ~/.zshrc
-fi
+for file in $shell $vim $scala $misc $neovim; do
+    if [ -L ~/.$file ]; then
+        rm ~/.$file
+    fi
+done
