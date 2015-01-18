@@ -1,23 +1,16 @@
-# Removes specified files in a project.
-function project-rm() {
-    local target="$(ag --nocolor -g '' |peco)"
-    if [ ! -z "$target" ]; then
-        rm -f "$target"
+function fast_file_search() {
+    local dir=$(echo $FFS_PATH | sed -e "s/:/\n/g" | peco)
+    if [ ! -z "$dir" ]; then
+        local file=$(eval "$FFS_COMMAND" "$dir" | peco)
+        if [ ! -z "$file" ]; then
+            eval $1 "$file"
+        fi
     fi
 }
 
-# Displays specified files in a project via less command.
-function project-less() {
-    local target="$(ag --nocolor -g '' |peco)"
-    if [ ! -z "$target" ]; then
-        less "$target"
-    fi
-}
+export FFS_PATH=$HOME/lib/go/src
+export FFS_PATH=$FFS_PATH:$HOME/lib/jdk/src
 
-# Edits specified files in a project via vim editor.
-function project-vim() {
-    local target="$(ag --nocolor -g '' |peco)"
-    if [ ! -z "$target" ]; then
-        vim "$target"
-    fi
-}
+export FFS_COMMAND="ag --nocolor -g ''"
+
+alias ffs=fast_file_search
