@@ -316,6 +316,10 @@ if !has('python')
 else
     let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 endif
+let g:ctrlp_quickref_paths = [
+    \ expand('$HOME/lib/go/src'),
+    \ expand('$HOME/lib/jdk/src/'),
+    \ ]
 
 "highlight matches when jumping to next
 "nnoremap <silent>n n:call HLNext(0.4)<CR>
