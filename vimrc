@@ -536,13 +536,12 @@ command! TreeView exe "normal! :!tree src | less\<cr>"
 augroup vimrcEx
     autocmd!
 
-    " Enable spellchecking for Markdown
+    " Set markdown filetype.
+    autocmd BufRead,BufNewFile *.md,*.txt setlocal filetype=markdown
+
+    " Enable spellchecking and word wrapping for Markdown
     autocmd FileType markdown setlocal spell
-
-    autocmd BufRead,BufNewFile *.txt setlocal filetype=markdown
-
-    " Automatically wrap at 80 characters for Markdown
-    autocmd BufRead,BufNewFile *.md,*.txt setlocal textwidth=80
+    autocmd FileType markdown setlocal textwidth=80
 
     " Automatically wrap at 72 characters and spell check git commit messages
     autocmd FileType gitcommit setlocal textwidth=72
