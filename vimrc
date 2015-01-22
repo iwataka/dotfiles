@@ -39,6 +39,40 @@ set fileformats=unix,dos,mac
 " Fix the input language to english.
 set imdisable
 
+" Japanese Fix Mode
+let g:ja_input_source = "anthy"
+let g:en_input_source = "xkb:jp::jpn"
+let g:fix_mode_enabled = 0
+com! FixModeEnable call FixModeEnable()
+fu! FixModeEnable()
+    setlocal formatoptions+=mM
+    let g:fix_mode_enabled = 1
+    aug ja-fix-mode
+        au!
+        au ja-fix-mode InsertEnter * call system("ibus engine " . g:ja_input_source)
+        au ja-fix-mode InsertLeave * call system("ibus engine " . g:en_input_source)
+    aug END
+endf
+com! FixModeDisable call FixModeDisable()
+fu! FixModeDisable()
+    if g:fix_mode_enabled
+        setlocal formatoptions-=mM
+        au! ja-fix-mode
+    endif
+    let g:fix_mode_enabled = 0
+endf
+com! FixModeToggle call FixModeToggle()
+fu! FixModeToggle()
+    if g:fix_mode_enabled
+        call FixModeDisable()
+    else
+        call FixModeEnable()
+    en
+endf
+set timeout timeoutlen=3000 ttimeoutlen=100
+
+
+
 "----------------------------------------------------------------
 " Display
 "----------------------------------------------------------------
