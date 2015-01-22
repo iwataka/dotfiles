@@ -539,8 +539,10 @@ augroup vimrcEx
     " Enable spellchecking for Markdown
     autocmd FileType markdown setlocal spell
 
+    autocmd BufRead,BufNewFile *.txt setlocal filetype=markdown
+
     " Automatically wrap at 80 characters for Markdown
-    autocmd BufRead,BufNewFile *.md setlocal textwidth=80
+    autocmd BufRead,BufNewFile *.md,*.txt setlocal textwidth=80
 
     " Automatically wrap at 72 characters and spell check git commit messages
     autocmd FileType gitcommit setlocal textwidth=72
