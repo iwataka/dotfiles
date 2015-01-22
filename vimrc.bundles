@@ -66,6 +66,7 @@ endif
 
 " depending on filetypes
 Plug 'plasticboy/vim-markdown', {'for': 'mkd'}
+Plug 'suan/vim-instant-markdown', {'for': 'mkd'}
 Plug 'derekwyatt/vim-scala', {'for': 'scala', 'on': 'SortScalaImports'}
 
 " colorschemes
@@ -475,6 +476,12 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/snippets"
+
+"----------------------------------------------------------------
+" vim-instant-markdown
+"----------------------------------------------------------------
+let g:instant_markdown_slow = 1
+let g:instant_markdown_autostart = 0
 
 "----------------------------------------------------------------
 " startify
