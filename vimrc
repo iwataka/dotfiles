@@ -49,8 +49,8 @@ fu! FixModeEnable()
     let g:fix_mode_enabled = 1
     aug ja-fix-mode
         au!
-        au ja-fix-mode InsertEnter * call system("ibus engine " . g:ja_input_source)
-        au ja-fix-mode InsertLeave * call system("ibus engine " . g:en_input_source)
+        au ja-fix-mode InsertEnter <buffer> call system("ibus engine " . g:ja_input_source)
+        au ja-fix-mode InsertLeave <buffer> call system("ibus engine " . g:en_input_source)
     aug END
 endf
 com! FixModeDisable call FixModeDisable()
