@@ -38,7 +38,7 @@ Plug 'Raimondi/delimitMate'
 " ctrlp and fast matcher
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'iwataka/ctrlp-quickref'
+Plug 'iwataka/ctrlp-quickref.vim'
 
 " useful key-mappings
 Plug 'tpope/vim-repeat'
