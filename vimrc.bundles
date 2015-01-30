@@ -54,6 +54,7 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'Yggdroot/indentLine'
+Plug 'majutsushi/tagbar'
 
 " Currently unused
 " Plug 'scrooloose/syntastic'
@@ -90,7 +91,6 @@ Plug 'altercation/vim-colors-solarized'
 " Plug 'Shougo/unite-outline'
 " Plug 'Shougo/vimproc.vim'
 
-" Plug 'majutsushi/tagbar'
 " Plug 'tacahiroy/ctrlp-funky'
 " Plug 'vim-scripts/AutoComplPop'
 " Plug 'scrooloose/nerdcommenter'
