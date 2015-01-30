@@ -567,7 +567,7 @@ augroup vimrcEx
     autocmd!
 
     " Set markdown filetype.
-    autocmd BufRead,BufNewFile *.md,*.txt setlocal filetype=markdown
+    autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
 
     " Enable spellchecking and word wrapping for Markdown
     autocmd FileType markdown setlocal spell
