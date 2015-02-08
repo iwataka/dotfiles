@@ -69,9 +69,10 @@ endif
 Plug 'plasticboy/vim-markdown', {'for': 'mkd'}
 Plug 'suan/vim-instant-markdown', {'for': 'mkd'}
 Plug 'derekwyatt/vim-scala', {'for': 'scala', 'on': 'SortScalaImports'}
+Plug 'fatih/vim-go', {'for': 'go'}
 
 " colorschemes
-" Solarized colorscheme is the only one I choose.
+" This is the only one I choose.
 Plug 'altercation/vim-colors-solarized'
 
 " This doesn't fit into the strategy of new editors.
