@@ -57,5 +57,14 @@ if [ $OSTYPE == 'linux-gnu' ]; then
             sudo apt-get install openjdk-7-jdk
             sudo apt-get install openjdk-7-source
         fi
+        if [ $o == '--ruby' ]; then
+            command -v gem >/dev/null 2>&1 || { echo "Require gem command to install ruby packages" >&2; exit 1;}
+            sudo gem install bundler
+            sudo gem install rake
+            sudo gem install rubocop
+        fi
+        if [ $o == '--python' ]; then
+            command -v pip >/dev/null 2>&1 || { echo "Require pip command to install python packages" >&2; exit 1;}
+        fi
     done
 fi
