@@ -36,3 +36,8 @@ After the installation, set zsh as your login shell:
 ```
 chsh -s $(which zsh)
 ```
+
+## References
+
++ [RubyGem](https://rubygems.org/pages/download)
++ [Scala](http://scala-lang.org/download)
