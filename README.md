@@ -20,7 +20,9 @@ Then, run this command:
 
 This setup script can accept several options like:
 
-+ `--java`: enable to install packages about java language
++ `--java` : enable to install packages about java.
++ `--ruby` : enable to install packages about ruby.
++ `--python` : enable to install packages about python.
 
 ## Requirements
 After the installation, set zsh as your login shell:
