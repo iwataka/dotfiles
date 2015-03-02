@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -e
+
 cd `dirname $0`
 
 # Make directories vim needs
@@ -33,3 +35,8 @@ if [ -L ~/.nvimrc ]; then
     rm ~/.nvimrc
 fi
 ln -s $PWD/vimrc ~/.nvimrc
+
+sudo -v
+
+apt-get install git
+apt-get install openjdk-7-jdk
