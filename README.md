@@ -21,13 +21,14 @@ Then, run this command:
 This setup script can accept several options like:
 
 + `--java` : enable to install packages about java.
++ `--scala` : enable to install packages about scala.
 + `--ruby` : enable to install packages about ruby (gem command is required).
 + `--python` : enable to install packages about python (pip command is required).
 
 You want to add options, run the command like this:
 
 ```
-./setup.sh --java --ruby --python
+./setup.sh --java --scala --ruby --python
 ```
 
 ## Requirements
@@ -40,4 +41,3 @@ chsh -s $(which zsh)
 ## References
 
 + [RubyGem](https://rubygems.org/pages/download)
-+ [Scala](http://scala-lang.org/download)
