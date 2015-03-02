@@ -780,32 +780,9 @@ let g:solarized_visibility='high'
 " highlight trailing spaces
 let g:solarized_hitrail=1
 let g:solarized_termtrans=1
-" if solarized is not loaded, the exception is thrown
-try
-    call togglebg#map("<F5>")
-catch
-endtry
 
-if has("gui_running")
-    try
-        set background=dark
-        colorscheme solarized
-    catch
-        colorscheme desert
-    endtry
-else
-    " Select colorscheme and background color depending on terminal type.
-    if $COLORTERM == 'gnome-terminal'
-        set t_Co=256
-        let g:default_colorscheme = "solarized"
-        let g:default_background = "dark"
-    else
-        let g:default_colorscheme = "desert"
-        let g:default_background = "dark"
-    endif
-    silent exe 'normal! :colorscheme ' . g:default_colorscheme . "\<cr>"
-    silent exe 'normal! :set background=' . g:default_background . "\<cr>"
-endif
+set background=dark
+colorscheme solarized
 
 "----------------------------------------------------------------
 " Loading local configurations
