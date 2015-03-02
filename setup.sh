@@ -15,7 +15,7 @@ done
 # Make symbolic links to these files.
 shell="aliases functions zshenv zshrc zsh_prompt"
 vim="vim vimrc vimrc.bundles vimperatorrc"
-scala="sbt sbtrc"
+scala="sbtrc"
 misc="agignore ctags gitconfig spacemacs tmux.conf"
 
 for file in $shell $vim $scala $misc; do
@@ -36,7 +36,15 @@ if [ -L ~/.nvimrc ]; then
 fi
 ln -s $PWD/vimrc ~/.nvimrc
 
-sudo -v
-
-apt-get install git
-apt-get install openjdk-7-jdk
+if [ $OSTYPE == 'linux-gnu' ]; then
+    sudo apt-get install git
+    # youcompleteme
+    sudo apt-get install build-essential cmake
+    sudo apt-get install python-dev
+    for o in $@; do
+        if [ $o == '--java' ]; then
+            sudo apt-get install openjdk-7-jdk
+            sudo apt-get install openjdk-7-source
+        fi
+    done
+fi
