@@ -1,52 +1,90 @@
 #! /bin/bash
 
+# abort if error occurs
 set -e
 
+# ask for user password
 sudo -v
 
+# move the current directory to the directory of this script
 cd `dirname $0`
 
 # Make directories vim needs
-dirs="vim/backups vim/swaps vim/undo"
-for dir in $dirs; do
-    if [ ! -e $PWD/$dir ]; then
-        mkdir $dir
-    fi
-done
+function mkdirs() {
+    dirs="vim/backups vim/swaps vim/undo"
+    for dir in $dirs; do
+        if [ ! -e $PWD/$dir ]; then
+            mkdir $dir
+        fi
+    done
+}
 
-# Make symbolic links to these files.
-shell="aliases profile zshenv zshrc zsh_prompt"
-vim="vim vimrc vimrc.bundles vimperatorrc"
-scala="sbtrc"
-misc="agignore ctags gitconfig spacemacs tmux.conf"
-
-for file in $shell $vim $scala $misc; do
-    if [ -L ~/.$file ]; then
-        rm ~/.$file
-    fi
-    ln -s $PWD/$file ~/.$file
-done
+# Make symbolic links.
+function mklinks() {
+    shell="aliases profile zshenv zshrc zsh_prompt"
+    vim="vim vimrc vimrc.bundles vimperatorrc"
+    scala="sbtrc"
+    misc="agignore ctags gitconfig spacemacs tmux.conf"
+    for file in $shell $vim $scala $misc; do
+        if [ -L ~/.$file ]; then
+            rm ~/.$file
+        fi
+        ln -s $PWD/$file ~/.$file
+    done
+    # neovim
+    for file in vim vimrc; do
+        if [ -L ~/.n${file} ]; then
+            rm ~/.n${file}
+        fi
+        ln -s $PWD/$file ~/.n${file}
+    done
+}
 
 # chpwd
-if [ ! -e ~/.cache/shell/chpwd-recent-dirs ]; then
-    if [ ! -e ~/.cache/shell ]; then
-        mkdir ~/.cache/shell
+function mkfile() {
+    if [ ! -e ~/.cache/shell/chpwd-recent-dirs ]; then
+        if [ ! -e ~/.cache/shell ]; then
+            mkdir ~/.cache/shell
+        fi
+        touch ~/.cache/shell/chpwd-recent-dirs
     fi
-    touch ~/.cache/shell/chpwd-recent-dirs
-fi
+}
 
-# neovim
-if [ -L ~/.nvim ]; then
-    rm ~/.nvim
-fi
-ln -s $PWD/vim ~/.nvim
+function install_java_ubuntu() {
+    sudo apt-get install ant
+    sudo apt-get install openjdk-7-jdk
+}
 
-if [ -L ~/.nvimrc ]; then
-    rm ~/.nvimrc
-fi
-ln -s $PWD/vimrc ~/.nvimrc
+function install_scala_ubuntu() {
+    install_java_ubuntu
+    if [ ! -d ~/projects/scala ]; then
+        git clone https://github.com/scala/scala ~/projects/scala
+    fi
+    if [ ! -e /etc/apt/sources.list.d/sbt.list ]; then
+        text = "deb https://dl.bintray.com/sbt/debian "
+        echo $text | sudo tee -a /etc/apt/sources.list.d/sbt.list
+    fi
+    command -v sbt > /dev/null 2>&1 || {
+        sudo apt-get update
+        sudo apt-get install sbt
+    }
+}
 
-if [ $OSTYPE == 'linux-gnu' ]; then
+function install_ruby_ubuntu() {
+    command -v gem >/dev/null 2>&1 || {
+        git clone https://github.com/rubygems/rubygems ~/projects/rubygems
+        sudo ruby ~/projects/rubygems/setup.rb
+    }
+    sudo gem install bundler
+    sudo gem install rubocop
+}
+
+function install_python_ubuntu() {
+    msg = "Require pip command to install python packages"
+    command -v pip >/dev/null 2>&1 || { echo $msg >&2; exit 1;}
+}
+
+function install_ubuntu() {
     sudo apt-get install git
     sudo apt-get install zsh
     sudo apt-get install exuberant-ctags
@@ -54,33 +92,20 @@ if [ $OSTYPE == 'linux-gnu' ]; then
     # youcompleteme
     sudo apt-get install build-essential cmake
     sudo apt-get install python-dev
+}
+
+mkdirs
+mklinks
+mkfile
+
+if [ $OSTYPE == 'linux-gnu' ]; then
+    install_ubuntu
     for o in $@; do
-        if [ $o == '--java' ]; then
-            sudo apt-get install openjdk-7-jdk
-        fi
-        if [ $o == '--scala' ]; then
-            command -v scala > /dev/null 2>&1 || {
-                SCALA_VERSION = '2.11.5'
-                wget https://downloads.typesafe.com/scala/${SCALA_VERSION}/scala-2.11.5.deb
-                sudo dpkg -i scala-${SCALA_VERSION}.deb
-                rm -f scala-${SCALA_VERSION}.deb
-            }
-            command -v sbt > /dev/null 2>&1 || {
-                SBT_VERSION = '0.13.7'
-                wget https://dl.bintray.com/sbt/debian/sbt-${SBT_VERSION}.deb
-                sudo dpkg -i sbt-${SBT_VERSION}.deb
-                rm -f sbt-${SBT_VERSION}.deb
-            }
-        fi
-        if [ $o == '--ruby' ]; then
-            msg = "Require gem command to install ruby packages" 
-            command -v gem >/dev/null 2>&1 || { echo $msg >&2; exit 1;}
-            sudo gem install bundler
-            sudo gem install rubocop
-        fi
-        if [ $o == '--python' ]; then
-            msg = "Require pip command to install python packages" 
-            command -v pip >/dev/null 2>&1 || { echo $msg >&2; exit 1;}
-        fi
+        case $o in
+            '--java' ) install_java_ubuntu ;;
+            '--scala' ) install_scala_ubuntu ;;
+            '--ruby' ) install_ruby_ubuntu ;;
+            '--python' ) install_python_ubuntu ;;
+        esac
     done
 fi
