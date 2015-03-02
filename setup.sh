@@ -57,16 +57,30 @@ if [ $OSTYPE == 'linux-gnu' ]; then
     for o in $@; do
         if [ $o == '--java' ]; then
             sudo apt-get install openjdk-7-jdk
-            sudo apt-get install openjdk-7-source
+        fi
+        if [ $o == '--scala' ]; then
+            command -v scala > /dev/null 2>&1 || {
+                SCALA_VERSION = '2.11.5'
+                wget https://downloads.typesafe.com/scala/${SCALA_VERSION}/scala-2.11.5.deb
+                sudo dpkg -i scala-${SCALA_VERSION}.deb
+                rm -f scala-${SCALA_VERSION}.deb
+            }
+            command -v sbt > /dev/null 2>&1 || {
+                SBT_VERSION = '0.13.7'
+                wget https://dl.bintray.com/sbt/debian/sbt-${SBT_VERSION}.deb
+                sudo dpkg -i sbt-${SBT_VERSION}.deb
+                rm -f sbt-${SBT_VERSION}.deb
+            }
         fi
         if [ $o == '--ruby' ]; then
-            command -v gem >/dev/null 2>&1 || { echo "Require gem command to install ruby packages" >&2; exit 1;}
+            msg = "Require gem command to install ruby packages" 
+            command -v gem >/dev/null 2>&1 || { echo $msg >&2; exit 1;}
             sudo gem install bundler
-            sudo gem install rake
             sudo gem install rubocop
         fi
         if [ $o == '--python' ]; then
-            command -v pip >/dev/null 2>&1 || { echo "Require pip command to install python packages" >&2; exit 1;}
+            msg = "Require pip command to install python packages" 
+            command -v pip >/dev/null 2>&1 || { echo $msg >&2; exit 1;}
         fi
     done
 fi
