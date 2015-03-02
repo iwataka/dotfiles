@@ -6,14 +6,15 @@ set -e
 # ask for user password
 sudo -v
 
-# move the current directory to the directory of this script
-cd `dirname $0`
+# get the directory of this script
+script_dir=`dirname $0`
+expr "${0}" : "/.*" > /dev/null || script_dir=`(cd "${script_dir}" && pwd)`
 
 # Make directories vim needs
 function mkdirs() {
     dirs="vim/backups vim/swaps vim/undo"
     for dir in $dirs; do
-        if [ ! -e $PWD/$dir ]; then
+        if [ ! -e $script_dir/$dir ]; then
             mkdir $dir
         fi
     done
@@ -29,14 +30,14 @@ function mklinks() {
         if [ -L ~/.$file ]; then
             rm ~/.$file
         fi
-        ln -s $PWD/$file ~/.$file
+        ln -s $script_dir/$file ~/.$file
     done
     # neovim
     for file in vim vimrc; do
         if [ -L ~/.n${file} ]; then
             rm ~/.n${file}
         fi
-        ln -s $PWD/$file ~/.n${file}
+        ln -s $script_dir/$file ~/.n${file}
     done
 }
 
@@ -59,6 +60,8 @@ function install_scala_ubuntu() {
     install_java_ubuntu
     if [ ! -d ~/projects/scala ]; then
         git clone https://github.com/scala/scala ~/projects/scala
+        cd ~/project/scala
+        ant build-opts
     fi
     if [ ! -e /etc/apt/sources.list.d/sbt.list ]; then
         text = "deb https://dl.bintray.com/sbt/debian "
