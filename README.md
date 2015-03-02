@@ -21,8 +21,14 @@ Then, run this command:
 This setup script can accept several options like:
 
 + `--java` : enable to install packages about java.
-+ `--ruby` : enable to install packages about ruby.
-+ `--python` : enable to install packages about python.
++ `--ruby` : enable to install packages about ruby (gem command is required).
++ `--python` : enable to install packages about python (pip command is required).
+
+You want to add options, run the command like this:
+
+```
+./setup.sh --java --ruby --python
+```
 
 ## Requirements
 After the installation, set zsh as your login shell:
