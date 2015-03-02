@@ -38,6 +38,9 @@ ln -s $PWD/vimrc ~/.nvimrc
 
 if [ $OSTYPE == 'linux-gnu' ]; then
     sudo apt-get install git
+    sudo apt-get install zsh
+    sudo apt-get install exuberant-ctags
+    sudo apt-get install tmux
     # youcompleteme
     sudo apt-get install build-essential cmake
     sudo apt-get install python-dev
