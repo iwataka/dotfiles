@@ -2,6 +2,8 @@
 
 set -e
 
+sudo -v
+
 cd `dirname $0`
 
 # Make directories vim needs
