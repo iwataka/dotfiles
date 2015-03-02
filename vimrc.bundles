@@ -38,7 +38,7 @@ Plug 'Raimondi/delimitMate'
 " ctrlp and fast matcher
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'iwataka/ctrlp-quickref.vim'
+Plug 'iwataka/ctrlproj.vim'
 
 " useful key-mappings
 Plug 'tpope/vim-repeat'
@@ -53,11 +53,9 @@ Plug 'haya14busa/incsearch.vim'
 " display useful information
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
-Plug 'Yggdroot/indentLine'
 Plug 'majutsushi/tagbar'
 
 " Currently unused
-" Plug 'scrooloose/syntastic'
 
 " Unix is faster than Windows.
 if !has('win32') && !has('win64') && !has('win32unix')
@@ -67,13 +65,10 @@ endif
 
 " depending on filetypes
 Plug 'plasticboy/vim-markdown', {'for': 'mkd'}
-Plug 'suan/vim-instant-markdown', {'for': 'mkd'}
 Plug 'derekwyatt/vim-scala', {'for': 'scala', 'on': 'SortScalaImports'}
 Plug 'fatih/vim-go', {'for': 'go'}
-
-" colorschemes
-" This is the only one I choose.
-Plug 'altercation/vim-colors-solarized'
+Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
+" Plug 'scrooloose/syntastic'
 
 " This doesn't fit into the strategy of new editors.
 " Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeFromBookmark', 'NERDTreeCWD']}
