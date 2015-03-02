@@ -1,5 +1,7 @@
 # My dotfiles
 
+This is very early-experimental stage, so use with much caution.
+
 ## Introduction
 This is my dotfiles using vim and zshell. This aims to set up the same
 environment on different computers easily. This contains several dotfiles and
