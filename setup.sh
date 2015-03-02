@@ -13,7 +13,7 @@ for dir in $dirs; do
 done
 
 # Make symbolic links to these files.
-shell="aliases functions zshenv zshrc zsh_prompt"
+shell="aliases profile zshenv zshrc zsh_prompt"
 vim="vim vimrc vimrc.bundles vimperatorrc"
 scala="sbtrc"
 misc="agignore ctags gitconfig spacemacs tmux.conf"
