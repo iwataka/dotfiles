@@ -18,6 +18,7 @@ let maplocalleader="\\"
 if filereadable(expand('~/.vimrc.bundles'))
     source ~/.vimrc.bundles
 endif
+let g:plug_timeout = 100000000
 
 " Enable filetype plugins
 filetype plugin on
