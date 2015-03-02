@@ -440,8 +440,9 @@ nnoremap <Leader>gh :!git log<cr>
 nnoremap <silent> <Leader>p :CtrlP .<CR>
 nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :CtrlPMRU<CR>
-nnoremap <silent> <Leader>q :CtrlPQuickRef<CR>
-nnoremap <silent> <Leader>l :CtrlPQuickRefLastDir<CR>
+nnoremap <silent> <Leader>q :Ctrlproj<CR>
+nnoremap <silent> <Leader>l :CtrlprojLastDir<CR>
+nnoremap <silent> <leader>x :CtrlprojSwitch<cr>
 " below three mappings is less frequently used
 " nnoremap <silent> <Leader>l :CtrlPLine %<CR>
 " nnoremap <silent> <Leader>u :CtrlPUndo<CR>
