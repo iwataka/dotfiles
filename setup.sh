@@ -82,6 +82,7 @@ function install_ruby_ubuntu() {
 function install_python_ubuntu() {
     msg = "Require pip command to install python packages"
     command -v pip >/dev/null 2>&1 || { echo $msg >&2; exit 1;}
+    sudo pip install flake8
 }
 
 function install_ubuntu() {
