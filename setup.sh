@@ -25,6 +25,14 @@ for file in $shell $vim $scala $misc; do
     ln -s $PWD/$file ~/.$file
 done
 
+# chpwd
+if [ ! -e ~/.cache/shell/chpwd-recent-dirs ]; then
+    if [ ! -e ~/.cache/shell ]; then
+        mkdir ~/.cache/shell
+    fi
+    touch ~/.cache/shell/chpwd-recent-dirs
+fi
+
 # neovim
 if [ -L ~/.nvim ]; then
     rm ~/.nvim
