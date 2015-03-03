@@ -152,3 +152,5 @@ if [[ "$OSTYPE" == "cygwin" ]]; then
     chcp 65001
     source $HOME/.profile
 fi
+
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
