@@ -56,12 +56,6 @@ Plug 'majutsushi/tagbar'
 
 " Currently unused
 
-" Unix is faster than Windows.
-if !has('win32') && !has('win64') && !has('win32unix')
-    " easymotion use unpredictable keys
-    " Plug 'Lokaltog/vim-easymotion'
-endif
-
 " depending on filetypes
 Plug 'plasticboy/vim-markdown', {'for': 'mkd'}
 Plug 'derekwyatt/vim-scala', {'for': 'scala', 'on': 'SortScalaImports'}
@@ -69,23 +63,18 @@ Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 Plug 'scrooloose/syntastic', {'for': ['ruby', 'python']}
 
-" This provides slower way to refactor than vim's built-in functions.
-" Plug 'terryma/vim-multiple-cursors'
-
 " The files *.sbt should be dealed as the files *.scala.
 " Plug 'derekwyatt/vim-sbt', {'for': 'sbt'}
 
 " It can't be an alternatie of git log command.
 " Plug 'gregsexton/gitv'
 
-" Plug 'Shougo/neomru.vim'
 " Plug 'Shougo/vimproc.vim'
 
 " Plug 'tacahiroy/ctrlp-funky'
 " Plug 'vim-scripts/AutoComplPop'
 " Plug 'scrooloose/nerdcommenter'
 " Plug 'mikewest/vimroom'
-" Plug 'nathanaelkane/vim-indent-guides'
 " Plug 'godlygeek/tabular'
 " Plug 'mhinz/vim-startify'
 " Plug 'tomasr/molokai'
@@ -98,6 +87,46 @@ if filereadable(expand('~/.vimrc.bundles.local'))
 endif
 
 call plug#end()
+
+"----------------------------------------------------------------
+" autocompletion and snippets
+"----------------------------------------------------------------
+if (has("win32") || has("win64") || has("win32unix")) && has("lua")
+    " neocomplete
+    let g:neocomplete#enable_at_startup = 1
+    let g:neocomplete#enable_auto_delimiter = 0
+    let g:neocomplete#sources#syntax#min_keyword_length = 4
+    let g:neocomplete#auto_completion_start_length = 2
+    if !exists('g:neocomplete#sources')
+        let g:neocomplete#sources = {}
+    endif
+    let g:neocomplete#sources._ = ['buffer', 'neosnippet']
+    inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+    " neosnippet
+    imap <c-k> <Plug>(neosnippet_expand_or_jump)
+    smap <c-k> <Plug>(neosnippet_expand_or_jump)
+    xmap <c-k> <Plug>(neosnippet_expand_target)
+    let g:neosnippet#snippets_directory = '~/.vim/bundle/neosnippet-snippets/neosnippets'
+    imap <expr><tab> neosnippet#expandable_or_jumpable() ?
+                \ "\<Plug>(neosnippet_expand_or_jump)"
+                \: pumvisible() ? "\<c-n>" : "\<tab>"
+    smap <expr><tab> neosnippet#expandable_or_jumpable() ?
+                \ "\<Plug>(neosnippet_expand_or_jump)"
+                \: "\<tab>"
+elseif has('unix') && has("python")
+    " ycm
+    let g:ycm_complete_in_comments = 1
+    let g:ycm_complete_in_strings = 1
+    let g:ycm_collect_identifiers_from_comments_and_strings = 1
+    let g:ycm_collect_identifiers_from_tags_files = 1
+    let g:ycm_seed_identifiers_with_syntax = 1
+    " ultisnips
+    let g:UltiSnipsListSnippets="<c-tab>"
+    let g:UltiSnipsExpandTrigger="<c-j>"
+    let g:UltiSnipsJumpForwardTrigger="<c-j>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+    let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/snippets"
+endif
 
 "----------------------------------------------------------------
 " incsearch
@@ -160,13 +189,6 @@ function! VimuxRunTest()
     endif
     exe "normal! :call VimuxRunCommand(\"" . l:command . "\")\<CR>"
 endfunction
-
-"----------------------------------------------------------------
-" indent-guides
-"----------------------------------------------------------------
-" let g:indent_guides_enable_on_vim_startup = 1
-" let g:indent_guides_start_level = 2
-" let g:indent_guides_guide_size = 1
 
 "----------------------------------------------------------------
 " tagbar
@@ -233,72 +255,7 @@ nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 
 "----------------------------------------------------------------
-" multiple-cursors
-"----------------------------------------------------------------
-" function! Multiple_cursors_before()
-"     if exists(':NeoCompleteLock')==2
-"         exe 'NeoCompleteLock'
-"     endif
-" endfunction
-" function! Multiple_cursors_after()
-"     if exists(':NeoCompleteUnlock')==2
-"         exe 'NeoCompleteUnlock'
-"     endif
-" endfunction
-
-"----------------------------------------------------------------
 " vim-scala
 "----------------------------------------------------------------
 nnoremap <silent> <Leader>ss :SortScalaImports<CR>
 let g:scala_sort_across_groups=0
-
-"----------------------------------------------------------------
-" ycm
-"----------------------------------------------------------------
-let g:ycm_complete_in_comments = 1
-let g:ycm_complete_in_strings = 1
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_seed_identifiers_with_syntax = 1
-
-"----------------------------------------------------------------
-" neocomplete
-"----------------------------------------------------------------
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_auto_delimiter = 0
-let g:neocomplete#sources#syntax#min_keyword_length = 4
-let g:neocomplete#auto_completion_start_length = 2
-if !exists('g:neocomplete#sources')
-    let g:neocomplete#sources = {}
-endif
-let g:neocomplete#sources._ = ['buffer', 'neosnippet']
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-
-"----------------------------------------------------------------
-" neosnippet
-"----------------------------------------------------------------
-" imap <c-k> <Plug>(neosnippet_expand_or_jump)
-" smap <c-k> <Plug>(neosnippet_expand_or_jump)
-" xmap <c-k> <Plug>(neosnippet_expand_target)
-" let g:neosnippet#snippets_directory = '~/.vim/bundle/neosnippet-snippets/neosnippets'
-"imap <expr><tab> neosnippet#expandable_or_jumpable() ?
-            "\ "\<Plug>(neosnippet_expand_or_jump)"
-            "\: pumvisible() ? "\<c-n>" : "\<tab>"
-"smap <expr><tab> neosnippet#expandable_or_jumpable() ?
-            "\ "\<Plug>(neosnippet_expand_or_jump)"
-            "\: "\<tab>"
-
-"----------------------------------------------------------------
-" ultisnips
-"----------------------------------------------------------------
-let g:UltiSnipsListSnippets="<c-tab>"
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/snippets"
-
-"----------------------------------------------------------------
-" vim-instant-markdown
-"----------------------------------------------------------------
-let g:instant_markdown_slow = 1
-let g:instant_markdown_autostart = 0
