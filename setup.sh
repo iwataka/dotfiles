@@ -11,8 +11,9 @@ script_dir=`dirname $0`
 expr "${0}" : "/.*" > /dev/null || script_dir=`(cd "${script_dir}" && pwd)`
 
 # Make directories vim needs
-function mkdirs() {
-    dirs="vim/backups vim/swaps vim/undo"
+mkdirs() {
+    local dirs="vim/backups vim/swaps vim/undo"
+    local dir
     for dir in $dirs; do
         if [ ! -e $script_dir/$dir ]; then
             mkdir $dir
@@ -21,11 +22,12 @@ function mkdirs() {
 }
 
 # Make symbolic links.
-function mklinks() {
-    shell="aliases profile zshenv zshrc zsh_prompt"
-    vim="vim vimrc vimrc.bundles vimperatorrc"
-    scala="sbtrc"
-    misc="agignore ctags gitconfig spacemacs tmux.conf"
+mklinks() {
+    local shell="aliases profile zshenv zshrc zsh_prompt"
+    local vim="vim vimrc vimrc.bundles vimperatorrc"
+    local scala="sbtrc"
+    local misc="agignore ctags gitconfig spacemacs tmux.conf"
+    local file
     for file in $shell $vim $scala $misc; do
         if [ -L ~/.$file ]; then
             rm ~/.$file
@@ -42,7 +44,7 @@ function mklinks() {
 }
 
 # chpwd
-function mkfile() {
+mkfile() {
     if [ ! -e ~/.cache/shell/chpwd-recent-dirs ]; then
         if [ ! -e ~/.cache/shell ]; then
             mkdir ~/.cache/shell
@@ -51,12 +53,12 @@ function mkfile() {
     fi
 }
 
-function install_java_ubuntu() {
+install_java_ubuntu() {
     sudo apt-get install ant
     sudo apt-get install openjdk-7-jdk
 }
 
-function install_scala_ubuntu() {
+install_scala_ubuntu() {
     install_java_ubuntu
     if [ ! -d ~/projects/scala ]; then
         git clone https://github.com/scala/scala ~/projects/scala
@@ -64,7 +66,7 @@ function install_scala_ubuntu() {
         ant build-opts
     fi
     if [ ! -e /etc/apt/sources.list.d/sbt.list ]; then
-        text = "deb https://dl.bintray.com/sbt/debian "
+        local text = "deb https://dl.bintray.com/sbt/debian "
         echo $text | sudo tee -a /etc/apt/sources.list.d/sbt.list
     fi
     command -v sbt > /dev/null 2>&1 || {
@@ -73,7 +75,7 @@ function install_scala_ubuntu() {
     }
 }
 
-function install_ruby_ubuntu() {
+install_ruby_ubuntu() {
     command -v gem >/dev/null 2>&1 || {
         git clone https://github.com/rubygems/rubygems ~/projects/rubygems
         sudo ruby ~/projects/rubygems/setup.rb
@@ -82,13 +84,13 @@ function install_ruby_ubuntu() {
     sudo gem install rubocop
 }
 
-function install_python_ubuntu() {
-    msg = "Require pip command to install python packages"
+install_python_ubuntu() {
+    local msg = "Require pip command to install python packages"
     command -v pip >/dev/null 2>&1 || { echo $msg >&2; exit 1;}
     sudo pip install flake8
 }
 
-function install_ubuntu() {
+install_ubuntu() {
     sudo apt-get install git
     sudo apt-get install zsh
     sudo apt-get install exuberant-ctags
