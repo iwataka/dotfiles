@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # Remove symbolic link to these files.
-shell="aliases functions zshenv zshrc zsh_prompt"
+shell="aliases zshenv zshrc zsh_prompt"
 vim="vim vimrc vimrc.bundles vimperatorrc"
 scala="sbt sbtrc"
 misc="agignore ctags gitconfig spacemacs tmux.conf"
