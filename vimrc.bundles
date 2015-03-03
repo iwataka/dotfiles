@@ -9,7 +9,6 @@ endif
 call plug#begin('~/.vim/bundle')
 
 " auto completion (depending on OS type)
-" snippets are not useful because you need to remembar keywords
 if (has("win32") || has("win64") || has("win32unix")) && has("lua")
     Plug 'Shougo/neocomplete.vim'
     Plug 'Shougo/neosnippet.vim'
@@ -68,10 +67,7 @@ Plug 'plasticboy/vim-markdown', {'for': 'mkd'}
 Plug 'derekwyatt/vim-scala', {'for': 'scala', 'on': 'SortScalaImports'}
 Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
-" Plug 'scrooloose/syntastic'
-
-" This doesn't fit into the strategy of new editors.
-" Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeFromBookmark', 'NERDTreeCWD']}
+Plug 'scrooloose/syntastic', {'for': ['ruby', 'python']}
 
 " This provides slower way to refactor than vim's built-in functions.
 " Plug 'terryma/vim-multiple-cursors'
@@ -125,15 +121,6 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
 nnoremap <silent> <Leader>si :SyntasticInfo<CR>
 nnoremap <silent> <Leader>sc :SyntasticCheck<CR>
-
-"----------------------------------------------------------------
-" nerdtree
-"----------------------------------------------------------------
-" nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
-" nnoremap <silent> <Leader>nf :NERDTreeFind<CR>
-" nnoremap <silent> <Leader>nm :NERDTreeMirror<CR>
-" nnoremap <silent> <Leader>nb :NERDTreeFromBookmark<CR>
-" nnoremap <silent> <Leader>nc :NERDTreeCWD<CR>
 
 "----------------------------------------------------------------
 " vimux
