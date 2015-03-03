@@ -15,10 +15,10 @@ let mapleader=" "
 "define local leader key
 let maplocalleader="\\"
 
+let g:plug_timeout = 100000000
 if filereadable(expand('~/.vimrc.bundles'))
     source ~/.vimrc.bundles
 endif
-let g:plug_timeout = 100000000
 
 " Enable filetype plugins
 filetype plugin on
@@ -276,40 +276,17 @@ set hlsearch
 " external commands for search
 if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor\ --column
-    let g:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
     " if &grepformat !~# '%c'
     "     set grepformat^=%f:%l:%c:%m
     " endif
 elseif executable('ack')
     set grepprg=ack\ -H\ --nocolor\ --nogroup
-    let g:ctrlp_user_command = 'ack --follow --nocolor -g "" %s'
 else
-    if executable('git') && !has('win32') && !has('win64')
-        let g:ctrlp_user_command = 'git ls-files %s --cached --exclude-standard --others'
-    endif
     set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
 endif
 
 " Add the g flag to search/replace by default
 set gdefault
-
-" ctrlp
-" default ignored directories
-let g:ctrlp_custom_ignore = {
-    \ 'dir': '\.gradle$\|build$\|project$\|target$\|out$\|libs$\|\.git$',
-    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
-\ }
-let g:ctrlp_cmd = 'CtrlP .'
-let g:ctrlp_working_path_mode='ra'
-let g:ctrlp_by_filename = 0
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
-" use pymatcher
-if !has('python')
-    echo 'In order to use pymatcher plugin, you need +python compiled vim'
-else
-    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-endif
 
 "highlight matches when jumping to next
 "nnoremap <silent>n n:call HLNext(0.4)<CR>
@@ -383,29 +360,6 @@ nnoremap <Leader>fo :foldopen<CR>
 nnoremap <Leader>fO :%foldopen!<CR>
 nnoremap <Leader>fc :foldclose<CR>
 nnoremap <Leader>fC :%foldclose!<CR>
-
-" aliases for git
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <Leader>gg :Ggrep<Space>
-nnoremap <Leader>gc :Gcommit<CR>
-nnoremap <Leader>gr :Gread<CR>
-nnoremap <Leader>gw :Gwrite<CR>
-nnoremap <Leader>gl :Glog<CR>
-" 'h' is the abbreviation of 'history'
-nnoremap <Leader>gh :!git log<cr>
-
-" fast aliases for ctrlp
-nnoremap <silent> <Leader>p :CtrlP .<CR>
-nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
-nnoremap <silent> <Leader>m :CtrlPMRU<CR>
-nnoremap <silent> <Leader>q :Ctrlproj<CR>
-nnoremap <silent> <Leader>l :CtrlprojLastDir<CR>
-nnoremap <silent> <leader>x :CtrlprojSwitch<cr>
-" below three mappings is less frequently used
-" nnoremap <silent> <Leader>l :CtrlPLine %<CR>
-" nnoremap <silent> <Leader>u :CtrlPUndo<CR>
-" nnoremap <silent> <Leader>r :CtrlPFunky<CR>
 
 " Fast redrawing and erasing highlight
 nnoremap <silent> <leader>r :redraw!<cr>:nohlsearch<cr>

@@ -129,6 +129,58 @@ elseif has('unix') && has("python")
 endif
 
 "----------------------------------------------------------------
+" ctrlp
+"----------------------------------------------------------------
+if executable('ag')
+    let g:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
+elseif executable('ack')
+    let g:ctrlp_user_command = 'ack --follow --nocolor -g "" %s'
+endif
+
+" default ignored directories
+let g:ctrlp_custom_ignore = {
+    \ 'dir': '\.gradle$\|build$\|project$\|target$\|out$\|libs$\|\.git$',
+    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
+\ }
+let g:ctrlp_cmd = 'CtrlP .'
+let g:ctrlp_working_path_mode='ra'
+let g:ctrlp_by_filename = 0
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+
+" use pymatcher
+if !has('python')
+    echo 'In order to use pymatcher plugin, you need +python compiled vim'
+else
+    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endif
+
+" fast aliases for ctrlp
+nnoremap <silent> <Leader>p :CtrlP .<CR>
+nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
+nnoremap <silent> <Leader>m :CtrlPMRU<CR>
+nnoremap <silent> <Leader>q :Ctrlproj<CR>
+nnoremap <silent> <Leader>l :CtrlprojLastDir<CR>
+nnoremap <silent> <leader>x :CtrlprojSwitch<cr>
+" below three mappings is less frequently used
+" nnoremap <silent> <Leader>l :CtrlPLine %<CR>
+" nnoremap <silent> <Leader>u :CtrlPUndo<CR>
+" nnoremap <silent> <Leader>r :CtrlPFunky<CR>
+
+"----------------------------------------------------------------
+" fugitive
+"----------------------------------------------------------------
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gg :Ggrep<Space>
+nnoremap <Leader>gc :Gcommit<CR>
+nnoremap <Leader>gr :Gread<CR>
+nnoremap <Leader>gw :Gwrite<CR>
+nnoremap <Leader>gl :Glog<CR>
+" 'h' is the abbreviation of 'history'
+nnoremap <Leader>gh :!git log<cr>
+
+"----------------------------------------------------------------
 " incsearch
 "----------------------------------------------------------------
 map /  <Plug>(incsearch-forward)
