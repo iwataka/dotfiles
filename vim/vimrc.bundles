@@ -295,6 +295,11 @@ let g:lightline = {
     \ }
     \ }
 
+let g:ctrlp_buffer_func = {'enter': 'CtrlPEnter'}
+function! CtrlPEnter()
+    let w:lightline = 0
+endfunction
+
 function! MyFugitive()
     if exists('*fugitive#statusline')
         retu fugitive#statusline()
