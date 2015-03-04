@@ -40,10 +40,9 @@ HELP
 exit
 fi
 
-shell_files="aliases profile zshenv zshrc zsh_prompt"
-vim_files="vim vimrc vimrc.bundles vimperatorrc"
-misc_files="agignore ctags gitconfig spacemacs tmux.conf sbtrc "
-nvim_files="nvim nvimrc"
+shell_files="$(ls $dotfiles/shell)"
+vim_files="$(ls $dotfiles/vim)"
+misc_files="$(ls $dotfiles/misc)"
 
 # Make directories vim needs
 make_dirs() {
@@ -118,7 +117,7 @@ update_dotfiles() {
 }
 
 remove_dotfiles() {
-    for file in $shell_files $vim_files $scala_files $misc_files $nvim_files; do
+    for file in $shell_files $vim_files $scala_files $misc_files nvim nvimrc; do
         if [ -L ~/.$file ]; then
             rm ~/.$file
         fi
