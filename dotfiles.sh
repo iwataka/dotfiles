@@ -33,6 +33,7 @@ Targets:
     scala    scala (binaries via OS package manager and latest source via git) and sbt
     ruby     gem, bundler, rubocop and rbenv
     python   pip, flake8 and pyenv
+    go       latest source
     nvim     neovim
     all      all packages above
 HELP
@@ -204,7 +205,7 @@ update_scala() {
         sudo apt-get install scala sbt
         if [ -d $project_dir/scala ]; then
             cd $project_dir/scala
-            git pull origin master
+            git pull origin
         fi
     fi
 }
@@ -239,14 +240,14 @@ update_ruby() {
         ruby_updated=true
         if [ -d $project_dir/rubygems ]; then
             cd $project_dir/rubygems
-            git pull origin master
+            git pull origin
             sudo ruby $project_dir/rubygems/setup.rb
         fi
         sudo gem install bundler
         sudo gem install rubocop
         if [ -d $HOME/.rbenv ]; then
             cd $HOME/.rbenv
-            git pull origin master
+            git pull origin
         fi
     fi
 }
@@ -283,13 +284,32 @@ update_python() {
         }
         if [ -d $HOME/.pyenv ]; then
             cd $HOME/.pyenv
-            git pull origin master
+            git pull origin
         fi
     fi
 }
 
 remove_python() {
     prompt_manual_remove "python"
+}
+
+install_go() {
+    if [ $go_installed != true ]; then
+        go_installed=true
+        git clone https://github.com/golang/go $project_dir/go
+    fi
+}
+
+update_go() {
+    if [ $go_updated != true]; then
+        go_updated=true
+        cd $project_dir/go
+        git pull origin
+    fi
+}
+
+remove_go() {
+    prompt_manual_remove "go"
 }
 
 install_nvim() {
@@ -306,7 +326,7 @@ install_nvim() {
 update_nvim() {
     if [ -d $project_dir/neovim ]; then
         cd $project_dir/neovim
-        git pull origin master
+        git pull origin
         make install
     fi
 }
