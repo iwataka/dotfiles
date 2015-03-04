@@ -51,7 +51,7 @@ Plug 'haya14busa/incsearch.vim'
 
 " display useful information
 Plug 'airblade/vim-gitgutter'
-Plug 'bling/vim-airline'
+Plug 'itchyny/lightline.vim'
 Plug 'majutsushi/tagbar'
 
 " Currently unused
@@ -62,6 +62,7 @@ Plug 'derekwyatt/vim-scala', {'for': 'scala', 'on': 'SortScalaImports'}
 Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 Plug 'scrooloose/syntastic', {'for': ['ruby', 'python']}
+Plug 'tpope/vim-endwise', {'for': ['ruby', 'vim']}
 
 " The files *.sbt should be dealed as the files *.scala.
 " Plug 'derekwyatt/vim-sbt', {'for': 'sbt'}
@@ -265,48 +266,54 @@ let g:tagbar_type_scala = {
 nnoremap <leader>t :TagbarToggle<CR>
 
 "----------------------------------------------------------------
-" airline
+" gitgutter
 "----------------------------------------------------------------
-" theme
-let g:airline_theme = "understated"
+let g:gitgutter_sign_added = '✚'
+let g:gitgutter_sign_modified = '➜'
+let g:gitgutter_sign_removed = '✘'
 
-" customization
-" let g:airline_powerline_fonts=1
-" if !exists('g:airline_symbols')
-"     let g:airline_symbols = {}
-" endif
-" let g:airline_left_sep = '»'
-" let g:airline_left_sep = '▶'
-" let g:airline_right_sep = '«'
-" let g:airline_right_sep = '◀'
-" let g:airline_symbols.linenr = '␊'
-" let g:airline_symbols.linenr = '␤'
-" let g:airline_symbols.linenr = '¶'
-" let g:airline_symbols.branch = '⎇'
-" let g:airline_symbols.paste = 'ρ'
-" let g:airline_symbols.paste = 'Þ'
-" let g:airline_symbols.paste = '∥'
-" let g:airline_symbols.whitespace = 'Ξ'
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
+"----------------------------------------------------------------
+" lightline
+"----------------------------------------------------------------
+let g:lightline = {
+    \ 'colorscheme': 'solarized',
+    \ 'active': {
+    \   'left': [
+    \       ['mode', 'paste'],
+    \       ['gitgutter', 'filename']
+    \   ],
+    \   'right': [
+    \       ['lineinfo', 'syntastic'],
+    \       ['percent'],
+    \       ['charcode', 'fileformat', 'fileencoding', 'filetype']
+    \   ]
+    \ },
+    \ 'component_function': {
+    \   'syntastic': 'SyntasticStatuslineFlag',
+    \   'gitgutter': 'MyGitGutter'
+    \ }
+    \ }
 
-" tabline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#show_tab_nr = 1
-let g:airline#extensions#tabline#tab_nr_type = 1
-let g:airline#extensions#tabline#show_close_button = 0
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
+function! MyGitGutter()
+    if !exists('*GitGutterGetHunkSummary')
+            \ || !get(g:, 'gitgutter_enabled', 0)
+            \ || winwidth('.') <= 90
+        return ''
+    en
+    let symbols = [
+        \ g:gitgutter_sign_added . ' ',
+        \ g:gitgutter_sign_modified . ' ',
+        \ g:gitgutter_sign_removed . ' '
+        \ ]
+    let hunks = GitGutterGetHunkSummary()
+    let ret = []
+    for i in [0, 1, 2]
+        if hunks[i] > 0
+            call add(ret, symbols[i].hunks[i])
+        en
+    endfo
+    return join(ret, ' ')
+endf
 
 "----------------------------------------------------------------
 " vim-scala
