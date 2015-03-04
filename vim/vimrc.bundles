@@ -120,6 +120,7 @@ elseif has('unix') && has("python")
     let g:ycm_collect_identifiers_from_comments_and_strings = 1
     let g:ycm_collect_identifiers_from_tags_files = 1
     let g:ycm_seed_identifiers_with_syntax = 1
+    let g:ycm_key_detailed_diagnostics = ''
     " ultisnips
     let g:UltiSnipsListSnippets="<c-tab>"
     let g:UltiSnipsExpandTrigger="<c-j>"
@@ -143,7 +144,7 @@ let g:ctrlp_custom_ignore = {
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
 \ }
 let g:ctrlp_cmd = 'CtrlP .'
-let g:ctrlp_working_path_mode='ra'
+let g:ctrlp_working_path_mode='wr'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
@@ -162,6 +163,7 @@ nnoremap <silent> <Leader>m :CtrlPMRU<CR>
 nnoremap <silent> <Leader>q :Ctrlproj<CR>
 nnoremap <silent> <Leader>l :CtrlprojLastDir<CR>
 nnoremap <silent> <leader>x :CtrlprojSwitch<cr>
+nnoremap <silent> <leader>d :CtrlpDir<cr>
 " below three mappings is less frequently used
 " nnoremap <silent> <Leader>l :CtrlPLine %<CR>
 " nnoremap <silent> <Leader>u :CtrlPUndo<CR>
