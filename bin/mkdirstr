@@ -1,0 +1,44 @@
+#!/usr/bin/ruby
+
+require 'fileutils'
+
+def mkdirstr(lang, org, app, dir='.')
+    strHash = {
+        'java' => ['src/main/java', 'src/test/java'],
+        'scala' => ['src/main/scala', 'src/test/scala']
+    }
+    pathHash = {
+        'iijima' => 'jp/ac/keio/ae/iijima'
+    }
+    str = strHash[lang]
+    path = pathHash[org]
+    for s in str
+        FileUtils.mkdir_p s + '/' + path + '/' + app
+    end
+end
+
+def show_help
+    puts "Usage: mkdirstr language1:[language2:...] organization application [directory]"
+    puts
+    puts "mkdirstr makes a directory structure according to given language, organization"
+    puts "and application names"
+    puts
+    puts "Available Languages: "
+    puts "\tjava: 'src/main/java' and 'src/test/java'"
+    puts "\tscala: 'src/main/scala' and 'src/test/scala'"
+    puts
+    puts "Available Organization: "
+    puts "\tiijima: 'jp/ac/keio/ae/iijima'"
+end
+
+if ARGV.size == 3
+    for lang in ARGV[0].split(':')
+        mkdirstr(lang, ARGV[1], ARGV[2])
+    end
+elsif ARGV.size == 4
+    for lang in ARGV[0].split(':')
+        mkdirstr(lang, ARGV[1], ARGV[2], ARGV[3])
+    end
+else
+    show_help
+end
