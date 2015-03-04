@@ -43,6 +43,7 @@ fi
 shell_files="$(ls $dotfiles/shell)"
 vim_files="$(ls $dotfiles/vim)"
 misc_files="$(ls $dotfiles/misc)"
+bin_files="$(ls $dotfiles/bin)"
 
 # Make directories vim needs
 make_dirs() {
@@ -101,6 +102,20 @@ make_file() {
     fi
 }
 
+make_bin() {
+    local file
+    if [ ! -d ~/bin ]; then
+        mkdir ~/bin
+    fi
+    for file in $bin_files; do
+        if [ -e ~/bin/$file ]; then
+            rm ~/bin/$file
+        fi
+        cp $dotfiles/bin/$file ~/bin/$file
+        chmod u+x ~/bin/$file
+    done
+}
+
 prompt_manual_remove() {
     echo "Can not remove "${1}" packages."
     echo "If you really want to remove them, you should do manually."
@@ -110,6 +125,7 @@ install_dotfiles() {
     make_dirs
     make_links
     make_file
+    make_bin
 }
 
 update_dotfiles() {
@@ -117,9 +133,15 @@ update_dotfiles() {
 }
 
 remove_dotfiles() {
+    local file
     for file in $shell_files $vim_files $scala_files $misc_files nvim nvimrc; do
         if [ -L ~/.$file ]; then
             rm ~/.$file
+        fi
+    done
+    for file in $bin_files; do
+        if [ -e ~/bin/$file ]; then
+            rm ~/bin/$file
         fi
     done
 }
