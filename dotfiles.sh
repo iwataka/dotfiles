@@ -16,11 +16,15 @@ fi
 # show help
 if [[ "$1" == "--help" || "$1" == "-h" ]]; then cat <<HELP
 Usage: dotfiles.sh [options] target1 [target2 ...]
+This script has functions like installing this configurations, various packages, updating the
+packages and removing them.
 
 Options:
     --install install given targets
     --update  update given targets
     --remove  remove given targets (but disabled for most of packages)
+
+    If there are no options, --install option is used.
 
 Targets:
     dotfiles dotfiles in this project
@@ -37,8 +41,7 @@ fi
 
 shell_files="aliases profile zshenv zshrc zsh_prompt"
 vim_files="vim vimrc vimrc.bundles vimperatorrc"
-scala_files="sbtrc"
-misc_files="agignore ctags gitconfig spacemacs tmux.conf"
+misc_files="agignore ctags gitconfig spacemacs tmux.conf sbtrc "
 nvim_files="nvim nvimrc"
 
 # Make directories vim needs
@@ -55,17 +58,25 @@ make_dirs() {
 # Make symbolic links.
 make_links() {
     local file
-    for file in $shell_files $vim_files $scala_files $misc_files; do
-        make_link . $file
+    for file in $shell_files; do
+        make_link . shell $file
+    done
+    for file in $vim_files; do
+        make_link . vim $file
+    done
+    for file in $misc_files; do
+        make_link . misc $file
     done
     # neovim
     for file in vim vimrc; do
-        make_link .n $file
+        make_link .n vim $file
     done
 }
 
 make_link() {
     local prefix=$1
+    local dir=$2
+    local file=$3
     if [ -L ~/${prefix}${file} ]; then
         rm ~/${prefix}${file}
     fi
@@ -73,7 +84,11 @@ make_link() {
     if [ -e ~/${prefix}${file} ]; then
         mv ~/${prefix}${file} ~/${prefix}${file}.backup
     fi
-    ln -s $dotfiles/$file ~/${prefix}${file}
+    if [ $dir == . ]; then
+        ln -s $dotfiles/$file ~/${prefix}${file}
+    else
+        ln -s $dotfiles/$dir/$file ~/${prefix}${file}
+    fi
 }
 
 # chpwd

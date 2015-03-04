@@ -1,5 +1,5 @@
-vim/bundle
-vim/.netrwhist
+/vim/vim/bundle
+/vim/vim/.netrwhist
 zsh.theme/
 
 # backup files
@@ -9,9 +9,9 @@ zsh.theme/
 *.swp
 
 # the directories vim needs
-vim/backups
-vim/swaps
-vim/undo
+/vim/vim/backups
+/vim/vim/swaps
+/vim/vim/undo
 
 # sbt
 sbt/0.13/staging
@@ -20,4 +20,4 @@ sbt/0.13/plugins/target
 sbt/boot/
 
 # ctrlproj
-vim/.ctrlproj
+/vim/vim/.ctrlproj
