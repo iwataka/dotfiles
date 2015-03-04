@@ -280,7 +280,7 @@ let g:lightline = {
     \ 'active': {
     \   'left': [
     \       ['mode', 'paste'],
-    \       ['gitgutter', 'filename']
+    \       ['gitgutter', 'fugitive', 'filename']
     \   ],
     \   'right': [
     \       ['lineinfo', 'syntastic'],
@@ -290,9 +290,16 @@ let g:lightline = {
     \ },
     \ 'component_function': {
     \   'syntastic': 'SyntasticStatuslineFlag',
-    \   'gitgutter': 'MyGitGutter'
+    \   'gitgutter': 'MyGitGutter',
+    \   'fugitive': 'MyFugitive'
     \ }
     \ }
+
+function! MyFugitive()
+    if exists('*fugitive#statusline')
+        retu fugitive#statusline()
+    endif
+endfunction
 
 function! MyGitGutter()
     if !exists('*GitGutterGetHunkSummary')
@@ -308,9 +315,7 @@ function! MyGitGutter()
     let hunks = GitGutterGetHunkSummary()
     let ret = []
     for i in [0, 1, 2]
-        if hunks[i] > 0
-            call add(ret, symbols[i].hunks[i])
-        en
+        call add(ret, symbols[i].hunks[i])
     endfo
     return join(ret, ' ')
 endf
