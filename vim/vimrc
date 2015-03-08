@@ -127,9 +127,9 @@ let g:vim_markdown_folding_disabled=1
 " use tab as 4 spaces
 set expandtab
 set smarttab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 
 " indent settings
 set autoindent
@@ -493,6 +493,11 @@ augroup vimrcEx
     " Automatically wrap at 72 characters and spell check git commit messages
     autocmd FileType gitcommit setlocal textwidth=72
     autocmd FileType gitcommit setlocal spell
+
+    autocmd FileType java
+        \ setlocal tabstop=4 |
+        \ setlocal softtabstop=4 |
+        \ setlocal shiftwidth=4
 
     " set groovy filetype to gradle file
     autocmd BufRead,BufNewFile *.gradle set filetype=groovy
