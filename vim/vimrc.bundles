@@ -163,7 +163,8 @@ nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :CtrlPMRU<CR>
 nnoremap <silent> <Leader>q :Ctrlproj<CR>
 nnoremap <silent> <Leader>l :CtrlprojLastDir<CR>
-nnoremap <silent> <leader>x :CtrlprojSwitch<cr>
+nnoremap <silent> <leader>x :CtrlprojVSwitch<cr>
+nnoremap <silent> <leader>a :CtrlprojVAlternate<cr>
 nnoremap <silent> <leader>d :CtrlpDir<cr>
 " below three mappings is less frequently used
 " nnoremap <silent> <Leader>l :CtrlPLine %<CR>
@@ -280,7 +281,8 @@ let g:lightline = {
     \ 'active': {
     \   'left': [
     \       ['mode', 'paste'],
-    \       ['gitgutter', 'fugitive', 'filename']
+    \       ['gitgutter', 'fugitive'],
+    \       ['filename', 'modified', 'readonly']
     \   ],
     \   'right': [
     \       ['lineinfo', 'syntastic'],
@@ -291,7 +293,9 @@ let g:lightline = {
     \ 'component_function': {
     \   'syntastic': 'SyntasticStatuslineFlag',
     \   'gitgutter': 'MyGitGutter',
-    \   'fugitive': 'MyFugitive'
+    \   'fugitive': 'MyFugitive',
+    \   'modified': 'MyModified',
+    \   'readonly': 'MyReadOnly'
     \ }
     \ }
 
@@ -303,6 +307,22 @@ endfunction
 function! MyFugitive()
     if exists('*fugitive#statusline')
         retu fugitive#statusline()
+    endif
+endfunction
+
+function! MyReadOnly()
+    if &readonly
+        retu 'RO'
+    else
+        retu ''
+    endif
+endfunction
+
+function! MyModified()
+    if &modified
+        retu '[+]'
+    else
+        retu ''
     endif
 endfunction
 
