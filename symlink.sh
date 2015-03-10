@@ -7,7 +7,7 @@ script_dir=$(cd `dirname $0` && pwd)
 target_dirs=(git zsh)
 
 # target files in root directory
-target_files=(curlrc sbtrc spacemacs tmux.conf agignore vimperatorrc ctags)
+target_files=(agignore ctags curlrc sbtrc spacemacs tmux.conf vimperatorrc wgetrc)
 
 remove_or_backup() {
     local path=$1
