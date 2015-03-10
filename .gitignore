@@ -9,9 +9,7 @@ zsh.theme/
 *.swp
 
 # the directories vim needs
-/vim/vim/backups
-/vim/vim/swaps
-/vim/vim/undo
+/vim/undo/%*
 
 # sbt
 sbt/0.13/staging
@@ -20,4 +18,4 @@ sbt/0.13/plugins/target
 sbt/boot/
 
 # ctrlproj
-/vim/vim/.ctrlproj
+.ctrlproj
