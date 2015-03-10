@@ -3,6 +3,16 @@ function mkd() {
     mkdir -p "$@" && cd "$_"
 }
 
+# `e` with no arguments opens the current directory in default editor, otherwise
+# opens the given location
+function e() {
+    if [ $# -qe 0]; then
+        $EDITOR .
+    else
+        $EDITOR "$@"
+    fi
+}
+
 # `s` with no arguments opens the current directory in Sublime Text, otherwise
 # opens the given location
 function s() {
