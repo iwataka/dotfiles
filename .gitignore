@@ -10,6 +10,8 @@ zsh.theme/
 
 # the directories vim needs
 /vim/undo/%*
+/vim/swaps/*.swo
+/vim/bundle/
 
 # sbt
 sbt/0.13/staging
