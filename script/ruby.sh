@@ -31,7 +31,10 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo gem install rubocop
 
     # rbenv
-    if [ ! -d $HOME/.rbenv ]; then
-        git clone $rbenv_url $rbenv_path
-    fi
+    # if [ -d $HOME/.rbenv ]; then
+    #     cd $rbenv_path
+    #     git pull
+    # else
+    #     git clone $rbenv_url $rbenv_path
+    # fi
 fi
