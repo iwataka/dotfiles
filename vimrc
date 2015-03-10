@@ -16,8 +16,8 @@ let mapleader=" "
 let maplocalleader="\\"
 
 let g:plug_timeout = 100000000
-if filereadable(expand('~/.vimrc.bundles'))
-    source ~/.vimrc.bundles
+if filereadable(expand('~/.vim/vimrc.bundles'))
+    source ~/.vim/vimrc.bundles
 endif
 
 " Enable filetype plugins
@@ -316,13 +316,13 @@ nnoremap x "_x
 inoremap jk <Esc>
 
 " edit .vimrc file
-nnoremap <leader>ev :e $MYVIMRC<CR>
+nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 
 " source .vimrc file
 nnoremap <leader>sv :wa<CR>:source $MYVIMRC<CR>
 
 " edit .vimrc.bundles file
-nnoremap <Leader>eb :e ~/.vimrc.bundles<CR>
+nnoremap <Leader>eb :vsplit ~/.vimrc.bundles<CR>
 
 " source .vimrc.bundles file
 nnoremap <Leader>sb :wa<CR>:source ~/.vimrc.bundles<CR>
@@ -494,15 +494,15 @@ augroup vimrcEx
     autocmd FileType gitcommit setlocal textwidth=72
     autocmd FileType gitcommit setlocal spell
 
-    autocmd FileType java
+    autocmd FileType java,make,sh
         \ setlocal tabstop=4 |
         \ setlocal softtabstop=4 |
         \ setlocal shiftwidth=4
 
-    " set groovy filetype to gradle file
+    " set filetype according to each file
     autocmd BufRead,BufNewFile *.gradle set filetype=groovy
-    " set scala filetype to sbt file
     autocmd BufRead,BufNewFile *.sbt set filetype=scala
+    autocmd BufRead,BufNewFile *gitignore set filetype=conf
 
     " automatically align html files
     " autocmd BufWritePre,BufRead *.html :normal gg=G
