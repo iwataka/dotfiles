@@ -16,11 +16,11 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo pip install flake8
 
     # pyenv
-    if [ -d $pyenv_path ]; then
-        cd $pyenv_path
-        git pull
-    else
-        git clone $pyenv_url $pyenv_path
-    fi
+    # if [ -d $pyenv_path ]; then
+    #     cd $pyenv_path
+    #     git pull
+    # else
+    #     git clone $pyenv_url $pyenv_path
+    # fi
 fi
 
