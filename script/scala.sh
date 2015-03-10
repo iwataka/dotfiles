@@ -25,6 +25,6 @@ if [ $OSTYPE == "linux-gnu" ]; then
         local text = "deb https://dl.bintray.com/sbt/debian "
         echo $text | sudo tee -a /etc/apt/sources.list.d/sbt.list
         sudo apt-get update
-        sudo apt-get install sbt
     }
+    sudo apt-get install sbt
 fi
