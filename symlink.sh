@@ -4,7 +4,10 @@
 script_dir=$(cd `dirname $0` && pwd)
 
 # target directories
-dirs=(git sbt spacemacs zsh tmux ctags ag firefox sbt)
+target_dirs=(git zsh)
+
+# target files in root directory
+target_files=(curlrc sbtrc spacemacs tmux.conf agignore vimperatorrc ctags)
 
 remove_or_backup() {
     local path=$1
@@ -16,7 +19,7 @@ remove_or_backup() {
     fi
 }
 
-for dir in ${dirs[@]}; do
+for dir in ${target_dirs[@]}; do
     path=$script_dir/$dir
     files=($(ls $path))
     for file in ${files[@]}; do
@@ -32,6 +35,12 @@ ln -s $script_dir/vim ~/.vim
 remove_or_backup ~/.nvim
 ln -s $script_dir/vim ~/.nvim
 
+for file in ${target_files[@]}; do
+    remove_or_backup "$HOME/.$file"
+    ln -s $script_dir/$file ~/.$file
+done
+
+# make necessary files
 if [ ! -e ~/.cache/shell/chpwd-recent-dirs ]; then
     if [ ! -e ~/.cache/shell ]; then
         mkdir -p ~/.cache/shell
@@ -39,6 +48,7 @@ if [ ! -e ~/.cache/shell/chpwd-recent-dirs ]; then
     touch ~/.cache/shell/chpwd-recent-dirs
 fi
 
+# make binaries executable
 if [ ! -d ~/bin ]; then
     mkdir ~/bin
 fi
