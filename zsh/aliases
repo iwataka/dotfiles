@@ -32,9 +32,6 @@ alias gst="git status"
 alias gdf="git diff"
 alias gco="git checkout"
 
-# Vim
-alias v=vim
-
 # Enables to display result in human-readable format.
 alias df='df -h'
 alias du='du -h'
