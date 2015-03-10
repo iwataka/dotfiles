@@ -54,8 +54,29 @@ read_test() {
     fi
 }
 
+array_test() {
+    arr=(
+        ele1
+        ele2
+        ele3
+    )
+    other_arr=(ele1 ele2 ele3)
+    flag=true
+    for i in 0 1 2; do
+        if [[ ${arr[$i]} != ${other_arr[$i]} ]]; then
+            flag=false
+        fi
+    done
+    if [[ $flag == true ]]; then
+        echo 'array_test successes'
+    else
+        echo 'array_test fails'
+    fi
+}
+
 regex_test
 echo_test
 dot_test
 tail_test
 read_test
+array_test
