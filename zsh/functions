@@ -1,53 +1,53 @@
 # Create a new directory and enter it
 function mkd() {
-	mkdir -p "$@" && cd "$_"
+    mkdir -p "$@" && cd "$_"
 }
 
 # `s` with no arguments opens the current directory in Sublime Text, otherwise
 # opens the given location
 function s() {
-	if [ $# -eq 0 ]; then
-		subl .
-	else
-		subl "$@"
-	fi;
+    if [ $# -eq 0 ]; then
+        subl .
+    else
+        subl "$@"
+    fi;
 }
 
 # `a` with no arguments opens the current directory in Atom Editor, otherwise
 # opens the given location
 function a() {
-	if [ $# -eq 0 ]; then
-		atom .
-	else
-		atom "$@"
-	fi;
+    if [ $# -eq 0 ]; then
+        atom .
+    else
+        atom "$@"
+    fi;
 }
 
 # `v` with no arguments opens the current directory in Vim, otherwise opens the
 # given location
 function v() {
-	if [ $# -eq 0 ]; then
-		vim .
-	else
-		vim "$@"
-	fi;
+    if [ $# -eq 0 ]; then
+        vim .
+    else
+        vim "$@"
+    fi;
 }
 
 # `o` with no arguments opens the current directory, otherwise opens the given
 # location
 function o() {
     local cmd=""
-    if [ $OSTYPE == "linux-gnu" ]; then
+    if [[ $OSTYPE == "linux-gnu" ]]; then
         cmd="xdg-open"
-    elif [ $OSTYPE == "cygwin" ]; then
+    elif [[ $OSTYPE == "cygwin" ]]; then
         cmd="cygstart"
     else
         cmd="open"
     fi
-	if [ $# -eq 0 ]; then
-		$cmd .
-	else
-		$cmd "$@"
-	fi;
+    if [ $# -eq 0 ]; then
+        $cmd .
+    else
+        $cmd "$@"
+    fi;
 }
 
