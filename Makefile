@@ -1,5 +1,3 @@
-all: symlink default java scala ruby python go nvim
-
 install: symlink default
 
 symlink:
