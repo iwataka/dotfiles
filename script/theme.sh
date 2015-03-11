@@ -6,9 +6,9 @@ script_dir=$(cd `dirname $0` && pwd)
 source "$script_dir/commons.sh"
 
 if [ $OSTYPE == "linux-gnu" ]; then
-    local name="gnome-terminal-colors-solarized"
-    local url="https://github.com/Anthony25/$name"
-    local path="$project_dir/$name"
-    git_clone_or_pull $url $path
+    gnome_name="gnome-terminal-colors-solarized"
+    gnome_url="https://github.com/Anthony25/$gnome_name"
+    gnome_path="$project_dir/$gnome_name"
+    git_clone_or_pull $gnome_url $gnome_path
     ./install.sh
 fi
