@@ -3,36 +3,22 @@
 This is very early-experimental stage, so use with much caution.
 
 ## Introduction
-This is my personal dotfiles using vim and zshell. This aims to set up the same
-environment on different computers easily. This contains several dotfiles and
-scripts for installation.
+This is my personal dotfiles using vim and zsh. This aims to set up the same
+environment on different computers easily.
 
 ## Installation
-Run this command:
+Most quick way is running this command:
 
 ```
-git clone https://github.com/iwataka/dotfiles
+sh -c "`curl -fsSL https://raw.githubusercontent.com/iwataka/dotfiles/master/install.sh`"
 ```
 
-Then, run this command:
+You can also install by running this:
 
 ```
-./setup.sh
-```
-
-This setup script can accept several options like:
-
-+ `--java` : install ant and openjdk-7-jdk
-+ `--scala` : install scala and sbt
-+ `--ruby` : install gem, bundler, rubocop and rbenv
-+ `--python` : install pip, flake8 and pyenv
-+ `--nvim` : clone neovim repository and install it
-+ `--all` : enable all options above
-
-You want to add options, run the command like this:
-
-```
-./setup.sh --scala --ruby --python --nvim
+git clone https://github.com/iwataka/dotfiles ~/dotfiles
+cd ~/dotfiles
+make install
 ```
 
 ## Requirements
