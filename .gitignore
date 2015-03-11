@@ -5,10 +5,10 @@
 *.swp
 
 # the directories vim needs
-/vim/undo/%*
-/vim/swaps/*.swo
-/vim/bundle/
-/vim/.netrwhist
+**/vim/undo/%*
+**/vim/swaps/*.swo
+**/vim/bundle/
+**/vim/.netrwhist
 
 # sbt
 sbt/0.13/staging

@@ -3,12 +3,8 @@
 # this script directory
 script_dir=$(cd `dirname $0` && pwd)
 
-# target directories
-target_dirs=(git zsh)
-
-# target files in root directory
-target_files=(agignore ctags curlrc sbtrc spacemacs tmux.conf vimperatorrc wgetrc)
-
+# removes it if a given path indicates a symbolic link,
+# makes backup of it if it exists
 remove_or_backup() {
     local path=$1
     if [ -L $path ]; then
@@ -19,26 +15,18 @@ remove_or_backup() {
     fi
 }
 
-for dir in ${target_dirs[@]}; do
-    path=$script_dir/$dir
-    files=($(ls $path))
-    for file in ${files[@]}; do
-        remove_or_backup "$HOME/.$file"
-        ln -s $path/$file ~/.$file
-    done
-done
-
-remove_or_backup ~/.nvimrc
-ln -s $script_dir/vimrc ~/.nvimrc
-remove_or_backup ~/.vim
-ln -s $script_dir/vim ~/.vim
-remove_or_backup ~/.nvim
-ln -s $script_dir/vim ~/.nvim
-
-for file in ${target_files[@]}; do
+# make symbolic links of files in link directory
+link_path="$script_dir/link"
+for file in $(ls $link_path); do
     remove_or_backup "$HOME/.$file"
-    ln -s $script_dir/$file ~/.$file
+    ln -s $link_path/$file ~/.$file
 done
+
+# symlink for neovim
+remove_or_backup ~/.nvimrc
+ln -s $link_path/vimrc ~/.nvimrc
+remove_or_backup ~/.nvim
+ln -s $link_path/vim ~/.nvim
 
 # make necessary files
 if [ ! -e ~/.cache/shell/chpwd-recent-dirs ]; then
