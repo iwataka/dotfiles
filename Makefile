@@ -27,4 +27,4 @@ neovim:
 	./script/neovim.sh
 
 theme:
-	./theme/install.sh
+	./script/theme.sh
