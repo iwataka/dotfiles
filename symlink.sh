@@ -36,16 +36,27 @@ if [ ! -e ~/.cache/shell/chpwd-recent-dirs ]; then
     touch ~/.cache/shell/chpwd-recent-dirs
 fi
 
-# make binaries executable
+# make binary directory for user
 if [ ! -d ~/bin ]; then
     mkdir ~/bin
 fi
-for file in $(ls ${script_dir}/bin); do
+
+# copy binaries and make them executable
+bin_path="$script_dir/bin"
+for file in $(ls $bin_path); do
     if [ -e ~/bin/$file ]; then
         rm ~/bin/$file
     fi
-    cp $script_dir/bin/$file ~/bin/$file
-    chmod u+x ~/bin/$file
+    if [[ -f $bin_path/$file ]]; then
+        cp $bin_path/$file ~/bin/$file
+        chmod u+x ~/bin/$file
+    fi
 done
+
+# copy git-open command and make it executable.
+if [[ -d $bin_path/git-open ]]; then
+    cp $bin_path/git-open/git-open ~/bin/git-open
+    chmod u+x ~/bin/git-open
+fi
 
 unset remove_or_backup
