@@ -11,7 +11,7 @@ default:
 java:
 	./script/java.sh
 
-scala:
+scala: java
 	./script/scala.sh
 
 ruby:
