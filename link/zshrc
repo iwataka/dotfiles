@@ -3,7 +3,6 @@
 #---------------------------------------------------------------
 [[ -f ~/.zsh_prompt ]] && source ~/.zsh_prompt
 [[ -f ~/.aliases ]] && source ~/.aliases
-[[ -f ~/.exports ]] && source ~/.exports
 [[ -f ~/.functions ]] && source ~/.functions
 
 #---------------------------------------------------------------
