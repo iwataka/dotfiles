@@ -6,6 +6,9 @@ script_dir=$(cd `dirname $0` && pwd)
 source "$script_dir/commons.sh"
 
 if [ $OSTYPE == "linux-gnu" ]; then
+    # prerequisity
+    sudo apt-get install dconf-cli
+    # clone from github and run install sript
     gnome_name="gnome-terminal-colors-solarized"
     gnome_url="https://github.com/Anthony25/$gnome_name"
     gnome_path="$project_dir/$gnome_name"

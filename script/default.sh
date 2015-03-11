@@ -20,8 +20,6 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install exuberant-ctags
     # default font
     sudo apt-get install fonts-inconsolata
-    # necessary to install gnome-solarized
-    sudo apt-get install dconf-cli
     # youcompleteme
     sudo apt-get install build-essential cmake
     sudo apt-get install python-dev
