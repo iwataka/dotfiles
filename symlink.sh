@@ -8,7 +8,7 @@ script_dir=$(cd `dirname $0` && pwd)
 remove_or_backup() {
     local path=$1
     if [ -L $path ]; then
-        rm -f $path
+        rm $path
     fi
     if [ -e $path ]; then
         mv $path ${path}.backup
@@ -55,6 +55,9 @@ done
 
 # copy git-open command and make it executable.
 if [[ -d $bin_path/git-open ]]; then
+    if [ -e ~/bin/git-open ]; then
+        rm ~/bin/git-open
+    fi
     cp $bin_path/git-open/git-open ~/bin/git-open
     chmod u+x ~/bin/git-open
 fi
