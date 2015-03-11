@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# this script directory
+# this directory
 script_dir=$(cd `dirname $0` && pwd)
+# source common settings
+source "$script_dir/script/commons.sh"
 
 # removes it if a given path indicates a symbolic link,
 # makes backup of it if it exists
@@ -53,13 +55,16 @@ for file in $(ls $bin_path); do
     fi
 done
 
-# copy git-open command and make it executable.
-if [[ -d $bin_path/git-open ]]; then
-    if [ -e ~/bin/git-open ]; then
-        rm ~/bin/git-open
-    fi
-    cp $bin_path/git-open/git-open ~/bin/git-open
-    chmod u+x ~/bin/git-open
+# url and path for git-open
+gitopen_url="https://github.com/paulirish/git-open"
+gitopen_path="$project_dir/git-open"
+git_clone_or_pull $gitopen_url $gitopen_path
+# remove old git-open if exists
+if [ -e ~/bin/git-open ]; then
+    rm ~/bin/git-open
 fi
+# copy git-open command and make it executable.
+cp $gitopen_path/git-open ~/bin/git-open
+chmod u+x ~/bin/git-open
 
 unset remove_or_backup

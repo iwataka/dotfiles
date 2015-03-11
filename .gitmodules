@@ -1,6 +1,0 @@
-[submodule "bin/git-open"]
-	path = bin/git-open
-	url = https://github.com/paulirish/git-open
-[submodule "theme/gnome-terminal-colors-solarized"]
-	path = theme/gnome-terminal-colors-solarized
-	url = https://github.com/Anthony25/gnome-terminal-colors-solarized
