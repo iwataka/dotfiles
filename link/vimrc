@@ -211,6 +211,9 @@ set history=100
 " Command-line completion operates in an enhanced mode.
 set wildmenu
 
+" ignore case when completing in command line
+set wildignorecase
+
 " List all matches without completing, then each full match.
 set wildmode=list:full
 
