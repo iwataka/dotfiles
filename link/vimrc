@@ -15,7 +15,6 @@ let mapleader=" "
 "define local leader key
 let maplocalleader="\\"
 
-let g:plug_timeout = 100000000
 if filereadable(expand('~/.vim/vimrc.bundles'))
     source ~/.vim/vimrc.bundles
 endif
