@@ -12,10 +12,11 @@ if !exists('g:japanese_mode_en_input_source')
 endif
 
 if !exists('g:japanese_mode_toggle_key')
-  let g:japanese_mode_toggle_key = '<F5>'
+  let g:japanese_mode_toggle_key = '<c-@>'
 endif
 
-let s:japanese_mode_enabled = 0
+let b:japanese_mode_enabled = 0
+let b:japanese_mode_spell_checked = 0
 
 fu! japanese_mode#to_japanese()
   silent call system("ibus engine ".g:japanese_mode_ja_input_source)
@@ -41,7 +42,11 @@ endfu
 
 fu! japanese_mode#enable()
   setlocal formatoptions+=mM
-  let s:japanese_mode_enabled = 1
+  if &spell
+    let b:japanese_mode_spell_checked = 1
+    setlocal nospell
+  endif
+  let b:japanese_mode_enabled = 1
   aug ja-fix-mode
     au!
     au ja-fix-mode InsertEnter <buffer> call japanese_mode#to_japanese()
@@ -52,16 +57,20 @@ fu! japanese_mode#enable()
 endf
 
 fu! japanese_mode#disable()
-  if s:japanese_mode_enabled
+  if b:japanese_mode_enabled
     setlocal formatoptions-=mM
+    if b:japanese_mode_spell_checked
+      setlocal spell
+      let b:japanese_mode_spell_checked = 0
+    endif
     au! ja-fix-mode
   endif
-  let s:japanese_mode_enabled = 0
+  let b:japanese_mode_enabled = 0
   silent! exe "normal! :iunmap ".g:japanese_mode_toggle_key."\<cr>"
 endf
 
 fu! japanese_mode#toggle()
-  if s:japanese_mode_enabled
+  if b:japanese_mode_enabled
     call japanese_mode#disable()
   else
     call japanese_mode#enable()
