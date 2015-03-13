@@ -170,7 +170,7 @@ nnoremap <silent> <Leader>q :Ctrlproj<CR>
 nnoremap <silent> <Leader>l :CtrlprojLastDir<CR>
 nnoremap <silent> <leader>x :CtrlprojVSwitch<cr>
 nnoremap <silent> <leader>a :CtrlprojVAlternate<cr>
-nnoremap <silent> <leader>d :CtrlpDir<cr>
+nnoremap <silent> <leader>d :CtrlPDir<cr>
 " below three mappings is less frequently used
 " nnoremap <silent> <Leader>l :CtrlPLine %<CR>
 " nnoremap <silent> <Leader>u :CtrlPUndo<CR>
