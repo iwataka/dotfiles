@@ -20,6 +20,8 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install exuberant-ctags
     # default font
     sudo apt-get install fonts-inconsolata
+    # faster code-searching tool
+    sudo apt-get install silversearcher-ag
     # youcompleteme
     sudo apt-get install build-essential cmake
     sudo apt-get install python-dev
