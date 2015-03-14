@@ -22,6 +22,8 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install fonts-inconsolata
     # faster code-searching tool
     sudo apt-get install silversearcher-ag
+    # displays directory structure as a tree
+    sudo apt-get install tree
     # youcompleteme
     sudo apt-get install build-essential cmake
     sudo apt-get install python-dev
