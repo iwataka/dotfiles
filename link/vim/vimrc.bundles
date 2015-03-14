@@ -149,7 +149,7 @@ let g:ctrlp_custom_ignore = {
     \ 'dir': '\.gradle$\|build$\|project$\|target$\|out$\|libs$\|\.git$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
 \ }
-let g:ctrlp_cmd = 'CtrlP .'
+let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode='wr'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_show_hidden = 1
