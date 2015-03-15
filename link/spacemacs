@@ -10,26 +10,82 @@
  ;; Paths must have a trailing slash (ie. `~/.mycontribs/')
  dotspacemacs-configuration-layer-path '()
  ;; List of configuration layers to load.
- dotspacemacs-configuration-layers '()
+ dotspacemacs-configuration-layers '(git scala)
  ;; A list of packages and/or extensions that will not be install and loaded.
- dotspacemacs-excluded-packages '()
+ dotspacemacs-excluded-packages '(
+                                  ace-jump-mode
+                                  auto-highlight-symbol
+                                  base16-theme
+                                  buffer-move
+                                  centerd-cursor
+                                  diminish
+                                  dired+
+                                  elisp-slime-nav
+                                  emoji-cheat-sheet
+                                  evil-anzu
+                                  evil-args
+                                  evil-exchange
+                                  evil-iedit-state
+                                  evil-indent-textobject
+                                  evil-jumper
+                                  evil-matchit
+                                  evil-org
+                                  evil-tutor
+                                  expand-region
+                                  fancy-bettery
+                                  fancy-narrow
+                                  fish-mode
+                                  gh
+                                  golden-ratio
+                                  google-translate
+                                  helm-swoop
+                                  helm-themes
+                                  highlight
+                                  hl-anything
+                                  ido-vertical-mode
+                                  iedit
+                                  let-alist
+                                  leuven-theme
+                                  monokai-theme
+                                  move-text
+                                  multi-term
+                                  neotree
+                                  noflet
+                                  org
+                                  org-bullets
+                                  page-break-lines
+                                  paradox
+                                  rainbow-delimiters
+                                  rfringe
+                                  smooth-scrolling
+                                  spray
+                                  string-edit
+                                  undo-tree
+                                  vi-tilde-fringe
+                                  visual-regexp-steroids
+                                  volatile-highlights
+                                  wdired
+                                  zenburn-theme
+                                  zoom-frm
+                                  )
 )
 
 ;; Settings
 ;; --------
 
 (setq-default
+ dotspacemacs-themes '(solarized-dark)
  ;; Default theme applied at startup
  dotspacemacs-default-theme 'solarized-dark
  ;; Guide-key delay in seconds. The Guide-key is the popup buffer listing
  ;; the commands bound to the current keystrokes.
  dotspacemacs-guide-key-delay 0.4
  ;; If non nil the frame is maximized when Emacs starts up (Emacs 24.4+ only)
- dotspacemacs-fullscreen-at-startup nil
+ dotspacemacs-fullscreen-at-startup t
  ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth scrolling
  ;; overrides the default behavior of Emacs which recenters the point when
  ;; it reaches the top or bottom of the screen
- dotspacemacs-smooth-scrolling t
+ dotspacemacs-smooth-scrolling nil
  ;; If non nil pressing 'jk' in insert state, ido or helm will activate the
  ;; evil leader.
  dotspacemacs-feature-toggle-leader-on-jk nil
@@ -46,6 +102,7 @@
 ;; startup.
 (defun dotspacemacs/init ()
   (setq-default evil-escape-key-sequence (kbd "jk"))
+  (setq-default recentf-exclude '())
 )
 
 ;; This is were you can ultimately override default Spacemacs configuration.
@@ -60,3 +117,17 @@
 ;; auto-generate custom variable definitions.
 
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ac-ispell-requires 4)
+ '(custom-safe-themes (quote ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(ring-bell-function (quote ignore) t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
