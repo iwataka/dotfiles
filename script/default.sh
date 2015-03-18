@@ -24,8 +24,6 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install silversearcher-ag
     # displays directory structure as a tree
     sudo apt-get install tree
-    # change encoding of file names
-    sudo apt-get install convmv
     # tweak images
     sudo apt-get install imagemagick
     # youcompleteme
