@@ -21,6 +21,9 @@ alias g="git"
 alias h="history"
 alias j="jobs"
 
+# unzip command for files which has japanese names
+alias unzip-ja="unzip -O cp932"
+
 # Git
 alias ga="git add"
 alias gaa="git add --all"
