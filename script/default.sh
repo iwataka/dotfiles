@@ -6,6 +6,7 @@
 # source "$script_dir/commons.sh"
 
 if [ $OSTYPE == "linux-gnu" ]; then
+    sudo apt-get update && sudo apt-get upgrade
     # necessaary to clone various projects
     sudo apt-get install git
     # mainly clone openjdk
