@@ -36,7 +36,7 @@
                                   fancy-narrow
                                   fish-mode
                                   gh
-                                  golden-ratio
+                                  github-browse-file
                                   google-translate
                                   helm-swoop
                                   helm-themes
@@ -46,11 +46,13 @@
                                   iedit
                                   let-alist
                                   leuven-theme
+                                  magit-gh-pulls
+                                  magit-gitflow
+                                  magit-svn
                                   monokai-theme
                                   move-text
                                   multi-term
                                   neotree
-                                  noflet
                                   org
                                   org-bullets
                                   page-break-lines
@@ -103,6 +105,7 @@
 (defun dotspacemacs/init ()
   (setq-default evil-escape-key-sequence (kbd "jk"))
   (setq-default recentf-exclude '())
+  (setq-default scala-indent:use-javadoc-style t)
 )
 
 ;; This is were you can ultimately override default Spacemacs configuration.
