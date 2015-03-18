@@ -235,6 +235,7 @@ endfunction
 nnoremap <silent> <Leader>vc :wa<CR>:VimuxRunCommand("compile")<CR>
 nnoremap <silent> <Leader>vr :wa<CR>:VimuxRunCommand("run")<CR>
 nnoremap <silent> <Leader>vt :call VimuxRunTest()<CR>
+nnoremap <silent> <leader>vT :wa<cr>:VimuxRunCommand("test")<cr>
 
 let g:lasttest = ""
 
