@@ -163,7 +163,7 @@ else
 endif
 
 " fast aliases for ctrlp
-nnoremap <silent> <Leader>p :CtrlP .<CR>
+nnoremap <silent> <Leader>p :CtrlP<CR>
 nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :CtrlPMRU<CR>
 nnoremap <silent> <Leader>q :Ctrlproj<CR>
@@ -233,8 +233,10 @@ endfunction
 
 " aliases for sbt commands
 nnoremap <silent> <Leader>vc :wa<CR>:VimuxRunCommand("compile")<CR>
-nnoremap <silent> <Leader>vr :wa<CR>:VimuxRunCommand("run")<CR>
-nnoremap <silent> <Leader>vt :call VimuxRunTest()<CR>
+nnoremap <silent> <leader>vC :wa<cr>:VimuxRunCommand("test:compile")<cr>
+nnoremap <silent> <Leader>vr :wa<CR>:call VimuxRunCurBuf()<CR>
+nnoremap <silent> <leader>vR :wa<cr>:VimuxRunCommand("run")<cr>
+nnoremap <silent> <Leader>vt :wa<cr>:call VimuxRunTest()<CR>
 nnoremap <silent> <leader>vT :wa<cr>:VimuxRunCommand("test")<cr>
 
 let g:lasttest = ""
@@ -251,6 +253,12 @@ function! VimuxRunTest()
     endif
     exe "normal! :call VimuxRunCommand(\"" . l:command . "\")\<CR>"
 endfunction
+
+fu! VimuxRunCurBuf()
+  let l:fname = substitute(expand("%:p:r"), '.*/src/main/\(java\|scala\)/\(.*\)', '\2', '')
+  let l:main = substitute(l:fname, '/', '\.', 'g')
+  exe "norm! :call VimuxRunCommand(\"runMain ".l:main."\")\<cr>"
+endfu
 
 "----------------------------------------------------------------
 " tagbar
