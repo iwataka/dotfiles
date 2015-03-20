@@ -106,6 +106,10 @@
   (setq-default evil-escape-key-sequence (kbd "jk"))
   (setq-default recentf-exclude '())
   (setq-default scala-indent:use-javadoc-style t)
+  ;; ensime configuration
+  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+  (add-hook 'java-mode-hook 'ensime-scala-mode-hook)
+  (setq-default ensime-typecheck-idle-interval nil)
 )
 
 ;; This is were you can ultimately override default Spacemacs configuration.
