@@ -27,6 +27,8 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install tree
     # tweak images
     sudo apt-get install imagemagick
+    # code formatter for java, c and cpp
+    sudo apt-get install astyle
     # youcompleteme
     sudo apt-get install build-essential cmake
     sudo apt-get install python-dev
