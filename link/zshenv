@@ -39,5 +39,10 @@ if [ -d /usr/local/scala ]; then
     export PATH=$PATH:$SCALA_HOME/bin
 fi
 
+if [ -d /usr/local/sbt ]; then
+    export SBT_HOME=/usr/local/sbt
+    export PATH=$PATH:$SBT_HOME/bin
+fi
+
 # Local config
 [[ -f ~/.zshenv.local ]] && source ~/.zshenv.local
