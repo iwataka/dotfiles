@@ -6,12 +6,6 @@ symlink:
 default:
 	./script/default.sh
 
-java:
-	./script/java.sh
-
-scala: java
-	./script/scala.sh
-
 ruby:
 	./script/ruby.sh
 
