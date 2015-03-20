@@ -11,10 +11,12 @@
 **/vim/.netrwhist
 
 # sbt
-sbt/0.13/staging
-sbt/0.13/plugins/project
-sbt/0.13/plugins/target
-sbt/boot/
+link/sbt/0.13/staging
+link/sbt/0.13/plugins/project
+link/sbt/0.13/plugins/target
+link/sbt/boot/
+link/sbt/cache
+link/sbt/sbt
 
 # ctrlproj
 .ctrlproj
