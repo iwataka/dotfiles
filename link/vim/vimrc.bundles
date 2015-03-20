@@ -63,6 +63,7 @@ Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 Plug 'scrooloose/syntastic', {'for': ['ruby', 'python']}
 Plug 'tpope/vim-endwise', {'for': ['ruby', 'vim']}
+Plug 'Chiel92/vim-autoformat', { 'for': ['java', 'c', 'cpp'] }
 
 " The files *.sbt should be dealed as the files *.scala.
 " Plug 'derekwyatt/vim-sbt', {'for': 'sbt'}
@@ -186,8 +187,9 @@ nnoremap <Leader>gc :Gcommit<CR>
 nnoremap <Leader>gr :Gread<CR>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gl :Glog<CR>
-" 'h' is the abbreviation of 'history'
-nnoremap <Leader>gh :!git log<cr>
+nnoremap <leader>gL :Git log<cr>
+nnoremap <leader>ga :Gcommit --amend<cr>
+nnoremap <leader>gA :Git add --all<cr>
 
 "----------------------------------------------------------------
 " incsearch
@@ -364,3 +366,9 @@ endf
 "----------------------------------------------------------------
 nnoremap <silent> <Leader>ss :SortScalaImports<CR>
 let g:scala_sort_across_groups=0
+
+"----------------------------------------------------------------
+" vim-autoformat
+"----------------------------------------------------------------
+let g:formatprg_args_expr_java =
+  \ '"--mode=java --style=java -pcH".(&expandtab ? "s".&shiftwidth : "t")'
