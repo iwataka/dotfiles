@@ -12,64 +12,7 @@
  ;; List of configuration layers to load.
  dotspacemacs-configuration-layers '(git scala)
  ;; A list of packages and/or extensions that will not be install and loaded.
- dotspacemacs-excluded-packages '(
-                                  ace-jump-mode
-                                  auto-highlight-symbol
-                                  base16-theme
-                                  buffer-move
-                                  centerd-cursor
-                                  diminish
-                                  dired+
-                                  elisp-slime-nav
-                                  emoji-cheat-sheet
-                                  evil-anzu
-                                  evil-args
-                                  evil-exchange
-                                  evil-iedit-state
-                                  evil-indent-textobject
-                                  evil-jumper
-                                  evil-matchit
-                                  evil-org
-                                  evil-tutor
-                                  expand-region
-                                  fancy-bettery
-                                  fancy-narrow
-                                  fish-mode
-                                  gh
-                                  github-browse-file
-                                  google-translate
-                                  helm-swoop
-                                  helm-themes
-                                  highlight
-                                  hl-anything
-                                  ido-vertical-mode
-                                  iedit
-                                  let-alist
-                                  leuven-theme
-                                  magit-gh-pulls
-                                  magit-gitflow
-                                  magit-svn
-                                  monokai-theme
-                                  move-text
-                                  multi-term
-                                  neotree
-                                  org
-                                  org-bullets
-                                  page-break-lines
-                                  paradox
-                                  rainbow-delimiters
-                                  rfringe
-                                  smooth-scrolling
-                                  spray
-                                  string-edit
-                                  undo-tree
-                                  vi-tilde-fringe
-                                  visual-regexp-steroids
-                                  volatile-highlights
-                                  wdired
-                                  zenburn-theme
-                                  zoom-frm
-                                  )
+ dotspacemacs-excluded-packages '()
 )
 
 ;; Settings
