@@ -1,5 +1,6 @@
 # java
 *.class
+*.jar
 
 # images
 *.jpeg
