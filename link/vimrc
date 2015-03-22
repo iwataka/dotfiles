@@ -494,10 +494,6 @@ augroup vimrcEx
     autocmd BufRead,BufNew * highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
     autocmd BufRead,BufNew * match FullWidthSpace /　/
 
-    if exists(':Autoformat') == 2
-      autocmd BufWrite *.java,*.c,*.cpp sil exe "norm! :Autoformat\<cr>"
-    en
-
     " Automatically open the quickfix window after :Ggrep of fugitive.
     autocmd QuickFixCmdPost *grep* cwindow
 augroup END
