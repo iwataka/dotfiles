@@ -6,89 +6,77 @@ if has("win32") || has("win64")
     set runtimepath+=~/.vim/
 endif
 
-call plug#begin('~/.vim/bundle')
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle
+Plugin 'gmarik/Vundle.vim'
 
 " auto completion (depending on OS type)
 if (has("win32") || has("win64") || has("win32unix")) && has("lua")
-    Plug 'Shougo/neocomplete.vim'
-    Plug 'Shougo/neosnippet.vim'
-    Plug 'Shougo/neosnippet-snippets'
+    Plugin 'Shougo/neocomplete.vim'
+    Plugin 'Shougo/neosnippet.vim'
+    Plugin 'Shougo/neosnippet-snippets'
 elseif has('unix') && has("python")
-    Plug 'Valloric/YouCompleteMe'
-    Plug 'SirVer/ultisnips'
+    Plugin 'Valloric/YouCompleteMe'
+    Plugin 'SirVer/ultisnips'
     " my fork repository to power scala support.
-    Plug 'iwataka/vim-snippets'
+    Plugin 'iwataka/vim-snippets'
 else
-    Plug 'ervandew/supertab'
+    Plugin 'ervandew/supertab'
 endif
 
 " cooperation with vimux (in gui only)
 if !has('gui_running')
-    Plug 'benmills/vimux'
-    Plug 'christoomey/vim-tmux-navigator'
+    Plugin 'benmills/vimux'
+    Plugin 'christoomey/vim-tmux-navigator'
 endif
 
 " This plugin is unstable with nerdtree.
-Plug 'tpope/vim-fugitive'
+Plugin 'tpope/vim-fugitive'
 
 " Save the time to add close brackets.
-Plug 'Raimondi/delimitMate'
+Plugin 'Raimondi/delimitMate'
 
 " ctrlp and fast matcher
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'iwataka/ctrlproj.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'FelikZ/ctrlp-py-matcher'
+Plugin 'iwataka/ctrlproj.vim'
 
 " useful key-mappings
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-commentary'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-commentary'
 
 " motion helper
-Plug 'haya14busa/incsearch.vim'
+Plugin 'haya14busa/incsearch.vim'
 
 " display useful information
-Plug 'airblade/vim-gitgutter'
-Plug 'itchyny/lightline.vim'
-Plug 'majutsushi/tagbar'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'itchyny/lightline.vim'
+Plugin 'majutsushi/tagbar'
 
 " Currently unused
 
 " depending on filetypes
-Plug 'plasticboy/vim-markdown', {'for': 'mkd'}
-Plug 'derekwyatt/vim-scala', {'for': 'scala', 'on': 'SortScalaImports'}
-Plug 'fatih/vim-go', {'for': 'go'}
-Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
-Plug 'scrooloose/syntastic', {'for': ['ruby', 'python']}
-Plug 'tpope/vim-endwise', {'for': ['ruby', 'vim']}
-Plug 'Chiel92/vim-autoformat', { 'for': ['java', 'c', 'cpp'] }
-
-" The files *.sbt should be dealed as the files *.scala.
-" Plug 'derekwyatt/vim-sbt', {'for': 'sbt'}
-
-" It can't be an alternatie of git log command.
-" Plug 'gregsexton/gitv'
-
-" Plug 'Shougo/vimproc.vim'
-
-" Plug 'tacahiroy/ctrlp-funky'
-" Plug 'vim-scripts/AutoComplPop'
-" Plug 'scrooloose/nerdcommenter'
-" Plug 'mikewest/vimroom'
-" Plug 'godlygeek/tabular'
-" Plug 'mhinz/vim-startify'
-" Plug 'tomasr/molokai'
-" Plug 'dag/vim2hs', {'for': 'haskell'}
-" Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+Plugin 'plasticboy/vim-markdown'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'fatih/vim-go'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-endwise'
+Plugin 'Chiel92/vim-autoformat'
 
 " local configuration for plugins
 if filereadable(expand('~/.vimrc.bundles.local'))
     source ~/.vimrc.bundles.local
 endif
 
-call plug#end()
+call vundle#end()
+filetype plugin indent on
 
 "----------------------------------------------------------------
 " vim-plug
@@ -163,14 +151,25 @@ else
     let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 endif
 
+let g:ctrlproj_paths = [
+  \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
+  \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
+  \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
+  \ '/usr/local/scala',
+  \ '/usr/local/jdk',
+  \ '~/projects/*',
+  \ '~/.vim/bundle/*',
+  \ '~/dotfiles'
+  \ ]
+
 " fast aliases for ctrlp
 nnoremap <silent> <Leader>p :CtrlP<CR>
 nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :CtrlPMRU<CR>
 nnoremap <silent> <Leader>q :Ctrlproj<CR>
 nnoremap <silent> <Leader>l :CtrlprojLastDir<CR>
-nnoremap <silent> <leader>x :CtrlprojVSwitch<cr>
-nnoremap <silent> <leader>a :CtrlprojVAlternate<cr>
+nnoremap <silent> <leader>x :only<cr>:CtrlprojVSwitch<cr>
+nnoremap <silent> <leader>a :only<cr>:CtrlprojVAlternate<cr>
 nnoremap <silent> <leader>d :CtrlPDir<cr>
 " below three mappings is less frequently used
 " nnoremap <silent> <Leader>l :CtrlPLine %<CR>
