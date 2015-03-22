@@ -51,6 +51,7 @@ Plugin 'tpope/vim-commentary'
 
 " motion helper
 Plugin 'haya14busa/incsearch.vim'
+Plugin 'terryma/vim-multiple-cursors'
 
 " display useful information
 Plugin 'airblade/vim-gitgutter'
