@@ -47,5 +47,10 @@ if [ -d /usr/local/ant ]; then
     export PATH=$PATH:$ANT_HOME/bin
 fi
 
+if [ -d /usr/local/idea ]; then
+    export IDEA_HOME=/usr/local/idea
+    export PATH=$PATH:$IDEA_HOME/bin
+fi
+
 # Local config
 [[ -f ~/.zshenv.local ]] && source ~/.zshenv.local
