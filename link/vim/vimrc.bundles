@@ -21,8 +21,7 @@ if (has("win32") || has("win64") || has("win32unix")) && has("lua")
 elseif has('unix') && has("python")
     Plugin 'Valloric/YouCompleteMe'
     Plugin 'SirVer/ultisnips'
-    " my fork repository to power scala support.
-    Plugin 'iwataka/vim-snippets'
+    Plugin 'honza/vim-snippets'
 else
     Plugin 'ervandew/supertab'
 endif
@@ -56,8 +55,6 @@ Plugin 'haya14busa/incsearch.vim'
 " display useful information
 Plugin 'airblade/vim-gitgutter'
 Plugin 'itchyny/lightline.vim'
-
-" Currently unused
 
 " depending on filetypes
 Plugin 'plasticboy/vim-markdown'
@@ -118,7 +115,7 @@ elseif has('unix') && has("python")
     let g:UltiSnipsExpandTrigger="<c-j>"
     let g:UltiSnipsJumpForwardTrigger="<c-j>"
     let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-    let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/snippets"
+    let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 endif
 
 "----------------------------------------------------------------
