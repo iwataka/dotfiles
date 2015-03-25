@@ -303,6 +303,20 @@ nnoremap <leader>es :UltiSnipsEdit<cr>
 " for consistency with operators 'c' and 'd'.
 nnoremap Y y$
 
+" Fast saving
+nnoremap <Leader>w :w<CR>
+inoremap <leader>w <esc>:w<cr>
+vnoremap <leader>w <esc>:w<cr>
+
+" Fast quitting
+nnoremap <Leader>q :q<CR>
+inoremap <leader>q <esc>:q<cr>
+vnoremap <leader>q <esc>:q<cr>
+
+" Fast executing macros
+nnoremap Q @q
+vnoremap Q :norm @q<cr>
+
 " Fast redrawing and switching off highlight search.
 " This mapping key is used to move between windows.
 " nnoremap <silent> <c-l> :redraw!<cr>:nohlsearch<cr>
@@ -411,12 +425,6 @@ command! TreeView exe "normal! :!tree src | less\<cr>"
 " au TabLeave * let g:lasttab = tabpagenr()
 
 " ======================deprecated because of the compatibility with Vi===========================
-" Fast saving
-" nnoremap <Leader>w :w!<CR>
-
-" Fast quitting
-" nnoremap <Leader>q :q<CR>
-
 " escape from command line mode more easier
 " cnoremap jk <C-C>
 
@@ -435,9 +443,6 @@ command! TreeView exe "normal! :!tree src | less\<cr>"
 " nnoremap : ;
 " vnoremap ; :
 " vnoremap : ;
-
-" quickly executing macros
-" nnoremap Q @q
 
 " Fast replace command
 " nnoremap S :%s//g<Left><Left>
