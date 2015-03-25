@@ -305,13 +305,6 @@ nnoremap Y y$
 
 " Fast saving
 nnoremap <Leader>w :w<CR>
-inoremap <leader>w <esc>:w<cr>
-vnoremap <leader>w <esc>:w<cr>
-
-" Fast quitting
-nnoremap <Leader>q :q<CR>
-inoremap <leader>q <esc>:q<cr>
-vnoremap <leader>q <esc>:q<cr>
 
 " Fast executing macros
 nnoremap Q @q
