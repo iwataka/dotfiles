@@ -20,6 +20,7 @@ alias p="cd ~/projects"
 alias g="git"
 alias h="history"
 alias j="jobs"
+alias v="vim"
 
 # unzip command for files which has japanese names
 alias unzip-ja="unzip -O cp932"
