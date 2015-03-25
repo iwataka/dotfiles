@@ -163,8 +163,8 @@ nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :CtrlPMRU<CR>
 nnoremap <silent> <Leader>q :Ctrlproj<CR>
 nnoremap <silent> <Leader>l :CtrlprojLastDir<CR>
-nnoremap <silent> <leader>x :only<cr>:CtrlprojVSwitch<cr>
-nnoremap <silent> <leader>a :only<cr>:CtrlprojVAlternate<cr>
+nnoremap <silent> <leader>x :silent only<cr>:CtrlprojVSwitch<cr>
+nnoremap <silent> <leader>a :silent only<cr>:CtrlprojVAlternate<cr>
 nnoremap <silent> <leader>d :CtrlPDir<cr>
 " below three mappings is less frequently used
 " nnoremap <silent> <Leader>l :CtrlPLine %<CR>
