@@ -29,6 +29,7 @@ endif
 " cooperation with vimux (in gui only)
 if !has('gui_running')
     Plugin 'benmills/vimux'
+    Plugin 'christoomey/vim-tmux-navigator'
 endif
 
 " This plugin is unstable with nerdtree.
@@ -51,7 +52,6 @@ Plugin 'tpope/vim-commentary'
 
 " motion helper
 Plugin 'haya14busa/incsearch.vim'
-Plugin 'terryma/vim-multiple-cursors'
 
 " display useful information
 Plugin 'airblade/vim-gitgutter'
