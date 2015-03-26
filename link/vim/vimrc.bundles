@@ -40,7 +40,7 @@ Plugin 'Raimondi/delimitMate'
 
 " ctrlp and fast matcher
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'FelikZ/ctrlp-py-matcher'
+Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'iwataka/ctrlproj.vim'
 
 " useful key-mappings
@@ -143,7 +143,7 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 if !has('python')
     echo 'In order to use pymatcher plugin, you need +python compiled vim'
 else
-    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+    let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
 endif
 
 let g:ctrlproj_paths = [

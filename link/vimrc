@@ -461,7 +461,7 @@ augroup vimrcEx
     autocmd FileType gitcommit setlocal textwidth=72
     autocmd FileType gitcommit setlocal spell
 
-    autocmd FileType java,make,sh,zsh
+    autocmd FileType java,make,sh,zsh,markdown
         \ setlocal tabstop=4 |
         \ setlocal softtabstop=4 |
         \ setlocal shiftwidth=4
