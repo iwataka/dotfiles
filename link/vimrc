@@ -15,8 +15,8 @@ let mapleader=" "
 "define local leader key
 let maplocalleader="\\"
 
-if filereadable(expand('~/.vim/vimrc.bundles'))
-    source ~/.vim/vimrc.bundles
+if filereadable(expand('~/.vim/vundles.vim'))
+    source ~/.vim/vundles.vim
 endif
 
 " Enable filetype plugins
@@ -291,11 +291,11 @@ nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 " source .vimrc file
 nnoremap <leader>sv :wa<CR>:source $MYVIMRC<CR>
 
-" edit .vimrc.bundles file
-nnoremap <Leader>eb :vsplit ~/.vim/vimrc.bundles<CR>
+" edit .vundles.vim file
+nnoremap <Leader>eb :vsplit ~/.vim/vundles.vim<CR>
 
-" source .vimrc.bundles file
-nnoremap <Leader>sb :wa<CR>:source ~/.vim/vimrc.bundles<CR>
+" source .vundles.vim file
+nnoremap <Leader>sb :wa<CR>:source ~/.vim/vundles.vim<CR>
 
 " edit snippets file
 nnoremap <leader>es :UltiSnipsEdit<cr>
