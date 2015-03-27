@@ -346,10 +346,16 @@ nnoremap <c-y> 3<c-y>
 nnoremap <c-e> 3<c-e>
 
 " move between splitted panes more easier
-if has('gui_running')
+if maparg('<c-j>', 'n') == ''
   nnoremap <c-j> <c-w>j
+endif
+if maparg('<c-k>', 'n') == ''
   nnoremap <c-k> <c-w>k
+endif
+if maparg('<c-h>', 'n') == ''
   nnoremap <c-h> <c-w>h
+endif
+if maparg('<c-l>', 'n') == ''
   nnoremap <c-l> <c-w>l
 endif
 
