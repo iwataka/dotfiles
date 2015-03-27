@@ -17,11 +17,15 @@ remove_or_backup() {
     fi
 }
 
+excluded_files="spacemacs"
+
 # make symbolic links of files in link directory
 link_path="$script_dir/link"
 for file in $(ls $link_path); do
-    remove_or_backup "$HOME/.$file"
-    ln -s $link_path/$file ~/.$file
+    if [[ ! $file =~ $excluded_files ]]; then
+        remove_or_backup "$HOME/.$file"
+        ln -s $link_path/$file ~/.$file
+    fi
 done
 
 # symlink for neovim
