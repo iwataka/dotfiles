@@ -28,9 +28,11 @@ endif
 
 " cooperation with vimux (in gui only)
 if !has('gui_running')
-    Plugin 'benmills/vimux'
-    Plugin 'christoomey/vim-tmux-navigator'
+    " Plugin 'benmills/vimux'
+    " Plugin 'christoomey/vim-tmux-navigator'
 endif
+
+Plugin 'tpope/vim-dispatch'
 
 " This plugin is unstable with nerdtree.
 Plugin 'tpope/vim-fugitive'
@@ -206,55 +208,6 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
 nnoremap <silent> <Leader>si :SyntasticInfo<CR>
 nnoremap <silent> <Leader>sc :SyntasticCheck<CR>
-
-"----------------------------------------------------------------
-" vimux
-"----------------------------------------------------------------
-" Some pane configuration
-" let g:VimuxHeight = "45"
-" let g:VimuxOrientation = "h"
-
-nnoremap <silent> <Leader>vp :wa<CR>:VimuxPromptCommand<CR>
-nnoremap <silent> <Leader>vl :wa<CR>:VimuxRunLastCommand<CR>
-nnoremap <silent> <Leader>vi :VimuxInspectRunner<CR>
-nnoremap <silent> <Leader>vq :VimuxCloseRunner<CR>
-nnoremap <silent> <Leader>vs :VimuxInterruptRunner<CR>
-nnoremap <silent> <Leader>vz :VimuxZoomRunner<CR>
-nnoremap <silent> <Leader>vo :call VimuxOpenRunnerAtCWD()<CR>
-nnoremap <silent> <Leader>vh :silent !tmux resize-pane -Z<CR>
-function! VimuxOpenRunnerAtCWD()
-    let cwd = getcwd()
-    exe "normal! :VimuxRunCommand(\"" . cwd . "\")\<CR>"
-endfunction
-
-" aliases for sbt commands
-nnoremap <silent> <Leader>vc :wa<CR>:VimuxRunCommand("compile")<CR>
-nnoremap <silent> <leader>vC :wa<cr>:VimuxRunCommand("test:compile")<cr>
-nnoremap <silent> <Leader>vr :wa<CR>:call VimuxRunCurBuf()<CR>
-nnoremap <silent> <leader>vR :wa<cr>:VimuxRunCommand("run")<cr>
-nnoremap <silent> <Leader>vt :wa<cr>:call VimuxRunTest()<CR>
-nnoremap <silent> <leader>vT :wa<cr>:VimuxRunCommand("test")<cr>
-
-let g:lasttest = ""
-
-function! VimuxRunTest()
-    exe "normal! :wa\<CR>"
-    let l:name = expand("%:t:r")
-    let l:command = ""
-    if l:name =~# "\.\*Test"
-        let g:lasttest = l:name
-        let l:command = "test:testOnly *" . l:name
-    else
-        let l:command = "test:testOnly *" . g:lasttest
-    endif
-    exe "normal! :call VimuxRunCommand(\"" . l:command . "\")\<CR>"
-endfunction
-
-fu! VimuxRunCurBuf()
-  let l:fname = substitute(expand("%:p:r"), '.*/src/main/\(java\|scala\)/\(.*\)', '\2', '')
-  let l:main = substitute(l:fname, '/', '\.', 'g')
-  exe "norm! :call VimuxRunCommand(\"runMain ".l:main."\")\<cr>"
-endfu
 
 "----------------------------------------------------------------
 " gitgutter
