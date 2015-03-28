@@ -52,5 +52,10 @@ if [ -d /usr/local/idea ]; then
     export PATH=$PATH:$IDEA_HOME/bin
 fi
 
+if [ -d /usr/local/eclipse ]; then
+    export ECLIPSE_HOME=/usr/local/eclipse
+    export PATH=$PATH:$ECLIPSE_HOME
+fi
+
 # Local config
 [[ -f ~/.zshenv.local ]] && source ~/.zshenv.local

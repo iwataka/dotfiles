@@ -285,20 +285,7 @@ nnoremap x "_x
 " escape from insert mode more easier
 inoremap jk <Esc>
 
-" edit .vimrc file
-nnoremap <leader>ev :vsplit $MYVIMRC<CR>
-
-" source .vimrc file
-nnoremap <leader>sv :wa<CR>:source $MYVIMRC<CR>
-
-" edit .vundles.vim file
-nnoremap <Leader>eb :vsplit ~/.vim/vundles.vim<CR>
-
-" source .vundles.vim file
-nnoremap <Leader>sb :wa<CR>:source ~/.vim/vundles.vim<CR>
-
-" edit snippets file
-nnoremap <leader>es :UltiSnipsEdit<cr>
+nnoremap <leader>E :vsplit ~/.vimrc<cr>
 
 " for consistency with operators 'c' and 'd'.
 nnoremap Y y$
@@ -665,9 +652,7 @@ let g:solarized_termtrans=1
 set background=dark
 colorscheme solarized
 
-"----------------------------------------------------------------
-" Loading local configurations
-"----------------------------------------------------------------
-if filereadable(expand('~/.vimrc.local'))
-    source ~/.vimrc.local
+" ================ Custom Settings ========================
+if filereadable(expand('~/.vim/settings.vim'))
+  source ~/.vim/settings.vim
 endif
