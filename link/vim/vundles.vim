@@ -28,11 +28,9 @@ endif
 
 " cooperation with vimux (in gui only)
 if !has('gui_running')
-    " Plugin 'benmills/vimux'
-    " Plugin 'christoomey/vim-tmux-navigator'
+    Plugin 'benmills/vimux'
+    Plugin 'christoomey/vim-tmux-navigator'
 endif
-
-Plugin 'tpope/vim-dispatch'
 
 " This plugin is unstable with nerdtree.
 Plugin 'tpope/vim-fugitive'
@@ -68,8 +66,8 @@ Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-endwise'
 
 " local configuration for plugins
-if filereadable(expand('~/.vimrc.bundles.local'))
-    source ~/.vimrc.bundles.local
+if filereadable(expand('~/.vundles.vim.local'))
+    source ~/.vundles.vim.local
 endif
 
 call vundle#end()
