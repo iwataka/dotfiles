@@ -11,11 +11,11 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " auto completion (depending on OS type)
-if (has("win32") || has("win64") || has("win32unix")) && has("lua")
+if g:use_neocomplete
     Plugin 'Shougo/neocomplete.vim'
     Plugin 'Shougo/neosnippet.vim'
     Plugin 'Shougo/neosnippet-snippets'
-elseif has('unix') && has("python")
+elseif g:use_ycm
     Plugin 'Valloric/YouCompleteMe'
     Plugin 'SirVer/ultisnips'
     Plugin 'honza/vim-snippets'
@@ -24,7 +24,7 @@ else
 endif
 
 " cooperation with vimux (in gui only)
-if !has('gui_running')
+if g:use_tmux
     Plugin 'benmills/vimux'
     Plugin 'christoomey/vim-tmux-navigator'
 endif

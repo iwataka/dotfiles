@@ -23,6 +23,13 @@ endif
 filetype plugin on
 filetype indent on
 
+let g:is_win = has('win32') || has('win64') || has('win32unix')
+let g:is_mac = has('mac')
+let g:is_unix = has('unix')
+let g:use_neocomplete = g:is_win && has('lua')
+let g:use_ycm = !g:use_neocomplete && g:is_unix && has('python')
+let g:use_tmux = !has('gui_running')
+
 "----------------------------------------------------------------
 " Language
 "----------------------------------------------------------------
