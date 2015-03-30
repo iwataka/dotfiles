@@ -1,6 +1,6 @@
 " If using Windows Vim, you should manually add .vim directory to runtime path.
 if has("win32") || has("win64")
-    set runtimepath+=~/.vim/
+  set runtimepath+=~/.vim/
 endif
 
 filetype off
@@ -12,21 +12,25 @@ Plugin 'gmarik/Vundle.vim'
 
 " auto completion (depending on OS type)
 if g:use_neocomplete
-    Plugin 'Shougo/neocomplete.vim'
-    Plugin 'Shougo/neosnippet.vim'
-    Plugin 'Shougo/neosnippet-snippets'
-elseif g:use_ycm
-    Plugin 'Valloric/YouCompleteMe'
-    Plugin 'SirVer/ultisnips'
-    Plugin 'honza/vim-snippets'
-else
-    Plugin 'ervandew/supertab'
+  Plugin 'Shougo/neocomplete.vim'
+  Plugin 'Shougo/neosnippet.vim'
+  Plugin 'Shougo/neosnippet-snippets'
+endif
+
+if g:use_ycm
+  Plugin 'Valloric/YouCompleteMe'
+  Plugin 'SirVer/ultisnips'
+  Plugin 'honza/vim-snippets'
+endif
+
+if g:use_supertab
+  Plugin 'ervandew/supertab'
 endif
 
 " cooperation with vimux (in gui only)
 if g:use_tmux
-    Plugin 'benmills/vimux'
-    Plugin 'christoomey/vim-tmux-navigator'
+  Plugin 'benmills/vimux'
+  Plugin 'christoomey/vim-tmux-navigator'
 endif
 
 " This plugin is unstable with nerdtree.
@@ -64,7 +68,7 @@ Plugin 'tpope/vim-endwise'
 
 " local configuration for plugins
 if filereadable(expand('~/.vim/.vundles.local'))
-    source ~/.vim/.vundles.local
+  source ~/.vim/.vundles.local
 endif
 
 call vundle#end()
