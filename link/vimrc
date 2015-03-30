@@ -226,6 +226,8 @@ if has('persistent_undo')
     set undofile
 endif
 
+set nostartofline
+
 "----------------------------------------------------------------
 " Search
 "----------------------------------------------------------------
@@ -293,6 +295,9 @@ nnoremap Y y$
 " Fast saving
 nnoremap <Leader>w :w<CR>
 
+" Fast Quitting
+nnoremap <leader>q :q<cr>
+
 " Fast executing macros
 nnoremap Q @q
 vnoremap Q :norm @q<cr>
@@ -326,11 +331,15 @@ nnoremap <Leader>fc :foldclose<CR>
 nnoremap <Leader>fC :%foldclose!<CR>
 
 " Fast redrawing and erasing highlight
-nnoremap <silent> <leader>r :redraw!<cr>:nohlsearch<cr>
+nnoremap <silent> gr :redraw!<cr>:nohlsearch<cr>
 
 " Fast scroll vertically
 nnoremap <c-y> 3<c-y>
 nnoremap <c-e> 3<c-e>
+
+" Fast tab navigation
+nnoremap <s-l> gt
+nnoremap <s-h> gT
 
 " move between splitted panes more easier
 if maparg('<c-j>', 'n') == ''
@@ -345,6 +354,14 @@ endif
 if maparg('<c-l>', 'n') == ''
   nnoremap <c-l> <c-w>l
 endif
+
+vnoremap > >gv
+vnoremap < <gv
+
+" save the file with root previledge
+cnoremap w!! w !sudo tee % >/dev/null
+
+nnoremap cp yap<s-}>p
 
 " Fast scroll horizontally
 nnoremap zl zL
