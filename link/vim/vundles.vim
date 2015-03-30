@@ -3,73 +3,66 @@ if has("win32") || has("win64")
   set runtimepath+=~/.vim/
 endif
 
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-" let Vundle manage Vundle
-Plugin 'gmarik/Vundle.vim'
-
-" auto completion (depending on OS type)
 if g:use_neocomplete
-  Plugin 'Shougo/neocomplete.vim'
-  Plugin 'Shougo/neosnippet.vim'
-  Plugin 'Shougo/neosnippet-snippets'
+  Plug 'Shougo/neocomplete.vim'
+  Plug 'Shougo/neosnippet.vim'
+  Plug 'Shougo/neosnippet-snippets'
 endif
 
 if g:use_ycm
-  Plugin 'Valloric/YouCompleteMe'
-  Plugin 'SirVer/ultisnips'
-  Plugin 'honza/vim-snippets'
+  Plug 'Valloric/YouCompleteMe'
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
 endif
 
 if g:use_supertab
-  Plugin 'ervandew/supertab'
+  Plug 'ervandew/supertab'
 endif
 
 " cooperation with vimux (in gui only)
 if g:use_tmux
-  Plugin 'benmills/vimux'
-  Plugin 'christoomey/vim-tmux-navigator'
+  Plug 'benmills/vimux'
+  Plug 'christoomey/vim-tmux-navigator'
 endif
 
 " This plugin is unstable with nerdtree.
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " Save the time to add close brackets.
-Plugin 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 
 " ctrlp and fast matcher
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'JazzCore/ctrlp-cmatcher'
-Plugin 'iwataka/ctrlproj.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
+Plug 'iwataka/ctrlproj.vim'
 
 " useful key-mappings
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-eunuch'
-Plugin 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-commentary'
 
 " motion helper
-Plugin 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch.vim'
 
 " display useful information
-Plugin 'airblade/vim-gitgutter'
-Plugin 'itchyny/lightline.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'itchyny/lightline.vim'
 
 " depending on filetypes
-Plugin 'plasticboy/vim-markdown'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'fatih/vim-go'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'scrooloose/syntastic'
-Plugin 'tpope/vim-endwise'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'scrooloose/syntastic', { 'for': ['ruby', 'python'] }
+Plug 'tpope/vim-endwise', { 'for': ['ruby', 'vim'] }
 
 " local configuration for plugins
 if filereadable(expand('~/.vim/.vundles.local'))
   source ~/.vim/.vundles.local
 endif
 
-call vundle#end()
-filetype plugin indent on
+call plug#end()

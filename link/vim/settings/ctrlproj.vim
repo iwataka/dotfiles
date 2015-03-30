@@ -5,7 +5,7 @@ let g:ctrlproj_paths = [
   \ '/usr/local/scala',
   \ '/usr/local/jdk',
   \ '~/projects/*',
-  \ '~/.vim/bundle/*',
+  \ '~/.vim/plugged/*',
   \ '~/dotfiles'
   \ ]
 
