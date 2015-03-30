@@ -7,16 +7,5 @@
 # the directories vim needs
 **/vim/undo/%*
 **/vim/swaps/*.swo
-**/vim/bundle/
+**/vim/plugged/
 **/vim/.netrwhist
-
-# sbt
-link/sbt/0.13/staging
-link/sbt/0.13/plugins/project
-link/sbt/0.13/plugins/target
-link/sbt/boot/
-link/sbt/cache
-link/sbt/sbt
-
-# ctrlproj
-.ctrlproj
