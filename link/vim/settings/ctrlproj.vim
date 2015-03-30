@@ -10,7 +10,9 @@ let g:ctrlproj_paths = [
   \ ]
 
 " fast aliases for ctrlp
-nnoremap <silent> <Leader>q :Ctrlproj<CR>
-nnoremap <silent> <Leader>l :CtrlprojLastDir<CR>
-nnoremap <silent> <leader>x :silent only<cr>:CtrlprojVSwitch<cr>
-nnoremap <silent> <leader>a :silent only<cr>:CtrlprojVAlternate<cr>
+nnoremap <silent> <Leader>pq :Ctrlproj<CR>
+nnoremap <silent> <Leader>pl :CtrlprojLastDir<CR>
+nnoremap <silent> <leader>pg :CtrlprojGrep<cr>
+nnoremap <silent> <leader>pr :CtrlprojRooter<cr>
+nnoremap <silent> <leader>ps :silent only<cr>:CtrlprojVSwitch<cr>
+nnoremap <silent> <leader>pa :silent only<cr>:CtrlprojVAlternate<cr>
