@@ -1,5 +1,5 @@
 " Some pane configuration
-let g:VimuxHeight = "50"
+let g:VimuxHeight = "40"
 let g:VimuxOrientation = "h"
 " let g:VimuxRunnerType = "window"
 " let g:VimuxUseNearest = 0
