@@ -1,25 +1,38 @@
-let g:lightline = {
-  \ 'colorscheme': 'solarized',
-  \ 'active': {
-  \   'left': [
-  \     ['mode', 'paste'],
-  \     ['gitgutter', 'fugitive'],
-  \     ['filename', 'modified', 'readonly']
-  \   ],
-  \   'right': [
-  \     ['lineinfo', 'syntastic'],
-  \     ['percent'],
-  \     ['charcode', 'fileformat', 'fileencoding', 'filetype']
-  \   ]
-  \ },
-  \ 'component_function': {
-  \   'syntastic': 'SyntasticStatuslineFlag',
-  \   'gitgutter': 'MyGitGutter',
-  \   'fugitive': 'MyFugitive',
-  \   'modified': 'MyModified',
-  \   'readonly': 'MyReadOnly'
-  \ }
-  \ }
+let g:lightline = {}
+
+let g:lightline.colorscheme = 'solarized'
+
+let g:lightline.active = {}
+let g:lightline.active.left = [
+  \   ['mode', 'paste'],
+  \   ['gitgutter', 'fugitive'],
+  \   ['filename']
+  \ ]
+let g:lightline.active.right = [
+  \   ['lineinfo', 'syntastic'],
+  \   ['percent'],
+  \   ['fileformat', 'fileencoding', 'filetype']
+  \ ]
+
+let g:lightline.component_function = {}
+let g:lightline.component_function.syntastic = 'SyntasticStatuslineFlag'
+let g:lightline.component_function.gitgutter = 'MyGitGutter'
+let g:lightline.component_function.filename = 'MyFilename'
+let g:lightline.component_function.fugitive = 'MyFugitive'
+
+let g:lightline.separator = { 'left': "\ue0b0", 'right': "\ue0b2" }
+let g:lightline.subseparator = { 'left': "\ue0b1", 'right': "\ue0b3" }
+
+let g:lightline.tabline = {}
+let g:lightline.tabline.left = [ [ 'tabs' ] ]
+let g:lightline.tabline.right = [ [ 'close' ] ]
+
+let g:lightline.component_expand = {}
+let g:lightline.component_expand.tabs = 'lightline#tabs'
+
+let g:lightline.enable = {}
+let g:lightline.enable.statusline = 1
+let g:lightline.enable.tabline = 1
 
 let g:ctrlp_buffer_func = {'enter': 'CtrlPEnter'}
 function! CtrlPEnter()
@@ -27,27 +40,25 @@ function! CtrlPEnter()
 endfunction
 
 function! MyFugitive()
-  if winwidth(0) > 60 && exists('*fugitive#statusline')
-    retu fugitive#statusline()
-  else
-    retu ''
+  if exists('*fugitive#head')
+    let _ = fugitive#head()
+    return strlen(_) ? ''._ : ''
   endif
+  return ''
 endfunction
 
-function! MyReadOnly()
-  if &readonly
-    retu 'RO'
-  else
-    retu ''
-  endif
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+    \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+    \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyReadonly()
+  return &readonly ? '' : ''
 endfunction
 
 function! MyModified()
-  if &modified
-    retu '[+]'
-  else
-    retu ''
-  endif
+  return &modifiable && &modified ? '+' : ''
 endfunction
 
 function! MyGitGutter()
