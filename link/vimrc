@@ -296,7 +296,8 @@ nnoremap x "_x
 " escape from insert mode more easier
 inoremap jk <Esc>
 
-nnoremap <leader>E :vsplit ~/.vimrc<cr>
+nnoremap <leader>ev :vsplit ~/.vimrc<cr>
+nnoremap <leader>sv :source ~/.vimrc<cr>
 
 " for consistency with operators 'c' and 'd'.
 nnoremap Y y$
@@ -349,6 +350,9 @@ nnoremap <c-e> 3<c-e>
 " Fast tab navigation
 nnoremap <s-l> gt
 nnoremap <s-h> gT
+
+nnoremap gb :bnext<cr>
+nnoremap gB :bprevious<cr>
 
 " move between splitted panes more easier
 if maparg('<c-j>', 'n') == ''
