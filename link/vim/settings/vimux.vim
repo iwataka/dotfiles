@@ -1,5 +1,5 @@
 " Some pane configuration
-let g:VimuxHeight = "40"
+let g:VimuxHeight = "50"
 let g:VimuxOrientation = "h"
 " let g:VimuxRunnerType = "window"
 " let g:VimuxUseNearest = 0
@@ -27,6 +27,7 @@ nnoremap <silent> <leader>vR :wa<cr>:call <sid>VimuxRunAll()<cr>
 nnoremap <silent> <Leader>vt :wa<cr>:call <sid>VimuxTest()<CR>
 nnoremap <silent> <leader>vT :wa<cr>:call <sid>VimuxTestAll()<cr>
 nnoremap <silent> <leader>vI :wa<cr>:call <sid>VimuxInteractiveMode()<cr>
+nnoremap <silent> <leader>vL :wa<cr>:call <sid>VimuxReload()<cr>
 nnoremap <silent> <leader>vv :call <sid>VimuxHideRunner()<cr>
 
 fu! s:IsTest(fname)
@@ -40,7 +41,10 @@ endfu
 fu! s:VimuxInteractiveMode()
   call s:VimuxOpenRunnerAtCWD()
   call s:VimuxRunCommand("sbt")
-  call s:VimuxHideRunner()
+endfu
+
+fu! s:VimuxReload()
+  call s:VimuxRunCommand("reload")
 endfu
 
 fu! s:VimuxHideRunner()
