@@ -27,8 +27,22 @@ let g:lightline.tabline = {}
 let g:lightline.tabline.left = [ [ 'tabs' ] ]
 let g:lightline.tabline.right = [ [ 'close' ] ]
 
+let g:lightline.tab = {}
+let g:lightline.tab.active = [ 'tabnum', 'filename', 'modified' ]
+let g:lightline.tab.inactive = [ 'tabnum', 'filename', 'modified' ]
+
 let g:lightline.component_expand = {}
 let g:lightline.component_expand.tabs = 'lightline#tabs'
+
+let g:lightline.component_type = {}
+let g:lightline.component_type.tabs = 'tabsel'
+let g:lightline.component_type.close = 'raw'
+
+let g:lightline.tab_component_function = {}
+let g:lightline.tab_component_function.filename = 'lightline#tab#filename'
+let g:lightline.tab_component_function.modified = 'lightline#tab#modified'
+let g:lightline.tab_component_function.readonly = 'lightline#tab#readonly'
+let g:lightline.tab_component_function.tabnum = 'lightline#tab#tabnum'
 
 let g:lightline.enable = {}
 let g:lightline.enable.statusline = 1
