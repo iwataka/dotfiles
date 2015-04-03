@@ -27,30 +27,27 @@ if g:use_tmux
   Plug 'christoomey/vim-tmux-navigator'
 endif
 
-" This plugin is unstable with nerdtree.
-Plug 'tpope/vim-fugitive'
-
-" Save the time to add close brackets.
-Plug 'Raimondi/delimitMate'
-
 " ctrlp and fast matcher
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
 Plug 'iwataka/ctrlproj.vim'
 
-" useful key-mappings
+" useful goodies
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-sleuth'
 
-" motion helper
-Plug 'haya14busa/incsearch.vim'
-
-" display useful information
+" Git
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+
+Plug 'haya14busa/incsearch.vim'
 Plug 'itchyny/lightline.vim'
+Plug 'Raimondi/delimitMate'
+Plug 'junegunn/vim-easy-align'
 
 " depending on filetypes
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
