@@ -1,6 +1,6 @@
 " Some pane configuration
-let g:VimuxHeight = "50"
-let g:VimuxOrientation = "h"
+let g:VimuxHeight = ""
+let g:VimuxOrientation = "v"
 " let g:VimuxRunnerType = "window"
 " let g:VimuxUseNearest = 0
 
@@ -15,8 +15,8 @@ nnoremap <silent> <leader>vu :VimuxScrollUpInspect<cr>
 nnoremap <silent> <leader>vd :VimuxScrollDownInspect<cr>
 
 function! s:VimuxOpenRunnerAtCWD()
-  let cwd = getcwd()
-  sil exe "normal! :VimuxRunCommand(\"" . cwd . "\")\<CR>"
+  let cmd = "cd " . getcwd()
+  sil call s:VimuxRunCommand(cmd)
 endfunction
 
 " aliases for build
@@ -28,7 +28,7 @@ nnoremap <silent> <Leader>vt :wa<cr>:call <sid>VimuxTest()<CR>
 nnoremap <silent> <leader>vT :wa<cr>:call <sid>VimuxTestAll()<cr>
 nnoremap <silent> <leader>vI :wa<cr>:call <sid>VimuxInteractiveMode()<cr>
 nnoremap <silent> <leader>vL :wa<cr>:call <sid>VimuxReload()<cr>
-nnoremap <silent> <leader>vv :call <sid>VimuxHideRunner()<cr>
+nnoremap <silent> <Enter> :call <sid>VimuxToggleRunner()<cr>
 
 fu! s:IsTest(fname)
   if a:fname =~ '\(Test\|Spec\|_test\|_spec\)'
@@ -47,7 +47,7 @@ fu! s:VimuxReload()
   call s:VimuxRunCommand("reload")
 endfu
 
-fu! s:VimuxHideRunner()
+fu! s:VimuxToggleRunner()
   sil exe "!tmux resize-pane -Z"
 endfu
 
@@ -78,9 +78,11 @@ function! s:VimuxTestAll()
 endfunction
 
 fu! s:VimuxRun()
-  let l:fname = substitute(expand("%:p:r"), '.*/src/main/\(java\|scala\)/\(.*\)', '\2', '')
-  let l:package = substitute(l:fname, '/', '\.', 'g')
-  sil call s:VimuxRunCommand("runMain " . l:package)
+  let fpath = expand('%:p:r')
+  let fname = substitute(fpath, '.*/src/main/\(java\|scala\)/\(.*\)', '\2', '')
+  let proj_name = substitute(fpath, '.*/\([^/]*\)/src/main/.*', '\1', '')
+  let package = substitute(fname, '/', '\.', 'g')
+  sil call s:VimuxRunCommand(proj_name . "/runMain " . package)
 endfu
 
 fu! s:VimuxRunAll()
@@ -89,8 +91,10 @@ endfu
 
 " Almost same as g:VimuxRunCommand function, but resize panes at first.
 fu! s:VimuxRunCommand(cmd)
-  sil exe "only"
-  sil exe "!tmux resize-pane"
+  if _VimuxRunnerType() == "pane"
+    sil exe "only"
+    sil exe "tmux resizep"
+  endif
   sil exe "call VimuxRunCommand(\"" . a:cmd . "\")"
   exe "redraw!"
 endfu
