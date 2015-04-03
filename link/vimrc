@@ -308,6 +308,8 @@ nnoremap <Leader>w :w<CR>
 " Fast Quitting
 nnoremap <leader>q :q<cr>
 
+nnoremap <leader>o :only<cr>
+
 " Fast executing macros
 nnoremap Q @q
 vnoremap Q :norm @q<cr>
