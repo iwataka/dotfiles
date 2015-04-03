@@ -1,5 +1,5 @@
 " Some pane configuration
-let g:VimuxHeight = ""
+let g:VimuxHeight = "40"
 let g:VimuxOrientation = "v"
 " let g:VimuxRunnerType = "window"
 " let g:VimuxUseNearest = 0
@@ -28,6 +28,7 @@ nnoremap <silent> <Leader>vt :wa<cr>:call <sid>VimuxTest()<CR>
 nnoremap <silent> <leader>vT :wa<cr>:call <sid>VimuxTestAll()<cr>
 nnoremap <silent> <leader>vI :wa<cr>:call <sid>VimuxInteractiveMode()<cr>
 nnoremap <silent> <leader>vL :wa<cr>:call <sid>VimuxReload()<cr>
+nnoremap <silent> <leader>vP :call <sid>VimuxRepl()<cr>
 nnoremap <silent> <Enter> :call <sid>VimuxToggleRunner()<cr>
 
 fu! s:IsTest(fname)
@@ -45,6 +46,11 @@ endfu
 
 fu! s:VimuxReload()
   call s:VimuxRunCommand("reload")
+endfu
+
+fu! s:VimuxRepl()
+  sil call s:VimuxRunCommand("consoleQuick")
+  sil call s:VimuxSelectPane()
 endfu
 
 fu! s:VimuxToggleRunner()
@@ -92,11 +98,10 @@ endfu
 " Almost same as g:VimuxRunCommand function, but resize panes at first.
 fu! s:VimuxRunCommand(cmd)
   if _VimuxRunnerType() == "pane"
-    sil exe "only"
-    sil exe "tmux resizep"
+    sil exe "!tmux resizep"
   endif
   sil exe "call VimuxRunCommand(\"" . a:cmd . "\")"
-  exe "redraw!"
+  sil exe "redraw!"
 endfu
 
 " Almost same as g:VimuxPromptCommand function, but use s:VimuxRunCommand
@@ -118,4 +123,10 @@ endfu
 fu! s:VimuxCloseRunner()
   call VimuxCloseRunner()
   exe "redraw!"
+endfu
+
+fu! s:VimuxSelectPane()
+  let index = _VimuxNearestIndex()
+  let type = _VimuxRunnerType()
+  let result = system("tmux select-" . type . " -t " . index)
 endfu
