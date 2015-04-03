@@ -1,5 +1,6 @@
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <leader>gD :Git diff<cr>
 nnoremap <Leader>gg :call <sid>GgrepPrompt()<cr>
 nnoremap <Leader>gc :Gcommit<CR>
 nnoremap <Leader>gr :Gread<CR>
