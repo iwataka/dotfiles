@@ -19,7 +19,7 @@ nnoremap <silent> <Leader>pp :CtrlP<CR>
 nnoremap <silent> <Leader>pb :CtrlPBuffer<CR>
 nnoremap <silent> <leader>pd :CtrlPDir<cr>
 nnoremap <silent> <leader>pv :CtrlP ~/.vim<cr>
-" nnoremap <silent> <Leader>m :CtrlPMRU<CR>
+nnoremap <silent> <Leader>pm :CtrlPMRU<CR>
 " nnoremap <silent> <Leader>l :CtrlPLine %<CR>
 " nnoremap <silent> <Leader>u :CtrlPUndo<CR>
 " nnoremap <silent> <Leader>r :CtrlPFunky<CR>
