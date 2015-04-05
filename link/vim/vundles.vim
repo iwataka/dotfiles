@@ -27,10 +27,13 @@ if g:use_tmux
   Plug 'christoomey/vim-tmux-navigator'
 endif
 
+if g:use_ctrlp_extensions
+  Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
+  Plug 'iwataka/ctrlproj.vim'
+endif
+
 " ctrlp and fast matcher
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
-Plug 'iwataka/ctrlproj.vim'
 
 " useful goodies
 Plug 'tpope/vim-repeat'
