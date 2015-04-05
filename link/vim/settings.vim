@@ -23,11 +23,16 @@ if !g:use_tmux
   call add(s:excluded_paths, 'vim-tmux-navigator')
 endif
 
+if !g:use_ctrlp_extensions
+  call add(s:excluded_paths, 'ctrlp-cmatcher')
+  call add(s:excluded_paths, 'ctrlproj')
+endif
+
 " Simply source setting files (detecting os type is in these files).
 for fpath in split(globpath(vimsettings, '*.vim'), '\n')
   let s:is_excluded = 0
   for p in s:excluded_paths
-    if p =~ fpath | let s:is_excluded = 1 | endif
+    if fpath =~ p | let s:is_excluded = 1 | endif
   endfor
   if !s:is_excluded | exe 'source' fpath | endif
 endfor
