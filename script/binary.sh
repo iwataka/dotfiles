@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# this directory
-script_dir=$(cd `dirname $0` && pwd)
+# dotfiles directory
+dotfiles_dir=$(cd `dirname $0` && cd .. && pwd)
 # source common settings
-source "$script_dir/script/commons.sh"
+source "$dotfiles_dir/script/commons.sh"
 
 # make binary directory for user
 if [ ! -d ~/bin ]; then
@@ -11,7 +11,7 @@ if [ ! -d ~/bin ]; then
 fi
 
 # copy binaries and make them executable
-bin_path="$script_dir/bin"
+bin_path="$dotfiles_dir/bin"
 for file in $(ls $bin_path); do
     if [ -e ~/bin/$file ]; then
         rm ~/bin/$file

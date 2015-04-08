@@ -1,7 +1,10 @@
-install: symlink default
+install: symlink binary default
 
 symlink:
 	./symlink.sh
+
+binary:
+	./script/binary.sh
 
 default:
 	./script/default.sh
