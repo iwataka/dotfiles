@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # this directory
-script_dir=$(cd `dirname $0` && pwd)
+dotfiles_dir=$(cd `dirname $0` && cd .. && pwd)
 # source common settings
-source "$script_dir/script/commons.sh"
+source "$dotfiles_dir/script/commons.sh"
 
 # removes it if a given path indicates a symbolic link,
 # makes backup of it if it exists
@@ -20,7 +20,7 @@ remove_or_backup() {
 excluded_files="spacemacs"
 
 # make symbolic links of files in link directory
-link_path="$script_dir/link"
+link_path="$dotfiles_dir/link"
 for file in $(ls $link_path); do
     if [[ ! $file =~ $excluded_files ]]; then
         remove_or_backup "$HOME/.$file"
