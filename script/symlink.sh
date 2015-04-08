@@ -19,9 +19,14 @@ remove_or_backup() {
 
 excluded_files="spacemacs"
 
+link_files=(Xmodmap agignore ctags curlrc gitconfig
+            sbtrc spacemacs tmux.conf vim vimperatorrc
+            vimrc wgetrc xsession zsh zshenv
+            zshrc)
+
 # make symbolic links of files in link directory
 link_path="$dotfiles_dir/link"
-for file in $(ls $link_path); do
+for file in ${link_files[@]}; do
     if [[ ! $file =~ $excluded_files ]]; then
         remove_or_backup "$HOME/.$file"
         ln -s $link_path/$file ~/.$file
