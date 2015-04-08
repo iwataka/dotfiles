@@ -2,7 +2,7 @@
 # Source various files
 #---------------------------------------------------------------
 zsh_home=$HOME/.zsh
-zsh_files=(prompt aliases functions)
+zsh_files=(prompt aliases functions plugins)
 for fl in ${zsh_files}; do
     [[ -f ${zsh_home}/${fl}.zsh ]] && source ${zsh_home}/${fl}.zsh
 done
