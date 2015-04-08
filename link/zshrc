@@ -1,9 +1,11 @@
 #---------------------------------------------------------------
 # Source various files
 #---------------------------------------------------------------
-[[ -f ~/.zsh_prompt ]] && source ~/.zsh_prompt
-[[ -f ~/.aliases ]] && source ~/.aliases
-[[ -f ~/.functions ]] && source ~/.functions
+zsh_home=$HOME/.zsh
+zsh_files=(prompt aliases functions)
+for fl in ${zsh_files}; do
+    [[ -f ${zsh_home}/${fl}.zsh ]] && source ${zsh_home}/${fl}.zsh
+done
 
 #---------------------------------------------------------------
 # Key-binding
