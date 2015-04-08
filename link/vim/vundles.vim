@@ -27,8 +27,11 @@ if g:use_tmux
   Plug 'christoomey/vim-tmux-navigator'
 endif
 
-if g:use_ctrlp_extensions
+if g:use_ctrlp_cmatcher
   Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
+endif
+
+if g:use_ctrlproj
   Plug 'iwataka/ctrlproj.vim'
 endif
 

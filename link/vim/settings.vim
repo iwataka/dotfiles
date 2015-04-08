@@ -23,8 +23,11 @@ if !g:use_tmux
   call add(s:excluded_paths, 'vim-tmux-navigator')
 endif
 
-if !g:use_ctrlp_extensions
+if !g:use_ctrlp_cmatcher
   call add(s:excluded_paths, 'ctrlp-cmatcher')
+endif
+
+if !g:use_ctrlproj
   call add(s:excluded_paths, 'ctrlproj')
 endif
 
