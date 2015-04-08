@@ -63,11 +63,11 @@ setopt promptsubst
 #newline
 PS1=$'\n'
 #user name
-PS1+='%K{blue}%F{black} [%n@%m] %f%k'
+PS1+='%K{blue}%F{black} [%n@%m] %f%k%K{cyan}%F{blue}%f%k'
 #current directory
-PS1+='%K{cyan}%F{black} %~ %f%k'
+PS1+='%K{cyan}%F{black} %~ %f%k%K{magenta}%F{cyan}%f%k'
 #branch name
-PS1+='%K{magenta}%F{black} $(prompt_git) %f%k '
+PS1+='%K{magenta}%F{black} $(prompt_git) %f%k%F{magenta}%f'
 #newline again
 PS1+=$'\n'
 #start mark
