@@ -9,6 +9,12 @@ binary:
 default:
 	./script/default.sh
 
+java:
+	./script/java.sh
+
+scala:
+	./script/scala.sh
+
 ruby:
 	./script/ruby.sh
 
