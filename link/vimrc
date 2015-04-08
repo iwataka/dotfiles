@@ -23,8 +23,10 @@ let g:use_neocomplete = g:is_win && has('lua')
 let g:use_ycm = !g:use_neocomplete && g:is_unix && has('python')
 let g:use_supertab = !g:use_neocomplete && !g:use_ycm
 let g:use_tmux = !has('gui_running')
-let g:use_ctrlp_cmatcher = 0
-let g:use_ctrlproj = 1
+let g:use_unite = 0
+let g:use_ctrlp = !g:use_unite
+let g:use_ctrlp_cmatcher = g:use_ctrlp && 0
+let g:use_ctrlproj = g:use_ctrlp && 1
 
 if filereadable(expand('~/.vim/vundles.vim'))
     source ~/.vim/vundles.vim
