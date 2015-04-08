@@ -24,20 +24,18 @@ link_files=(Xmodmap agignore ctags curlrc gitconfig
             vimrc wgetrc xsession zsh zshenv
             zshrc)
 
-# make symbolic links of files in link directory
-link_path="$dotfiles_dir/link"
 for file in ${link_files[@]}; do
     if [[ ! $file =~ $excluded_files ]]; then
         remove_or_backup "$HOME/.$file"
-        ln -s $link_path/$file ~/.$file
+        ln -s $dotfiles_dir/$file ~/.$file
     fi
 done
 
 # symlink for neovim
 remove_or_backup ~/.nvimrc
-ln -s $link_path/vimrc ~/.nvimrc
+ln -s $dotfiles_dir/vimrc ~/.nvimrc
 remove_or_backup ~/.nvim
-ln -s $link_path/vim ~/.nvim
+ln -s $dotfiles_dir/vim ~/.nvim
 
 # make necessary files
 if [ ! -e ~/.cache/shell/chpwd-recent-dirs ]; then
