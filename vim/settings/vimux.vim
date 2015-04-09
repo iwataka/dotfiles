@@ -80,7 +80,7 @@ function! s:VimuxTest()
 endfunction
 
 function! s:VimuxTestAll()
-  sil call s:VimuxRunCommand("test")
+  sil call s:VimuxRunCommand("testQuick")
 endfunction
 
 fu! s:VimuxRun()
