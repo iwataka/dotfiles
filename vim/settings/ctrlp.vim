@@ -15,7 +15,7 @@ let g:ctrlp_by_filename = 0
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 
-nnoremap <silent> <Leader>pp :CtrlP<CR>
+nnoremap <silent> <Leader>pf :CtrlP<CR>
 nnoremap <silent> <Leader>pb :CtrlPBuffer<CR>
 nnoremap <silent> <leader>pd :CtrlPDir<cr>
 nnoremap <silent> <leader>pv :CtrlP ~/.vim<cr>
