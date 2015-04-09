@@ -52,7 +52,9 @@ set fileformats=unix,dos,mac
 " Fix the input language to english.
 set imdisable
 
-set timeout timeoutlen=3000 ttimeoutlen=100
+set timeout
+set timeoutlen=1000
+set ttimeoutlen=100
 
 "----------------------------------------------------------------
 " Display
