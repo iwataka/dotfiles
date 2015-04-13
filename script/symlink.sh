@@ -22,7 +22,7 @@ excluded_files="spacemacs"
 link_files=(Xmodmap agignore ctags curlrc gitconfig
             sbtrc spacemacs tmux.conf vim vimperatorrc
             vimrc wgetrc xsession zsh zshenv
-            zshrc)
+            zshrc emacs.d)
 
 for file in ${link_files[@]}; do
     if [[ ! $file =~ $excluded_files ]]; then
