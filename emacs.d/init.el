@@ -1,3 +1,5 @@
+(menu-bar-mode -1)
+
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
 (unless (require 'el-get nil 'noerror)
@@ -28,6 +30,7 @@
 
 (el-get-bundle evil
   (evil-mode 1)
+  (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
   ;; maps C-l to moving between multiple windows
   (define-key evil-normal-state-map (kbd "C-l") 'other-window))
 
@@ -47,3 +50,19 @@
    "o" 'delete-other-windows
    "w" 'evil-write
    "q" 'evil-quit))
+
+(el-get-bundle projectile
+  :url "https://github.com/bbatsov/projectile"
+  :features projectile
+  (projectile-global-mode)
+  (evil-leader/set-key
+    "pf" 'helm-projectile-find-file-dwim
+    "pb" 'helm-projectile-switch-to-buffer))
+
+(el-get-bundle helm
+  :url "https://github.com/emacs-helm/helm"
+  :features helm)
+
+(el-get-bundle ensime
+  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+  (add-hook 'java-mode-hook 'ensime-scala-mode-hook))
