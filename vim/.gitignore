@@ -1,9 +1,0 @@
-undo/*
-!undo/.gitignore
-swaps/*
-!swaps/.gitignore
-backups/*
-!backups/.gitignore
-plugged/*
-!plugged/.gitignore
-.netrwhist

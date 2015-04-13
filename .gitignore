@@ -3,3 +3,17 @@
 
 # swap files
 *.swp
+
+# Vim
+vim/plugged/*
+vim/swaps/*
+!vim/swaps/.gitignore
+vim/undo/*
+!vim/undo/.gitignore
+vim/backups/*
+!vim/backups/.gitignore
+vim/.netrwhist
+
+# Emacs
+emacs.d/*
+!emacs.d/init.el
