@@ -5,10 +5,6 @@
 " possible, as it has side effects.
 set nocompatible
 
-" The space key can be typed by both of two hands.
-let mapleader=" "
-let maplocalleader="\\"
-
 " Set flags for OS type and plug-in
 let g:is_win = has('win32') || has('win64') || has('win32unix')
 let g:is_mac = has('mac')
@@ -33,6 +29,9 @@ filetype indent on
 " ===============================================================
 " BASIC SETTINGS {{{
 " ===============================================================
+
+let mapleader      = " "
+let maplocalleader = "\\"
 
 let $LANG='en'
 set encoding=utf-8
@@ -60,14 +59,75 @@ set smartindent
 set noerrorbells
 set vb t_vb=
 set shortmess+=atI
+set scrolloff=3
+set showcmd
+set cmdheight=2
+set ruler
+set showmode
+set laststatus=2
+set history=100
+set wildmenu
+set wildignorecase
+set wildmode=list:full
+set wildignore+=*.exe,*.zip,*.swp,*.dll
+set autowrite
+set autoread
+set backspace=indent,eol,start
+set hidden
+set nostartofline
+set ignorecase
+set smartcase
+set magic
+set incsearch
+set hlsearch
+set gdefault
+set ttyfast
 
-if has("title") | set title | endif
-if (&t_Co > 2 || has('gui_running')) && !exists('syntax_on') | syntax on | endif
+set clipboard=unnamed
+if has('unnamedplus')
+  set clipboard+=unnamedplus
+endif
+
+set number
+if exists('&relativenumber')
+  set relativenumber
+endif
+
+if has('title')
+  set title
+endif
+
+if (&t_Co > 2 || has('gui_running')) && !exists('syntax_on')
+  syntax on
+endif
+
 if has('gui_running')
   set guioptions-=mTLr
   set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
 endif
 
+if has('mouse')
+    set mouse=a
+    set mousehide
+endif
+
+set backupdir=~/.vim/backups
+set directory=~/.vim/swaps
+if has('persistent_undo')
+    set undodir=~/.vim/undo
+    set undolevels=100
+    set undofile
+endif
+
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor\ --column
+elseif executable('ack')
+    set grepprg=ack\ -H\ --nocolor\ --nogroup
+else
+    set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
+endif
+
+" }}}
 "----------------------------------------------------------------
 " Cursor Moving
 "----------------------------------------------------------------
@@ -81,148 +141,18 @@ nnoremap <Up> gk
 nnoremap ' `
 nnoremap ` '
 
-" use relative number for moving cursor
-" Absolute number is somtimes useful.
-set number
-if exists("&relativenumber")
-    set relativenumber
-    autocmd BufReadPost * set relativenumber
-endif
+" Highlight matches when jumping to next.
+" Disabled because of incsearch plug-in.
+" nnoremap <silent>n n:call HLNext(0.4)<CR>
+" nnoremap <silent>N N:call HLNext(0.4)<CR>
+" function! HLNext(blinktime)
+    " set invcursorline
+    " redraw
+    " exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+    " set invcursorline
+    " redraw
+" endfunction
 
-" In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-    set mouse=a
-    set mousehide
-endif
-
-" set three lines
-set scrolloff=3
-
-"----------------------------------------------------------------
-" Command Line and something around it
-"----------------------------------------------------------------
-" command line itself
-set showcmd
-set cmdheight=2
-
-" show the line and column number of the cursor position
-set ruler
-
-" enable to show mode
-set showmode
-
-" Always show the status line
-set laststatus=2
-
-" default status line
-if has("fugitive#statusline")
-    set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-endif
-
-" set the amount of the command-line history
-set history=100
-
-" Command-line completion operates in an enhanced mode.
-set wildmenu
-
-" ignore case when completing in command line
-set wildignorecase
-
-" List all matches without completing, then each full match.
-set wildmode=list:full
-
-" The patterns which is ignored when expanding wildcards.
-set wildignore+=*.exe,*.zip,*.swp,*.dll
-
-"----------------------------------------------------------------
-" Editting files
-"----------------------------------------------------------------
-" Enable to share clipboard.
-set clipboard=unnamed
-if has('unnamedplus')
-    set clipboard+=unnamedplus
-endif
-
-" Automatically save before commands like :next and :make
-set autowrite
-" Automatically read when a file is modified from outside
-set autoread
-
-" Backup files don't annoy you if they are aggregated in certain single directory.
-" set nobackup
-" set nowritebackup
-set backupdir=~/.vim/backups
-
-" Swap files are useful to prevent from conflicting multiple edit.
-" set noswapfile
-set directory=~/.vim/swaps
-
-" Enable backspace to delete indent, eol and start.
-set backspace=indent,eol,start
-
-" Enable to edit multiple files.
-set hidden
-
-" enable persistent undo
-if has('persistent_undo')
-    " Save all undo files in a single location (less messy, more risky)...
-    set undodir=~/.vim/undo
-    " Save a lot of back-history...
-    set undolevels=100
-    " Actually switch on persistent undo
-    set undofile
-endif
-
-set nostartofline
-
-"----------------------------------------------------------------
-" Search
-"----------------------------------------------------------------
-" The case of normal letters is ignored.
-set ignorecase
-" Override the 'ignorecase' option if the search pattern contains upper case characters.
-set smartcase
-
-" When preceded with a backslash, some characters get a special meanings in search mode.
-set magic
-
-" Enable incremental search
-set incsearch
-
-" highlight all matches
-set hlsearch
-
-" external commands for search
-if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor\ --column
-    " if &grepformat !~# '%c'
-    "     set grepformat^=%f:%l:%c:%m
-    " endif
-elseif executable('ack')
-    set grepprg=ack\ -H\ --nocolor\ --nogroup
-else
-    set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
-endif
-
-" Add the g flag to search/replace by default
-set gdefault
-
-"highlight matches when jumping to next
-"nnoremap <silent>n n:call HLNext(0.4)<CR>
-"nnoremap <silent>N N:call HLNext(0.4)<CR>
-"function! HLNext(blinktime)
-    "set invcursorline
-    "redraw
-    "exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
-    "set invcursorline
-    "redraw
-"endfunction
-
-"----------------------------------------------------------------
-" Connection
-"----------------------------------------------------------------
-" Optimize for fast terminal connections
-set ttyfast
 
 "----------------------------------------------------------------
 " Key mappings
@@ -579,17 +509,14 @@ abbrev reutrn return
 abbrev netowrk network
 
 "----------------------------------------------------------------
-" colorscheme
+" solarized
 "----------------------------------------------------------------
-" solarized configuration
 let g:solarized_termcolors=256
 let g:solarized_visibility='high'
-" highlight trailing spaces
 let g:solarized_hitrail=1
 let g:solarized_termtrans=1
-
 set background=dark
-colorscheme solarized
+silent! colo solarized
 
 " ================ Custom Settings ========================
 if filereadable(expand('~/.vim/settings.vim'))
