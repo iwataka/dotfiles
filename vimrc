@@ -301,6 +301,7 @@ nnoremap x "_x
 " Very tired to use the little finger frequently.
 " escape from insert mode more easier
 inoremap jk <Esc>
+cnoremap jk <C-c>
 
 nnoremap <leader>ev :vsplit ~/.vimrc<cr>
 nnoremap <leader>sv :source ~/.vimrc<cr>
@@ -313,6 +314,7 @@ nnoremap <Leader>w :w<CR>
 
 " Fast Quitting
 nnoremap <leader>q :q<cr>
+nnoremap <leader>Q :qa!<cr>
 
 nnoremap <leader>o :only<cr>
 
