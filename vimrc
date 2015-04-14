@@ -5,14 +5,8 @@
 " possible, as it has side effects.
 set nocompatible
 
-" define leader key
+" The space key can be typed by both of two hands.
 let mapleader=" "
-
-" alternative key-bind of ,
-" This is used when mapleader is ','.
-" nnoremap <Leader>, ,
-
-" define local leader key
 let maplocalleader="\\"
 
 " Set flags for OS type and plug-in
@@ -36,105 +30,43 @@ endif
 filetype plugin on
 filetype indent on
 
-"----------------------------------------------------------------
-" Language
-"----------------------------------------------------------------
-"when using Vim, english is better choice than japanese
-let $LANG='en'
+" ===============================================================
+" BASIC SETTINGS {{{
+" ===============================================================
 
-" set encoding to utf-8
+let $LANG='en'
 set encoding=utf-8
 set fileencodings=utf-8,sjis
-
-" use unix as the standard file type
 set fileformats=unix,dos,mac
-
-" Fix the input language to english.
 set imdisable
-
 set timeout
 set timeoutlen=1000
 set ttimeoutlen=100
-
-"----------------------------------------------------------------
-" Display
-"----------------------------------------------------------------
-" Switch syntax highlighting on, when the terminal has colors.
-" Also switch on highlighting the last used search pattern.
-if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
-    syntax on
-endif
-
-" highlight cursor line position
 set cursorline
-
-" Don't redraw while executing macros (good performance config)
 set lazyredraw
-
-" Set below options if gui_running.
-if has("gui_running")
-    "hide menubar and toolbar when running gui
-    set guioptions-=m
-    set guioptions-=T
-
-    "hide scrollbars
-    set guioptions-=L
-    set guioptions-=r
-
-    "default font for gui
-    set guifont=Inconsolata\ Medium\ 12
-endif
-
-" When a bracket is inserted, briefly jump to the matching one.
 set showmatch
-" Set the time to show matches to 0.1s.
 set matchtime=1
-
-" set textwidth
 set textwidth=0
-
-" limit the height of popup menu when completing
 set pumheight=10
-
-" more natural way to split
 set splitright
 set splitbelow
-
-" folding
-let g:vim_markdown_folding_disabled=1
-
-"----------------------------------------------------------------
-" Indentation
-"----------------------------------------------------------------
-" use tab as 4 spaces
 set expandtab
 set smarttab
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-
-" indent settings
 set autoindent
 set smartindent
-
-"----------------------------------------------------------------
-" Notification
-"----------------------------------------------------------------
-" no error notification
 set noerrorbells
 set vb t_vb=
+set shortmess+=atI
 
-" set filename to title bar
-if has("title")
-    set title
+if has("title") | set title | endif
+if (&t_Co > 2 || has('gui_running')) && !exists('syntax_on') | syntax on | endif
+if has('gui_running')
+  set guioptions-=mTLr
+  set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
 endif
-
-" apply all of the abbreviations
-set shortmess+=a
-" truncate file message at the start
-set shortmess+=t
-" Don't show the intro message when starting vim
-set shortmess+=I
 
 "----------------------------------------------------------------
 " Cursor Moving
