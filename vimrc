@@ -531,42 +531,6 @@ augroup vimrcEx
     autocmd QuickFixCmdPost *grep* cwindow
 augroup END
 
-" make naughty characters stand out
-" exec "set lcs=tab:\uBB\uBB,trail:\uB7,nbsp:~"
-" augroup VisibleNaughtiness
-"     autocmd!
-"     autocmd BufEnter * set list
-"     autocmd BufEnter *.txt set nolist
-"     autocmd BufEnter *.vp* set nolist
-"     autocmd BufEnter * if !&modifiable
-"     autocmd BufEnter * set nolist
-"     autocmd BufEnter * endif
-" augroup END
-
-" make 'O' the default when trying to edit the file simultaneously
-" This paragraph is introduced by Demian Conway.
-" augroup NoSimultaneousEdits
-"     autocmd!
-"     autocmd SwapExists * let v:swapchoice = 'o'
-"     autocmd SwapExists * echomsg ErrorMsg
-"     autocmd SwapExists * echo 'Duplicate edit session (readonly)'
-"     autocmd SwapExists * echohl None
-" augroup END
-
-" If the filetype is diff, enables syntax highlight
-" It is useful when syntax highlight is off by default.
-" But I always enables syntax highlight, so this is meaningless.
-"augroup PatchDiffHighlight
-    "autocmd!
-    "autocmd FileType diff syntax enable
-"augroup END
-
-" For the compatibility with Vi, it is deprecated.
-" augroup VimHelpKeybinds
-"     autocmd!
-"     autocmd FileType help nnoremap q :q<CR>
-" augroup END
-
 "----------------------------------------------------------------
 " Helper function settings
 "----------------------------------------------------------------
