@@ -388,4 +388,58 @@ if filereadable(expand('~/.vim/settings.vim'))
   source ~/.vim/settings.vim
 endif
 
+" --------------------------------------------------------------
+" CtrlP
+" --------------------------------------------------------------
+if executable('ag')
+    let g:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
+elseif executable('ack')
+    let g:ctrlp_user_command = 'ack --follow --nocolor -g "" %s'
+endif
+
+" default ignored directories
+let g:ctrlp_custom_ignore = {
+    \ 'dir': '\.gradle$\|build$\|project$\|target$\|out$\|libs$\|\.git$',
+    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
+\ }
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode='wr'
+let g:ctrlp_by_filename = 0
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+
+nnoremap <silent> <Leader>pf :CtrlP<CR>
+nnoremap <silent> <Leader>pb :CtrlPBuffer<CR>
+nnoremap <silent> <leader>pd :CtrlPDir<cr>
+nnoremap <silent> <leader>pv :CtrlP ~/.vim<cr>
+nnoremap <silent> <Leader>pm :CtrlPMRU<CR>
+nnoremap <silent> <Leader>pl :CtrlPLine %<CR>
+nnoremap <silent> <Leader>pu :CtrlPUndo<CR>
+" nnoremap <silent> <Leader>pr :CtrlPFunky<CR>
+
+" let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
+" let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+
+" --------------------------------------------------------------
+" CtrlProj
+" --------------------------------------------------------------
+let g:ctrlproj_paths = [
+  \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
+  \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
+  \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
+  \ '/usr/local/scala',
+  \ '/usr/local/jdk',
+  \ '~/projects/*',
+  \ '~/.vim/plugged/*',
+  \ '~/dotfiles'
+  \ ]
+
+" fast aliases for ctrlp
+nnoremap <silent> <Leader>pq :Ctrlproj<CR>
+nnoremap <silent> <Leader>pl :CtrlprojLastDir<CR>
+nnoremap <silent> <leader>pg :CtrlprojGrep<cr>
+nnoremap <silent> <leader>pr :CtrlprojRooter<cr>
+nnoremap <silent> <leader>ps :silent only<cr>:CtrlprojVSwitch<cr>
+nnoremap <silent> <leader>pa :silent only<cr>:CtrlprojVAlternate<cr>
+
 " }}}
