@@ -21,3 +21,5 @@
     co = checkout
     cp = cherry-pick
     st = status
+[github]
+    user = iwataka
