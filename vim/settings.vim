@@ -2,20 +2,10 @@ let vimsettings = '~/.vim/settings'
 
 let s:excluded_paths = []
 
-if !g:use_neocomplete
-  call add(s:excluded_paths, 'neocomplete.vim')
-  call add(s:excluded_paths, 'neosnippet.vim')
-  call add(s:excluded_paths, 'neosnippet-snippets')
-endif
-
 if !g:use_ycm
   call add(s:excluded_paths, 'YouCompleteMe')
   call add(s:excluded_paths, 'ultisnips')
   call add(s:excluded_paths, 'vim-snippets')
-endif
-
-if !g:use_supertab
-  call add(s:excluded_paths, 'supertab')
 endif
 
 if !g:use_tmux
@@ -25,18 +15,6 @@ endif
 
 if !g:use_unite
   call add(s:excluded_paths, 'unite')
-endif
-
-if !g:use_ctrlp
-  call add(s:excluded_paths, 'ctrlp')
-endif
-
-if !g:use_ctrlp_cmatcher
-  call add(s:excluded_paths, 'ctrlp-cmatcher')
-endif
-
-if !g:use_ctrlproj
-  call add(s:excluded_paths, 'ctrlproj')
 endif
 
 " Simply source setting files (detecting os type is in these files).
