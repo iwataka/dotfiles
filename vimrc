@@ -10,16 +10,9 @@ if has("win32") || has("win64")
   set runtimepath+=~/.vim/
 endif
 
-" Set flags for OS type and plug-in
-let g:is_win = has('win32') || has('win64') || has('win32unix')
-let g:is_mac = has('mac')
-let g:is_unix = has('unix')
-let g:use_ycm = g:is_unix && has('python')
-let g:use_tmux = !has('gui_running')
-
 silent! if plug#begin('~/.vim/plugged')
 
-if g:use_ycm
+if (has('unix') || has('mac')) && has('python')
   Plug 'Valloric/YouCompleteMe'
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
@@ -28,7 +21,7 @@ else
 endif
 
 " cooperation with tmux (in gui only)
-if g:use_tmux
+if !has('gui_running')
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'tpope/vim-dispatch'
 endif
