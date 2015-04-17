@@ -452,4 +452,13 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_key_detailed_diagnostics = ''
 
+" --------------------------------------------------------------
+" Ultisnips
+" --------------------------------------------------------------
+let g:UltiSnipsListSnippets="<c-tab>"
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsSnippetsDir="~/.vim/snippets"
+
 " }}}
