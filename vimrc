@@ -471,7 +471,7 @@ let g:gitgutter_sign_removed = '-'
 " --------------------------------------------------------------
 " fugitive
 " --------------------------------------------------------------
-nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gs :Gstatus<CR>8j
 nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <leader>gD :Git diff<cr>
 nnoremap <Leader>gg :call <sid>GgrepPrompt()<cr>
