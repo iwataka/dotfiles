@@ -47,7 +47,7 @@ prompt_git() {
 
 		echo -e "${1}${branchName}${blue}${s}";
 	else
-		echo '[Outside-Git-Repo]';
+		echo '';
 	fi;
 }
 
