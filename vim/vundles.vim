@@ -21,10 +21,11 @@ if g:use_supertab
   Plug 'ervandew/supertab'
 endif
 
-" cooperation with vimux (in gui only)
+" cooperation with tmux (in gui only)
 if g:use_tmux
-  Plug 'benmills/vimux'
-  Plug 'christoomey/vim-tmux-navigator'
+  " Plug 'benmills/vimux'
+  " Plug 'christoomey/vim-tmux-navigator'
+  Plug 'tpope/vim-dispatch'
 endif
 
 if g:use_ctrlp
@@ -59,6 +60,8 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/fzf', { 'do': 'yes \| ./install' }
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 
 " depending on filetypes
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }

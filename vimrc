@@ -1,6 +1,6 @@
-"----------------------------------------------------------------
-" Preparations
-"----------------------------------------------------------------
+" ===============================================================
+" VIM-PLUG BLOCK {{{
+" ===============================================================
 " Use Vim settings, rather than Vi settings. This setting must be as early as
 " possible, as it has side effects.
 set nocompatible
@@ -26,6 +26,7 @@ endif
 filetype plugin on
 filetype indent on
 
+" }}}
 " ===============================================================
 " BASIC SETTINGS {{{
 " ===============================================================
@@ -128,105 +129,66 @@ else
 endif
 
 " }}}
-"----------------------------------------------------------------
-" Cursor Moving
-"----------------------------------------------------------------
-"more intuitive movement
+" ===============================================================
+" MAPPINGS {{{
+" ===============================================================
+
 nnoremap j gj
 nnoremap k gk
 nnoremap <Down> gj
 nnoremap <Up> gk
 
-" move to marks efficiently
+nnoremap x "_x
+
 nnoremap ' `
 nnoremap ` '
 
-" Highlight matches when jumping to next.
-" Disabled because of incsearch plug-in.
-" nnoremap <silent>n n:call HLNext(0.4)<CR>
-" nnoremap <silent>N N:call HLNext(0.4)<CR>
-" function! HLNext(blinktime)
-    " set invcursorline
-    " redraw
-    " exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
-    " set invcursorline
-    " redraw
-" endfunction
-
-
-"----------------------------------------------------------------
-" Key mappings
-"----------------------------------------------------------------
-" delete a character without adding it to default register
-nnoremap x "_x
-
-" Very tired to use the little finger frequently.
-" escape from insert mode more easier
 inoremap jk <Esc>
 cnoremap jk <C-c>
 
 nnoremap <leader>ev :vsplit ~/.vimrc<cr>
 nnoremap <leader>sv :source ~/.vimrc<cr>
 
-" for consistency with operators 'c' and 'd'.
-nnoremap Y y$
-
-" Fast saving
-nnoremap <Leader>w :w<CR>
-
-" Fast Quitting
-nnoremap <leader>q :q<cr>
-nnoremap <leader>Q :qa!<cr>
-
-nnoremap <leader>o :only<cr>
-
-" Fast executing macros
+" qq to record, Q to replay
 nnoremap Q @q
 vnoremap Q :norm @q<cr>
 
-" Fast redrawing and switching off highlight search.
-" This mapping key is used to move between windows.
-" nnoremap <silent> <c-l> :redraw!<cr>:nohlsearch<cr>
+" Make Y behave like other capitals
+nnoremap Y y$
 
-" Bash like keys for the command line
+" Save
+nnoremap <Leader>w :w<CR>
+cnoremap w!! w !sudo tee % >/dev/null
+
+" Quit
+nnoremap <leader>q :q<cr>
+nnoremap <leader>Q :qa!<cr>
+
+" Hide other visibie buffers
+nnoremap <leader>o :only<cr>
+
+" Redraw
+nnoremap <silent> gr :redraw!<cr>:nohlsearch<cr>
+
+" Command line
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
 cnoremap <C-K> <C-U>
-
-" Scrolls in command line
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
-
-" alias for current buffer path
 cnoremap <expr> %% expand("%")
 
-" $q is super useful when browsing on the command line
-" it deletes everything until the last slash
-" cnoremap $q <C-\>eDeleteTillSlash()<CR>
+" Scroll horizontally
+nnoremap zl zL
+nnoremap zh zH
+nnoremap zL zl
+nnoremap zH zh
 
-" aliases for fold operations
-" If the space key is mapleader, this mapping is useful
-" to be alternative way to fold and unfold.
-nnoremap <Leader>fo :foldopen<CR>
-nnoremap <Leader>fO :%foldopen!<CR>
-nnoremap <Leader>fc :foldclose<CR>
-nnoremap <Leader>fC :%foldclose!<CR>
-
-" Fast redrawing and erasing highlight
-nnoremap <silent> gr :redraw!<cr>:nohlsearch<cr>
-
-" Fast scroll vertically
+" Scroll vertically
 nnoremap <c-y> 3<c-y>
 nnoremap <c-e> 3<c-e>
 
-" Fast tab navigation
-nnoremap <s-l> gt
-nnoremap <s-h> gT
-
-nnoremap gb :bnext<cr>
-nnoremap gB :bprevious<cr>
-
-" move between splitted panes more easier
+" Move between splitted panes
 if maparg('<c-j>', 'n') == ''
   nnoremap <c-j> <c-w>j
 endif
@@ -240,108 +202,23 @@ if maparg('<c-l>', 'n') == ''
   nnoremap <c-l> <c-w>l
 endif
 
-vnoremap > >gv
-vnoremap < <gv
+" Highlight matches when jumping to next.
+" Disabled because of incsearch plug-in.
+" nnoremap <silent>n n:call HLNext(0.4)<CR>
+" nnoremap <silent>N N:call HLNext(0.4)<CR>
+" function! HLNext(blinktime)
+    " set invcursorline
+    " redraw
+    " exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+    " set invcursorline
+    " redraw
+" endfunction
 
-" save the file with root previledge
-cnoremap w!! w !sudo tee % >/dev/null
+" }}}
+" ===============================================================
+" AUTOCMD {{{
+" ===============================================================
 
-nnoremap cp yap<s-}>p
-
-" Fast scroll horizontally
-nnoremap zl zL
-nnoremap zh zH
-nnoremap zL zl
-nnoremap zH zh
-
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-" vnoremap <silent> * :call VisualSelection('f', '')<CR>
-" vnoremap <silent> # :call VisualSelection('b', '')<CR>
-
-" typing backspace twice to normalize spaces
-" Typing twice prevents from calling accidentally.
-nnoremap <silent> <BS><BS> :call NormalizeSpaces()<CR>
-
-" Show tree view of your project via terminal.
-command! TreeView exe "normal! :!tree src | less\<cr>"
-
-" ======================deprecated because they have same function as unimpaired===========================
-" insert blank line more easily
-" This mapping is the imitation of the plugin 'unimpaired'.
-" nnoremap ]<Space> o<Esc>k
-" nnoremap [<Space> O<Esc>j
-
-" exchange two lines more easily
-" This mapping is the imitation of the plugin 'unimpaired'.
-" nnoremap ]e ddp
-" nnoremap [e ddkP
-
-" Switch CWD to the directory of the open buffer
-" This mapping is same prefix as quickfix operation mappings.
-" noremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
-
-" alias for ctags operations
-" This mapping is same prefix as quickfix operation mappings.
-" nnoremap <Leader>ct :!ctags -R .<CR>
-
-" aliases for quickfix operations
-" nnoremap <Leader>cc :cclose<CR>
-" nnoremap <Leader>cn :cnext<CR>
-" nnoremap <Leader>cp :cprevious<CR>
-
-" aliases for buffeer operations
-" nnoremap <Leader>bd :bdelete
-" nnoremap <Leader>bn :bnext<CR>
-" nnoremap <Leader>bp :bprevious<CR>
-
-" move last open buffer easily
-" let g:lastbuffer = 1
-" nnoremap <Leader>bl :exe "buffer " . lastbuffer<CR>
-" au BufLeave * let g:lastbuffer = bufnr('%')
-
-" aliases for tab operations
-" nnoremap <Leader>to :tabonly<CR>
-" nnoremap <Leader>tn :tabnext<CR>
-" nnoremap <Leader>tp :tabprevious<CR>
-" nnoremap <Leader>tc :tabclose<CR>
-" nnoremap <Leader>tm :tabmove
-
-" move last open tab easily
-" let g:lasttab = 1
-" nnoremap <Leader>tl :exe "tabn " . g:lasttab<CR>
-" au TabLeave * let g:lasttab = tabpagenr()
-
-" ======================deprecated because of the compatibility with Vi===========================
-" escape from command line mode more easier
-" cnoremap jk <C-C>
-
-" Fast hide other windows
-" nnoremap <Leader>o :only<CR>
-
-" define special leader
-" nnoremap [Leader] <Nop>
-" nmap <Space> [Leader]
-
-" clears search highlight and redraw display
-" nnoremap <silent> <Esc> :nohlsearch<CR>:redraw!<CR>
-
-" more useful command prefix
-" nnoremap ; :
-" nnoremap : ;
-" vnoremap ; :
-" vnoremap : ;
-
-" Fast replace command
-" nnoremap S :%s//g<Left><Left>
-
-" Fast redrawing and switching off highlight search.
-" nnoremap <silent> <c-h> :redraw!<cr>:nohlsearch<cr>
-
-"----------------------------------------------------------------
-" Auto commands
-"----------------------------------------------------------------
-" This group includes non-named auto commands.
 augroup vimrcEx
     autocmd!
 
@@ -386,70 +263,18 @@ augroup vimrcEx
     autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%101v')
 
     " Visualizes full-size space
-    autocmd BufRead,BufNew * highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
+    autocmd BufRead,BufNew *
+      \ highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
     autocmd BufRead,BufNew * match FullWidthSpace /　/
 
     " Automatically open the quickfix window after :Ggrep of fugitive.
     autocmd QuickFixCmdPost *grep* cwindow
 augroup END
 
-"----------------------------------------------------------------
-" Helper function settings
-"----------------------------------------------------------------
-" Trim trailing white spaces and expand tab to some spaces.
-function! NormalizeSpaces()
-    let l:save_cursor = getpos(".")
-    if search("\\t")
-        let l:count = 0
-        let l:spaces = ""
-        while l:count < &tabstop
-            let l:spaces = l:spaces . " "
-            let l:count = l:count + 1
-        endwhile
-        exe "normal! :%s/\\t/" . l:spaces . "/g\<CR>"
-    endif
-    if search('\s\+$')
-        :%s/\s\+$//g
-    endif
-    call setpos(".", l:save_cursor)
-endfunction
-
-" Change the number of spaces.
-function! ChangeSpaceNum(m, n)
-    let l:save_cursor = getpos(".")
-    let l:before = ""
-    let l:count = 0
-    while l:count < a:m
-        let l:before = l:before . " "
-        let l:count = l:count + 1
-    endwhile
-    if search(l:before)
-        let l:after = ""
-        let l:count = 0
-        while l:count < a:n
-            let l:after = l:after . " "
-            let l:count = l:count + 1
-        endwhile
-        exe "normal! :%s/" . l:before . "/" . l:after . "/g\<CR>"
-    endif
-    call setpos(".", l:save_cursor)
-endfunction
-
-"a function to convert java code into scala one
-function! ConvertJavaIntoScala()
-    let l:save_cursor = getpos(".")
-    if search(";\\n")
-        :%s/;\n/\r/g
-    endif
-    if search("()")
-        :%s/()//g
-    endif
-    if search("public ")
-        :%s/public //g
-    endif
-    call ChangeSpaceNum(4, 2)
-    call setpos(".", l:save_cursor)
-endfunction
+" }}}
+" ===============================================================
+" FUNCTIONS & COMMANDS {{{
+" ===============================================================
 
 " clear buffers except for current one
 command! BufClear :call BufClear()
@@ -460,57 +285,39 @@ function! BufClear()
     silent! exe "normal! :" . (l:current_bufnr + 1) . "," . l:last_bufnr . "bdelete\<cr>"
 endfunction
 
-" func! DeleteTillSlash()
-"     let g:cmd = getcmdline()
-"     if has("win16") || has("win32")
-"         let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
-"     else
-"         let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
-"     endif
-"     if g:cmd == g:cmd_edited
-"         if has("win16") || has("win32")
-"             let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
-"         else
-"             let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
-"         endif
-"     endif
-"     return g:cmd_edited
-" endfunc
-
-" function! CmdLine(str)
-"     exe "menu Foo.Bar :" . a:str
-"     emenu Foo.Bar
-"     unmenu Foo
-" endfunction
-
-" function! VisualSelection(direction, extra_filter) range
-"     let l:saved_reg = @"
-"     execute "normal! vgvy"
-"     let l:pattern = escape(@", '\\/.*$^~[]')
-"     let l:pattern = substitute(l:pattern, "\n$", "", "")
-"     if a:direction == 'b'
-"         execute "normal ?" . l:pattern . "^M"
-"     elseif a:direction == 'gv'
-"         call CmdLine("Ack \"" . l:pattern . "\" " )
-"     elseif a:direction == 'replace'
-"         call CmdLine("%s" . '/'. l:pattern . '/')
-"     elseif a:direction == 'f'
-"         execute "normal /" . l:pattern . "^M"
-"     endif
-"     let @/ = l:pattern
-"     let @" = l:saved_reg
-" endfunction
-
-"----------------------------------------------------------------
-" Abbreviations for Type
-"----------------------------------------------------------------
+" }}}
+" ===============================================================
+" ABBREVIATIONS {{{
+" ===============================================================
 abbrev factroy factory
 abbrev reutrn return
 abbrev netowrk network
 
-"----------------------------------------------------------------
+" }}}
+" ===============================================================
+" PLUGINS {{{
+" ===============================================================
+
+" --------------------------------------------------------------
+" dispatch
+" --------------------------------------------------------------
+augroup dispatchEx
+  autocmd!
+  autocmd FileType scala let b:start = 'sbt'
+augroup END
+
+nnoremap <F9> :call <sid>StartOrDispatch()<cr>
+fu! s:StartOrDispatch()
+  if exists('b:start') && b:start != ''
+    exe 'Start'
+  else
+    exe 'Dispatch'
+  endif
+endfu
+
+" --------------------------------------------------------------
 " solarized
-"----------------------------------------------------------------
+" --------------------------------------------------------------
 let g:solarized_termcolors=256
 let g:solarized_visibility='high'
 let g:solarized_hitrail=1
@@ -518,7 +325,8 @@ let g:solarized_termtrans=1
 set background=dark
 silent! colo solarized
 
-" ================ Custom Settings ========================
 if filereadable(expand('~/.vim/settings.vim'))
   source ~/.vim/settings.vim
 endif
+
+" }}}
