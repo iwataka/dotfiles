@@ -12,6 +12,7 @@ endif
 
 silent! if plug#begin('~/.vim/plugged')
 
+" Auto Completion
 if (has('unix') || has('mac')) && has('python')
   Plug 'Valloric/YouCompleteMe'
   Plug 'SirVer/ultisnips'
@@ -20,44 +21,42 @@ else
   Plug 'ervandew/supertab'
 endif
 
-" cooperation with tmux (in gui only)
+" Tmux
 if !has('gui_running')
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'tpope/vim-dispatch'
 endif
 
-" useful goodies
+" Git
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'mattn/gist-vim'
+Plug 'mattn/webapi-vim'
+
+" CtrlP
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'iwataka/ctrlproj.vim'
+Plug 'JazzCore/ctrlp-cmatcher'
+
+" Other useful goodies
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
-
-" Git
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-
 Plug 'haya14busa/incsearch.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/fzf', { 'do': 'yes \| ./install' }
-Plug 'mattn/webapi-vim'
-Plug 'mattn/gist-vim'
 
-" depending on filetypes
+" For specific filetypes
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'scrooloose/syntastic', { 'for': ['ruby', 'python'] }
 Plug 'tpope/vim-endwise', { 'for': ['ruby', 'vim'] }
-
-" local configuration for plugins
-if filereadable(expand('~/.vim/.vundles.local'))
-  source ~/.vim/.vundles.local
-endif
 
 call plug#end()
 endif
