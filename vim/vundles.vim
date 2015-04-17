@@ -5,19 +5,11 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-if g:use_neocomplete
-  Plug 'Shougo/neocomplete.vim'
-  Plug 'Shougo/neosnippet.vim'
-  Plug 'Shougo/neosnippet-snippets'
-endif
-
 if g:use_ycm
   Plug 'Valloric/YouCompleteMe'
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
-endif
-
-if g:use_supertab
+else
   Plug 'ervandew/supertab'
 endif
 

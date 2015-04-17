@@ -9,9 +9,7 @@ set nocompatible
 let g:is_win = has('win32') || has('win64') || has('win32unix')
 let g:is_mac = has('mac')
 let g:is_unix = has('unix')
-let g:use_neocomplete = g:is_win && has('lua')
-let g:use_ycm = !g:use_neocomplete && g:is_unix && has('python')
-let g:use_supertab = !g:use_neocomplete && !g:use_ycm
+let g:use_ycm = g:is_unix && has('python')
 let g:use_tmux = !has('gui_running')
 let g:use_unite = 0
 let g:use_ctrlp = !g:use_unite
