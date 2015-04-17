@@ -206,6 +206,11 @@ nnoremap <leader>Q :qa!<cr>
 " Hide other visibie buffers
 nnoremap <leader>o :only<cr>
 
+" Source the current file
+nnoremap <leader>S :source %<cr>
+" Source a visual range
+vnoremap <leader>S y:@"<cr>
+
 " Redraw
 nnoremap <silent> gr :redraw!<cr>:nohlsearch<cr>
 
