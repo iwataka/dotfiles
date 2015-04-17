@@ -62,6 +62,8 @@ Plug 'Raimondi/delimitMate'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'do': 'yes \| ./install' }
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'mattn/webapi-vim'
+Plug 'mattn/gist-vim'
 
 " depending on filetypes
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
