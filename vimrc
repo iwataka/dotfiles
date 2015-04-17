@@ -11,10 +11,6 @@ let g:is_mac = has('mac')
 let g:is_unix = has('unix')
 let g:use_ycm = g:is_unix && has('python')
 let g:use_tmux = !has('gui_running')
-let g:use_unite = 0
-let g:use_ctrlp = !g:use_unite
-let g:use_ctrlp_cmatcher = g:use_ctrlp && 0
-let g:use_ctrlproj = g:use_ctrlp && 1
 
 if filereadable(expand('~/.vim/vundles.vim'))
     source ~/.vim/vundles.vim

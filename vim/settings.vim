@@ -13,10 +13,6 @@ if !g:use_tmux
   call add(s:excluded_paths, 'vim-tmux-navigator')
 endif
 
-if !g:use_unite
-  call add(s:excluded_paths, 'unite')
-endif
-
 " Simply source setting files (detecting os type is in these files).
 for fpath in split(globpath(vimsettings, '*.vim'), '\n')
   let s:is_excluded = 0

@@ -19,10 +19,6 @@ if g:use_tmux
   Plug 'tpope/vim-dispatch'
 endif
 
-if g:use_unite
-  Plug 'Shougo/unite.vim'
-endif
-
 " useful goodies
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
