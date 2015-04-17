@@ -621,4 +621,10 @@ let g:delimitMate_expand_inside_quotes = 1
 vnoremap <Enter> <Plug>(EasyAlign)
 nnoremap ga <Plug>(EasyAlign)
 
+" --------------------------------------------------------------
+" scala
+" --------------------------------------------------------------
+nnoremap <silent> <Leader>ss :SortScalaImports<CR>
+let g:scala_sort_across_groups = 1
+
 " }}}
