@@ -185,8 +185,7 @@ nnoremap ` '
 inoremap jk <Esc>
 cnoremap jk <C-c>
 
-nnoremap <leader>ev :vsplit ~/.vimrc<cr>
-nnoremap <leader>sv :source ~/.vimrc<cr>
+nnoremap <leader>E :e ~/.vimrc<cr>
 
 " qq to record, Q to replay
 nnoremap Q @q
@@ -321,13 +320,70 @@ augroup END
 " ===============================================================
 
 " clear buffers except for current one
-command! BufClear :call BufClear()
-function! BufClear()
+com! BufClear call s:bufclear()
+function! s:bufclear()
     let l:current_bufnr = bufnr("%")
     let l:last_bufnr = bufnr("$")
     silent! exe "normal! :0," . (l:current_bufnr - 1) . "bdelete\<cr>"
     silent! exe "normal! :" . (l:current_bufnr + 1) . "," . l:last_bufnr . "bdelete\<cr>"
 endfunction
+
+" Returns the project root
+com! Root call s:root()
+fu! s:root()
+  let cwd = fnamemodify('.', ':p:h')
+  let gitd = finddir('.git', cwd.';')
+  if empty(gitd)
+    echo 'Not in git repo'
+  else
+    let gitp = fnamemodify(gitd, ':h')
+    echo 'Change directory to: '.gitp
+    execute 'lcd '.gitp
+  endif
+endfu
+
+fu! s:sbt_send_command(cmd)
+  let win_list = split(system('tmux list-windows'), '\n')
+  let sbt_exists = 0
+  for w in win_list
+    if w =~ '^[0-9]\+: sbt'
+      let sbt_exists = 1
+    endif
+  endfor
+  if sbt_exists
+    silent exe '!tmux send -t sbt '.cmd
+    silent !tmux send -t sbt Enter
+  else
+    echoe 'Requires sbt window'
+  endif
+endfu
+
+fu! s:sbt_run_command()
+  let fpath = expand('%:p:r')
+  let package_path = substitute(fpath, '.*/src/main/\(java\|scala\)/\(.*\)', '\2', '')
+  let project_name = substitute(fpath, '.*/\([^/]*\)/src/main/.*', '\1', '')
+  let package = substitute(package_path, '/', '\.', 'g')
+  if package && project_name
+    retu project_name.'/runMain'.package
+  else
+    echoe 'Not in sbt project'
+    retu ''
+  endif
+endfu
+
+fu! s:sbt_test_command()
+  let command_prefix = 'test:testOnly *'
+  let fname = expand('%:t:r')
+  if fname =~ '\(Test\|Spec\|_test\|_spec\)'
+    let s:sbt_last_test = fname
+    retu command_prefix.fname
+  elseif exists('s:sbt_last_test')
+    retu command_prefix.sbt_last_test
+  else
+    echoe 'Test is not found'
+    retu ''
+  endif
+endfu
 
 " }}}
 " ===============================================================
