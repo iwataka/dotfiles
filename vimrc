@@ -343,46 +343,30 @@ fu! s:root()
   endif
 endfu
 
-fu! s:sbt_send_command(cmd)
-  let win_list = split(system('tmux list-windows'), '\n')
-  let sbt_exists = 0
-  for w in win_list
-    if w =~ '^[0-9]\+: sbt'
-      let sbt_exists = 1
+fu! s:open_command()
+  if has('mac')
+    retu 'open'
+  elseif has('unix')
+    if executable('xdg-open')
+      retu 'xdg-open'
+    else
+      echoe 'Requires xdg-open command'
+      retu ''
     endif
-  endfor
-  if sbt_exists
-    silent exe '!tmux send -t sbt '.cmd
-    silent !tmux send -t sbt Enter
+  elseif has('win32unix')
+    retu 'cygstart'
   else
-    echoe 'Requires sbt window'
+    retu 'start'
   endif
 endfu
 
-fu! s:sbt_run_command()
-  let fpath = expand('%:p:r')
-  let package_path = substitute(fpath, '.*/src/main/\(java\|scala\)/\(.*\)', '\2', '')
-  let project_name = substitute(fpath, '.*/\([^/]*\)/src/main/.*', '\1', '')
-  let package = substitute(package_path, '/', '\.', 'g')
-  if package && project_name
-    retu project_name.'/runMain'.package
-  else
-    echoe 'Not in sbt project'
-    retu ''
-  endif
-endfu
-
-fu! s:sbt_test_command()
-  let command_prefix = 'test:testOnly *'
-  let fname = expand('%:t:r')
-  if fname =~ '\(Test\|Spec\|_test\|_spec\)'
-    let s:sbt_last_test = fname
-    retu command_prefix.fname
-  elseif exists('s:sbt_last_test')
-    retu command_prefix.sbt_last_test
-  else
-    echoe 'Test is not found'
-    retu ''
+nnoremap <leader>? :call <sid>google()<cr>
+fu! s:google()
+  let word = join(split(input('Keyword? ')), '+')
+  if word
+    let url = shellescape('http://google.com/search?q='.word)
+    let open = s:open_command()
+    silent! exe '!'.open.' '.url
   endif
 endfu
 
