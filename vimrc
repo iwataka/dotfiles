@@ -25,6 +25,7 @@ endif
 if !has('gui_running')
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'tpope/vim-dispatch'
+  Plug 'tpope/vim-tbone'
 endif
 
 " Git
