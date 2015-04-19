@@ -325,22 +325,31 @@ com! BufClear call s:bufclear()
 function! s:bufclear()
     let l:current_bufnr = bufnr("%")
     let l:last_bufnr = bufnr("$")
-    silent! exe "normal! :0," . (l:current_bufnr - 1) . "bdelete\<cr>"
-    silent! exe "normal! :" . (l:current_bufnr + 1) . "," . l:last_bufnr . "bdelete\<cr>"
+    silent! exe '0,'.(l:current_bufnr - 1).'bdelete'
+    silent! exe ''.(l:current_bufnr + 1).','.l:last_bufnr.'bdelete'
 endfunction
 
-" Returns the project root
-com! Root call s:root()
-fu! s:root()
-  let cwd = fnamemodify('.', ':p:h')
-  let gitd = finddir('.git', cwd.';')
-  if empty(gitd)
-    echo 'Not in git repo'
+" Changes the current directory to the project root
+com! Root call s:cd_root()
+fu! s:cd_root()
+  let root = s:root()
+  if empty(root)
+    echom 'Not in a project'
   else
-    let gitp = fnamemodify(gitd, ':h')
-    echo 'Change directory to: '.gitp
-    execute 'lcd '.gitp
+    echom 'Changes the current directory to: '.root
+    silent exe 'cd '.root
   endif
+endfu
+fu! s:root()
+  let rmarkers = ['.git', '.hg', '.svn', '.bzr', '_darcs']
+  let cwd = fnamemodify('.', ':p:h')
+  for mark in rmarkers
+    let rdir = finddir(mark, cwd.';')
+    if !empty(rdir)
+      retu fnamemodify(rdir, ':h')
+    endif
+  endfor
+  retu ''
 endfu
 
 if has('mac')
@@ -377,6 +386,13 @@ fu! s:wikipedia(...)
   endif
 endfu
 
+nnoremap <silent> <Enter> :silent exe '!tmux breakp'<cr>
+fu! s:tmux_send(wname, cmd)
+  silent exe '!tmux send -t '.a:wname.' '.a:cmd
+  silent exe '!tmux send -t '.a:wname.' Enter'
+  silent exe '!tmux joinp -b -t '.a:wname
+endfu
+
 " }}}
 " ===============================================================
 " ABBREVIATIONS {{{
@@ -401,9 +417,9 @@ augroup END
 nnoremap <F9> :call <sid>StartOrDispatch()<cr>
 fu! s:StartOrDispatch()
   if exists('b:start') && b:start != ''
-    exe 'Start'
+    Start!
   else
-    exe 'Dispatch'
+    Dispatch
   endif
 endfu
 
