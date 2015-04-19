@@ -343,30 +343,37 @@ fu! s:root()
   endif
 endfu
 
-fu! s:open_command()
-  if has('mac')
-    retu 'open'
-  elseif has('unix')
-    if executable('xdg-open')
-      retu 'xdg-open'
-    else
-      echoe 'Requires xdg-open command'
-      retu ''
-    endif
-  elseif has('win32unix')
-    retu 'cygstart'
+if has('mac')
+  let s:open = 'open'
+elseif has('unix')
+  if executable('xdg-open')
+    let s:open = 'xdg-open'
   else
-    retu 'start'
+    let s:open = ''
+  endif
+elseif has('win32unix')
+  let s:open = 'cygstart'
+else
+  let s:open = 'start'
+endif
+
+nnoremap K :call <sid>google(expand('<cword>'))<cr>
+vnoremap K y:call <sid>google()<cr>
+fu! s:google(...)
+  let word = a:0 == 0 ? join(split(substitute(@0, '\n\|\r', '', 'g')), '+') : a:1
+  let url = shellescape('http://google.com/search?q='.word)
+  if !s:open
+    silent exe '!'.s:open.' '.url
   endif
 endfu
 
-nnoremap <leader>? :call <sid>google()<cr>
-fu! s:google()
-  let word = join(split(input('Keyword? ')), '+')
-  if word
-    let url = shellescape('http://google.com/search?q='.word)
-    let open = s:open_command()
-    silent! exe '!'.open.' '.url
+nnoremap <leader>? :call <sid>wikipedia(expand('<cword>'))<cr>
+vnoremap <leader>? y:call <sid>wikipedia()<cr>
+fu! s:wikipedia(...)
+  let word = a:0 == 0 ? join(split(substitute(@0, '\n\|\r', '', 'g')), '_') : a:1
+  let url = shellescape('http://en.wikipedia.org/'.word)
+  if !s:open
+    silent exe '!'.s:open.' '.url
   endif
 endfu
 
