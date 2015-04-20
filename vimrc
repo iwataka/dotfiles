@@ -24,7 +24,6 @@ endif
 " Tmux
 if !has('gui_running')
   Plug 'christoomey/vim-tmux-navigator'
-  Plug 'tpope/vim-dispatch'
   Plug 'tpope/vim-tbone'
 endif
 
@@ -38,6 +37,9 @@ Plug 'mattn/webapi-vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'iwataka/ctrlproj.vim'
 Plug 'JazzCore/ctrlp-cmatcher'
+
+" Colorschemes
+Plug 'altercation/vim-colors-solarized'
 
 " Other useful goodies
 Plug 'tpope/vim-repeat'
@@ -201,7 +203,7 @@ cnoremap w!! w !sudo tee % >/dev/null
 
 " Quit
 nnoremap <leader>q :q<cr>
-nnoremap <leader>Q :qa!<cr>
+nnoremap <leader>Q :wqa!<cr>
 
 " Hide other visibie buffers
 nnoremap <leader>o :only<cr>
@@ -332,7 +334,8 @@ endfunction
 " Changes the current directory to the project root
 com! Root call s:cd_root()
 fu! s:cd_root()
-  let root = s:root()
+  let cwd = fnamemodify('.', ':p')
+  let root = s:root(cwd)
   if empty(root)
     echom 'Not in a project'
   else
@@ -340,11 +343,10 @@ fu! s:cd_root()
     silent exe 'cd '.root
   endif
 endfu
-fu! s:root()
+fu! s:root(cwd)
   let rmarkers = ['.git', '.hg', '.svn', '.bzr', '_darcs']
-  let cwd = fnamemodify('.', ':p:h')
   for mark in rmarkers
-    let rdir = finddir(mark, cwd.';')
+    let rdir = finddir(mark, a:cwd.';')
     if !empty(rdir)
       retu fnamemodify(rdir, ':h')
     endif
@@ -386,13 +388,6 @@ fu! s:wikipedia(...)
   endif
 endfu
 
-nnoremap <silent> <Enter> :silent exe '!tmux breakp'<cr>
-fu! s:tmux_send(wname, cmd)
-  silent exe '!tmux send -t '.a:wname.' '.a:cmd
-  silent exe '!tmux send -t '.a:wname.' Enter'
-  silent exe '!tmux joinp -b -t '.a:wname
-endfu
-
 " }}}
 " ===============================================================
 " ABBREVIATIONS {{{
@@ -405,23 +400,6 @@ abbrev netowrk network
 " ===============================================================
 " PLUGINS {{{
 " ===============================================================
-
-" --------------------------------------------------------------
-" dispatch
-" --------------------------------------------------------------
-augroup dispatchEx
-  autocmd!
-  autocmd FileType scala let b:start = 'sbt'
-augroup END
-
-nnoremap <F9> :call <sid>StartOrDispatch()<cr>
-fu! s:StartOrDispatch()
-  if exists('b:start') && b:start != ''
-    Start!
-  else
-    Dispatch
-  endif
-endfu
 
 " --------------------------------------------------------------
 " solarized
@@ -682,8 +660,8 @@ let g:delimitMate_expand_inside_quotes = 1
 " --------------------------------------------------------------
 " easy-align
 " --------------------------------------------------------------
-vnoremap <Enter> <Plug>(EasyAlign)
-nnoremap ga <Plug>(EasyAlign)
+vmap <Enter> <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 " --------------------------------------------------------------
 " scala
@@ -701,9 +679,6 @@ let g:syntastic_mode_map = {
   \ }
 let g:syntastic_check_on_open = 0
 let g:syntastic_enable_signs = 1
-
-nnoremap <silent> <Leader>si :SyntasticInfo<CR>
-nnoremap <silent> <Leader>sc :SyntasticCheck<CR>
 
 if executable('rubocop')
   let g:syntastic_ruby_checkers = ['rubocop']
