@@ -357,6 +357,14 @@ fu! s:root(cwd)
   retu ''
 endfu
 
+nnoremap <silent> <BS><BS> :call <sid>remove_trailing_space<cr>
+fu! s:remove_trailing_space()
+  if search('\s*$', 'n')
+    %s/\s*$//
+    exe "normal! `'"
+  endif
+endfu
+
 if has('mac')
   let s:open = 'open'
 elseif has('unix')
