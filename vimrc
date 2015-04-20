@@ -24,6 +24,7 @@ endif
 " Tmux
 if !has('gui_running')
   Plug 'christoomey/vim-tmux-navigator'
+  Plug 'tpope/vim-dispatch'
   Plug 'tpope/vim-tbone'
 endif
 
@@ -484,6 +485,8 @@ nnoremap <silent> <leader>pr :CtrlprojRooter<cr>
 nnoremap <silent> <leader>ps :silent only<cr>:CtrlprojVSwitch<cr>
 nnoremap <silent> <leader>pa :silent only<cr>:CtrlprojVAlternate<cr>
 
+let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
+
 " --------------------------------------------------------------
 " YCM
 " --------------------------------------------------------------
@@ -502,6 +505,23 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets"
+
+" --------------------------------------------------------------
+" dispatch
+" --------------------------------------------------------------
+augroup dispatchEx
+  autocmd!
+  autocmd FileType scala,java let b:start = 'sbt'
+augroup END
+
+nnoremap <silent> <F9> :call <sid>dispatch_or_start()<cr>
+fu! s:dispatch_or_start()
+  if exists('b:start') && b:start != ''
+    Start
+  else
+    Dispatch
+  endif
+endfu
 
 " --------------------------------------------------------------
 " gitgutter
