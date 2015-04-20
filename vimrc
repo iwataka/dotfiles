@@ -126,6 +126,8 @@ set incsearch
 set hlsearch
 set gdefault
 set ttyfast
+set foldenable
+set foldmethod=marker
 
 set clipboard=unnamed
 if has('unnamedplus')
