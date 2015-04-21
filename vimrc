@@ -213,7 +213,6 @@ cnoremap w!! w !sudo tee % >/dev/null
 
 " Quit
 nnoremap <leader>q :q<cr>
-nnoremap <leader>Q :wqa!<cr>
 
 " Hide other visibie buffers
 nnoremap <leader>o :only<cr>
