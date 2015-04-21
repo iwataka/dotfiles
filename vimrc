@@ -58,10 +58,12 @@ if v:version >= 703
 endif
 
 " For specific filetypes
+if v:version >= 703
+  Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+endif
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'scrooloose/syntastic', { 'for': ['ruby', 'python'] }
 Plug 'tpope/vim-endwise', { 'for': ['ruby', 'vim'] }
 
