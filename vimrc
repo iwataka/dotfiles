@@ -258,6 +258,9 @@ if maparg('<c-l>', 'n') == ''
   nnoremap <c-l> <c-w>l
 endif
 
+" Execute grep by the word under the cursor
+nnoremap K :grep <cword><cr>:cwindow<cr>
+
 " Highlight matches when jumping to next.
 " Disabled because of incsearch plug-in.
 " nnoremap <silent>n n:call HLNext(0.4)<CR>
@@ -323,8 +326,8 @@ augroup vimrcEx
       \ highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
     autocmd BufRead,BufNew * match FullWidthSpace /　/
 
-    " Automatically open the quickfix window after :Ggrep of fugitive.
-    autocmd QuickFixCmdPost *grep* cwindow
+    " Automatically open the quickfix window
+    autocmd QuickFixCmdPost * cwindow
 augroup END
 
 " }}}
