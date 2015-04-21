@@ -364,9 +364,9 @@ fu! s:root(cwd)
   retu ''
 endfu
 
-nnoremap <silent> <BS><BS> :call <sid>remove_trailing_space<cr>
+nnoremap <silent> <BS><BS> :call <sid>remove_trailing_space()<cr>
 fu! s:remove_trailing_space()
-  if search('\s*$', 'n')
+  if search('\s\+$', 'n')
     %s/\s*$//
     exe "normal! `'"
   endif
