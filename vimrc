@@ -43,6 +43,9 @@ Plug 'JazzCore/ctrlp-cmatcher'
 Plug 'altercation/vim-colors-solarized'
 
 " Other useful goodies
+if v:version >= 703
+  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+endif
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -53,9 +56,7 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/vim-easy-align', { 'on': '<Plug>(EasyAlign)' }
-if v:version >= 703
-  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-endif
+Plug 'scrooloose/nerdtree'
 
 " For specific filetypes
 if v:version >= 703
@@ -761,6 +762,13 @@ if v:version >= 703
   let g:tagbar_sort = 0
   let g:tagbar_show_linenumbers = 2
   let g:tagbar_autofocus = 1
+  let g:tagbar_autoclose = 1
 endif
+
+" --------------------------------------------------------------
+" nerdtree
+" --------------------------------------------------------------
+inoremap <F2> <esc>:NERDTreeToggle<cr>
+nnoremap <F2> :NERDTreeToggle<cr>
 
 " }}}
