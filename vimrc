@@ -24,14 +24,14 @@ endif
 " Tmux
 if !has('gui_running')
   Plug 'christoomey/vim-tmux-navigator'
-  Plug 'tpope/vim-dispatch'
+  Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
   Plug 'tpope/vim-tbone'
 endif
 
 " Git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'mattn/gist-vim'
+Plug 'mattn/gist-vim', { 'on': 'Gist' }
 Plug 'mattn/webapi-vim'
 
 " CtrlP
@@ -52,7 +52,10 @@ Plug 'tpope/vim-sleuth'
 Plug 'haya14busa/incsearch.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'Raimondi/delimitMate'
-Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align', { 'on': '<Plug>(EasyAlign)' }
+if v:version >= 703
+  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+endif
 
 " For specific filetypes
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -128,6 +131,8 @@ set gdefault
 set ttyfast
 set foldenable
 set foldmethod=marker
+set foldopen+=jump
+set complete-=i
 
 set clipboard=unnamed
 if has('unnamedplus')
@@ -716,6 +721,17 @@ if executable('rubocop')
 endif
 if executable('flake8')
   let g:syntastic_python_checkers = ['flake8']
+endif
+
+" --------------------------------------------------------------
+" tagbar
+" --------------------------------------------------------------
+if v:version >= 703
+  inoremap <F8> <esc>:TagbarToggle<cr>
+  nnoremap <F8> :TagbarToggle<cr>
+  let g:tagbar_sort = 0
+  let g:tagbar_show_linenumbers = 2
+  let g:tagbar_autofocus = 1
 endif
 
 " }}}
