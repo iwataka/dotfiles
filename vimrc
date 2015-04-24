@@ -261,6 +261,11 @@ endif
 " Execute grep by the word under the cursor
 nnoremap K :grep <cword><cr>:cwindow<cr>
 
+" Increment and decrement numbers by + and - keys.
+" Tmux uses <c-a> key as a prefix, so Vim can't use it.
+nnoremap + <c-a>
+nnoremap - <c-x>
+
 " Highlight matches when jumping to next.
 " Disabled because of incsearch plug-in.
 " nnoremap <silent>n n:call HLNext(0.4)<CR>
