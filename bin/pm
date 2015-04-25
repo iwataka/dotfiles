@@ -15,15 +15,13 @@ open-command() {
 }
 
 install-java() {
-    install-java-deps
     local open=$(open-command)
     $open "www.oracle.com/technetwork/java/javase/downloads/index.html"
 }
 
-install-java-deps() {
-    if [[ $OSTYPE == "linux-gnu" ]]; then
-        sudo apt-get install ant
-    fi
+install-ant() {
+    local open=$(open-command)
+    $open http://ant.apache.org/bindownload.cgi
 }
 
 install-scala() {
@@ -33,31 +31,30 @@ install-scala() {
         cd $path
         ant build-opt
     fi
+}
+
+install-sbt() {
     local open=$(open-command)
     $open http://www.scala-sbt.org/download.html
 }
 
-install-ruby() {
-    install-ruby-deps
-    sudo gem install bundler rubocop
-    git clone https://sstephenson/rbenv ~/.rbenv
-}
-
-install-ruby-deps() {
-    if [[ $OSTYPE == "linux-gnu" ]]; then
-        sudo apt-get install rubygems-integration
+install-rbenv() {
+    local path=$HOME/.rbenv
+    if [[ -d  $path ]]; then
+        cd $path
+        git pull
+    else
+        git clone https://sstephenson/rbenv ~/.rbenv
     fi
 }
 
-install-python() {
-    install-python-deps
-    sudo pip install flake8
-    git clone https://github.com/yyuu/pyenv.git ~/.pyenv
-}
-
-install-python-deps() {
-    if [[ $OSTYPE == "linux-gnu" ]]; then
-        sudo apt-get install python-pip
+install-pyenv() {
+    local path=$HOME/.pyenv
+    if [[ -d $path ]]; then
+        cd $path
+        git pull
+    else
+        git clone https://github.com/yyuu/pyenv.git ~/.pyenv
     fi
 }
 
@@ -68,7 +65,10 @@ install-go() {
 
 install-antigen() {
     local path=$HOME/.antigen
-    if [[ ! -d $path ]]; then
+    if [[ -d $path ]]; then
+        cd $path
+        git pull
+    else
         git clone https://github.com/zsh-users/antigen $path
     fi
 }
@@ -90,8 +90,10 @@ install-neovim-deps() {
     fi
 }
 
-install-theme() {
-    install-theme-deps
+install-gnome-terminal-colors-solarized() {
+    if [[ $OSTYPE == "linux-gnu" ]]; then
+        sudo apt-get install dconf-cli
+    fi
     local name=gnome-terminal-colors-solarized
     local path=$HOME/projects/$name
     git clone https://github.com/Anthony25/$name $path
@@ -99,16 +101,15 @@ install-theme() {
     ./install.sh
 }
 
-install-theme-deps() {
-    if [[ $OSTYPE == "linux-gnu" ]]; then
-        sudo apt-get install dconf-cli
-    fi
-}
-
-install-font() {
+install-powerline-fonts() {
     local path=$HOME/projects/fonts
-    git clone https://github.com/powerline/fonts $path
-    cd $path
+    if [[ -d $path ]]; then
+        cd $path
+        git pull
+    else
+        git clone https://github.com/powerline/fonts $path
+        cd $path
+    fi
     ./install.sh
 }
 
