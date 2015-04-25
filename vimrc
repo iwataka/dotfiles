@@ -345,7 +345,7 @@ augroup vimrcEx
     autocmd QuickFixCmdPost * cwindow
 
     " Remove trailing spaces when writing buffers
-    autocmd BufWritePost call s:remove_trailing_space()
+    autocmd BufWritePre * call s:remove_trailing_space()
 augroup END
 
 " }}}
