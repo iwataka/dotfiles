@@ -1,33 +1,36 @@
-install: symlink binary default
+install: links bins default
 
-symlink:
-	./script/symlink.sh
+links:
+	./script/setup-links.sh
 
-binary:
-	./script/binary.sh
+bins:
+	./script/setup-bins.sh
 
-default:
-	./script/default.sh
+default-packages:
+	./script/install-packages.sh default-packages
 
 java:
-	./script/java.sh
+	./script/install-packages.sh java
 
-scala:
-	./script/scala.sh
+scala: java
+	./script/install-packages.sh scala
 
 ruby:
-	./script/ruby.sh
+	./script/install-packages.sh ruby
 
 python:
-	./script/python.sh
+	./script/install-packages.sh python
 
 go:
-	./script/go.sh
+	./script/install-packages.sh go
 
 nvim: neovim
 
 neovim:
-	./script/neovim.sh
+	./script/install-packages.sh neovim
 
 theme:
-	./script/theme.sh
+	./script/install-packages.sh theme
+
+font:
+	./script/install-packages.sh font

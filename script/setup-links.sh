@@ -1,9 +1,9 @@
 #!/bin/bash
 
+set -e
+
 # this directory
 dotfiles_dir=$(cd `dirname $0` && cd .. && pwd)
-# source common settings
-source "$dotfiles_dir/script/commons.sh"
 
 # removes it if a given path indicates a symbolic link,
 # makes backup of it if it exists
@@ -17,23 +17,17 @@ remove_or_backup() {
     fi
 }
 
-excluded_files="spacemacs"
-
 link_files=(Xmodmap agignore ctags curlrc gitconfig
             sbtrc spacemacs tmux.conf vim vimperatorrc
             vimrc wgetrc xsession zsh zshenv
-            zshrc emacs.d)
+            zshrc emacs.d nvimrc)
 
 for file in ${link_files[@]}; do
-    if [[ ! $file =~ $excluded_files ]]; then
-        remove_or_backup "$HOME/.$file"
-        ln -s $dotfiles_dir/$file ~/.$file
-    fi
+    remove_or_backup "$HOME/.$file"
+    ln -s $dotfiles_dir/$file ~/.$file
 done
 
 # symlink for neovim
-remove_or_backup ~/.nvimrc
-ln -s $dotfiles_dir/vimrc ~/.nvimrc
 remove_or_backup ~/.nvim
 ln -s $dotfiles_dir/vim ~/.nvim
 
