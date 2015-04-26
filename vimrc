@@ -490,15 +490,9 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 
 nnoremap <silent> <Leader>pf :CtrlP<CR>
 nnoremap <silent> <Leader>pb :CtrlPBuffer<CR>
-nnoremap <silent> <leader>pd :CtrlPDir<cr>
-nnoremap <silent> <leader>pv :CtrlP ~/.vim<cr>
 nnoremap <silent> <Leader>pm :CtrlPMRU<CR>
-nnoremap <silent> <Leader>pl :CtrlPLine %<CR>
-nnoremap <silent> <Leader>pu :CtrlPUndo<CR>
-" nnoremap <silent> <Leader>pr :CtrlPFunky<CR>
 
-" let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
-" let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
 
 " --------------------------------------------------------------
 " CtrlProj
@@ -521,8 +515,6 @@ nnoremap <silent> <leader>pg :CtrlprojGrep<cr>
 nnoremap <silent> <leader>pr :CtrlprojRooter<cr>
 nnoremap <silent> <leader>ps :silent only<cr>:CtrlprojVSwitch<cr>
 nnoremap <silent> <leader>pa :silent only<cr>:CtrlprojVAlternate<cr>
-
-let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
 
 " --------------------------------------------------------------
 " YCM
@@ -805,7 +797,7 @@ endif
 " --------------------------------------------------------------
 " nerdtree
 " --------------------------------------------------------------
-inoremap <F2> <esc>:NERDTreeToggle<cr>
-nnoremap <F2> :NERDTreeToggle<cr>
+nnoremap <leader>nn :NERDTreeToggle<cr>
+nnoremap <leader>nf :NERDTreeFind<cr>
 
 " }}}
