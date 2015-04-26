@@ -209,7 +209,7 @@ nnoremap ` '
 inoremap jk <Esc>
 cnoremap jk <C-c>
 
-nnoremap <leader>E :e ~/.vimrc<cr>
+nnoremap <leader>v :tabe ~/.vimrc<cr>
 
 " qq to record, Q to replay
 nnoremap Q @q
@@ -535,17 +535,21 @@ let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 " --------------------------------------------------------------
 augroup dispatchEx
   autocmd!
-  autocmd FileType scala,java let b:start = 'sbt'
+  autocmd FileType scala let b:start = 'sbt'
+  autocmd FileType java let b:start = 'sbt'
+  autocmd FileType closure let b:start = 'lein repl'
+  autocmd FileType python
+        \ let b:start = 'python' |
+        \ let b:dispatch = 'python %'
+  autocmd FileType ruby
+        \ let b:start = 'irb' |
+        \ let b:dispatch = 'ruby %'
 augroup END
 
-nnoremap <silent> <F9> :call <sid>dispatch_or_start()<cr>
-fu! s:dispatch_or_start()
-  if exists('b:start') && b:start != ''
-    Start
-  else
-    Dispatch
-  endif
-endfu
+nnoremap <silent> <F8> :Dispatch<cr>
+nnoremap <silent> <F9> :Start<cr>
+inoremap <silent> <F8> <Esc>:Dispatch<cr>
+inoremap <silent> <F9> <esc>:Start<cr>
 
 " --------------------------------------------------------------
 " gitgutter
@@ -772,8 +776,8 @@ endif
 " tagbar
 " --------------------------------------------------------------
 if v:version >= 703
-  inoremap <F8> <esc>:TagbarToggle<cr>
-  nnoremap <F8> :TagbarToggle<cr>
+  nnoremap <F4> :TagbarToggle<cr>
+  inoremap <F4> <esc>:TagbarToggle<cr>
   let g:tagbar_sort = 0
   let g:tagbar_show_linenumbers = 2
   let g:tagbar_autofocus = 1
@@ -783,7 +787,9 @@ endif
 " --------------------------------------------------------------
 " nerdtree
 " --------------------------------------------------------------
-nnoremap <leader>nn :NERDTreeToggle<cr>
-nnoremap <leader>nf :NERDTreeFind<cr>
+nnoremap <F2> :NERDTreeToggle<cr>
+nnoremap <F3> :NERDTreeFind<cr>
+inoremap <F2> <Esc>:NERDTreeToggle<cr>
+inoremap <F3> <Esc>:NERDTreeFind<cr>
 
 " }}}
