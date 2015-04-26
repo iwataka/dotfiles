@@ -35,7 +35,7 @@ Plug 'mattn/webapi-vim'
 
 " CtrlP
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'iwataka/ctrlproj.vim'
+Plug 'iwataka/ctrlp-quickref.vim'
 Plug 'JazzCore/ctrlp-cmatcher'
 
 " Colorschemes
@@ -494,9 +494,9 @@ nnoremap <silent> <Leader>pm :CtrlPMRU<CR>
 let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
 
 " --------------------------------------------------------------
-" CtrlProj
+" ctrlp-quickref
 " --------------------------------------------------------------
-let g:ctrlproj_paths = [
+let g:ctrlp_quickref_paths = [
   \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
   \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
   \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
@@ -508,12 +508,8 @@ let g:ctrlproj_paths = [
   \ ]
 
 " fast aliases for ctrlp
-nnoremap <silent> <Leader>pq :Ctrlproj<CR>
-nnoremap <silent> <Leader>pl :CtrlprojLastDir<CR>
-nnoremap <silent> <leader>pg :CtrlprojGrep<cr>
-nnoremap <silent> <leader>pr :CtrlprojRooter<cr>
-nnoremap <silent> <leader>ps :silent only<cr>:CtrlprojVSwitch<cr>
-nnoremap <silent> <leader>pa :silent only<cr>:CtrlprojVAlternate<cr>
+nnoremap <silent> <Leader>pq :CtrlPQuickRef<CR>
+nnoremap <silent> <Leader>pl :CtrlPQuickRefLastDir<CR>
 
 " --------------------------------------------------------------
 " YCM
