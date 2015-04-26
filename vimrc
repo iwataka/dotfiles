@@ -53,6 +53,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'haya14busa/incsearch.vim'
+Plug 'terryma/vim-multiple-cursors'
 Plug 'itchyny/lightline.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/vim-easy-align', { 'on': '<Plug>(EasyAlign)' }
@@ -620,6 +621,15 @@ fu! s:incsearch_keymap()
   IncSearchNoreMap <Tab> <Over>(buffer-complete)
   IncSearchNoreMap <S-Tab> <Over>(buffer-complete-prev)
 endfu
+
+" --------------------------------------------------------------
+" vim-multiple-cursors
+" --------------------------------------------------------------
+let g:multi_cursor_use_default_mapping = 0
+let g:multi_cursor_next_key='<c-n>'
+let g:multi_cursor_prev_key='<c-p>'
+let g:multi_cursor_skip_key='<c-x>'
+let g:multi_cursor_quit_key='<Esc>'
 
 " --------------------------------------------------------------
 " lightline
