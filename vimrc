@@ -398,8 +398,6 @@ if has('mac')
 elseif has('unix')
   if executable('xdg-open')
     let s:open = 'xdg-open'
-  else
-    let s:open = ''
   endif
 elseif has('win32unix')
   let s:open = 'cygstart'
@@ -412,7 +410,7 @@ vnoremap gG y:call <sid>google()<cr>
 fu! s:google(...)
   let word = a:0 == 0 ? join(split(substitute(@0, '\n\|\r', '', 'g')), '+') : a:1
   let url = shellescape('http://google.com/search?q='.word)
-  if !s:open
+  if exists('s:open') && !empty(s:open)
     silent exe '!'.s:open.' '.url
   endif
 endfu
@@ -422,7 +420,7 @@ vnoremap gW y:call <sid>wikipedia()<cr>
 fu! s:wikipedia(...)
   let word = a:0 == 0 ? join(split(substitute(@0, '\n\|\r', '', 'g')), '_') : a:1
   let url = shellescape('http://en.wikipedia.org/'.word)
-  if !s:open
+  if exists('s:open') && !empty(s:open)
     silent exe '!'.s:open.' '.url
   endif
 endfu
