@@ -25,7 +25,6 @@ endif
 if !has('gui_running')
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
-  Plug 'tpope/vim-tbone'
 endif
 
 " Git
@@ -53,11 +52,11 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'haya14busa/incsearch.vim'
-Plug 'terryma/vim-multiple-cursors'
+Plug 'Yggdroot/indentLine'
 Plug 'itchyny/lightline.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/vim-easy-align', { 'on': '<Plug>(EasyAlign)' }
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 
 " For specific filetypes
 if v:version >= 703
@@ -611,15 +610,6 @@ fu! s:incsearch_keymap()
   IncSearchNoreMap <Tab> <Over>(buffer-complete)
   IncSearchNoreMap <S-Tab> <Over>(buffer-complete-prev)
 endfu
-
-" --------------------------------------------------------------
-" vim-multiple-cursors
-" --------------------------------------------------------------
-let g:multi_cursor_use_default_mapping = 0
-let g:multi_cursor_next_key='<c-n>'
-let g:multi_cursor_prev_key='<c-p>'
-let g:multi_cursor_skip_key='<c-x>'
-let g:multi_cursor_quit_key='<Esc>'
 
 " --------------------------------------------------------------
 " lightline
