@@ -27,26 +27,6 @@ if [ -d /usr/local/go ]; then
     export PATH=$PATH:$GOROOT/bin
 fi
 
-if [ -d /usr/local/jdk ]; then
-    export JAVA_HOME=/usr/local/jdk
-    export PATH=$PATH:$JAVA_HOME/bin
-fi
-
-if [ -d /usr/local/scala ]; then
-    export SCALA_HOME=/usr/local/scala
-    export PATH=$PATH:$SCALA_HOME/build/pack/bin
-fi
-
-if [ -d /usr/local/sbt ]; then
-    export SBT_HOME=/usr/local/sbt
-    export PATH=$PATH:$SBT_HOME/bin
-fi
-
-if [ -d /usr/local/ant ]; then
-    export ANT_HOME=/usr/local/ant
-    export PATH=$PATH:$ANT_HOME/bin
-fi
-
 if [ -d /usr/local/idea ]; then
     export IDEA_HOME=/usr/local/idea
     export PATH=$PATH:$IDEA_HOME/bin
