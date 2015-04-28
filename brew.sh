@@ -2,6 +2,35 @@
 
 set -e
 
+git-clone-or-pull() {
+    if [[ -d $2 ]]; then
+        cd $2
+        git pull
+    else
+        git clone $1 $2
+    fi
+}
+
+install-fonts() {
+    local path=~/projects/fonts
+    if [[ ! -d $path ]]; then
+        git clone https://github.com/powerline/fonts $path
+        cd $path
+        ./install.sh
+    fi
+}
+
+# gnome-terminal-colors-solarized
+install-gtcs() {
+    local name=gnome-terminal-colors-solarized
+    local path=~/projects/$name
+    if [[ ! -d $path ]]; then
+        git clone https://github.com/Anthony25/$name $path
+        cd $path
+        ./install.sh
+    fi
+}
+
 if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get update && sudo apt-get upgrade
     # xdg-open and so on
@@ -40,66 +69,11 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install sbt
     # Java
     sudo apt-get install openjdk-7-jdk
+    # gnome-terminal-colors-solarized
+    install-gtcs
 fi
 
-# rbenv
-install-rbenv() {
-    local path=$HOME/.rbenv
-    if [[ ! -d $path ]]; then
-        cd $path
-        git pull
-    else
-        git clone https://github.com/sstephenson/rbenv $path
-    fi
-}
-
-# pyenv
-install-pyenv() {
-    local path=$HOME/.pyenv
-    if [[ -d $path ]]; then
-        cd $path
-        git pull
-    else
-        git clone https://github.com/yyuu/pyenv $path
-    fi
-}
-
-install-antigen() {
-    local path=$HOME/.antigen
-    if [[ -d $path ]]; then
-        cd $path
-        git pull
-    else
-        git clone https://github.com/zsh-users/antigen $path
-    fi
-}
-
-# gnome-terminal-colors-solarized
-install-gnome-terminal-colors-solarized() {
-    local name=gnome-terminal-colors-solarized
-    local path=$HOME/projects/$name
-    if [[ -d $path ]]; then
-        cd $path
-        git pull
-    else
-        git clone https://github.com/Anthony25/$name $path
-        cd $path
-        ./install.sh
-    fi
-}
-
-install-poweline-fonts() {
-    local path=$HOME/projects/fonts
-    if [[ -d $path ]]; then
-        cd $path
-        git pull
-    else
-        git clone https://github.com/powerline/fonts $path
-        cd $path
-        ./install.sh
-    fi
-}
-
-install-antigen
-install-gnome-terminal-colors-solarized
-install-poweline-fonts
+git-clone-or-pull https://github.com/sstephenson/rbenv ~/.rbenv
+git-clone-or-pull https://github.com/yyuu/pyenv ~/.pyenv
+git-clone-or-pull https://github.com/zsh-users/antigen ~/.antigen
+install-fonts
