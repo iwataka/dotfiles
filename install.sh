@@ -33,24 +33,6 @@ setup-bins() {
     done
 }
 
-# TODO: move this to the package manager
-install-git-open() {
-    local path=$HOME/projects/git-open
-    if [[ ! -d $path ]]; then
-        git clone https://github.com/paulirish/git-open $path
-    else
-        cd $path
-        git pull
-    fi
-    # Remove old git-open if exists
-    if [ -e ~/bin/git-open ]; then
-        rm ~/bin/git-open
-    fi
-    # Copy git-open file and make it executable.
-    cp $path/git-open ~/bin/git-open
-    chmod u+x ~/bin/git-open
-}
-
 # Removes it if a given path indicates a symbolic link and
 # makes a backup if it exists
 remove_or_backup() {
@@ -77,46 +59,10 @@ setup-symlinks() {
     ln -s $dfsdir/vim ~/.nvim
 }
 
-install-packages() {
-    if [ $OSTYPE == "linux-gnu" ]; then
-        sudo apt-get update && sudo apt-get upgrade
-        # necessaary to clone various projects
-        sudo apt-get install git
-        # mainly clone openjdk
-        sudo apt-get install mercurial
-        # default shell
-        sudo apt-get install zsh
-        # default editor
-        sudo apt-get install vim
-        # cooperate with vim
-        sudo apt-get install tmux
-        # tagbar and so on
-        sudo apt-get install exuberant-ctags
-        # faster code-searching tool
-        sudo apt-get install silversearcher-ag
-        # displays directory structure as a tree
-        sudo apt-get install tree
-        # tweak images
-        sudo apt-get install imagemagick
-        # code formatter for java, c and cpp
-        sudo apt-get install astyle
-        # youcompleteme
-        sudo apt-get install build-essential cmake python-dev
-    fi
-}
-
-if [[ $# == 0 ]]; then
-    if [[ ! -d $dfsdir ]]; then
-        git clone https://github.com/iwataka/dotfiles $dfsdir
-        cd $dfsdir
-    fi
-    pre-setup
-    setup-bins
-    install-git-open
-    setup-symlinks
-    install-packages
-else
-    for name in $@; do
-        $name
-    done
+if [[ ! -d $dfsdir ]]; then
+    git clone https://github.com/iwataka/dotfiles $dfsdir
+    cd $dfsdir
 fi
+pre-setup
+setup-bins
+setup-symlinks
