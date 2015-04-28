@@ -15,7 +15,9 @@ git-clone-if-not-exists() {
     if [[ ! -d $2 ]]; then
         git clone https://github.com/$1 $2
         cd $2
-        $3
+        if [[ $# > 2 ]]; then
+            $3
+        fi
     fi
 }
 
@@ -66,6 +68,7 @@ if [ $OSTYPE == "linux-gnu" ]; then
     # gnome-terminal-colors-solarized
     install-gtcs
 elif [[ $OSTYPE == "darwin"* ]]; then
+    # Some sentences derived from https://github.com/mathiasbynens/dotfiles
     brew update
     brew upgrade
     # Install some other useful utilities like `sponge`.
@@ -83,12 +86,18 @@ elif [[ $OSTYPE == "darwin"* ]]; then
     brew install tree
 fi
 
-git-clone-or-pull sstephenson/rbenv ~/.rbenv
-git-clone-or-pull yyuu/pyenv ~/.pyenv
 git-clone-or-pull zsh-users/antigen ~/.antigen
 git-clone-if-not-exists powerline/fonts ~/projects/fonts ./install.sh
+
+git-clone-if-not-exists scala/scala ~/projects/scala
+
+# Ruby
+git-clone-or-pull sstephenson/rbenv ~/.rbenv
 git-clone-if-not-exists rubygems/rubygems ~/projects/rubygems 'ruby setup.rb'
 sudo gem install rubocop
 sudo gem install bundler
+
+# Python
+git-clone-or-pull yyuu/pyenv ~/.pyenv
 curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python
 sudo -H pip install flake8
