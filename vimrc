@@ -36,7 +36,7 @@ Plug 'mattn/webapi-vim'
 " CtrlP
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'iwataka/ctrlp-quickref.vim'
-Plug 'JazzCore/ctrlp-cmatcher'
+Plug 'JazzCore/ctrlp-cmatcher', { 'do': 'install' }
 
 " Colorschemes
 Plug 'altercation/vim-colors-solarized'
