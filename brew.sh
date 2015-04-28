@@ -7,16 +7,15 @@ git-clone-or-pull() {
         cd $2
         git pull
     else
-        git clone $1 $2
+        git clone https://github.com/$1 $2
     fi
 }
 
-install-fonts() {
-    local path=~/projects/fonts
-    if [[ ! -d $path ]]; then
-        git clone https://github.com/powerline/fonts $path
-        cd $path
-        ./install.sh
+git-clone-if-not-exists() {
+    if [[ ! -d $2 ]]; then
+        git clone https://github.com/$1 $2
+        cd $2
+        $3
     fi
 }
 
@@ -24,11 +23,7 @@ install-fonts() {
 install-gtcs() {
     local name=gnome-terminal-colors-solarized
     local path=~/projects/$name
-    if [[ ! -d $path ]]; then
-        git clone https://github.com/Anthony25/$name $path
-        cd $path
-        ./install.sh
-    fi
+    git-clone-if-not-exists Anthony25/$name ~/projects/$name ./install.sh
 }
 
 if [ $OSTYPE == "linux-gnu" ]; then
@@ -73,7 +68,10 @@ if [ $OSTYPE == "linux-gnu" ]; then
     install-gtcs
 fi
 
-git-clone-or-pull https://github.com/sstephenson/rbenv ~/.rbenv
-git-clone-or-pull https://github.com/yyuu/pyenv ~/.pyenv
-git-clone-or-pull https://github.com/zsh-users/antigen ~/.antigen
-install-fonts
+git-clone-or-pull sstephenson/rbenv ~/.rbenv
+git-clone-or-pull yyuu/pyenv ~/.pyenv
+git-clone-or-pull zsh-users/antigen ~/.antigen
+git-clone-if-not-exists powerline/fonts ~/projects/fonts ./install.sh
+git-clone-if-not-exists rubygems/rubygems ~/projects/rubygems 'ruby setup.rb'
+sudo gem install rubocop
+sudo gem install bundler
