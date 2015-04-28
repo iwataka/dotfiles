@@ -500,8 +500,7 @@ let g:ctrlp_quickref_paths = [
   \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
   \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
   \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
-  \ '/usr/local/scala',
-  \ '/usr/local/jdk',
+  \ '/usr/lib/jvm/java-[1-9]\+-oracle',
   \ '~/projects/*',
   \ '~/.vim/plugged/*',
   \ '~/dotfiles'
