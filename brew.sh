@@ -36,6 +36,8 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install mercurial
     # default shell
     sudo apt-get install zsh
+    # must items
+    sudo apt-get install curl wget
     # default editor
     sudo apt-get install vim
     # cooperate with vim
