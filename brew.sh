@@ -27,17 +27,17 @@ install-gtcs() {
 }
 
 if [ $OSTYPE == "linux-gnu" ]; then
-    sudo apt-get update && sudo apt-get upgrade
+    sudo apt-get update
+    sudo apt-get upgrade
     # xdg-open and so on
     sudo apt-get install xdg-utils
     # necessaary to clone various projects
     sudo apt-get install git
-    # mainly clone openjdk
-    sudo apt-get install mercurial
     # default shell
     sudo apt-get install zsh
     # must items
-    sudo apt-get install curl wget
+    sudo apt-get install curl
+    sudo apt-get install wget
     # default editor
     sudo apt-get install vim
     # cooperate with vim
@@ -65,6 +65,22 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install openjdk-7-jdk
     # gnome-terminal-colors-solarized
     install-gtcs
+elif [[ $OSTYPE == "darwin"* ]]; then
+    brew update
+    brew upgrade
+    # Install some other useful utilities like `sponge`.
+    brew install moreutils
+    # Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
+    brew install findutils
+    # Install GNU `sed`, overwriting the built-in `sed`.
+    brew install gnu-sed --with-default-names
+    brew install git
+    brew install zsh
+    brew install curl
+    brew install wget --with-iri
+    brew install vim --override-system-vi
+    brew install imagemagick
+    brew install tree
 fi
 
 git-clone-or-pull sstephenson/rbenv ~/.rbenv
