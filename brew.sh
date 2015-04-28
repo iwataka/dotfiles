@@ -72,3 +72,5 @@ git-clone-if-not-exists powerline/fonts ~/projects/fonts ./install.sh
 git-clone-if-not-exists rubygems/rubygems ~/projects/rubygems 'ruby setup.rb'
 sudo gem install rubocop
 sudo gem install bundler
+curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python
+sudo -H pip install flake8
