@@ -52,9 +52,6 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install astyle
     # youcompleteme
     sudo apt-get install build-essential cmake python-dev
-    # neovim
-    sudo apt-get install libtool autoconf automake cmake
-    sudo apt-get install g++ pkg-config unzip
     # build tool for JVM
     sudo apt-get install ant
     # used for install solarized colorscheme
