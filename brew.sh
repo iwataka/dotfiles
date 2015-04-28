@@ -29,7 +29,12 @@ install-gtcs() {
 }
 
 if [ $OSTYPE == "linux-gnu" ]; then
+    # for oracle jdk
+    sudo apt-get install python-software-properties
+    sudo add-apt-repository ppa:webupd8team/java
+    # update apt-get itself
     sudo apt-get update
+    # upgrade packages
     sudo apt-get upgrade
     # xdg-open and so on
     sudo apt-get install xdg-utils
@@ -64,7 +69,12 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install scala
     sudo apt-get install sbt
     # Java
+    # If you want to switch other jdk, run this command:
+    # sudo update-alternatives --config java
     sudo apt-get install openjdk-7-jdk
+    sudo apt-get install oracle-java8-installer
+    cd /usr/lib/jvm/java-8-oracle
+    sudo unzip -d src src.zip
     # gnome-terminal-colors-solarized
     install-gtcs
 elif [[ $OSTYPE == "darwin"* ]]; then
@@ -89,6 +99,7 @@ fi
 git-clone-or-pull zsh-users/antigen ~/.antigen
 git-clone-if-not-exists powerline/fonts ~/projects/fonts ./install.sh
 
+# Scala
 git-clone-if-not-exists scala/scala ~/projects/scala
 
 # Ruby
@@ -99,5 +110,5 @@ sudo gem install bundler
 
 # Python
 git-clone-or-pull yyuu/pyenv ~/.pyenv
-curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python
+curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo -H python
 sudo -H pip install flake8
