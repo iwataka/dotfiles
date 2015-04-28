@@ -79,7 +79,7 @@ install-rbenv() {
         cd $path
         git pull
     else
-        git clone https://sstephenson/rbenv $path
+        git clone https://github.com/sstephenson/rbenv $path
     fi
 }
 
@@ -90,7 +90,7 @@ install-pyenv() {
         cd $path
         git pull
     else
-        git clone https://github.com/yyuu/pyenv.git $path
+        git clone https://github.com/yyuu/pyenv $path
     fi
 }
 
@@ -105,7 +105,7 @@ install-antigen() {
 }
 
 install-neovim() {
-    local path=$HOME/projecs/neovim
+    local path=$HOME/projects/neovim
     if [[ -d $path ]]; then
         cd $path
         git pull
