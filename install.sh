@@ -36,7 +36,12 @@ setup-bins() {
 # TODO: move this to the package manager
 install-git-open() {
     local path=$HOME/projects/git-open
-    git clone https://github.com/paulirish/git-open $path
+    if [[ ! -d $path ]]; then
+        git clone https://github.com/paulirish/git-open $path
+    else
+        cd $path
+        git pull
+    fi
     # Remove old git-open if exists
     if [ -e ~/bin/git-open ]; then
         rm ~/bin/git-open
@@ -65,11 +70,11 @@ setup-symlinks() {
            zshrc emacs.d nvimrc)
     for file in ${files[@]}; do
         remove_or_backup "$HOME/.$file"
-        ln -s $dotfiles_dir/$file ~/.$file
+        ln -s $dfsdir/$file ~/.$file
     done
     # symlink for neovim
     remove_or_backup ~/.nvim
-    ln -s $dotfiles_dir/vim ~/.nvim
+    ln -s $dfsdir/vim ~/.nvim
 }
 
 install-packages() {
@@ -108,7 +113,7 @@ if [[ $# == 0 ]]; then
     pre-setup
     setup-bins
     install-git-open
-    setup-symlink
+    setup-symlinks
     install-packages
 else
     for name in $@; do
