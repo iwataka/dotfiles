@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# Abort when errors are thrown
 set -e
 
+# Usage: git-clone-or-pull $url $path
 git-clone-or-pull() {
     if [[ -d $2 ]]; then
         cd $2
@@ -11,6 +13,7 @@ git-clone-or-pull() {
     fi
 }
 
+# Usage: git-clone-if-not-exists $url $path [$command]
 git-clone-if-not-exists() {
     if [[ ! -d $2 ]]; then
         git clone https://github.com/$1 $2
@@ -21,21 +24,31 @@ git-clone-if-not-exists() {
     fi
 }
 
-# gnome-terminal-colors-solarized
+# installs gnome-terminal-colors-solarized
 install-gtcs() {
     local name=gnome-terminal-colors-solarized
     local path=~/projects/$name
     git-clone-if-not-exists Anthony25/$name ~/projects/$name ./install.sh
 }
 
+# Usage: install-oracle-java $version
+# Following command must be run before executing this function.
+# sudo add-apt-repository [-y] ppa:webupd8team/java
+install-oracle-java() {
+    sudo apt-get install oracle-java${1}-installer
+    cd /usr/lib/jvm/java-${1}-oracle
+    if [[ -e src.zip && ! -d src ]]; then
+        sudo unzip -d src src.zip
+    fi
+}
+
 if [ $OSTYPE == "linux-gnu" ]; then
-    # for oracle jdk
-    sudo apt-get install python-software-properties
-    sudo add-apt-repository ppa:webupd8team/java
     # update apt-get itself
     sudo apt-get update
     # upgrade packages
     sudo apt-get upgrade
+    # install apt-add-repository command
+    sudo apt-get install python-software-properties
     # xdg-open and so on
     sudo apt-get install xdg-utils
     # necessaary to clone various projects
@@ -71,10 +84,9 @@ if [ $OSTYPE == "linux-gnu" ]; then
     # Java
     # If you want to switch other jdk, run this command:
     # sudo update-alternatives --config java
+    sudo add-apt-repository -y ppa:webupd8team/java
     sudo apt-get install openjdk-7-jdk
-    sudo apt-get install oracle-java8-installer
-    cd /usr/lib/jvm/java-8-oracle
-    sudo unzip -d src src.zip
+    install-oracle-java 8
     # gnome-terminal-colors-solarized
     install-gtcs
 elif [[ $OSTYPE == "darwin"* ]]; then
