@@ -74,6 +74,7 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install astyle
     # youcompleteme
     sudo apt-get install build-essential cmake python-dev
+    sudo apt-get install monodevelop
     # build tool for JVM
     sudo apt-get install ant
     # used for install solarized colorscheme
