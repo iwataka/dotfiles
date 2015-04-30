@@ -1,4 +1,4 @@
-if !executable('pandoc') || (exists('g:mini_markdown_loaded') && g:mini_markdown_loaded)
+if exists('g:mini_markdown_loaded') && g:mini_markdown_loaded
   finish
 endif
 
@@ -20,13 +20,32 @@ elsei has('mac')
   let s:open_cmd = 'open'
 endif
 
-fu! mini_markdown#preview(src)
-  if has('python')
-    call s:preview_python(a:src)
-  elseif has('ruby')
-    call s:preview_ruby(a:src)
+fu! mini_markdown#preview(...)
+  if a:0 > 0
+    call s:previwe(a:000)
   else
-    echom 'Mini-markdown requires ruby or python interface.'
+    let fname = fnamemodify(expand('%'), ':p')
+    call s:preview(fname)
+  endif
+endfu
+
+fu! s:preview(src)
+  if !executable('pandoc')
+    echoe 'Mini-markdown requires pandoc command!'
+    return
+  endif
+  if type(a:src) == type('')
+    if has('python')
+      call s:preview_python(a:src)
+    elseif has('ruby')
+      call s:preview_ruby(a:src)
+    else
+      echoe 'Mini-markdown requires ruby or python interface!'
+    endif
+  elseif type(a:src) == type([])
+    for s in a:src
+      call mini_markdown#preview(s)
+    endfor
   endif
 endfu
 
