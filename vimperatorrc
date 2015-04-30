@@ -1,5 +1,6 @@
 " Scroll down more efficiently and prevent from deleting a tab accidentally.
 nnoremap d <c-d>
+nnoremap D <nop>
 " Scroll up more efficiently and prevent from creating old tab accidentally.
 nnoremap u <c-u>
 
