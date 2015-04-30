@@ -117,7 +117,7 @@ git-clone-if-not-exists scala/scala ~/projects/scala
 
 # Ruby
 git-clone-or-pull sstephenson/rbenv ~/.rbenv
-git-clone-if-not-exists rubygems/rubygems ~/projects/rubygems 'ruby setup.rb'
+git-clone-if-not-exists rubygems/rubygems ~/projects/rubygems 'sudo ruby setup.rb'
 sudo gem install rubocop
 sudo gem install bundler
 
