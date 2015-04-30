@@ -357,10 +357,8 @@ augroup END
 " clear buffers except for current one
 com! BufClear call s:bufclear()
 function! s:bufclear()
-    let l:current_bufnr = bufnr("%")
-    let l:last_bufnr = bufnr("$")
-    silent! exe '0,'.(l:current_bufnr - 1).'bdelete'
-    silent! exe ''.(l:current_bufnr + 1).','.l:last_bufnr.'bdelete'
+  let lastnr = bufnr('$')
+  silent exe '0,'.lastnr.'bdelete'
 endfunction
 
 " Changes the current directory to the project root
