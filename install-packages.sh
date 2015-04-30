@@ -75,10 +75,10 @@ if [ $OSTYPE == "linux-gnu" ]; then
     # youcompleteme
     sudo apt-get install build-essential cmake python-dev
     sudo apt-get install monodevelop
+    # Markdown
+    sudo apt-get install pandoc
     # build tool for JVM
     sudo apt-get install ant
-    # used for install solarized colorscheme
-    sudo apt-get install dconf-cli
     # Scala
     sudo apt-get install scala
     sudo apt-get install sbt
@@ -88,6 +88,8 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo add-apt-repository -y ppa:webupd8team/java
     sudo apt-get install openjdk-7-jdk
     install-oracle-java 8
+    # used for install solarized colorscheme
+    sudo apt-get install dconf-cli
     # gnome-terminal-colors-solarized
     install-gtcs
 elif [[ $OSTYPE == "darwin"* ]]; then
