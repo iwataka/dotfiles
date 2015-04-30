@@ -57,6 +57,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/vim-easy-align', { 'on': '<Plug>(EasyAlign)' }
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'iwataka/minidown.vim', { 'on': 'Minidown' }
 
 " For specific filetypes
 if v:version >= 703
