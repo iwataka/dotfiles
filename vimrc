@@ -446,6 +446,24 @@ let g:solarized_termtrans=1
 set background=dark
 silent! colo solarized
 
+aug tweak-solarized
+  au!
+  au VimEnter,ColorScheme * call s:tweak_colorscheme()
+aug END
+
+fu! s:tweak_colorscheme()
+  if g:colors_name == 'solarized'
+    call s:tweak_solarized()
+  endif
+endfu
+
+fu! s:tweak_solarized()
+  if &background == 'dark'
+    hi Comment ctermfg=242  " The original value is 239.
+    hi vimIsCommand ctermfg=243  " The original value is 240.
+  endif
+endfu
+
 " --------------------------------------------------------------
 " gist
 " --------------------------------------------------------------
