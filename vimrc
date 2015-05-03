@@ -277,6 +277,9 @@ nnoremap K :grep <cword><cr>:cwindow<cr>
 nnoremap + <c-a>
 nnoremap - <c-x>
 
+" Changes the current working directory to the directory of focused buffer
+nnoremap <leader>cd  :exe 'cd '.fnamemodify(expand('%'), ':p:h')<cr>
+
 " Highlight matches when jumping to next.
 " Disabled because of incsearch plug-in.
 " nnoremap <silent>n n:call HLNext(0.4)<CR>
@@ -364,7 +367,7 @@ endfunction
 " Changes the current directory to the project root
 com! Root call s:cd_root()
 fu! s:cd_root()
-  let cwd = fnamemodify('.', ':p')
+  let cwd = fnamemodify(expand('%'), ':p:h')
   let root = s:root(cwd)
   if empty(root)
     echom 'Not in a project'
@@ -446,7 +449,7 @@ let g:solarized_termtrans=1
 set background=dark
 silent! colo solarized
 
-aug tweak-solarized
+aug colorschemeEx
   au!
   au VimEnter,ColorScheme * call s:tweak_colorscheme()
 aug END
@@ -461,6 +464,9 @@ fu! s:tweak_solarized()
   if &background == 'dark'
     hi Comment ctermfg=242  " The original value is 239.
     hi vimIsCommand ctermfg=243  " The original value is 240.
+    hi gitcommitComment ctermfg=242  " The original value is 239.
+    hi gitcommitOnBranch ctermfg=242
+    hi gitcommitHeader ctermfg=242
   endif
 endfu
 
@@ -499,14 +505,14 @@ let g:ctrlp_custom_ignore = {
 \ }
 let g:ctrlp_map = ''
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode='wr'
+let g:ctrlp_working_path_mode='ra'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 
-nnoremap <silent> <Leader>pf :CtrlP<CR>
-nnoremap <silent> <Leader>pb :CtrlPBuffer<CR>
-nnoremap <silent> <Leader>pm :CtrlPMRU<CR>
+nnoremap <silent> <Leader>p :CtrlP<CR>
+nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
+nnoremap <silent> <Leader>m :CtrlPMRU<CR>
 
 let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
 
@@ -520,8 +526,7 @@ let g:quickref_paths = [
   \ '/usr/lib/jvm/java-[1-9]\+-oracle',
   \ ]
 
-nnoremap <silent> <Leader>pq :Quickref<CR>
-nnoremap <silent> <Leader>pl :QuickrefLastDir<CR>
+nnoremap <silent> <Leader>r :Quickref<CR>
 
 " --------------------------------------------------------------
 " YCM
@@ -558,10 +563,10 @@ augroup dispatchEx
         \ let b:dispatch = 'ruby %'
 augroup END
 
-nnoremap <silent> <F8> :Dispatch<cr>
-nnoremap <silent> <F9> :Start<cr>
-inoremap <silent> <F8> <Esc>:Dispatch<cr>
-inoremap <silent> <F9> <esc>:Start<cr>
+nnoremap <silent> <leader>dm :Make<cr>
+nnoremap <silent> <leader>dc :Copen<cr>
+nnoremap <silent> <leader>dd :Dispatch<cr>
+nnoremap <silent> <leader>ds :Start<cr>
 
 " --------------------------------------------------------------
 " gitgutter
@@ -614,7 +619,7 @@ map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
-augroup incsearch-keymap
+augroup incsearchEx
   autocmd!
   autocmd VimEnter * call s:incsearch_keymap()
 augroup END
@@ -763,7 +768,10 @@ nmap ga <Plug>(EasyAlign)
 " --------------------------------------------------------------
 " scala
 " --------------------------------------------------------------
-nnoremap <silent> <Leader>ss :SortScalaImports<CR>
+aug scalaEx
+  au!
+  au FileType scala nnoremap <silent><buffer> <Leader>s :SortScalaImports<CR>
+aug END
 let g:scala_sort_across_groups = 1
 
 " --------------------------------------------------------------
@@ -788,8 +796,7 @@ endif
 " tagbar
 " --------------------------------------------------------------
 if v:version >= 703
-  nnoremap <F4> :TagbarToggle<cr>
-  inoremap <F4> <esc>:TagbarToggle<cr>
+  nnoremap <leader>t :TagbarToggle<cr>
   let g:tagbar_sort = 0
   let g:tagbar_show_linenumbers = 2
   let g:tagbar_autofocus = 1
@@ -799,9 +806,15 @@ endif
 " --------------------------------------------------------------
 " nerdtree
 " --------------------------------------------------------------
-nnoremap <F2> :NERDTreeToggle<cr>
-nnoremap <F3> :NERDTreeFind<cr>
-inoremap <F2> <Esc>:NERDTreeToggle<cr>
-inoremap <F3> <Esc>:NERDTreeFind<cr>
+nnoremap <leader>nt :NERDTreeToggle<cr>
+nnoremap <leader>nf :NERDTreeFind<cr>
+nnoremap <leader>nm :NERDTreeMirror<cr>
+nnoremap <leader>nc :NERDTreeCWD<cr>
+nnoremap <leader>nb :NERDTreeFromBookmark
+
+" --------------------------------------------------------------
+" indentLine
+" --------------------------------------------------------------
+let g:indentLine_color_term = 242
 
 " }}}
