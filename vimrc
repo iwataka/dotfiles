@@ -463,6 +463,11 @@ endfu
 " ===============================================================
 " ABBREVIATIONS {{{
 " ===============================================================
+
+" Insert the current date and time.
+iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
+
+" Prevent misspellings.
 abbrev factroy factory
 abbrev reutrn return
 abbrev netowrk network
