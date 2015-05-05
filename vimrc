@@ -347,9 +347,6 @@ augroup vimrcEx
 
     " Automatically open the quickfix window
     autocmd QuickFixCmdPost * cwindow
-
-    " Remove trailing spaces when writing buffers
-    autocmd BufWritePre * call s:remove_trailing_space()
 augroup END
 
 " }}}
@@ -357,7 +354,8 @@ augroup END
 " FUNCTIONS & COMMANDS {{{
 " ===============================================================
 
-" clear buffers except for current one
+" Clear all buffers by bdelete command.
+" If unsaved buffers exist, this command fails.
 com! BufClear call s:bufclear()
 function! s:bufclear()
   let lastnr = bufnr('$')
@@ -387,11 +385,9 @@ fu! s:root(cwd)
   retu ''
 endfu
 
+com! Chomp call s:remove_trailing_space()
 fu! s:remove_trailing_space()
-  if search('\s\+$', 'n')
-    %s/\s*$//
-    exe "normal! `'"
-  endif
+  silent! call s:preserve('%s/\s*$//')
 endfu
 
 if has('mac')
@@ -423,6 +419,43 @@ fu! s:wikipedia(...)
   let url = shellescape('http://en.wikipedia.org/'.word)
   if exists('s:open') && !empty(s:open)
     silent exe '!'.s:open.' '.url
+  endif
+endfu
+
+" Execute a given command with the cursor position and the search register
+" preserved.
+fu! s:preserve(cmd)
+  let _s = @/
+  let l = line(".")
+  let c = col(".")
+  exe a:cmd
+  let @/ = _s
+  call cursor(l, c)
+endfu
+
+" Expands a given path/paths and returns a path list.
+fu! s:expand(path)
+  if type(a:path) == type('')
+    retu split(expand(a:path), '\n')
+  elseif type(a:path) == type([])
+    let result = []
+    for p in a:path
+      call extend(result, s:expand(p))
+    endfor
+    retu result
+  endif
+endfu
+
+" Resolves a given path/paths and returns a path list.
+fu! s:resolve(path)
+  if type(a:path) == type('')
+    retu resolve(a:path)
+  elseif type(a:path) == type([])
+    let result = []
+    for p in a:path
+      call add(result, s:resolve(p))
+    endfor
+    retu result
   endif
 endfu
 
