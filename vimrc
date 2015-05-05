@@ -278,7 +278,7 @@ nnoremap + <c-a>
 nnoremap - <c-x>
 
 " Changes the current working directory to the directory of focused buffer
-nnoremap <leader>cd  :exe 'cd '.fnamemodify(expand('%'), ':p:h')<cr>
+nnoremap <leader>cd  :cd %:h<cr>
 
 " Highlight matches when jumping to next.
 " Disabled because of incsearch plug-in.
