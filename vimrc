@@ -553,29 +553,33 @@ nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :CtrlPMRU<CR>
 nnoremap <silent> <Leader>d :CtrlPBookmarkDir<CR>
 
-let s:ctrlp_bookmark_dirs = [
+let s:ctrlp_bookmark_paths = [
   \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
   \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
   \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
   \ '/usr/lib/jvm/java-[1-9]\+-oracle',
   \ '~/projects/*',
-  \ '~/.vim/plugged/*',
   \ '~/dotfiles'
   \ ]
 
-fu! s:init_ctrlp_bookmarks()
-  for dir in s:ctrlp_bookmark_dirs
-    for path in s:resolve(s:expand(dir))
-      if isdirectory(path)
-        silent exe 'CtrlPBookmarkDirAdd! '.path
-      endif
-    endfor
+fu! s:ctrlp_bookmark_init()
+  for path in s:ctrlp_bookmark_paths
+    call s:ctrlp_bookmark_add(s:resolve(s:expand(path)))
   endfor
+  call s:ctrlp_bookmark_add(split(&rtp, ','))
 endf
+
+fu! s:ctrlp_bookmark_add(dirs)
+  for dir in a:dirs
+    if isdirectory(dir)
+      silent exe 'CtrlPBookmarkDirAdd! '.dir
+    endif
+  endfor
+endfu
 
 augroup vimrc-ctrlp
   au!
-  au VimEnter * if exists(':CtrlPBookmarkDirAdd') | call s:init_ctrlp_bookmarks() | endif
+  au VimEnter * if exists(':CtrlPBookmarkDirAdd') | call s:ctrlp_bookmark_init() | endif
 augroup END
 
 let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
