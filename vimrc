@@ -588,7 +588,7 @@ let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 " --------------------------------------------------------------
 " dispatch
 " --------------------------------------------------------------
-augroup dispatchEx
+augroup vimrc-dispatch
   autocmd!
   autocmd FileType scala let b:start = 'sbt'
   autocmd FileType java let b:start = 'sbt'
@@ -601,10 +601,10 @@ augroup dispatchEx
         \ let b:dispatch = 'ruby %'
 augroup END
 
-nnoremap <silent> <leader>dm :Make<cr>
-nnoremap <silent> <leader>dc :Copen<cr>
-nnoremap <silent> <leader>dd :Dispatch<cr>
-nnoremap <silent> <leader>ds :Start<cr>
+nnoremap <silent> <F8> :Dispatch<cr>
+nnoremap <silent> <F9> :Start<cr>
+inoremap <silent> <F8> <esc>:Dispatch<cr>
+inoremap <silent> <F9> <esc>:Start<cr>
 
 " --------------------------------------------------------------
 " gitgutter
@@ -657,7 +657,7 @@ map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
-augroup incsearchEx
+augroup vimrc-incsearch
   autocmd!
   autocmd VimEnter * call s:incsearch_keymap()
 augroup END
