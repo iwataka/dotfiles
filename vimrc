@@ -35,7 +35,6 @@ Plug 'mattn/webapi-vim'
 
 " CtrlP
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'iwataka/quickref.vim'
 Plug 'JazzCore/ctrlp-cmatcher', { 'do': 'install' }
 
 " Colorschemes
@@ -543,28 +542,43 @@ let g:ctrlp_custom_ignore = {
 \ }
 let g:ctrlp_map = ''
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode='ra'
+let g:ctrlp_working_path_mode='wr'
 let g:ctrlp_by_filename = 0
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+let g:ctrlp_mruf_max = 1000
 
 nnoremap <silent> <Leader>p :CtrlP<CR>
 nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :CtrlPMRU<CR>
+nnoremap <silent> <Leader>d :CtrlPBookmarkDir<CR>
 
-let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
-
-" --------------------------------------------------------------
-" quickref
-" --------------------------------------------------------------
-let g:quickref_paths = [
+let s:ctrlp_bookmark_dirs = [
   \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
   \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
   \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
   \ '/usr/lib/jvm/java-[1-9]\+-oracle',
+  \ '~/projects/*',
+  \ '~/.vim/plugged/*',
+  \ '~/dotfiles'
   \ ]
 
-nnoremap <silent> <Leader>r :Quickref<CR>
+fu! s:init_ctrlp_bookmarks()
+  for dir in s:ctrlp_bookmark_dirs
+    for path in s:resolve(s:expand(dir))
+      if isdirectory(path)
+        silent exe 'CtrlPBookmarkDirAdd! '.path
+      endif
+    endfor
+  endfor
+endf
+
+augroup vimrc-ctrlp
+  au!
+  au VimEnter * if exists(':CtrlPBookmarkDirAdd') | call s:init_ctrlp_bookmarks() | endif
+augroup END
+
+let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
 
 " --------------------------------------------------------------
 " YCM
