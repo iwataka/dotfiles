@@ -91,7 +91,6 @@ set imdisable
 set timeout
 set timeoutlen=1000
 set ttimeoutlen=100
-set cursorline
 set lazyredraw
 set showmatch
 set matchtime=1
@@ -298,6 +297,10 @@ nnoremap <leader>cd  :cd %:h<cr>
 
 augroup vimrcEx
     autocmd!
+
+    " Use cursorline only in the focused window.
+    autocmd WinEnter * set cursorline
+    autocmd WinLeave * set nocursorline
 
     " Set markdown filetype.
     autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
