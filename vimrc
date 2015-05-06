@@ -654,7 +654,7 @@ nnoremap <leader>gA :Git add --all<cr>
 fu! s:GgrepPrompt()
   let keyword = input('Keyword? ')
   if keyword != ''
-    exe ":Ggrep " . keyword
+    exe "Ggrep ".keyword
   else
     echoe "Non-empty keyword is needed!"
   endif
