@@ -170,24 +170,24 @@ if has('gui_running')
 endif
 
 if has('mouse')
-    set mouse=a
-    set mousehide
+  set mouse=a
+  set mousehide
 endif
 
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 if has('persistent_undo')
-    set undodir=~/.vim/undo
-    set undolevels=100
-    set undofile
+  set undodir=~/.vim/undo
+  set undolevels=100
+  set undofile
 endif
 
 if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor\ --column
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
 elseif executable('ack')
-    set grepprg=ack\ -H\ --nocolor\ --nogroup
+  set grepprg=ack\ -H\ --nocolor\ --nogroup
 else
-    set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
+  set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
 endif
 
 " }}}
@@ -296,55 +296,60 @@ nnoremap <leader>cd  :cd %:h<cr>
 " ===============================================================
 
 augroup vimrcEx
-    autocmd!
+  autocmd!
 
-    " Use cursorline only in the focused window.
-    autocmd WinEnter * set cursorline
-    autocmd WinLeave * set nocursorline
+  " Use cursorline only in the focused window.
+  autocmd WinEnter * set cursorline
+  autocmd WinLeave * set nocursorline
 
-    " Set markdown filetype.
-    autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
+  " When editing a file, always jump to the last known cursor position.
+  " do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-    " Enable spellchecking and word wrapping for Markdown
-    autocmd FileType markdown setlocal spell
-    autocmd FileType markdown setlocal textwidth=80
+  " Set markdown filetype.
+  autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
 
-    " Automatically wrap at 72 characters and spell check git commit messages
-    autocmd FileType gitcommit setlocal textwidth=72
-    autocmd FileType gitcommit setlocal spell
+  " Enable spellchecking and word wrapping for Markdown
+  autocmd FileType markdown setlocal spell
+  autocmd FileType markdown setlocal textwidth=80
 
-    " Quit help buffer by typing just q.
-    autocmd FileType help
-      \ if &readonly | nnoremap <buffer> q :q<cr> | endif
+  " Automatically wrap at 72 characters and spell check git commit messages
+  autocmd FileType gitcommit setlocal textwidth=72
+  autocmd FileType gitcommit setlocal spell
 
-    autocmd FileType java,make,sh,zsh,markdown
-      \ setlocal tabstop=4 |
-      \ setlocal softtabstop=4 |
-      \ setlocal shiftwidth=4
+  " Quit help buffer by typing just q.
+  autocmd FileType help
+    \ if &readonly | nnoremap <buffer> q :q<cr> | endif
 
-    " automatically align html files
-    " autocmd BufWritePre,BufRead *.html :normal gg=G
+  autocmd FileType java,make,sh,zsh,markdown
+    \ setlocal tabstop=4 |
+    \ setlocal softtabstop=4 |
+    \ setlocal shiftwidth=4
 
-    " write comments easily for any files
-    autocmd BufRead,BufNewFile * set formatoptions+=ro
+  " automatically align html files
+  " autocmd BufWritePre,BufRead *.html :normal gg=G
 
-    " emphasize comments
-    autocmd BufRead,BufNew * highlight Comment term=bold
+  " write comments easily for any files
+  autocmd BufRead,BufNewFile * set formatoptions+=ro
 
-    " prevent from conflicting multiple edit
-    autocmd SwapExists * let v:swapchoice = 'o'
+  " emphasize comments
+  autocmd BufRead,BufNew * highlight Comment term=bold
 
-    "make the 81st column stand out
-    autocmd BufRead,BufNew * highlight ColorColumn ctermbg=red guibg=#666666
-    autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%101v')
+  " prevent from conflicting multiple edit
+  autocmd SwapExists * let v:swapchoice = 'o'
 
-    " Visualizes full-size space
-    autocmd BufRead,BufNew *
-      \ highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
-    autocmd BufRead,BufNew * match FullWidthSpace /　/
+  "make the 81st column stand out
+  autocmd BufRead,BufNew * highlight ColorColumn ctermbg=red guibg=#666666
+  autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%101v')
 
-    " Automatically open the quickfix window
-    autocmd QuickFixCmdPost * cwindow
+  " Visualizes full-size space
+  autocmd BufRead,BufNew *
+    \ highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
+  autocmd BufRead,BufNew * match FullWidthSpace /　/
+
+  " Automatically open the quickfix window
+  autocmd QuickFixCmdPost * cwindow
 augroup END
 
 " }}}
