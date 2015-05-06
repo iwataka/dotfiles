@@ -313,6 +313,7 @@ augroup vimrcEx
     autocmd FileType gitcommit setlocal textwidth=72
     autocmd FileType gitcommit setlocal spell
 
+    " Quit help buffer by typing just q.
     autocmd FileType help
       \ if &readonly | nnoremap <buffer> q :q<cr> | endif
 
@@ -320,11 +321,6 @@ augroup vimrcEx
       \ setlocal tabstop=4 |
       \ setlocal softtabstop=4 |
       \ setlocal shiftwidth=4
-
-    " set filetype according to each file
-    autocmd BufRead,BufNewFile *.gradle set filetype=groovy
-    autocmd BufRead,BufNewFile *.sbt set filetype=scala
-    autocmd BufRead,BufNewFile *gitignore set filetype=conf
 
     " automatically align html files
     " autocmd BufWritePre,BufRead *.html :normal gg=G
