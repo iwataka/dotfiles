@@ -522,19 +522,23 @@ nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :CtrlPMRU<CR>
 nnoremap <silent> <Leader>d :CtrlPBookmarkDir<CR>
 
-let s:ctrlp_bookmark_paths = [
-  \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
-  \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
-  \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
-  \ '/usr/lib/jvm/java-[1-9]\+-oracle',
-  \ '~/projects/*',
-  \ '~/dotfiles'
-  \ ]
+if has('unix')
+  let s:ctrlp_bookmark_paths = [
+    \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
+    \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
+    \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
+    \ '/usr/lib/jvm/java-[1-9]\+-oracle',
+    \ '~/projects/*',
+    \ '~/dotfiles'
+    \ ]
+endif
 
 fu! s:ctrlp_bookmark_init()
-  for path in s:ctrlp_bookmark_paths
-    call s:ctrlp_bookmark_add(s:resolve(s:expand(path)))
-  endfor
+  if exists('s:ctrlp_bookmark_paths')
+    for path in s:ctrlp_bookmark_paths
+      call s:ctrlp_bookmark_add(s:resolve(s:expand(path)))
+    endfor
+  endif
   call s:ctrlp_bookmark_add(split(&rtp, ','))
 endf
 
