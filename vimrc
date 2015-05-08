@@ -21,12 +21,6 @@ else
   Plug 'ervandew/supertab'
 endif
 
-" Tmux
-if !has('gui_running')
-  Plug 'christoomey/vim-tmux-navigator'
-  Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
-endif
-
 " Git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -57,6 +51,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'junegunn/vim-easy-align', { 'on': '<Plug>(EasyAlign)' }
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'iwataka/minidown.vim', { 'on': 'Minidown' }
+Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
 
 " For specific filetypes
 if v:version >= 703
@@ -252,20 +247,6 @@ nnoremap zH zh
 " Scroll vertically
 nnoremap <c-y> 3<c-y>
 nnoremap <c-e> 3<c-e>
-
-" Move between splitted panes
-if maparg('<c-j>', 'n') == ''
-  nnoremap <c-j> <c-w>j
-endif
-if maparg('<c-k>', 'n') == ''
-  nnoremap <c-k> <c-w>k
-endif
-if maparg('<c-h>', 'n') == ''
-  nnoremap <c-h> <c-w>h
-endif
-if maparg('<c-l>', 'n') == ''
-  nnoremap <c-l> <c-w>l
-endif
 
 " Execute grep by the word under the cursor
 nnoremap K :grep <cword><cr>:cwindow<cr>
