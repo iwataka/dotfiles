@@ -69,6 +69,10 @@ endif
 filetype plugin on
 filetype indent on
 
+if findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
+endif
+
 " }}}
 " ===============================================================
 " BASIC SETTINGS {{{
