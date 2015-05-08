@@ -583,10 +583,10 @@ augroup vimrc-dispatch
         \ let b:dispatch = 'ruby %'
 augroup END
 
-nnoremap <silent> <F8> :Dispatch<cr>
-nnoremap <silent> <F9> :Start<cr>
-inoremap <silent> <F8> <esc>:Dispatch<cr>
-inoremap <silent> <F9> <esc>:Start<cr>
+nnoremap <silent> <F3> :Dispatch<cr>
+nnoremap <silent> <F4> :Start<cr>
+inoremap <silent> <F3> <esc>:Dispatch<cr>
+inoremap <silent> <F4> <esc>:Start<cr>
 
 " --------------------------------------------------------------
 " gitgutter
@@ -767,7 +767,7 @@ nmap ga <Plug>(EasyAlign)
 " --------------------------------------------------------------
 aug vimrc-scala
   au!
-  au FileType scala nnoremap <silent><buffer> <Leader>s :SortScalaImports<CR>
+  au FileType scala nnoremap <silent><buffer> <Leader>si :SortScalaImports<CR>
 aug END
 let g:scala_sort_across_groups = 1
 
@@ -793,7 +793,8 @@ endif
 " tagbar
 " --------------------------------------------------------------
 if v:version >= 703
-  nnoremap <leader>t :TagbarToggle<cr>
+  inoremap <F2> <esc>:TagbarToggle<cr>
+  nnoremap <F2> :TagbarToggle<cr>
   let g:tagbar_sort = 0
   let g:tagbar_show_linenumbers = 2
   let g:tagbar_autofocus = 1
