@@ -284,6 +284,9 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
+" Double <BS> to remove trailing spaces
+nnoremap <silent> <BS><BS> :call <sid>preserve('%s/\s*$//')<cr>
+
 " }}}
 " ===============================================================
 " AUTOCMD {{{
@@ -382,7 +385,6 @@ fu! s:root(cwd)
   retu ''
 endfu
 
-com! Chomp call s:remove_trailing_space()
 fu! s:remove_trailing_space()
   silent! call s:preserve('%s/\s*$//')
 endfu
