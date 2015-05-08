@@ -112,7 +112,7 @@ set cmdheight=2
 set ruler
 set showmode
 set laststatus=2
-set history=100
+set history=1000
 set autowrite
 set autoread
 set backspace=indent,eol,start
@@ -193,20 +193,26 @@ endif
 " MAPPINGS {{{
 " ===============================================================
 
+" More reasonable cursor moving
 nnoremap j gj
 nnoremap k gk
 nnoremap <Down> gj
 nnoremap <Up> gk
 
+" Prevent to override registers by one character
 nnoremap x "_x
 
+" Better jumping to marks
 nnoremap ' `
 nnoremap ` '
 
+" jk | Escaping!
 inoremap jk <Esc>
+xnoremap jk <Esc>
 cnoremap jk <C-c>
 
-nnoremap <leader>v :tabe ~/.vimrc<cr>
+" Edit vimrc
+nnoremap <leader>v :vsplit ~/.vimrc<cr>
 
 " qq to record, Q to replay
 nnoremap Q @q
