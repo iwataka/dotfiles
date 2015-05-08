@@ -227,6 +227,7 @@ vnoremap Q :norm @q<cr>
 nnoremap Y y$
 
 " Save
+nnoremap <leader>u :update<cr>
 nnoremap <Leader>w :w<CR>
 cnoremap w!! w !sudo tee % >/dev/null
 
@@ -261,7 +262,7 @@ nnoremap <S-tab> <c-w>W
 " Clear the highlighting of :set hlsearch.
 nnoremap <silent> <C-l> :nohlsearch<cr><C-l>
 
-" Execute grep by the word under the cursor
+" Disable K
 nnoremap K <Nop>
 
 " Increment and decrement numbers by + and - keys.
