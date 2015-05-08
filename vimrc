@@ -450,7 +450,7 @@ let g:solarized_termtrans=1
 set background=dark
 silent! colo solarized
 
-aug colorschemeEx
+aug vimrc-colorscheme
   au!
   au VimEnter,ColorScheme * call s:tweak_colorscheme()
 aug END
@@ -765,7 +765,7 @@ nmap ga <Plug>(EasyAlign)
 " --------------------------------------------------------------
 " scala
 " --------------------------------------------------------------
-aug scalaEx
+aug vimrc-scala
   au!
   au FileType scala nnoremap <silent><buffer> <Leader>s :SortScalaImports<CR>
 aug END
