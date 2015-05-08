@@ -385,42 +385,6 @@ fu! s:root(cwd)
   retu ''
 endfu
 
-fu! s:remove_trailing_space()
-  silent! call s:preserve('%s/\s*$//')
-endfu
-
-if has('mac')
-  let s:open = 'open'
-elseif has('unix')
-  if executable('xdg-open')
-    let s:open = 'xdg-open'
-  endif
-elseif has('win32unix')
-  let s:open = 'cygstart'
-else
-  let s:open = 'start'
-endif
-
-nnoremap gG :call <sid>google(expand('<cword>'))<cr>
-vnoremap gG y:call <sid>google()<cr>
-fu! s:google(...)
-  let word = a:0 == 0 ? join(split(substitute(@0, '\n\|\r', '', 'g')), '+') : a:1
-  let url = shellescape('http://google.com/search?q='.word)
-  if exists('s:open') && !empty(s:open)
-    silent exe '!'.s:open.' '.url
-  endif
-endfu
-
-nnoremap gW :call <sid>wikipedia(expand('<cword>'))<cr>
-vnoremap gW y:call <sid>wikipedia()<cr>
-fu! s:wikipedia(...)
-  let word = a:0 == 0 ? join(split(substitute(@0, '\n\|\r', '', 'g')), '_') : a:1
-  let url = shellescape('http://en.wikipedia.org/'.word)
-  if exists('s:open') && !empty(s:open)
-    silent exe '!'.s:open.' '.url
-  endif
-endfu
-
 " Execute a given command with the cursor position and the search register
 " preserved.
 fu! s:preserve(cmd)
