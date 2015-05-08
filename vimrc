@@ -273,6 +273,9 @@ nnoremap - <c-x>
 " Changes the current working directory to the directory of focused buffer
 nnoremap <leader>cd  :cd %:h<cr>
 
+" Make <C-u> behave like being on command line
+inoremap <C-u> <C-g>u<C-u>
+
 " Highlight matches when jumping to next.
 " Disabled because of incsearch plug-in.
 " nnoremap <silent>n n:call HLNext(0.4)<CR>
