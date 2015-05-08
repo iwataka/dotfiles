@@ -227,9 +227,6 @@ nnoremap <leader>S :source %<cr>
 " Source a visual range
 vnoremap <leader>S y:@"<cr>
 
-" Redraw
-nnoremap <silent> gr :redraw!<cr>:nohlsearch<cr>
-
 " Command line
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
@@ -251,6 +248,9 @@ nnoremap <c-e> 3<c-e>
 " Circular window navigation
 nnoremap <tab> <c-w>w
 nnoremap <S-tab> <c-w>W
+
+" Clear the highlighting of :set hlsearch.
+nnoremap <silent> <C-l> :nohlsearch<cr><C-l>
 
 " Execute grep by the word under the cursor
 nnoremap K :grep <cword><cr>:cwindow<cr>
