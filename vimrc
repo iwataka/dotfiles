@@ -47,6 +47,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'Yggdroot/indentLine'
 Plug 'itchyny/lightline.vim'
 Plug 'Raimondi/delimitMate'
+Plug 'terryma/vim-multiple-cursors'
 Plug 'junegunn/vim-easy-align', { 'on': '<Plug>(EasyAlign)' }
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'iwataka/minidown.vim', { 'on': 'Minidown' }
