@@ -263,7 +263,7 @@ nnoremap <S-tab> <c-w>W
 nnoremap <silent> <C-l> :nohlsearch<cr><C-l>
 
 " Execute grep by the word under the cursor
-nnoremap K :grep <cword><cr>:cwindow<cr>
+nnoremap K <Nop>
 
 " Increment and decrement numbers by + and - keys.
 " Tmux uses <c-a> key as a prefix, so Vim can't use it.
