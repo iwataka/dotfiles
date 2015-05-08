@@ -248,6 +248,10 @@ nnoremap zH zh
 nnoremap <c-y> 3<c-y>
 nnoremap <c-e> 3<c-e>
 
+" Circular window navigation
+nnoremap <tab> <c-w>w
+nnoremap <S-tab> <c-w>W
+
 " Execute grep by the word under the cursor
 nnoremap K :grep <cword><cr>:cwindow<cr>
 
