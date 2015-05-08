@@ -214,6 +214,10 @@ cnoremap jk <C-c>
 
 " Edit vimrc
 nnoremap <leader>v :vsplit ~/.vimrc<cr>
+" Source vimrc
+nnoremap <leader>V :source ~/.vimrc<cr>
+" Source the other current file
+nnoremap <leader>S :source %<cr>
 
 " qq to record, Q to replay
 nnoremap Q @q
@@ -231,11 +235,6 @@ nnoremap <leader>q :q<cr>
 
 " Hide other visibie buffers
 nnoremap <leader>o :only<cr>
-
-" Source the current file
-nnoremap <leader>S :source %<cr>
-" Source a visual range
-vnoremap <leader>S y:@"<cr>
 
 " Command line
 cnoremap <C-A> <Home>
