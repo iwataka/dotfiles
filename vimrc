@@ -12,7 +12,7 @@ endif
 
 silent! if plug#begin('~/.vim/plugged')
 
-" Auto Completion
+" Auto completion and snippets
 if (has('unix') || has('mac')) && has('python')
   Plug 'Valloric/YouCompleteMe'
   Plug 'SirVer/ultisnips'
@@ -44,7 +44,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
-Plug 'haya14busa/incsearch.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'itchyny/lightline.vim'
 Plug 'Raimondi/delimitMate'
@@ -649,29 +648,6 @@ endfu
 " repeat
 " --------------------------------------------------------------
 sil! call repeat#set("\<Plug>(EasyAlign)", v:count)
-
-" --------------------------------------------------------------
-" incsearch
-" --------------------------------------------------------------
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
-
-augroup vimrc-incsearch
-  autocmd!
-  autocmd VimEnter * call s:incsearch_keymap()
-augroup END
-fu! s:incsearch_keymap()
-  IncSearchNoreMap <Tab> <Over>(buffer-complete)
-  IncSearchNoreMap <S-Tab> <Over>(buffer-complete-prev)
-endfu
 
 " --------------------------------------------------------------
 " lightline
