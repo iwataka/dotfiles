@@ -288,6 +288,10 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
+" Search in visual mode
+xnoremap <silent> * :call <sid>visual_search()<cr>:normal n<cr>
+xnoremap <silent> # :call <sid>visual_search()<cr>:normal N<cr>
+
 " Double <BS> to remove trailing spaces
 nnoremap <silent> <BS><BS> :call <sid>preserve('%s/\s*$//')<cr>
 
@@ -434,6 +438,12 @@ fu! s:get_visual_selection()
   let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
   let lines[0] = lines[0][col1 - 1 :]
   return lines
+endfu
+
+fu! s:visual_search()
+  let lines = map(s:get_visual_selection(), "escape(v:val, ' \\/.*$^~[]')")
+  let pattern = join(lines, '\n')
+  let @/ = pattern
 endfu
 
 " }}}
