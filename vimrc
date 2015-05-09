@@ -404,32 +404,6 @@ fu! s:preserve(cmd)
   call cursor(l, c)
 endfu
 
-" Expands a given path/paths and returns a path list.
-fu! s:expand(path)
-  if type(a:path) == type('')
-    retu split(expand(a:path), '\n')
-  elseif type(a:path) == type([])
-    let result = []
-    for p in a:path
-      call extend(result, s:expand(p))
-    endfor
-    retu result
-  endif
-endfu
-
-" Resolves a given path/paths and returns a path list.
-fu! s:resolve(path)
-  if type(a:path) == type('')
-    retu resolve(a:path)
-  elseif type(a:path) == type([])
-    let result = []
-    for p in a:path
-      call add(result, s:resolve(p))
-    endfor
-    retu result
-  endif
-endfu
-
 " Returns the text in the current visual selection.
 fu! s:get_visual_selection()
   let [lnum1, col1] = getpos("'<")[1:2]
@@ -440,6 +414,7 @@ fu! s:get_visual_selection()
   return lines
 endfu
 
+" Put the current selected pattern into the search register.
 fu! s:visual_search()
   let lines = map(s:get_visual_selection(), "escape(v:val, ' \\/.*$^~[]')")
   let pattern = join(lines, '\n')
@@ -555,7 +530,9 @@ endif
 fu! s:ctrlp_bookmark_init()
   if exists('s:ctrlp_bookmark_paths')
     for path in s:ctrlp_bookmark_paths
-      call s:ctrlp_bookmark_add(s:resolve(s:expand(path)))
+      let dirs = split(expand(path), '\n')
+      let dirs = map(dirs, 'resolve(v:val)')
+      call s:ctrlp_bookmark_add(dirs)
     endfor
   endif
   call s:ctrlp_bookmark_add(split(&rtp, ','))
