@@ -214,7 +214,6 @@ nnoremap ` '
 
 " jk | Escaping!
 inoremap jk <Esc>
-xnoremap jk <Esc>
 cnoremap jk <C-c>
 
 " Edit vimrc
