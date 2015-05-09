@@ -266,9 +266,6 @@ nnoremap <S-tab> <c-w>W
 " Clear the highlighting of :set hlsearch.
 nnoremap <silent> <C-l> :nohlsearch<cr><C-l>
 
-" Disable K
-nnoremap K <Nop>
-
 " Increment and decrement numbers by + and - keys.
 " Tmux uses <c-a> key as a prefix, so Vim can't use it.
 nnoremap + <c-a>
@@ -289,8 +286,12 @@ nnoremap g* g*zz
 nnoremap g# g#zz
 
 " Search in visual mode
-xnoremap <silent> * :call <sid>visual_search()<cr>:normal n<cr>
-xnoremap <silent> # :call <sid>visual_search()<cr>:normal N<cr>
+xnoremap <silent> * :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal n<cr>
+xnoremap <silent> # :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal N<cr>
+
+" K to grep files
+nnoremap <silent> K :grep <cword><cr>
+xnoremap <silent> K :<C-u>exe "grep '".<sid>get_grep_pattern()."'"<cr>
 
 " Double <BS> to remove trailing spaces
 nnoremap <silent> <BS><BS> :call <sid>preserve('%s/\s*$//')<cr>
@@ -414,11 +415,17 @@ fu! s:get_visual_selection()
   return lines
 endfu
 
-" Put the current selected pattern into the search register.
-fu! s:visual_search()
+fu! s:get_search_pattern()
   let lines = map(s:get_visual_selection(), "escape(v:val, ' \\/.*$^~[]')")
-  let pattern = join(lines, '\n')
-  let @/ = pattern
+  retu join(lines, '\n')
+endfu
+
+fu! s:get_grep_pattern()
+  let lines = s:get_visual_selection()
+  let lines = map(lines, "escape(v:val, '\\')")
+  let lines = map(lines, "escape(v:val, ' /.*$^~[]()')")
+  echom join(lines, '\n')
+  retu join(lines, '\n')
 endfu
 
 " }}}
