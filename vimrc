@@ -354,7 +354,7 @@ xnoremap <silent> # :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal N<cr>
 
 " K to grep files
 nnoremap <silent> K :grep <cword><cr>
-xnoremap <silent> K :<C-u>exe "grep '".<sid>get_grep_pattern()."'"<cr>
+xnoremap <silent> K :<C-u>exe 'grep "'.<sid>get_grep_pattern().'"'<cr>
 
 " Double <BS> to remove trailing spaces
 nnoremap <silent> <BS><BS> :call <sid>preserve('%s/\s*$//')<cr>
@@ -433,8 +433,12 @@ endfu
 fu! s:get_grep_pattern()
   let lines = s:get_visual_selection()
   let lines = map(lines, "escape(v:val, '\\')")
-  let lines = map(lines, "escape(v:val, ' /.*$^~[]()')")
-  echom join(lines, '\n')
+  let lines = map(lines, "escape(v:val, ' /.*$?^~\[\]()')")
+  let lines = map(lines, "escape(v:val, '\\')")
+  " Escape single quotes.
+  let lines = map(lines, "escape(v:val, \"''\")")
+  " Escape double quotes.
+  let lines = map(lines, "escape(v:val, '\"')")
   retu join(lines, '\n')
 endfu
 
