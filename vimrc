@@ -130,6 +130,7 @@ set foldenable
 set foldmethod=marker
 set foldopen+=jump
 set complete-=i
+set allowrevins  " Allow to use CTRL-_
 
 set wildmenu
 set wildignorecase
@@ -193,6 +194,68 @@ elseif executable('ack')
 else
   set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
 endif
+
+" }}}
+" ===============================================================
+" AUTOCMD {{{
+" ===============================================================
+
+augroup vimrcEx
+  autocmd!
+
+  " Use cursorline only in the focused window.
+  autocmd WinEnter * set cursorline
+  autocmd WinLeave * set nocursorline
+
+  " When editing a file, always jump to the last known cursor position.
+  " do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+  " Set markdown filetype.
+  autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
+
+  " Enable spellchecking and word wrapping for Markdown
+  autocmd FileType markdown setlocal spell
+  autocmd FileType markdown setlocal textwidth=80
+
+  " Automatically wrap at 72 characters and spell check git commit messages
+  autocmd FileType gitcommit setlocal textwidth=72
+  autocmd FileType gitcommit setlocal spell
+
+  " Quit help buffer by typing just q.
+  autocmd FileType help
+    \ if &readonly | nnoremap <buffer> q :q<cr> | endif
+
+  autocmd FileType java,make,sh,zsh,markdown
+    \ setlocal tabstop=4 |
+    \ setlocal softtabstop=4 |
+    \ setlocal shiftwidth=4
+
+  " automatically align html files
+  " autocmd BufWritePre,BufRead *.html :normal gg=G
+
+  " write comments easily for any files
+  autocmd BufRead,BufNewFile * set formatoptions+=ro
+
+  " emphasize comments
+  autocmd BufRead,BufNew * highlight Comment term=bold
+
+  " prevent from conflicting multiple edit
+  autocmd SwapExists * let v:swapchoice = 'o'
+
+  "make the 81st column stand out
+  autocmd BufRead,BufNew * highlight ColorColumn ctermbg=red guibg=#666666
+  autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%101v')
+
+  " Visualizes full-size space
+  autocmd BufRead,BufNew *
+    \ highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
+  autocmd BufRead,BufNew * match FullWidthSpace /　/
+
+  " Automatically open the quickfix window
+  autocmd QuickFixCmdPost * cwindow
+augroup END
 
 " }}}
 " ===============================================================
@@ -296,67 +359,14 @@ xnoremap <silent> K :<C-u>exe "grep '".<sid>get_grep_pattern()."'"<cr>
 " Double <BS> to remove trailing spaces
 nnoremap <silent> <BS><BS> :call <sid>preserve('%s/\s*$//')<cr>
 
-" }}}
-" ===============================================================
-" AUTOCMD {{{
-" ===============================================================
-
-augroup vimrcEx
-  autocmd!
-
-  " Use cursorline only in the focused window.
-  autocmd WinEnter * set cursorline
-  autocmd WinLeave * set nocursorline
-
-  " When editing a file, always jump to the last known cursor position.
-  " do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-
-  " Set markdown filetype.
-  autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
-
-  " Enable spellchecking and word wrapping for Markdown
-  autocmd FileType markdown setlocal spell
-  autocmd FileType markdown setlocal textwidth=80
-
-  " Automatically wrap at 72 characters and spell check git commit messages
-  autocmd FileType gitcommit setlocal textwidth=72
-  autocmd FileType gitcommit setlocal spell
-
-  " Quit help buffer by typing just q.
-  autocmd FileType help
-    \ if &readonly | nnoremap <buffer> q :q<cr> | endif
-
-  autocmd FileType java,make,sh,zsh,markdown
-    \ setlocal tabstop=4 |
-    \ setlocal softtabstop=4 |
-    \ setlocal shiftwidth=4
-
-  " automatically align html files
-  " autocmd BufWritePre,BufRead *.html :normal gg=G
-
-  " write comments easily for any files
-  autocmd BufRead,BufNewFile * set formatoptions+=ro
-
-  " emphasize comments
-  autocmd BufRead,BufNew * highlight Comment term=bold
-
-  " prevent from conflicting multiple edit
-  autocmd SwapExists * let v:swapchoice = 'o'
-
-  "make the 81st column stand out
-  autocmd BufRead,BufNew * highlight ColorColumn ctermbg=red guibg=#666666
-  autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%101v')
-
-  " Visualizes full-size space
-  autocmd BufRead,BufNew *
-    \ highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
-  autocmd BufRead,BufNew * match FullWidthSpace /　/
-
-  " Automatically open the quickfix window
-  autocmd QuickFixCmdPost * cwindow
-augroup END
+" Add extra mappings for commenting out stuffs like other editors.
+au vimrcEx VimEnter * call s:extra_commentary_mappings()
+fu! s:extra_commentary_mappings()
+  if maparg('<Plug>CommentaryLine') && maparg('<Plug>Commentary')
+    nmap <C-_> <Plug>CommentaryLine
+    xmap <C-_> <Plug>Commentary
+  endif
+endfu
 
 " }}}
 " ===============================================================
