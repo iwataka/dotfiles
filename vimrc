@@ -435,7 +435,7 @@ endfu
 fu! s:get_grep_pattern()
   let lines = s:get_visual_selection()
   let lines = map(lines, "escape(v:val, '\\')")
-  let lines = map(lines, "escape(v:val, ' /.*$?^~\[\]()')")
+  let lines = map(lines, "escape(v:val, ' /.*+#$?^~\[\]()|')")
   let lines = map(lines, "escape(v:val, '\\')")
   " Escape single quotes.
   let lines = map(lines, "escape(v:val, \"''\")")
