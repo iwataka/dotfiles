@@ -132,6 +132,7 @@ set foldopen+=jump
 set complete-=i
 set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
+set pastetoggle=<F2>                      " Toggle paste mode by F2
 
 set wildmenu
 set wildignorecase
@@ -610,10 +611,10 @@ augroup vimrc-dispatch
         \ let b:dispatch = 'ruby %'
 augroup END
 
-nnoremap <silent> <F3> :Dispatch<cr>
-nnoremap <silent> <F4> :Start<cr>
-inoremap <silent> <F3> <esc>:Dispatch<cr>
-inoremap <silent> <F4> <esc>:Start<cr>
+nnoremap <silent> <F8> :Start<cr>
+nnoremap <silent> <F9> :Dispatch<cr>
+inoremap <silent> <F8> <esc>:Start<cr>
+inoremap <silent> <F9> <esc>:Dispatch<cr>
 
 " --------------------------------------------------------------
 " gitgutter
@@ -789,8 +790,8 @@ endif
 " tagbar
 " --------------------------------------------------------------
 if v:version >= 703
-  inoremap <F2> <esc>:TagbarToggle<cr>
-  nnoremap <F2> :TagbarToggle<cr>
+  inoremap <F3> <esc>:TagbarToggle<cr>
+  nnoremap <F3> :TagbarToggle<cr>
   let g:tagbar_sort = 0
   let g:tagbar_show_linenumbers = 2
   let g:tagbar_autofocus = 1
@@ -810,10 +811,5 @@ nnoremap <leader>nb :NERDTreeFromBookmark
 " indentLine
 " --------------------------------------------------------------
 let g:indentLine_color_term = 242
-
-" --------------------------------------------------------------
-" tabular
-" --------------------------------------------------------------
-xnoremap <leader>t :Tabularize /
 
 " }}}
