@@ -48,7 +48,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'itchyny/lightline.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'junegunn/vim-easy-align', { 'on': '<Plug>(EasyAlign)' }
+Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'iwataka/minidown.vim', { 'on': 'Minidown' }
 Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
@@ -130,8 +130,8 @@ set foldenable
 set foldmethod=marker
 set foldopen+=jump
 set complete-=i
-set allowrevins  " Allow to use CTRL-_
-set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_  " Show invisible characters
+set allowrevins                           " Allow to use CTRL-_
+set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
 
 set wildmenu
 set wildignorecase
@@ -759,37 +759,6 @@ let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_inside_quotes = 1
 
 " --------------------------------------------------------------
-" easy-align
-" --------------------------------------------------------------
-let g:easy_align_delimiters = {
-\ '>': { 'pattern': '>>\|=>\|>' },
-\ '/': {
-\     'pattern':         '//\+\|/\*\|\*/',
-\     'delimiter_align': 'l',
-\     'ignore_groups':   ['!Comment']
-\    },
-\ ']': {
-\     'pattern':       '[[\]]',
-\     'left_margin':   0,
-\     'right_margin':  0,
-\     'stick_to_left': 0
-\   },
-\ ')': {
-\     'pattern':       '[()]',
-\     'left_margin':   0,
-\     'right_margin':  0,
-\     'stick_to_left': 0
-\   },
-\ 'd': {
-\     'pattern':      ' \(\S\+\s*[;=]\)\@=',
-\     'left_margin':  0,
-\     'right_margin': 0
-\   }
-\ }
-vmap <Enter> <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-
-" --------------------------------------------------------------
 " scala
 " --------------------------------------------------------------
 aug vimrc-scala
@@ -841,5 +810,10 @@ nnoremap <leader>nb :NERDTreeFromBookmark
 " indentLine
 " --------------------------------------------------------------
 let g:indentLine_color_term = 242
+
+" --------------------------------------------------------------
+" tabular
+" --------------------------------------------------------------
+xnoremap <leader>t :Tabularize /
 
 " }}}
