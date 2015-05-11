@@ -131,6 +131,7 @@ set foldmethod=marker
 set foldopen+=jump
 set complete-=i
 set allowrevins  " Allow to use CTRL-_
+set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_  " Show invisible characters
 
 set wildmenu
 set wildignorecase
@@ -465,7 +466,7 @@ abbrev netowrk network
 " --------------------------------------------------------------
 let g:solarized_termcolors=256
 let g:solarized_visibility='high'
-let g:solarized_hitrail=1
+let g:solarized_hitrail=0
 let g:solarized_termtrans=1
 set background=dark
 silent! colo solarized
