@@ -5,7 +5,7 @@
 " possible, as it has side effects.
 set nocompatible
 
-" If using Windows Vim, you should manually add .vim directory to runtime path.
+" Use ~/.vim as a runtime path even in Windows
 if has("win32") || has("win64")
   set runtimepath+=~/.vim/
 endif
@@ -66,7 +66,6 @@ Plug 'tpope/vim-endwise', { 'for': ['ruby', 'vim'] }
 call plug#end()
 endif
 
-" Enable filetype plugins
 filetype plugin on
 filetype indent on
 
