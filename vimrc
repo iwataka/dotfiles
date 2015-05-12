@@ -285,6 +285,8 @@ cnoremap jk <C-c>
 nnoremap <leader>ev :vsplit ~/.vimrc<cr>
 " Source vimrc
 nnoremap <leader>sv :source ~/.vimrc<cr>
+" Source the current buffer
+nnoremap <leader>sc :source %<cr>
 
 " qq to record, Q to replay
 nnoremap Q @q
