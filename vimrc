@@ -282,11 +282,9 @@ inoremap jk <Esc>
 cnoremap jk <C-c>
 
 " Edit vimrc
-nnoremap <leader>v :vsplit ~/.vimrc<cr>
+nnoremap <leader>ev :vsplit ~/.vimrc<cr>
 " Source vimrc
-nnoremap <leader>V :source ~/.vimrc<cr>
-" Source the other current file
-nnoremap <leader>S :source %<cr>
+nnoremap <leader>sv :source ~/.vimrc<cr>
 
 " qq to record, Q to replay
 nnoremap Q @q
