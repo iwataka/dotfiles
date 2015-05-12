@@ -136,16 +136,16 @@ set pastetoggle=<F2>                      " Toggle paste mode by <F2>
 set wildmenu
 set wildignorecase
 set wildmode=list:full
-" From fatih's vimrc (https://github.com/fatih/dotfiles)
-set wildignore+=.git,.hg,.svn                     " Version control
-set wildignore+=*.aux,*.out,*.toc                 " LaTeX intermediate files
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest  " compiled object files
-set wildignore+=*.spl                             " compiled spelling word lists
-set wildignore+=*.sw?                             " Vim swap files
-set wildignore+=*.DS_Store                        " OSX bullshit
-set wildignore+=*.luac                            " Lua byte code
-set wildignore+=*.pyc                             " Python byte code
-set wildignore+=*.class                           " JVM byte code
+set wildignore+=.git,.hg,.svn,.bzr,_darcs        " VCS
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.spl                            " compiled spelling word lists
+set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*.DS_Store                       " OSX
+set wildignore+=*.luac                           " Lua
+set wildignore+=*.pyc                            " Python
+set wildignore+=*.rbc                            " Ruby
+set wildignore+=*.class                          " JVM
 
 set clipboard=unnamed
 if has('unnamedplus')
