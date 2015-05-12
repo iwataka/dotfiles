@@ -71,7 +71,7 @@ filetype plugin on
 filetype indent on
 
 if findfile('plugin/matchit.vim', &rtp) ==# ''
-  runtime! macros/matchit.vim
+  runtime! macros/matchit.vim  " Move between if and else
 endif
 
 " }}}
