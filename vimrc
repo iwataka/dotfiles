@@ -79,43 +79,44 @@ endif
 " BASIC SETTINGS {{{
 " ===============================================================
 
+" The mapleader is used as a prefix for all user mappings.
 let mapleader      = " "  " Space can be typed by both of hands.
 let maplocalleader = "\\"  " The local mapleader is hardly used.
 
-let $LANG='en'                            " English as a default language
-set encoding=utf-8                        " UTF8 as a default encoding
-set fileencodings=utf-8,sjis              " UTF8 as a default file encoding
-set fileformats=unix,dos,mac              " Unix as a default file format
+let $LANG='en'                            " Vim should be in English
+set encoding=utf-8                        " UTF8 is a universal encoding
+set fileencodings=utf-8,sjis              " UTF8 is first, SJIS is second
+set fileformats=unix,dos,mac              " Unix format has highest priority
 set imdisable                             " The Input Method is never used
-set timeout                               " Time out on :mappings and key codes
-set timeoutlen=1000                       " Time out on mapping after this
-set ttimeoutlen=100                       " Time out on key codes after this
+set timeout                               " Enable timeout settings
+set timeoutlen=1000                       " Time out on mapping after 1 second
+set ttimeoutlen=100                       " Time out on key codes after 0.1 second
 set lazyredraw                            " Not be redrawn while executing macros and so on
 set showmatch                             " Show pairs of brackets
-set matchtime=1                           " The length of show matches
+set matchtime=1                           " Tenths of a second to show the mathing paren
 set textwidth=0                           " No limit for text width
 set pumheight=10                          " Limit the height of popup menu
 set splitright                            " More natural way to split a window vertically
 set splitbelow                            " More natural way to split a window horizontally
-set expandtab                             " Use spaces instead of tabs when indenting
-set smarttab                              " Use spaces instead of tabs when inserting
-set tabstop=2                             " Number of spaces that a <Tab> in the file counts for
-set softtabstop=2                         " Number of spaces that a <Tab> counts for while inserting a <Tab> or using <BS>.
+set expandtab                             " Use spaces for indenting
+set smarttab                              " Use spaces for inserting <Tab>
+set tabstop=2                             " :retab command use this value
+set softtabstop=2                         " Number of spaces while inserting a <Tab> or using <BS>.
 set shiftwidth=2                          " Number of spaces to use for each step of (auto)indent
-set autoindent                            " Enable to indent automatically
-set smartindent
-set noerrorbells
-set visualbell t_vb=
-set shortmess+=atI
-set scrolloff=3
-set showcmd
-set cmdheight=2
-set ruler
-set showmode
-set laststatus=2
-set history=1000
-set autowrite
-set autoread
+set autoindent                            " Same as the above indent
+set smartindent                           " Smart autoindenting
+set noerrorbells                          " No beep or screen flash for error messages
+set visualbell t_vb=                      " No beeping, use visual bell
+set shortmess+=atI                        " Some visual settings
+set scrolloff=3                           " Keep some lines
+set showcmd                               " Show command in the last line
+set cmdheight=2                           " The height of command line
+set ruler                                 " Show the cursor position in status line
+set showmode                              " Show mode in the last line
+set laststatus=2                          " last window will have a status line
+set history=1000                          " A history in command line
+set autowrite                             " Write contents of modified files automatically
+set autoread                              " Detect changes from outside automatically
 set backspace=indent,eol,start            " Enable backspace to delete more than characters
 set hidden                                " A bufffer becomes hidden when it is abandoned
 set nostartofline                         " Jump to certain positions, not starts of line
