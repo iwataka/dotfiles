@@ -175,9 +175,8 @@ if has('mouse')
   set mousehide
 endif
 
-" Delete comment character when joining commented line
 if v:version > 703 || v:version == 703 && has("patch541")
-  set formatoptions+=j
+  set formatoptions+=j  " Delete comment character when joining commented line
 endif
 
 set backupdir=~/.vim/backups
