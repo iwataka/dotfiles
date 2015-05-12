@@ -359,15 +359,6 @@ xnoremap <silent> K :<C-u>exe 'grep "'.<sid>get_grep_pattern().'"'<cr>
 " Double <BS> to remove trailing spaces
 nnoremap <silent> <BS><BS> :call <sid>preserve('%s/\s*$//')<cr>
 
-" Add extra mappings for commenting out stuffs like other editors.
-au vimrcEx VimEnter * call s:extra_commentary_mappings()
-fu! s:extra_commentary_mappings()
-  if maparg('<Plug>CommentaryLine') && maparg('<Plug>Commentary')
-    nmap <C-_> <Plug>CommentaryLine
-    xmap <C-_> <Plug>Commentary
-  endif
-endfu
-
 " }}}
 " ===============================================================
 " FUNCTIONS & COMMANDS {{{
