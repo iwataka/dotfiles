@@ -79,33 +79,33 @@ endif
 " BASIC SETTINGS {{{
 " ===============================================================
 
-let mapleader      = " "
-let maplocalleader = "\\"
+let mapleader      = " "  " Space can be typed by both of hands.
+let maplocalleader = "\\"  " The local mapleader is hardly used.
 
-let $LANG='en'
-set encoding=utf-8
-set fileencodings=utf-8,sjis
-set fileformats=unix,dos,mac
-set imdisable
-set timeout
-set timeoutlen=1000
-set ttimeoutlen=100
-set lazyredraw
-set showmatch
-set matchtime=1
-set textwidth=0
-set pumheight=10
-set splitright
-set splitbelow
-set expandtab
-set smarttab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set autoindent
+let $LANG='en'                            " English as a default language
+set encoding=utf-8                        " UTF8 as a default encoding
+set fileencodings=utf-8,sjis              " UTF8 as a default file encoding
+set fileformats=unix,dos,mac              " Unix as a default file format
+set imdisable                             " The Input Method is never used
+set timeout                               " Time out on :mappings and key codes
+set timeoutlen=1000                       " Time out on mapping after this
+set ttimeoutlen=100                       " Time out on key codes after this
+set lazyredraw                            " Not be redrawn while executing macros and so on
+set showmatch                             " Show pairs of brackets
+set matchtime=1                           " The length of show matches
+set textwidth=0                           " No limit for text width
+set pumheight=10                          " Limit the height of popup menu
+set splitright                            " More natural way to split a window vertically
+set splitbelow                            " More natural way to split a window horizontally
+set expandtab                             " Use spaces instead of tabs when indenting
+set smarttab                              " Use spaces instead of tabs when inserting
+set tabstop=2                             " Number of spaces that a <Tab> in the file counts for
+set softtabstop=2                         " Number of spaces that a <Tab> counts for while inserting a <Tab> or using <BS>.
+set shiftwidth=2                          " Number of spaces to use for each step of (auto)indent
+set autoindent                            " Enable to indent automatically
 set smartindent
 set noerrorbells
-set vb t_vb=
+set visualbell t_vb=
 set shortmess+=atI
 set scrolloff=3
 set showcmd
@@ -116,23 +116,22 @@ set laststatus=2
 set history=1000
 set autowrite
 set autoread
-set backspace=indent,eol,start
-set hidden
-set nostartofline
-set ignorecase
-set smartcase
-set magic
-set incsearch
-set hlsearch
-set gdefault
-set ttyfast
-set foldenable
-set foldmethod=marker
-set foldopen+=jump
-set complete-=i
+set backspace=indent,eol,start            " Enable backspace to delete more than characters
+set hidden                                " A bufffer becomes hidden when it is abandoned
+set nostartofline                         " Jump to certain positions, not starts of line
+set ignorecase                            " Case insensitive by default
+set smartcase                             " Case sensitive when containing capitals
+set magic                                 " Make using regex more easier
+set incsearch                             " Enable incremental search
+set hlsearch                              " Highlight search results
+set gdefault                              " Set the g flag by default when executing substitute
+set ttyfast                               " Enable fast connection
+set foldenable                            " Enable to fold
+set foldmethod=marker                     " Use specified markers to fold sentences
+set foldopen+=jump                        " Open foldings when jumping to them
 set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
-set pastetoggle=<F2>                      " Toggle paste mode by F2
+set pastetoggle=<F2>                      " Toggle paste mode by <F2>
 
 set wildmenu
 set wildignorecase
