@@ -753,7 +753,7 @@ let g:delimitMate_expand_inside_quotes = 1
 " --------------------------------------------------------------
 aug vimrc-scala
   au!
-  au FileType scala nnoremap <silent><buffer> <Leader>si :SortScalaImports<CR>
+  au FileType java,scala nnoremap <silent><buffer> <Leader>si :SortScalaImports<CR>
 aug END
 let g:scala_sort_across_groups = 1
 
