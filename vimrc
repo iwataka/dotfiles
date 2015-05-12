@@ -589,16 +589,29 @@ let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 " --------------------------------------------------------------
 augroup vimrc-dispatch
   autocmd!
-  autocmd FileType scala let b:start = 'sbt'
-  autocmd FileType java let b:start = 'sbt'
+  autocmd FileType java,scala let b:start = 'sbt'
   autocmd FileType closure let b:start = 'lein repl'
-  autocmd FileType python
-        \ let b:start = 'python' |
-        \ let b:dispatch = 'python %'
-  autocmd FileType ruby
-        \ let b:start = 'irb' |
-        \ let b:dispatch = 'ruby %'
+  autocmd FileType python call s:dispatch_python()
+  autocmd FileType ruby call s:dispatch_ruby()
 augroup END
+
+fu! s:dispatch_python()
+  if executable('ipython')
+    let b:start = 'ipython'
+  else
+    let b:start = 'python'
+  endif
+  let b:dispatch = 'python %'
+endfu
+
+fu! s:dispatch_ruby()
+  if executable('pry')
+    let b:start = 'pry'
+  else
+    let b:start = 'irb'
+  endif
+  let b:dispatch = 'ruby %'
+endfu
 
 nnoremap <silent> <F8> :Start<cr>
 nnoremap <silent> <F9> :Dispatch<cr>
