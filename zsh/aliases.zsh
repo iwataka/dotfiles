@@ -36,6 +36,9 @@ alias gst="git status"
 alias gdf="git diff"
 alias gco="git checkout"
 
+# Google Chrome
+alias chrome="google-chrome-stable"
+
 # Enables to display result in human-readable format.
 alias df='df -h'
 alias du='du -h'
