@@ -82,6 +82,10 @@ if [ $OSTYPE == "linux-gnu" ]; then
     # Scala
     sudo apt-get install -y scala
     sudo apt-get install -y sbt
+    # NodeJS
+    sudo apt-get install -y nodejs
+    sudo apt-get install -y npm
+    sudo npm -g install instant-markdown-d
     # Java
     # If you want to switch other jdk, run this command:
     # sudo update-alternatives --config java
