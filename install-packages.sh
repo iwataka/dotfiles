@@ -86,6 +86,8 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install -y nodejs
     sudo apt-get install -y npm
     sudo npm -g install instant-markdown-d
+    # Chrome
+    sudo apt-get install google-chrome-stable
     # Java
     # If you want to switch other jdk, run this command:
     # sudo update-alternatives --config java
