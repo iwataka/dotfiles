@@ -50,7 +50,6 @@ Plug 'Raimondi/delimitMate'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-Plug 'iwataka/minidown.vim', { 'on': 'Minidown' }
 Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
 
 " For specific filetypes
@@ -58,6 +57,7 @@ if v:version >= 703
   Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 endif
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'scrooloose/syntastic', { 'for': ['ruby', 'python'] }
@@ -813,5 +813,11 @@ nnoremap <leader>nb :NERDTreeFromBookmark
 " indentLine
 " --------------------------------------------------------------
 let g:indentLine_color_term = 242
+
+" --------------------------------------------------------------
+" instant-markdown
+" --------------------------------------------------------------
+let g:instant_markdown_slow = 1
+let g:instant_markdown_autostart = 0
 
 " }}}
