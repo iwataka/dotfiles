@@ -56,8 +56,8 @@ Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
 if v:version >= 703
   Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 endif
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
+Plug 'plasticboy/vim-markdown', { 'for': 'mkd' }
+Plug 'suan/vim-instant-markdown', { 'for': 'mkd' }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'scrooloose/syntastic', { 'for': ['ruby', 'python'] }
@@ -213,12 +213,9 @@ augroup vimrcEx
   " (happens when dropping a file on gvim).
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-  " Set markdown filetype.
-  autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
-
   " Enable spellchecking and word wrapping for Markdown
-  autocmd FileType markdown setlocal spell
-  autocmd FileType markdown setlocal textwidth=80
+  autocmd FileType mkd setlocal spell
+  autocmd FileType mkd setlocal textwidth=80
 
   " Automatically wrap at 72 characters and spell check git commit messages
   autocmd FileType gitcommit setlocal textwidth=72
@@ -228,7 +225,7 @@ augroup vimrcEx
   autocmd FileType help
     \ if &readonly | nnoremap <buffer> q :q<cr> | endif
 
-  autocmd FileType java,make,sh,zsh,markdown
+  autocmd FileType java,make,sh,zsh,mkd
     \ setlocal tabstop=4 |
     \ setlocal softtabstop=4 |
     \ setlocal shiftwidth=4
@@ -763,7 +760,7 @@ let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_inside_quotes = 1
 aug vimrc-delimitMate
   au!
-  au FileType markdown let b:delimitMate_expand_space = 0
+  au FileType mkd let b:delimitMate_expand_space = 0
 aug END
 
 " --------------------------------------------------------------
