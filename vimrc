@@ -204,6 +204,7 @@ augroup vimrcEx
   autocmd!
 
   " Use cursorline only in the focused window.
+  " This doesn't work with NERDTree.
   autocmd WinEnter * set cursorline
   autocmd WinLeave * set nocursorline
 
