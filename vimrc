@@ -128,7 +128,7 @@ set gdefault                              " Set the g flag by default when execu
 set ttyfast                               " Enable fast connection
 set foldenable                            " Enable to fold
 set foldmethod=marker                     " Use specified markers to fold sentences
-set foldopen+=jump                        " Open foldings when jumping to them
+set foldopen+=jump,search                 " Open foldings when jumping to them
 set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
 set pastetoggle=<F2>                      " Toggle paste mode by <F2>
