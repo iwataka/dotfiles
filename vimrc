@@ -757,7 +757,7 @@ endf
 " --------------------------------------------------------------
 let g:delimitMate_expand_space = 1
 let g:delimitMate_expand_cr = 1
-let g:delimitMate_expand_inside_quotes = 1
+let g:delimitMate_expand_inside_quotes = 0
 aug vimrc-delimitMate
   au!
   au FileType mkd let b:delimitMate_expand_space = 0
