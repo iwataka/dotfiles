@@ -431,6 +431,17 @@ fu! s:get_grep_pattern()
   retu join(lines, '\n')
 endfu
 
+com! CheckboxToggle call s:toggle_check_box(line('.'))
+fu! s:toggle_check_box(linenr)
+  let line = getline(a:linenr)
+  if line =~ '[-+*]\s*\[x\]'
+    let line = substitute(line, '\([-+*]\s*\[\)x\(\]\)', '\1'.' '.'\2', '')
+  elseif line =~ '[-+*]\s*\[\s*\]'
+    let line = substitute(line, '\([-+*]\s*\[\)\s*\(\]\)', '\1'.'x'.'\2', '')
+  endif
+  call setline(a:linenr, line)
+endfu
+
 " }}}
 " ===============================================================
 " ABBREVIATIONS {{{
