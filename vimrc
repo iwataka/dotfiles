@@ -338,14 +338,6 @@ nnoremap <leader>cd  :cd %:h<cr>
 " Make <C-u> behave like being on command line
 inoremap <C-u> <C-g>u<C-u>
 
-" Make search results appear in the middle of the screen.
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
-nnoremap g* g*zz
-nnoremap g# g#zz
-
 " Search in visual mode
 xnoremap <silent> * :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal n<cr>
 xnoremap <silent> # :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal N<cr>
