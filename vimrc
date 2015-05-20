@@ -127,6 +127,7 @@ set hlsearch                              " Highlight search results
 set gdefault                              " Set the g flag by default when executing substitute
 set ttyfast                               " Enable fast connection
 set foldenable                            " Enable to fold
+set foldlevel=2                           " Start folding at the second depth
 set foldmethod=marker                     " Use specified markers to fold sentences
 set foldopen+=jump,search                 " Open foldings when jumping to them
 set allowrevins                           " Allow to use CTRL-_
