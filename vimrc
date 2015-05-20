@@ -435,6 +435,41 @@ fu! s:toggle_check_box(linenr)
   call setline(a:linenr, line)
 endfu
 
+" Settings about japanese and english input sources
+if has('unix')
+  let s:default_input_source = "xkb:jp::jpn"
+  let s:other_input_sources = ["mozc-jp", "anthy"]
+  let s:ibus = !empty(system('ibus engine 2> /dev/null'))
+  aug vimrc-jp
+    au!
+    au InsertLeave * call s:on_insert_leave()
+  aug END
+endif
+
+" Execute this when leaving from insert mode.
+fu! s:on_insert_leave()
+  let cis = s:current_input_source()
+  if index(s:other_input_sources, cis) >= 0
+    silent call s:switch_input_source_to_default()
+  endif
+endfu
+
+" Switch current input source to the default
+fu! s:switch_input_source_to_default()
+  if s:ibus
+    silent call system('ibus engine '.s:default_input_source)
+  endif
+endfu
+
+" Returns current input source
+fu! s:current_input_source()
+  if s:ibus
+    return substitute(system('ibus engine'), '\(\n\|\r\)', '', '')
+  else
+    return ''
+  endif
+endfu
+
 " }}}
 " ===============================================================
 " ABBREVIATIONS {{{
