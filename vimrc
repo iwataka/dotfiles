@@ -470,6 +470,15 @@ fu! s:current_input_source()
   endif
 endfu
 
+com! InputRestart call s:input_restart()
+fu! s:input_restart()
+  if s:ibus
+    silent call system('ibus restart')
+  endif
+  sleep 300m
+  silent call s:switch_input_source_to_default()
+endfu
+
 " }}}
 " ===============================================================
 " ABBREVIATIONS {{{
