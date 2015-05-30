@@ -1,5 +1,5 @@
 " ===============================================================
-" VIM-PLUG BLOCK {{{
+" VIM-PLUG BLOCK {{{1
 " ===============================================================
 " Use Vim settings, rather than Vi settings. This setting must be as early as
 " possible, as it has side effects.
@@ -73,9 +73,8 @@ if findfile('plugin/matchit.vim', &rtp) ==# ''
   runtime! macros/matchit.vim  " Move between if and else
 endif
 
-" }}}
 " ===============================================================
-" BASIC SETTINGS {{{
+" BASIC SETTINGS {{{1
 " ===============================================================
 
 " The mapleader is used as a prefix for all user mappings.
@@ -195,9 +194,8 @@ else
   set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
 endif
 
-" }}}
 " ===============================================================
-" AUTOCMD {{{
+" AUTOCMD {{{1
 " ===============================================================
 
 augroup vimrcEx
@@ -255,9 +253,8 @@ augroup vimrcEx
   autocmd QuickFixCmdPost * cwindow
 augroup END
 
-" }}}
 " ===============================================================
-" MAPPINGS {{{
+" MAPPINGS {{{1
 " ===============================================================
 
 " More reasonable cursor moving
@@ -349,9 +346,8 @@ xnoremap <silent> K :<C-u>exe 'grep "'.<sid>get_grep_pattern().'"'<cr>
 " Double <BS> to remove trailing spaces
 nnoremap <silent> <BS><BS> :call <sid>preserve('%s/\s*$//')<cr>
 
-" }}}
 " ===============================================================
-" FUNCTIONS & COMMANDS {{{
+" FUNCTIONS & COMMANDS {{{1
 " ===============================================================
 
 " Clear all buffers by bdelete command.
@@ -434,9 +430,8 @@ fu! s:toggle_check_box(linenr)
   call setline(a:linenr, line)
 endfu
 
-" }}}
 " ===============================================================
-" ABBREVIATIONS {{{
+" ABBREVIATIONS {{{1
 " ===============================================================
 
 " Insert the current date and time.
@@ -447,13 +442,12 @@ abbrev factroy factory
 abbrev reutrn return
 abbrev netowrk network
 
-" }}}
 " ===============================================================
-" PLUGINS {{{
+" PLUGINS {{{1
 " ===============================================================
 
 " --------------------------------------------------------------
-" solarized
+" solarized {{{2
 " --------------------------------------------------------------
 let g:solarized_termcolors=256
 let g:solarized_visibility='high'
@@ -484,7 +478,7 @@ fu! s:tweak_solarized()
 endfu
 
 " --------------------------------------------------------------
-" gist
+" gist {{{2
 " --------------------------------------------------------------
 if has('mac')
   let g:gist_clip_command = 'pbcopy'
@@ -503,7 +497,7 @@ if filereadable(expand('~/.vim/settings.vim'))
 endif
 
 " --------------------------------------------------------------
-" CtrlP
+" CtrlP {{{2
 " --------------------------------------------------------------
 if executable('ag')
     let g:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
@@ -567,7 +561,7 @@ augroup END
 let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
 
 " --------------------------------------------------------------
-" YCM
+" YCM {{{2
 " --------------------------------------------------------------
 let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
@@ -577,7 +571,7 @@ let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_key_detailed_diagnostics = ''
 
 " --------------------------------------------------------------
-" Ultisnips
+" Ultisnips {{{2
 " --------------------------------------------------------------
 let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsExpandTrigger="<c-j>"
@@ -586,7 +580,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 
 " --------------------------------------------------------------
-" dispatch
+" dispatch {{{2
 " --------------------------------------------------------------
 augroup vimrc-dispatch
   autocmd!
@@ -620,14 +614,14 @@ inoremap <silent> <F8> <esc>:Start<cr>
 inoremap <silent> <F9> <esc>:Dispatch<cr>
 
 " --------------------------------------------------------------
-" gitgutter
+" gitgutter {{{2
 " --------------------------------------------------------------
 let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '~'
 let g:gitgutter_sign_removed = '-'
 
 " --------------------------------------------------------------
-" fugitive
+" fugitive {{{2
 " --------------------------------------------------------------
 nnoremap <Leader>gs :Gstatus<CR>8j
 nnoremap <Leader>gd :Gdiff<CR>
@@ -652,12 +646,12 @@ fu! s:GgrepPrompt()
 endfu
 
 " --------------------------------------------------------------
-" repeat
+" repeat {{{2
 " --------------------------------------------------------------
 sil! call repeat#set("\<Plug>(EasyAlign)", v:count)
 
 " --------------------------------------------------------------
-" lightline
+" lightline {{{2
 " --------------------------------------------------------------
 let g:lightline = {}
 
@@ -756,7 +750,7 @@ function! MyGitGutter()
 endf
 
 " --------------------------------------------------------------
-" delimitMate
+" delimitMate {{{2
 " --------------------------------------------------------------
 let g:delimitMate_expand_space = 1
 let g:delimitMate_expand_cr = 1
@@ -767,7 +761,7 @@ aug vimrc-delimitMate
 aug END
 
 " --------------------------------------------------------------
-" scala
+" scala {{{2
 " --------------------------------------------------------------
 aug vimrc-scala
   au!
@@ -776,7 +770,7 @@ aug END
 let g:scala_sort_across_groups = 1
 
 " --------------------------------------------------------------
-" syntastic
+" syntastic {{{2
 " --------------------------------------------------------------
 let g:syntastic_mode_map = {
   \ "mode": "passive",
@@ -794,7 +788,7 @@ if executable('flake8')
 endif
 
 " --------------------------------------------------------------
-" tagbar
+" tagbar {{{2
 " --------------------------------------------------------------
 if v:version >= 703
   inoremap <F3> <esc>:TagbarToggle<cr>
@@ -806,7 +800,7 @@ if v:version >= 703
 endif
 
 " --------------------------------------------------------------
-" nerdtree
+" nerdtree {{{2
 " --------------------------------------------------------------
 nnoremap <leader>nt :NERDTreeToggle<cr>
 nnoremap <leader>nf :NERDTreeFind<cr>
@@ -815,14 +809,12 @@ nnoremap <leader>nc :NERDTreeCWD<cr>
 nnoremap <leader>nb :NERDTreeFromBookmark
 
 " --------------------------------------------------------------
-" indentLine
+" indentLine {{{2
 " --------------------------------------------------------------
 let g:indentLine_color_term = 242
 
 " --------------------------------------------------------------
-" instant-markdown
+" instant-markdown {{{2
 " --------------------------------------------------------------
 let g:instant_markdown_slow = 1
 let g:instant_markdown_autostart = 0
-
-" }}}
