@@ -231,7 +231,7 @@ augroup vimrcEx
     \ setlocal shiftwidth=4
 
   " automatically align html files
-  " autocmd BufWritePre,BufRead *.html :normal gg=G
+  autocmd BufWritePre,BufRead *.html :normal gg=G
 
   " write comments easily for any files
   autocmd BufRead,BufNewFile * set formatoptions+=ro
