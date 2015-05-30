@@ -659,7 +659,7 @@ let g:gitgutter_sign_removed = '-'
 " --------------------------------------------------------------
 " fugitive {{{2
 " --------------------------------------------------------------
-nnoremap <Leader>gs :Gstatus<CR>8j
+nnoremap <Leader>gs :Gstatus<CR>5j
 nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <leader>gD :Git diff<cr>
 nnoremap <Leader>gg :call <sid>GgrepPrompt()<cr>
@@ -677,7 +677,7 @@ fu! s:GgrepPrompt()
   if keyword != ''
     exe "Ggrep ".keyword
   else
-    echoe "Non-empty keyword is needed!"
+    echoe 'Require non-empty input'
   endif
 endfu
 
