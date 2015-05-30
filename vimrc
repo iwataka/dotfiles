@@ -24,8 +24,8 @@ endif
 " Git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'mattn/gist-vim', { 'on': 'Gist' }
-Plug 'mattn/webapi-vim'
+" Plug 'mattn/gist-vim', { 'on': 'Gist' }
+" Plug 'mattn/webapi-vim'
 
 " Fancy
 " Plug 'bling/vim-airline'
@@ -483,21 +483,21 @@ endfu
 " --------------------------------------------------------------
 " gist {{{2
 " --------------------------------------------------------------
-if has('mac')
-  let g:gist_clip_command = 'pbcopy'
-elseif has('unix')
-  let g:gist_clip_command = 'xclip -selection clipboard'
-else
-  let g:gist_clip_command = 'putclip'
-endif
-let g:gist_detect_filetype = 1
-let g:gist_open_browser_after_post = 0
-let g:gist_show_privates = 1
-let g:gist_post_private = 1
+" if has('mac')
+"   let g:gist_clip_command = 'pbcopy'
+" elseif has('unix')
+"   let g:gist_clip_command = 'xclip -selection clipboard'
+" else
+"   let g:gist_clip_command = 'putclip'
+" endif
+" let g:gist_detect_filetype = 1
+" let g:gist_open_browser_after_post = 0
+" let g:gist_show_privates = 1
+" let g:gist_post_private = 1
 
-if filereadable(expand('~/.vim/settings.vim'))
-  source ~/.vim/settings.vim
-endif
+" if filereadable(expand('~/.vim/settings.vim'))
+"   source ~/.vim/settings.vim
+" endif
 
 " --------------------------------------------------------------
 " CtrlP {{{2
