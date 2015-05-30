@@ -446,10 +446,37 @@ endfu
 " Insert the current date and time.
 iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
 
-" Prevent misspellings.
+" Spelling
 abbrev factroy factory
 abbrev reutrn return
 abbrev netowrk network
+
+" Shortcut
+aug vimrc-abbrev
+  au!
+  au FileType java call s:abbrev_java()
+  au FileType scala call s:abbrev_scala()
+aug END
+
+fu! s:abbrev_java()
+  iab <buffer> ijm jp.ac.keio.ae.iijima
+  iab <buffer> ijmb jp.ac.keio.ae.iijima.besim
+  iab <buffer> cvj com.vividsolutions.jts
+  iab <buffer> cvjg com.vividsolutions.jts.geom
+  iab <buffer> cvja com.vividsolutions.jts.algorithm
+  iab <buffer> cvjm com.vividsolutions.jts.math
+  iab <buffer> cvjgu com.vividsolutions.jts.geom.util
+  iab <buffer> sfn sim.field.network
+  iab <buffer> sfg sim.field.grid
+  iab <buffer> sfc sim.field.continuous
+  iab <buffer> oij openifctools.com.openifcjavatoolbox
+  iab <buffer> jvec javax.vecmath
+endfu
+
+fu! s:abbrev_scala()
+  call s:abbrev_java()
+  iab <buffer> jconv scala.collection.JavaConversions._
+endfu
 
 " ===============================================================
 " PLUGINS {{{1
