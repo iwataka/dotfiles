@@ -349,6 +349,10 @@ xnoremap <silent> K :<C-u>exe 'grep "'.<sid>get_grep_pattern().'"'<cr>
 " Double <BS> to remove trailing spaces
 nnoremap <silent> <BS><BS> :call <sid>preserve('%s/\s*$//')<cr>
 
+" Some mappings for user-defined commands
+nnoremap <silent> <leader>cb :CheckboxToggle<cr>
+nnoremap <silent> <leader>rt :Root<cr>
+
 " ===============================================================
 " FUNCTIONS & COMMANDS {{{1
 " ===============================================================
