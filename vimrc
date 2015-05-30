@@ -133,7 +133,6 @@ set foldmethod=marker                     " Use specified markers to fold senten
 set foldopen+=jump,search                 " Open foldings when jumping to them
 set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
-set pastetoggle=<F2>                      " Toggle paste mode by <F2>
 
 set wildmenu
 set wildignorecase
@@ -615,10 +614,10 @@ fu! s:dispatch_ruby()
   let b:dispatch = 'ruby %'
 endfu
 
-nnoremap <silent> <F8> :Start<cr>
-nnoremap <silent> <F9> :Dispatch<cr>
-inoremap <silent> <F8> <esc>:Start<cr>
-inoremap <silent> <F9> <esc>:Dispatch<cr>
+nnoremap <silent> <leader>ds :Start<cr>
+nnoremap <silent> <leader>dd :Dispatch<cr>
+nnoremap <silent> <leader>dm :Make<cr>
+nnoremap <silent> <leader>dc :Copen<cr>
 
 " --------------------------------------------------------------
 " gitgutter {{{2
@@ -807,8 +806,7 @@ endif
 " tagbar {{{2
 " --------------------------------------------------------------
 if v:version >= 703
-  inoremap <F3> <esc>:TagbarToggle<cr>
-  nnoremap <F3> :TagbarToggle<cr>
+  nnoremap <silent> <leader>t :TagbarToggle<cr>
   let g:tagbar_sort = 0
   let g:tagbar_show_linenumbers = 2
   let g:tagbar_autofocus = 1
