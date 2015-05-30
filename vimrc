@@ -27,16 +27,17 @@ Plug 'tpope/vim-fugitive'
 Plug 'mattn/gist-vim', { 'on': 'Gist' }
 Plug 'mattn/webapi-vim'
 
+" Fancy
+" Plug 'bling/vim-airline'
+Plug 'itchyny/lightline.vim'
+
 " CtrlP
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'JazzCore/ctrlp-cmatcher', { 'do': 'install' }
 
-" Colorschemes
-Plug 'altercation/vim-colors-solarized'
-
 " Other useful goodies
 if v:version >= 703
-  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+  Plug 'majutsushi/tagbar'
 endif
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -45,12 +46,14 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'Yggdroot/indentLine'
-Plug 'itchyny/lightline.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
+
+" Colorschemes
+Plug 'altercation/vim-colors-solarized'
 
 " For specific filetypes
 if v:version >= 703
@@ -649,6 +652,15 @@ endfu
 " repeat {{{2
 " --------------------------------------------------------------
 sil! call repeat#set("\<Plug>(EasyAlign)", v:count)
+
+" --------------------------------------------------------------
+" airline {{{2
+" --------------------------------------------------------------
+" let g:airline_theme = 'understated'
+" let g:airline_powerline_fonts = 1
+" let g:airline#extensions#tabline#buffer_nr_show = 1
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#fnamemod = ':t'
 
 " --------------------------------------------------------------
 " lightline {{{2
