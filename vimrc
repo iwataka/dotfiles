@@ -12,7 +12,7 @@ endif
 
 silent! if plug#begin('~/.vim/plugged')
 
-" Auto completion and snippets
+" Completion
 if (has('unix') || has('mac')) && has('python')
   Plug 'Valloric/YouCompleteMe'
   Plug 'SirVer/ultisnips'
@@ -35,9 +35,9 @@ Plug 'itchyny/lightline.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'JazzCore/ctrlp-cmatcher', { 'do': 'install' }
 
-" Other useful goodies
+" Others
 if v:version >= 703
-  Plug 'majutsushi/tagbar'
+  Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle'] }
 endif
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -52,10 +52,10 @@ Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
 
-" Colorschemes
+" Colorscheme
 Plug 'altercation/vim-colors-solarized'
 
-" For specific filetypes
+" Filetype
 if v:version >= 703
   Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 endif
