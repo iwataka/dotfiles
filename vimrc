@@ -30,26 +30,26 @@ Plug 'mattn/webapi-vim'
 " Fancy
 " Plug 'bling/vim-airline'
 Plug 'itchyny/lightline.vim'
+Plug 'Yggdroot/indentLine'
 
-" CtrlP
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'JazzCore/ctrlp-cmatcher', { 'do': 'install' }
-
-" Others
+" Navigation
 if v:version >= 703
   Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle'] }
 endif
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'JazzCore/ctrlp-cmatcher', { 'do': 'install' }
+
+" Editing
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
-Plug 'Yggdroot/indentLine'
 Plug 'Raimondi/delimitMate'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
 
 " Colorscheme
