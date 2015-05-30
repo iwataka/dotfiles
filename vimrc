@@ -129,6 +129,7 @@ set hlsearch                              " Highlight search results
 set gdefault                              " Set the g flag by default when executing substitute
 set ttyfast                               " Enable fast connection
 set foldenable                            " Enable to fold
+set foldlevel=2                           " Start folding at the second depth
 set foldmethod=marker                     " Use specified markers to fold sentences
 set foldopen+=jump,search                 " Open foldings when jumping to them
 set allowrevins                           " Allow to use CTRL-_
@@ -439,6 +440,51 @@ fu! s:toggle_check_box(linenr)
   call setline(a:linenr, line)
 endfu
 
+" Settings about japanese and english input sources
+if has('unix')
+  let s:default_input_source = "xkb:jp::jpn"
+  let s:other_input_sources = ["mozc-jp", "anthy"]
+  let s:ibus = !empty(system('ibus engine 2> /dev/null'))
+  aug vimrc-jp
+    au!
+    au InsertLeave * call s:on_insert_leave()
+  aug END
+endif
+
+" Execute this when leaving from insert mode.
+fu! s:on_insert_leave()
+  let cis = s:current_input_source()
+  if index(s:other_input_sources, cis) >= 0
+    silent call s:switch_input_source_to_default()
+  endif
+endfu
+
+" Switch current input source to the default
+fu! s:switch_input_source_to_default()
+  if s:ibus
+    silent call system('ibus engine '.s:default_input_source)
+  endif
+endfu
+
+" Returns current input source
+fu! s:current_input_source()
+  if s:ibus
+    return substitute(system('ibus engine'), '\(\n\|\r\)', '', '')
+  else
+    return ''
+  endif
+endfu
+
+com! InputRestart call s:input_restart()
+fu! s:input_restart()
+  if s:ibus
+    silent call system('ibus restart')
+  endif
+  sleep 300m
+  silent call s:switch_input_source_to_default()
+endfu
+
+" }}}
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
