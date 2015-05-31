@@ -247,9 +247,8 @@ augroup vimrcEx
   autocmd BufRead,BufNew * highlight ColorColumn ctermbg=red guibg=#666666
   autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%101v')
 
-  " Visualizes full-size space
-  autocmd BufRead,BufNew *
-    \ highlight FullWidthSpace cterm=underline ctermbg=red guibg=#666666
+  " Full-width spaces
+  autocmd BufRead,BufNew * hi FullWidthSpace cterm=underline ctermbg=red guibg=#666666
   autocmd BufRead,BufNew * match FullWidthSpace /　/
 
   " Automatically open the quickfix window
