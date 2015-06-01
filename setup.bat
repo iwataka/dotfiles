@@ -3,12 +3,10 @@
 set DOTFILES=%~dp0
 
 if exist %USERPROFILE%\.vimrc del %USERPROFILE%\.vimrc
-mklink %USERPROFILE%\.vimrc %DOTFILES%vimrc
+mklink /H %USERPROFILE%\.vimrc %DOTFILES%vimrc
 
-if exist %USERPROFILE%\.vim del %USERPROFILE%\.vim
-mklink %USERPROFILE%\.vim %DOTFILES%vim
+if exist %USERPROFILE%\.vim rmdir %USERPROFILE%\.vim
+mklink /J /D %USERPROFILE%\.vim %DOTFILES%vim
 
-if exist %USERPROFILE%\.atom del %USERPROFILE%\.atom
-mklink %USERPROFILE%\.atom %DOTFILES%atom
-
-@pause
+if exist %USERPROFILE%\.gitconfig del %USERPROFILE%\.gitconfig
+mklink /H %USERPROFILE%\.gitconfig %DOTFILES%gitconfig
