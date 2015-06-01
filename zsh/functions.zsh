@@ -21,3 +21,10 @@ function o() {
     fi;
 }
 
+function replace() {
+    ag -l $1 |xargs sed -i "s/$1/$2/g"
+}
+
+function psg() {
+    ps -ef |grep "$@"
+}
