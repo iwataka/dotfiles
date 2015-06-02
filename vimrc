@@ -17,8 +17,6 @@ if (has('unix') || has('mac')) && has('python')
   Plug 'Valloric/YouCompleteMe'
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
-else
-  Plug 'ervandew/supertab'
 endif
 
 " Git
