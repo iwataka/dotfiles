@@ -170,7 +170,7 @@ if (&t_Co > 2 || has('gui_running')) && !exists('syntax_on')
 endif
 
 if has('gui_running')
-  set guioptions-=mTLr
+  set guioptions=
   set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
 endif
 
