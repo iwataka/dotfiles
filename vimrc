@@ -36,7 +36,7 @@ if v:version >= 703
 endif
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'JazzCore/ctrlp-cmatcher', { 'do': 'install' }
+Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
 
 " Editing
 Plug 'tpope/vim-repeat'
