@@ -231,6 +231,9 @@ augroup vimrcEx
     \ setlocal softtabstop=4 |
     \ setlocal shiftwidth=4
 
+  " Spacemacs configuration file setting
+  autocmd BufRead,BufNew spacemacs set filetype=lisp
+
   " automatically align html files
   autocmd BufWritePre,BufRead *.html :normal gg=G
 
