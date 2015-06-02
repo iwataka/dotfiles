@@ -356,6 +356,8 @@ nnoremap <silent> <leader>p :set invpaste<cr>
 " Some mappings for user-defined commands
 nnoremap <silent> <leader>cb :CheckboxToggle<cr>
 nnoremap <silent> <leader>rt :Root<cr>
+inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", "\<tab>")
+inoremap <expr> <tab> <sid>super_duper_tab("\<c-p>", "\<tab>")
 
 " ===============================================================
 " FUNCTIONS & COMMANDS {{{1
@@ -439,6 +441,37 @@ fu! s:toggle_check_box(linenr)
     let line = substitute(line, '\([-+*]\s*\[\)\s*\(\]\)', '\1'.'x'.'\2', '')
   endif
   call setline(a:linenr, line)
+endfu
+
+" derived from junegunn's vimrc
+fu! s:super_duper_tab(k, o)
+  if pumvisible()
+    return a:k
+  endif
+  let line = getline('.')
+  let col = col('.') - 2
+  if empty(line) || line[col] !~ '\k\|[/~.]' || line[col + 1] =~ '\k'
+    return a:o
+  endif
+  let prefix = expand(matchstr(line[0:col], '\S*$'))
+  if prefix =~ '^[~/.]'
+    return "\<c-x>\<c-f>"
+  endif
+  if s:can_complete(&omnifunc, prefix)
+    return "\<c-x>\<c-o>"
+  endif
+  if s:can_complete(&completefunc, prefix)
+    return "\<c-x>\<c-u>"
+  endif
+  return a:k
+endfu
+
+fu! s:can_complete(func, prefix)
+  if empty(a:func) || call(a:func, [1, '']) < 0
+    return 0
+  endif
+  let result = call(a:func, [0, matchstr(a:prefix, '\k\+$')])
+  return !empty(type(result) == type([]) ? result : result.words)
 endfu
 
 " Settings about japanese and english input sources
