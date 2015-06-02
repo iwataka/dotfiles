@@ -640,7 +640,9 @@ augroup vimrc-ctrlp
   au VimEnter * if exists(':CtrlPBookmarkDirAdd') | call s:ctrlp_bookmark_init() | endif
 augroup END
 
-let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
+if exists('*matcher#cmatch')
+  let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
+endif
 
 " --------------------------------------------------------------
 " YCM {{{2
