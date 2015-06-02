@@ -2,23 +2,20 @@
 
 set DOTFILES=%~dp0
 
-if exist %USERPROFILE%\.vimrc del %USERPROFILE%\.vimrc
-mklink /H %USERPROFILE%\.vimrc %DOTFILES%vimrc
+call:mklinkFile vimrc
+call:mklinkFile gitconfig
+call:mklinkFile agignore
+call:mklinkFile sbtrc
+call:mklinkFile vimperatorrc
+call:mklinkFile ctags
+call:mklinkDir vim
 
-if exist %USERPROFILE%\.vim rmdir %USERPROFILE%\.vim
-mklink /J /D %USERPROFILE%\.vim %DOTFILES%vim
+:mklinkDir
+if exist %USERPROFILE%\.%~1 rmdir %USERPROFILE%\.%~1
+mklink /J %USERPROFILE%\.%~1 %DOTFILES%%~1
+goto:eof
 
-if exist %USERPROFILE%\.gitconfig del %USERPROFILE%\.gitconfig
-mklink /H %USERPROFILE%\.gitconfig %DOTFILES%gitconfig
-
-if exist %USERPROFILE%\.agignore del %USERPROFILE%\.agignore
-mklink /H %USERPROFILE%\.agignore %DOTFILES%agignore
-
-if exist %USERPROFILE%\.sbtrc del %USERPROFILE%\.sbtrc
-mklink /H %USERPROFILE%\.sbtrc %DOTFILES%sbtrc
-
-if exist %USERPROFILE%\.vimperatorrc del %USERPROFILE%\.vimperatorrc
-mklink /H %USERPROFILE%\.vimperatorrc %DOTFILES%vimperatorrc
-
-if exist %USERPROFILE%\.ctags del %USERPROFILE%\.ctags
-mklink /H %USERPROFILE%\.ctags %DOTFILES%ctags
+:mklinkFile
+if exist %USERPROFILE%\.%~1 del %USERPROFILE%\.%~1
+mklink /H %USERPROFILE%\.%~1 %DOTFILES%%~1
+goto:eof
