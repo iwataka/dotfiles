@@ -36,8 +36,6 @@ if v:version >= 703
 endif
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'JazzCore/ctrlp-cmatcher', { 'do': function('BuildCMatcher') }
-
 fu! BuildCMatcher(info)
   if a:info.status == 'installed' || a:info.status == 'updated'
     if has('win32') || has('win64')
@@ -47,6 +45,7 @@ fu! BuildCMatcher(info)
     endif
   endif
 endfu
+Plug 'JazzCore/ctrlp-cmatcher', { 'do': function('BuildCMatcher') }
 
 " Editing
 Plug 'tpope/vim-repeat'
