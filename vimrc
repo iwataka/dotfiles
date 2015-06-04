@@ -366,8 +366,8 @@ nnoremap <silent> <leader>p :set invpaste<cr>
 " Some mappings for user-defined commands
 nnoremap <silent> <leader>cb :CheckboxToggle<cr>
 nnoremap <silent> <leader>rt :Root<cr>
-inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", "\<tab>")
-inoremap <expr> <tab> <sid>super_duper_tab("\<c-p>", "\<tab>")
+if !maparg('<tab>', 'i') | inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", "\<tab>") | endif
+if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>", "\<tab>") | endif
 
 " ===============================================================
 " FUNCTIONS & COMMANDS {{{1
