@@ -225,7 +225,6 @@ augroup vimrcEx
 
   " Enable spellchecking and word wrapping for Markdown
   autocmd FileType mkd setlocal spell
-  autocmd FileType mkd setlocal textwidth=80
 
   " Automatically wrap at 72 characters and spell check git commit messages
   autocmd FileType gitcommit setlocal textwidth=72
