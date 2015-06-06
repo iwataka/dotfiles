@@ -403,6 +403,18 @@ fu! s:root(cwd)
   retu ''
 endfu
 
+com! Tab2Spaces call s:tab_to_spaces()
+fu! s:tab_to_spaces()
+  if search('\t', 'n')
+    let num = &tabstop
+    let spaces = ''
+    for i in range(num)
+      let spaces = spaces.' '
+    endfor
+    silent exe '%s/\t/'.spaces.'/'
+  endif
+endfu
+
 " Execute a given command with the cursor position and the search register
 " preserved.
 fu! s:preserve(cmd)
