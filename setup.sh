@@ -19,7 +19,7 @@ pre-setup() {
     fi
 }
 
-# Copy binaries and make them executable
+# Make links of binaries
 setup-bins() {
     local path="$dfsdir/bin"
     for file in $(ls $path); do
@@ -27,8 +27,7 @@ setup-bins() {
             rm ~/bin/$file
         fi
         if [[ -f $path/$file ]]; then
-            cp $path/$file ~/bin/$file
-            chmod u+x ~/bin/$file
+            ln -s $path/$file ~/bin/$file
         fi
     done
 }
