@@ -2,7 +2,7 @@
 
 set -e
 
-dfsdir="$HOME/dotfiles"
+dfsdir=$PWD
 
 # Some necessary operations before setup
 pre-setup() {
