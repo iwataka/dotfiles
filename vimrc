@@ -68,7 +68,7 @@ if v:version >= 703
 endif
 Plug 'plasticboy/vim-markdown', { 'for': 'mkd' }
 Plug 'suan/vim-instant-markdown', { 'for': 'mkd' }
-Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
+Plug 'derekwyatt/vim-scala', { 'for': 'scala', 'on': ['SortScalaImports'] }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'scrooloose/syntastic', { 'for': ['ruby', 'python'] }
 Plug 'tpope/vim-endwise', { 'for': ['ruby', 'vim'] }
@@ -239,8 +239,15 @@ augroup vimrcEx
     \ setlocal softtabstop=4 |
     \ setlocal shiftwidth=4
 
+  autocmd FileType java,c,cpp
+    \ if executable('astyle') |
+    \   setlocal formatprg='astyle' |
+    \ endif
+
   " Spacemacs configuration file setting
-  autocmd BufRead,BufNew spacemacs set filetype=lisp
+  autocmd BufRead,BufNew spacemacs setlocal filetype=lisp
+
+  autocmd BufRead,BufNew *.gradle setlocal filetype=groovy
 
   " automatically align html files
   autocmd BufWritePre,BufRead *.html :normal gg=G
@@ -358,9 +365,6 @@ xnoremap <silent> K :<C-u>exe 'grep "'.<sid>get_grep_pattern().'"'<cr>
 
 " Double <BS> to remove trailing spaces
 nnoremap <silent> <BS><BS> :call <sid>preserve('%s/\s*$//')<cr>
-
-" Toggle paste
-nnoremap <silent> <leader>p :set invpaste<cr>
 
 " Some mappings for user-defined commands
 nnoremap <silent> <leader>cb :CheckboxToggle<cr>
@@ -654,7 +658,7 @@ let g:ctrlp_show_hidden = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 let g:ctrlp_mruf_max = 1000
 
-nnoremap <silent> <Leader>f :CtrlP<CR>
+nnoremap <silent> <Leader>p :CtrlP<CR>
 nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :CtrlPMRU<CR>
 nnoremap <silent> <Leader>d :CtrlPBookmarkDir<CR>
