@@ -49,8 +49,9 @@
   (setq-default blank-hspace nil)
   (setq-default blank-chars '(tabs trailing newline))
   (setq-default blank-active-chars '(tabs trailing newline))
-  (blank-mode 1)
-  (global-blank-mode 1))
+  (eval-and-compile
+    (blank-mode 1)
+    (global-blank-mode 1)))
 
 (el-get-bundle evil-escape
   :url "https://github.com/syl20bnr/evil-escape"
