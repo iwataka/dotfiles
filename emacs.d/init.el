@@ -36,7 +36,6 @@
   (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
-  (define-key evil-normal-state-map (kbd "sc") 'eval-buffer)
   (define-key evil-normal-state-map (kbd "<tab>") 'other-window)
   (define-key evil-normal-state-map (kbd "<backtab>") 'prev-window))
 
@@ -45,7 +44,13 @@
   (other-window -1))
 
 (el-get-bundle blank-mode
-  (blank-mode 1))
+  (setq-default blank-space nil)
+  (setq-default blank-indentation nil)
+  (setq-default blank-hspace nil)
+  (setq-default blank-chars '(tabs trailing newline))
+  (setq-default blank-active-chars '(tabs trailing newline))
+  (blank-mode 1)
+  (global-blank-mode 1))
 
 (el-get-bundle evil-escape
   :url "https://github.com/syl20bnr/evil-escape"
@@ -62,7 +67,8 @@
   (evil-leader/set-key
    "o" 'delete-other-windows
    "w" 'evil-write
-   "q" 'evil-quit))
+   "q" 'evil-quit
+   "sc" 'eval-buffer))
 
 (el-get-bundle evil-surround
   :url "https://github.com/timcharper/evil-surround"
@@ -103,10 +109,11 @@
 (el-get-bundle git-gutter
   :url "https://github.com/syohex/emacs-git-gutter"
   :features git-gutter
-  (git-gutter-mode 1)
+  (global-git-gutter-mode 1)
   (define-key evil-normal-state-map (kbd "[c") 'git-gutter:previous-hunk)
   (define-key evil-normal-state-map (kbd "]c") 'git-gutter:next-hunk)
   (setq git-gutter:deleted-sign "-")
+  (setq git-gutter:modified-sign "~")
   (evil-leader/set-key
     "gG" 'git-gutter:toggle
     "hs" 'git-gutter:stage-hunk
