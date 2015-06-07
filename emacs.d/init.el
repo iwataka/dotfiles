@@ -69,7 +69,7 @@
    "o" 'delete-other-windows
    "w" 'evil-write
    "q" 'evil-quit
-   "sc" 'eval-buffer))
+   "sc" 'eval-current-buffer))
 
 (el-get-bundle evil-surround
   :url "https://github.com/timcharper/evil-surround"
