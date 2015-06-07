@@ -113,8 +113,9 @@
   (global-git-gutter-mode 1)
   (define-key evil-normal-state-map (kbd "[c") 'git-gutter:previous-hunk)
   (define-key evil-normal-state-map (kbd "]c") 'git-gutter:next-hunk)
-  (setq git-gutter:deleted-sign "-")
-  (setq git-gutter:modified-sign "~")
+  (setq-default git-gutter:deleted-sign "-")
+  (setq-default git-gutter:modified-sign "~")
+  (setq-default git-gutter:force t)
   (evil-leader/set-key
     "gG" 'git-gutter:toggle
     "hs" 'git-gutter:stage-hunk
