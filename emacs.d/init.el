@@ -105,6 +105,11 @@
   (evil-leader/set-key
     "gs" 'magit-status
     "gc" 'magit-commit
+    "gA" 'magit-stage-all
+    "gw" 'stage-this-file
+    "gr" 'revert-this-file
+    "gL" 'magit-log
+    "ga" 'magit-commit-amend
     "gd" 'magit-diff))
 
 (el-get-bundle git-gutter
@@ -157,3 +162,16 @@
 (defun open-init-file ()
   (interactive)
   (find-file "~/.emacs.d/init.el"))
+
+(defun stage-this-file ()
+  (interactive)
+  (or (buffer-file-name) (error "No file is currently being edited"))
+  (magit-stage-item (buffer-file-name))
+  (git-gutter:update-all-windows))
+
+(defun revert-this-file ()
+  (interactive)
+  (or (buffer-file-name) (error "No file is currently being edited"))
+  (magit-revert-item (buffer-file-name))
+  (git-gutter:update-all-windows))
+
