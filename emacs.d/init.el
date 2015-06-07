@@ -22,17 +22,30 @@
 
 ;; use light frames in the GUI and dark frames in the terminal
 (add-hook 'after-make-frame-functions
-	  (lambda (frame)
-	    (set-frame-parameter frame
-				 'background-mode
-				 (if (display-graphic-p frame) 'light 'dark))
-	    (enable-theme 'solarized)))
+          (lambda (frame)
+            (set-frame-parameter frame
+                                 'background-mode
+                                 (if (display-graphic-p frame) 'light 'dark))
+            (enable-theme 'solarized)))
 
 (el-get-bundle evil
   (evil-mode 1)
+  (define-key evil-normal-state-map "Y" (kbd "y$"))
+  (define-key evil-normal-state-map "+" 'evil-numbers/inc-at-pt)
+  (define-key evil-normal-state-map "-" 'evil-numbers/dec-at-pt)
   (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
-  ;; maps C-l to moving between multiple windows
-  (define-key evil-normal-state-map (kbd "C-l") 'other-window))
+  (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+  (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+  (define-key evil-normal-state-map (kbd "sc") 'eval-buffer)
+  (define-key evil-normal-state-map (kbd "<tab>") 'other-window)
+  (define-key evil-normal-state-map (kbd "<backtab>") 'prev-window))
+
+(defun prev-window ()
+  (interactive)
+  (other-window -1))
+
+(el-get-bundle blank-mode
+  (blank-mode 1))
 
 (el-get-bundle evil-escape
   :url "https://github.com/syl20bnr/evil-escape"
@@ -51,18 +64,87 @@
    "w" 'evil-write
    "q" 'evil-quit))
 
+(el-get-bundle evil-surround
+  :url "https://github.com/timcharper/evil-surround"
+  :features evil-surround)
+
 (el-get-bundle projectile
   :url "https://github.com/bbatsov/projectile"
   :features projectile
   (projectile-global-mode)
   (evil-leader/set-key
-    "pf" 'helm-projectile-find-file-dwim
-    "pb" 'helm-projectile-switch-to-buffer))
+    "p" 'helm-projectile-find-file-dwim
+    "f" 'helm-recentf
+    "b" 'helm-buffers-list
+    "ei" 'open-init-file))
 
 (el-get-bundle helm
   :url "https://github.com/emacs-helm/helm"
-  :features helm)
+  :features helm
+  (setq helm-split-window-in-side-p t
+        helm-move-to-line-cycle-in-source t
+        helm-scroll-amount 8))
+
+(el-get-bundle magit
+  :url "https://github.com/magit/magit"
+  :features magit
+  (setq magit-last-seen-setup-instructions "1.4.0")
+  (evil-define-key 'motion magit-commit-mode-map
+    (kbd "<tab>") 'magit-toggle-section
+    (kbd "RET") 'magit-visit-item)
+  (evil-define-key 'motion magit-diff-mode-map
+    (kbd "<tab>") 'magit-toggle-section
+    (kbd "RET") 'magit-visit-item)
+  (evil-leader/set-key
+    "gs" 'magit-status
+    "gc" 'magit-commit
+    "gd" 'magit-diff))
+
+(el-get-bundle git-gutter
+  :url "https://github.com/syohex/emacs-git-gutter"
+  :features git-gutter
+  (git-gutter-mode 1)
+  (define-key evil-normal-state-map (kbd "[c") 'git-gutter:previous-hunk)
+  (define-key evil-normal-state-map (kbd "]c") 'git-gutter:next-hunk)
+  (setq git-gutter:deleted-sign "-")
+  (evil-leader/set-key
+    "gG" 'git-gutter:toggle
+    "hs" 'git-gutter:stage-hunk
+    "hr" 'git-gutter:revert-hunk))
 
 (el-get-bundle ensime
   (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
   (add-hook 'java-mode-hook 'ensime-scala-mode-hook))
+
+;; Use spaces instead of tabs
+(setq-default indent-tabs-mode nil)
+;; Use the system clipboard
+(setq x-select-enable-clipboard t)
+
+(defun delete-this-file ()
+  "Delete the current file, and kill the buffer."
+  (interactive)
+  (or (buffer-file-name) (error "No file is currently being edited"))
+  (when (yes-or-no-p (format "Really delete '%s'?"
+                             (file-name-nondirectory buffer-file-name)))
+    (delete-file (buffer-file-name))
+    (kill-this-buffer)))
+
+(defun rename-this-file (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "New name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (unless filename
+      (error "Buffer '%s' is not visiting a file!" name))
+    (if (get-buffer new-name)
+        (message "A buffer named '%s' already exists!" new-name)
+      (progn
+        (rename-file filename new-name 1)
+        (rename-buffer new-name)
+        (set-visited-file-name new-name)
+        (set-buffer-modified-p nil)))))
+
+(defun open-init-file ()
+  (interactive)
+  (find-file "~/.emacs.d/init.el"))
