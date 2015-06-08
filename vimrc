@@ -245,9 +245,11 @@ augroup vimrcEx
     \ endif
 
   " Spacemacs configuration file setting
-  autocmd BufRead,BufNew spacemacs setlocal filetype=lisp
+  autocmd BufRead,BufNew *spacemacs setlocal filetype=lisp
 
   autocmd BufRead,BufNew *.gradle setlocal filetype=groovy
+
+  autocmd BufRead,BufNew *editorconfig setlocal filetype=jproperties
 
   " automatically align html files
   autocmd BufWritePre,BufRead *.html :normal gg=G
@@ -263,7 +265,7 @@ augroup vimrcEx
 
   "make the 81st column stand out
   autocmd BufRead,BufNew * highlight ColorColumn ctermbg=red guibg=#666666
-  autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%101v')
+  autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%81v')
 
   " Full-width spaces
   autocmd BufRead,BufNew * hi FullWidthSpace cterm=underline ctermbg=red guibg=#666666
