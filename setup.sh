@@ -50,8 +50,10 @@ setup-symlinks() {
     local emacs=(emacs.d spacemacs)
     local env=(Xmodemap xsession)
     local sbt=(sbtrc sbt)
-    local others=(agignore ctags curlrc gitconfig tmux.conf wgetrc atom)
-    local files=("${vim[@]}" "${zsh[@]}" "${emacs[@]}" "${env[@]}" "${sbt[@]}" "${others[@]}")
+    local others=(agignore ctags curlrc gitconfig tmux.conf \
+        wgetrc atom editorconfig)
+    local files=("${vim[@]}" "${zsh[@]}" "${emacs[@]}" "${env[@]}" \
+        "${sbt[@]}" "${others[@]}")
     for file in ${files[@]}; do
         remove_or_backup "$HOME/.$file"
         ln -s $dfsdir/$file ~/.$file
