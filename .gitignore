@@ -17,3 +17,13 @@ vim/.netrwhist
 # Emacs
 emacs.d/*
 !emacs.d/init.el
+
+# Atom
+atom/storage
+atom/compile-cache
+atom/dev
+atom/.npm
+atom/.node-gyp
+atom/.apm
+atom/projects.cson
+atom/packages
