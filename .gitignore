@@ -27,3 +27,11 @@ atom/.node-gyp
 atom/.apm
 atom/projects.cson
 atom/packages
+
+# Sbt
+sbt/*
+!sbt/0.13
+sbt/0.13/*
+!sbt/0.13/plugins
+sbt/0.13/plugins/*
+!sbt/0.13/plugins/plugins.sbt
