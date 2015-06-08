@@ -49,7 +49,7 @@ setup-symlinks() {
     local zsh=(zsh zshenv zshrc)
     local emacs=(emacs.d spacemacs)
     local env=(Xmodemap xsession)
-    local others=(agignore ctags curlrc gitconfig sbtrc tmux.conf wgetrc)
+    local others=(agignore ctags curlrc gitconfig sbtrc tmux.conf wgetrc atom)
     local files=("${vim[@]}" "${zsh[@]}" "${emacs[@]}" "${env[@]}" "${others[@]}")
     for file in ${files[@]}; do
         remove_or_backup "$HOME/.$file"

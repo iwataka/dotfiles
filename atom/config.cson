@@ -1,0 +1,19 @@
+"*":
+  editor:
+    invisibles:
+      {}
+  core:
+    themes: [
+      "one-dark-ui"
+      "solarized-dark-syntax"
+    ]
+  "exception-reporting":
+    userId: "16cdba16-a2b1-eff3-7d6f-92f60c2fcfc9"
+  welcome:
+    showOnStartup: false
+  "autocomplete-plus":
+    {}
+  "vim-mode":
+    startInInsertMode: true
+    useClipboardAsDefaultRegister: true
+    useSmartcaseForSearch: true

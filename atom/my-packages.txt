@@ -1,0 +1,9 @@
+autocomplete-paths
+docblockr
+file-icons
+git-plus
+japanese-wrap
+language-scala
+merge-conflicts
+minimap
+project-manager
