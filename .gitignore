@@ -32,6 +32,7 @@ atom/packages
 sbt/*
 !sbt/0.13
 sbt/0.13/*
+!sbt/0.13/global.sbt
 !sbt/0.13/plugins
 sbt/0.13/plugins/*
 !sbt/0.13/plugins/plugins.sbt
