@@ -40,7 +40,7 @@ remove_or_backup() {
         rm $path
     fi
     if [ -e $path ]; then
-        mv $path ${path}.backup
+        mv $path ${path}.bak
     fi
 }
 
