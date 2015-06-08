@@ -4,6 +4,9 @@
 # swap files
 *.swp
 
+# temporary directory
+/tmp/
+
 # Vim
 vim/plugged/*
 vim/swaps/*
