@@ -763,31 +763,23 @@ nnoremap <silent> <leader>dc :Copen<cr>
 let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '~'
 let g:gitgutter_sign_removed = '-'
+nnoremap <leader>gG :GitGutterToggle<cr>
 
 " --------------------------------------------------------------
 " fugitive {{{2
 " --------------------------------------------------------------
 nnoremap <Leader>gs :Gstatus<CR>5j
 nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <leader>gD :Git diff<cr>
-nnoremap <Leader>gg :call <sid>GgrepPrompt()<cr>
+nnoremap <leader>gD :Gsplit! diff<cr>
+nnoremap <Leader>gg :Ggrep<Space>
 nnoremap <Leader>gc :Gcommit<CR>
 nnoremap <Leader>gr :Gread<CR>
 nnoremap <leader>gR :Gremove<cr>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gl :Glog<CR>
-nnoremap <leader>gL :Git log -n 30<cr>
+nnoremap <leader>gL :Gsplit! log -n 100<cr>
 nnoremap <leader>ga :Gcommit --amend<cr>
-nnoremap <leader>gA :Git add --all<cr>
-
-fu! s:GgrepPrompt()
-  let keyword = input('Keyword? ')
-  if keyword != ''
-    exe "Ggrep ".keyword
-  else
-    echoe 'Require non-empty input'
-  endif
-endfu
+nnoremap <leader>gA :Gsplit! add --all<cr>
 
 " --------------------------------------------------------------
 " repeat {{{2
