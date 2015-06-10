@@ -258,13 +258,13 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile * set formatoptions+=ro
 
   " emphasize comments
-  autocmd BufRead,BufNew * highlight Comment term=bold
+  autocmd BufRead,BufNew * hi Comment term=bold
 
   " prevent from conflicting multiple edit
   autocmd SwapExists * let v:swapchoice = 'o'
 
   "make the 81st column stand out
-  autocmd BufRead,BufNew * highlight ColorColumn ctermbg=red guibg=#666666
+  autocmd BufRead,BufNew * hi ColorColumn ctermbg=red guibg=#666666
   autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%81v')
 
   " Full-width spaces
