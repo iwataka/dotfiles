@@ -700,9 +700,18 @@ augroup vimrc-ctrlp
   au VimEnter * if exists(':CtrlPBookmarkDirAdd') | call s:ctrlp_bookmark_init() | endif
 augroup END
 
-if exists('*matcher#cmatch')
-  let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
-endif
+fu! s:set_ctrlp_matcher()
+  let has_cmatcher = 0
+  for path in split(&rtp, ',')
+    if path =~ 'ctrlp-cmatcher'
+      let has_cmatcher = 1
+    endif
+  endfor
+  if has_cmatcher
+    let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
+  endif
+endfu
+call s:set_ctrlp_matcher()
 
 " --------------------------------------------------------------
 " YCM {{{2
