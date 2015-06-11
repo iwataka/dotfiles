@@ -255,7 +255,7 @@ augroup vimrcEx
   autocmd BufWritePre,BufRead *.html :normal gg=G
 
   " write comments easily for any files
-  autocmd BufRead,BufNewFile * set formatoptions+=ro
+  autocmd BufRead,BufNewFile * set formatoptions-=ro
 
   " emphasize comments
   autocmd BufRead,BufNew * hi Comment term=bold
@@ -660,10 +660,10 @@ let g:ctrlp_show_hidden = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 let g:ctrlp_mruf_max = 1000
 
-nnoremap <silent> <Leader>o :CtrlP<CR>
+nnoremap <silent> <Leader>f :CtrlP<CR>
 nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :CtrlPMRU<CR>
-nnoremap <silent> <Leader>d :CtrlPBookmarkDir<CR>
+nnoremap <silent> <Leader>p :CtrlPBookmarkDir<CR>
 
 if has('unix')
   let s:ctrlp_bookmark_paths = [
