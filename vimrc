@@ -660,7 +660,7 @@ let g:ctrlp_show_hidden = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 let g:ctrlp_mruf_max = 1000
 
-nnoremap <silent> <Leader>p :CtrlP<CR>
+nnoremap <silent> <Leader>o :CtrlP<CR>
 nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :CtrlPMRU<CR>
 nnoremap <silent> <Leader>d :CtrlPBookmarkDir<CR>
