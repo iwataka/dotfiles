@@ -255,7 +255,7 @@ augroup vimrcEx
   autocmd BufWritePre,BufRead *.html :normal gg=G
 
   " write comments easily for any files
-  autocmd BufRead,BufNewFile * set formatoptions-=ro
+  autocmd BufRead,BufNewFile * set formatoptions+=ro
 
   " emphasize comments
   autocmd BufRead,BufNew * hi Comment term=bold
