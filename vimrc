@@ -143,6 +143,7 @@ set foldmethod=marker                     " Use specified markers to fold senten
 set foldopen+=jump,search                 " Open foldings when jumping to them
 set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
+set colorcolumn=81
 
 set wildmenu
 set wildignorecase
@@ -263,10 +264,6 @@ augroup vimrcEx
   " prevent from conflicting multiple edit
   autocmd SwapExists * let v:swapchoice = 'o'
 
-  "make the 81st column stand out
-  autocmd BufRead,BufNew * hi ColorColumn ctermbg=red guibg=#666666
-  autocmd BufRead,BufNew * call matchadd('ColorColumn', '\%81v')
-
   " Full-width spaces
   autocmd BufRead,BufNew * hi FullWidthSpace cterm=underline ctermbg=red guibg=#666666
   autocmd BufRead,BufNew * match FullWidthSpace /　/
@@ -367,6 +364,9 @@ xnoremap <silent> K :<C-u>exe 'grep "'.<sid>get_grep_pattern().'"'<cr>
 
 " Double <BS> to remove trailing spaces
 nnoremap <silent> <BS><BS> :call <sid>preserve('%s/\s*$//')<cr>
+
+" :checktime is frequently used
+nnoremap <leader>ct :checktime<cr>
 
 " Some mappings for user-defined commands
 nnoremap <silent> <leader>cb :CheckboxToggle<cr>
