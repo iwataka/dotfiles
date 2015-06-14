@@ -22,7 +22,7 @@ endif
 " Git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-" Plug 'mattn/gist-vim', { 'on': 'Gist' }
+" Plug 'mattn/gist-vim', { 'on': 'Gist' }  " Not used in my workflow
 " Plug 'mattn/webapi-vim'
 
 " Fancy
@@ -55,7 +55,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'Raimondi/delimitMate'
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'terryma/vim-multiple-cursors'  " Critical performance issue
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
 
