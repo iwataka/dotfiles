@@ -26,14 +26,14 @@ Plug 'tpope/vim-fugitive'
 " Plug 'mattn/webapi-vim'
 
 " Fancy
-" Plug 'bling/vim-airline'
+" Plug 'bling/vim-airline'  " Waste time on startup
 Plug 'itchyny/lightline.vim'
 Plug 'Yggdroot/indentLine'
 
 " Navigation
-if v:version >= 703
-  Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle'] }
-endif
+" if v:version >= 703
+"   Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle'] }  " Hardly used
+" endif
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'ctrlpvim/ctrlp.vim'
 fu! BuildCMatcher(info)
@@ -939,13 +939,13 @@ endif
 " --------------------------------------------------------------
 " tagbar {{{2
 " --------------------------------------------------------------
-if v:version >= 703
-  nnoremap <silent> <leader>t :TagbarToggle<cr>
-  let g:tagbar_sort = 0
-  let g:tagbar_show_linenumbers = 2
-  let g:tagbar_autofocus = 1
-  let g:tagbar_autoclose = 1
-endif
+" if v:version >= 703
+"   nnoremap <silent> <leader>t :TagbarToggle<cr>
+"   let g:tagbar_sort = 0
+"   let g:tagbar_show_linenumbers = 2
+"   let g:tagbar_autofocus = 1
+"   let g:tagbar_autoclose = 1
+" endif
 
 " --------------------------------------------------------------
 " nerdtree {{{2
