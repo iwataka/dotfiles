@@ -245,15 +245,10 @@ augroup vimrcEx
     \   setlocal formatprg='astyle' |
     \ endif
 
-  " Spacemacs configuration file setting
+  " Set some filetypes for some cetain files
   autocmd BufRead,BufNew *spacemacs setlocal filetype=lisp
-
   autocmd BufRead,BufNew *.gradle setlocal filetype=groovy
-
   autocmd BufRead,BufNew *editorconfig setlocal filetype=jproperties
-
-  " automatically align html files
-  autocmd BufWritePre,BufRead *.html :normal gg=G
 
   " write comments easily for any files
   autocmd BufRead,BufNewFile * set formatoptions+=ro
