@@ -69,11 +69,14 @@ endif
 Plug 'plasticboy/vim-markdown', { 'for': 'mkd' }
 Plug 'suan/vim-instant-markdown', { 'for': 'mkd' }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala', 'on': ['SortScalaImports'] }
-Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'scrooloose/syntastic', { 'for': ['ruby', 'python'] }
 Plug 'tpope/vim-endwise', { 'for': ['ruby', 'vim'] }
-Plug 'groenewege/vim-less', { 'for': 'less' }
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'mattn/emmet-vim', { 'for': ['html', 'xhtml'] }
+" Currently unused ones
+" Plug 'fatih/vim-go', { 'for': 'go' }
+" Plug 'groenewege/vim-less', { 'for': 'less' }
+" Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 
 call plug#end()
 endif
