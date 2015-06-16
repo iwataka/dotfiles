@@ -884,8 +884,8 @@ endfunction
 
 function! MyGitGutter()
   if !exists('*GitGutterGetHunkSummary')
-        \ || !get(g:, 'gitgutter_enabled', 0)
-        \ || winwidth('.') <= 90
+      \ || !get(g:, 'gitgutter_enabled', 0)
+      \ || winwidth('.') <= 90
     return ''
   en
   let symbols = [
