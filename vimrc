@@ -113,9 +113,9 @@ set splitright                            " More natural way to split a window v
 set splitbelow                            " More natural way to split a window horizontally
 set expandtab                             " Use spaces for indenting
 set smarttab                              " Use spaces for inserting <Tab>
-set tabstop=2                             " :retab command use this value
-set softtabstop=2                         " Number of spaces while inserting a <Tab> or using <BS>.
-set shiftwidth=2                          " Number of spaces to use for each step of (auto)indent
+set tabstop=4                             " :retab command use this value
+set softtabstop=4                         " Number of spaces while inserting a <Tab> or using <BS>.
+set shiftwidth=4                          " Number of spaces to use for each step of (auto)indent
 set autoindent                            " Same as the above indent
 set smartindent                           " Smart autoindenting
 set noerrorbells                          " No beep or screen flash for error messages
@@ -238,10 +238,10 @@ augroup vimrcEx
   autocmd FileType help
     \ if &readonly | nnoremap <buffer> q :q<cr> | endif
 
-  autocmd FileType java,make,sh,zsh,mkd
-    \ setlocal tabstop=4 |
-    \ setlocal softtabstop=4 |
-    \ setlocal shiftwidth=4
+  autocmd FileType scala
+    \ setlocal tabstop=2 |
+    \ setlocal softtabstop=2 |
+    \ setlocal shiftwidth=2
 
   autocmd FileType java,c,cpp
     \ if executable('astyle') |
