@@ -7,3 +7,4 @@ language-scala
 merge-conflicts
 minimap
 project-manager
+vim-mode
