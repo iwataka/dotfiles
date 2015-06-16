@@ -9,6 +9,7 @@ call:mklinkFile sbtrc
 call:mklinkFile vimperatorrc
 call:mklinkFile ctags
 call:mklinkDir vim
+call:mklinkDir atom
 
 :mklinkDir
 if exist %USERPROFILE%\.%~1 rmdir %USERPROFILE%\.%~1
