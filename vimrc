@@ -676,6 +676,7 @@ if has('unix')
     \ ]
 endif
 
+com! CtrlPBookmarkReload call s:ctrlp_bookmark_init()
 fu! s:ctrlp_bookmark_init()
   if exists('s:ctrlp_bookmark_paths')
     for path in s:ctrlp_bookmark_paths
