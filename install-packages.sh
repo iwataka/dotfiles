@@ -70,11 +70,6 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install -y monodevelop
     # Markdown
     sudo apt-get install -y pandoc
-    # build tool for JVM
-    sudo apt-get install -y ant
-    # Scala
-    sudo apt-get install -y scala
-    sudo apt-get install -y sbt
     # NodeJS
     sudo apt-get install -y nodejs
     sudo apt-get install -y npm
