@@ -56,10 +56,6 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install -y build-essential cmake python-dev
     # Markdown
     sudo apt-get install -y pandoc
-    # NodeJS
-    sudo apt-get install -y nodejs
-    sudo apt-get install -y npm
-    sudo npm -g install instant-markdown-d
 elif [[ $OSTYPE == "darwin"* ]]; then
     # Some sentences derived from https://github.com/mathiasbynens/dotfiles
     brew update
