@@ -60,8 +60,6 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install -y nodejs
     sudo apt-get install -y npm
     sudo npm -g install instant-markdown-d
-    # Chrome
-    sudo apt-get install google-chrome-stable
 elif [[ $OSTYPE == "darwin"* ]]; then
     # Some sentences derived from https://github.com/mathiasbynens/dotfiles
     brew update
