@@ -54,7 +54,6 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install -y astyle
     # youcompleteme
     sudo apt-get install -y build-essential cmake python-dev
-    sudo apt-get install -y monodevelop
     # Markdown
     sudo apt-get install -y pandoc
     # NodeJS
