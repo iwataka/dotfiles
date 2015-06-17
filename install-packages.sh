@@ -24,13 +24,6 @@ git-clone-if-not-exists() {
     fi
 }
 
-# installs gnome-terminal-colors-solarized
-install-gtcs() {
-    local name=gnome-terminal-colors-solarized
-    local path=~/projects/$name
-    git-clone-if-not-exists Anthony25/$name ~/projects/$name ./install.sh
-}
-
 # Usage: install-oracle-java $version
 # Following command must be run before executing this function.
 # sudo add-apt-repository [-y] ppa:webupd8team/java
@@ -96,10 +89,6 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo add-apt-repository -y ppa:webupd8team/java
     sudo apt-get update
     install-oracle-java 8
-    # used for install solarized colorscheme
-    sudo apt-get install -y dconf-cli
-    # gnome-terminal-colors-solarized
-    install-gtcs
 elif [[ $OSTYPE == "darwin"* ]]; then
     # Some sentences derived from https://github.com/mathiasbynens/dotfiles
     brew update
