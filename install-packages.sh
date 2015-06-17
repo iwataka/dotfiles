@@ -59,20 +59,32 @@ if [ $OSTYPE == "linux-gnu" ]; then
 elif [[ $OSTYPE == "darwin"* ]]; then
     # Some sentences derived from https://github.com/mathiasbynens/dotfiles
     brew update
-    brew upgrade
+    brew upgrade --all
+    # Install GNU core utilities (those that come with OS X are outdated)
+    # Don't forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`
+    brew install coreutils
+    sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
     # Install some other useful utilities like `sponge`.
     brew install moreutils
     # Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
     brew install findutils
     # Install GNU `sed`, overwriting the built-in `sed`.
     brew install gnu-sed --with-default-names
+    brew install rename
     brew install git
     brew install zsh
     brew install curl
     brew install wget --with-iri
     brew install vim --override-system-vi
-    brew install imagemagick
+    brew install tmux
+    brew install ctags-exuberant
+    brew install the_silver_searcher
     brew install tree
+    brew install imagemagick --with-webp
+    brew install astyle
+    brew install pandoc
+    # Remove outdated versions from the cellar.
+    brew cleanup
 fi
 
 git-clone-or-pull zsh-users/antigen ~/.antigen
