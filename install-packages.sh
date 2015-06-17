@@ -87,16 +87,3 @@ git-clone-if-not-exists powerline/fonts ~/projects/fonts ./install.sh
 
 # Scala
 git-clone-if-not-exists scala/scala ~/projects/scala
-
-# Ruby
-# rbenv is for advanced rubyists
-# git-clone-or-pull sstephenson/rbenv ~/.rbenv
-git-clone-if-not-exists rubygems/rubygems ~/projects/rubygems 'sudo ruby setup.rb'
-sudo gem install rubocop
-sudo gem install bundler
-
-# Python
-# pyenv is for advanced pythonistas
-# git-clone-or-pull yyuu/pyenv ~/.pyenv
-curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo -H python
-sudo -H pip install flake8
