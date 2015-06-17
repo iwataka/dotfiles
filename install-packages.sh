@@ -84,6 +84,3 @@ fi
 
 git-clone-or-pull zsh-users/antigen ~/.antigen
 git-clone-if-not-exists powerline/fonts ~/projects/fonts ./install.sh
-
-# Scala
-git-clone-if-not-exists scala/scala ~/projects/scala
