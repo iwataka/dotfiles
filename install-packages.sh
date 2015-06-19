@@ -75,7 +75,8 @@ elif [[ $OSTYPE == "darwin"* ]]; then
     brew install zsh
     brew install curl
     brew install wget --with-iri
-    brew install vim --override-system-vi
+    brew install vim --override-system-vi --enable -interop=python,python3
+    brew install macvim
     brew install tmux
     brew install ctags-exuberant
     brew install the_silver_searcher
