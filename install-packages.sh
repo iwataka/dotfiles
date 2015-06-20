@@ -83,6 +83,7 @@ elif [[ $OSTYPE == "darwin"* ]]; then
     brew install tree
     brew install imagemagick --with-webp
     brew install astyle
+    brew install cmake
     brew install pandoc
     # Remove outdated versions from the cellar.
     brew cleanup
