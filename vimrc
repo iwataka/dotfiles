@@ -74,6 +74,7 @@ Plug 'tpope/vim-endwise'
 Plug 'fatih/vim-go'
 Plug 'pangloss/vim-javascript'
 Plug 'othree/html5.vim'
+Plug 'ekalinin/Dockerfile.vim'
 
 call plug#end()
 endif
