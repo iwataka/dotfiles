@@ -64,16 +64,16 @@ Plug 'altercation/vim-colors-solarized'
 
 " Filetype
 if v:version >= 703
-  Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+  Plug 'vim-ruby/vim-ruby'
 endif
-Plug 'plasticboy/vim-markdown', { 'for': 'mkd' }
-Plug 'suan/vim-instant-markdown', { 'for': 'mkd' }
-Plug 'derekwyatt/vim-scala', { 'for': 'scala', 'on': ['SortScalaImports'] }
-Plug 'scrooloose/syntastic', { 'for': ['ruby', 'python'] }
-Plug 'tpope/vim-endwise', { 'for': ['ruby', 'vim'] }
-Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'othree/html5.vim', { 'for': ['html', 'xhtml'] }
+Plug 'plasticboy/vim-markdown'
+Plug 'suan/vim-instant-markdown'
+Plug 'derekwyatt/vim-scala'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-endwise'
+Plug 'fatih/vim-go'
+Plug 'pangloss/vim-javascript'
+Plug 'othree/html5.vim'
 
 call plug#end()
 endif
