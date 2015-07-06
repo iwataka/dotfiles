@@ -18,6 +18,8 @@ if [ -d $HOME/.pyenv ]; then
     eval "$(pyenv init -)"
 fi
 
+[[ -s ~/.gvm/scripts/gvm ]] && source ~/.gvm/scripts/gvm
+
 if [ -d /usr/local/idea ]; then
     export IDEA_HOME=/usr/local/idea
     export PATH=$PATH:$IDEA_HOME/bin

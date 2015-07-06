@@ -75,6 +75,7 @@ Plug 'fatih/vim-go'
 Plug 'pangloss/vim-javascript'
 Plug 'othree/html5.vim'
 Plug 'ekalinin/Dockerfile.vim'
+Plug 'ap/vim-css-color'
 
 call plug#end()
 endif
@@ -785,7 +786,7 @@ nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gl :Glog<CR>
 nnoremap <leader>gL :Gsplit! log -n 100<cr>
 nnoremap <leader>ga :Gcommit --amend<cr>
-nnoremap <leader>gA :Gsplit! add --all<cr>
+nnoremap <leader>gA :Git add --all<cr>
 
 " --------------------------------------------------------------
 " repeat {{{2
@@ -883,8 +884,8 @@ endfunction
 
 function! MyGitGutter()
   if !exists('*GitGutterGetHunkSummary')
-        \ || !get(g:, 'gitgutter_enabled', 0)
-        \ || winwidth('.') <= 90
+      \ || !get(g:, 'gitgutter_enabled', 0)
+      \ || winwidth('.') <= 90
     return ''
   en
   let symbols = [
