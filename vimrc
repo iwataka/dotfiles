@@ -73,6 +73,8 @@ Plug 'scrooloose/syntastic', { 'for': ['ruby', 'python'] }
 Plug 'tpope/vim-endwise', { 'for': ['ruby', 'vim'] }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'mattn/emmet-vim', { 'for': ['html', 'xhtml'] }
+Plug 'othree/html5.vim', { 'for': ['html', 'xhtml'] }
+Plug 'ap/vim-css-color', { 'for': ['css'] }
 " Plug 'fatih/vim-go', { 'for': 'go' }
 " Plug 'groenewege/vim-less', { 'for': 'less' }
 " Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
