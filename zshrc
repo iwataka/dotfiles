@@ -7,6 +7,27 @@ for fl in ${zsh_files}; do
     [[ -f ${zsh_home}/${fl}.zsh ]] && source ${zsh_home}/${fl}.zsh
 done
 
+if [ -d $HOME/.rbenv ]; then
+    export PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+fi
+
+if [ -d $HOME/.pyenv ]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
+
+if [ -d /usr/local/idea ]; then
+    export IDEA_HOME=/usr/local/idea
+    export PATH=$PATH:$IDEA_HOME/bin
+fi
+
+if [ -d /usr/local/eclipse ]; then
+    export ECLIPSE_HOME=/usr/local/eclipse
+    export PATH=$PATH:$ECLIPSE_HOME
+fi
+
 #---------------------------------------------------------------
 # Key-binding
 #---------------------------------------------------------------

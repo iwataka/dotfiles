@@ -64,20 +64,18 @@ Plug 'altercation/vim-colors-solarized'
 
 " Filetype
 if v:version >= 703
-  Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+  Plug 'vim-ruby/vim-ruby'
 endif
-Plug 'plasticboy/vim-markdown', { 'for': 'mkd' }
-Plug 'suan/vim-instant-markdown', { 'for': 'mkd' }
-Plug 'derekwyatt/vim-scala', { 'for': 'scala', 'on': ['SortScalaImports'] }
-Plug 'scrooloose/syntastic', { 'for': ['ruby', 'python'] }
-Plug 'tpope/vim-endwise', { 'for': ['ruby', 'vim'] }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'mattn/emmet-vim', { 'for': ['html', 'xhtml'] }
-Plug 'othree/html5.vim', { 'for': ['html', 'xhtml'] }
-Plug 'ap/vim-css-color', { 'for': ['css'] }
-" Plug 'fatih/vim-go', { 'for': 'go' }
-" Plug 'groenewege/vim-less', { 'for': 'less' }
-" Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'plasticboy/vim-markdown'
+Plug 'suan/vim-instant-markdown'
+Plug 'derekwyatt/vim-scala'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-endwise'
+Plug 'fatih/vim-go'
+Plug 'pangloss/vim-javascript'
+Plug 'othree/html5.vim'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'ap/vim-css-color'
 
 call plug#end()
 endif

@@ -24,31 +24,11 @@ git-clone-if-not-exists() {
     fi
 }
 
-# installs gnome-terminal-colors-solarized
-install-gtcs() {
-    local name=gnome-terminal-colors-solarized
-    local path=~/projects/$name
-    git-clone-if-not-exists Anthony25/$name ~/projects/$name ./install.sh
-}
-
-# Usage: install-oracle-java $version
-# Following command must be run before executing this function.
-# sudo add-apt-repository [-y] ppa:webupd8team/java
-install-oracle-java() {
-    sudo apt-get install -y oracle-java${1}-installer
-    cd /usr/lib/jvm/java-${1}-oracle
-    if [[ -e src.zip && ! -d src ]]; then
-        sudo unzip -d src src.zip
-    fi
-}
-
 if [ $OSTYPE == "linux-gnu" ]; then
     # update apt-get itself
     sudo apt-get update
     # upgrade packages
     sudo apt-get upgrade
-    # install apt-add-repository command
-    sudo apt-get install -y python-software-properties
     # xdg-open and so on
     sudo apt-get install -y xdg-utils
     # necessaary to clone various projects
@@ -74,66 +54,40 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install -y astyle
     # youcompleteme
     sudo apt-get install -y build-essential cmake python-dev
-    sudo apt-get install -y monodevelop
     # Markdown
     sudo apt-get install -y pandoc
-    # build tool for JVM
-    sudo apt-get install -y ant
-    # Scala
-    sudo apt-get install -y scala
-    sudo apt-get install -y sbt
-    # NodeJS
-    sudo apt-get install -y nodejs
-    sudo apt-get install -y npm
-    sudo npm -g install instant-markdown-d
-    # Chrome
-    sudo apt-get install google-chrome-stable
-    # Java
-    # If you want to switch other jdk, run this command:
-    # sudo update-alternatives --config java
-    # openjdk is currently unused
-    # sudo apt-get install -y openjdk-7-jdk
-    sudo add-apt-repository -y ppa:webupd8team/java
-    sudo apt-get update
-    install-oracle-java 8
-    # used for install solarized colorscheme
-    sudo apt-get install -y dconf-cli
-    # gnome-terminal-colors-solarized
-    install-gtcs
 elif [[ $OSTYPE == "darwin"* ]]; then
     # Some sentences derived from https://github.com/mathiasbynens/dotfiles
     brew update
-    brew upgrade
+    brew upgrade --all
+    # Install GNU core utilities (those that come with OS X are outdated)
+    # Don't forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`
+    brew install coreutils
+    sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
     # Install some other useful utilities like `sponge`.
     brew install moreutils
     # Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
     brew install findutils
     # Install GNU `sed`, overwriting the built-in `sed`.
     brew install gnu-sed --with-default-names
+    brew install rename
     brew install git
     brew install zsh
     brew install curl
     brew install wget --with-iri
-    brew install vim --override-system-vi
-    brew install imagemagick
+    brew install vim --override-system-vi --enable -interop=python,python3
+    brew install macvim
+    brew install tmux
+    brew install ctags-exuberant
+    brew install the_silver_searcher
     brew install tree
+    brew install imagemagick --with-webp
+    brew install astyle
+    brew install cmake
+    brew install pandoc
+    # Remove outdated versions from the cellar.
+    brew cleanup
 fi
 
 git-clone-or-pull zsh-users/antigen ~/.antigen
 git-clone-if-not-exists powerline/fonts ~/projects/fonts ./install.sh
-
-# Scala
-git-clone-if-not-exists scala/scala ~/projects/scala
-
-# Ruby
-# rbenv is for advanced rubyists
-# git-clone-or-pull sstephenson/rbenv ~/.rbenv
-git-clone-if-not-exists rubygems/rubygems ~/projects/rubygems 'sudo ruby setup.rb'
-sudo gem install rubocop
-sudo gem install bundler
-
-# Python
-# pyenv is for advanced pythonistas
-# git-clone-or-pull yyuu/pyenv ~/.pyenv
-curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo -H python
-sudo -H pip install flake8
