@@ -788,7 +788,7 @@ nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gl :Glog<CR>
 nnoremap <leader>gL :Gsplit! log -n 100<cr>
 nnoremap <leader>ga :Gcommit --amend<cr>
-nnoremap <leader>gA :Gsplit! add --all<cr>
+nnoremap <leader>gA :Git add --all<cr>
 
 " --------------------------------------------------------------
 " repeat {{{2
