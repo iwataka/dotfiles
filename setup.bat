@@ -8,6 +8,7 @@ call:mklinkFile agignore
 call:mklinkFile sbtrc
 call:mklinkFile vimperatorrc
 call:mklinkFile ctags
+call:mklinkDir sbt
 call:mklinkDir vim
 call:mklinkDir atom
 
