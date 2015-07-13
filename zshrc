@@ -20,6 +20,12 @@ fi
 
 [[ -s ~/.gvm/scripts/gvm ]] && source ~/.gvm/scripts/gvm
 
+if [ -d /usr/local/go ]; then
+    export PATH=$PATH:/usr/local/go/bin
+    export GOPATH=$HOME/go
+    export PATH=$PATH:$GOPATH/bin
+fi
+
 if [ -d /usr/local/idea ]; then
     export IDEA_HOME=/usr/local/idea
     export PATH=$PATH:$IDEA_HOME/bin
