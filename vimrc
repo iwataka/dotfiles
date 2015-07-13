@@ -606,7 +606,7 @@ aug vimrc-colorscheme
 aug END
 
 fu! s:tweak_colorscheme()
-  if g:colors_name == 'solarized'
+  if exists('g:colors_name') && g:colors_name == 'solarized'
     call s:tweak_solarized()
   endif
 endfu
