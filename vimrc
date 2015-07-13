@@ -14,7 +14,12 @@ silent! if plug#begin('~/.vim/plugged')
 
 " Completion
 if (has('unix') || has('mac')) && has('python')
-  Plug 'Valloric/YouCompleteMe'
+  fu! BuildYCM(info)
+    if a:info.status == 'installed' || a:info.force
+      !./install.sh --clang-completer
+    endif
+  endfu
+  Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
 endif
@@ -601,7 +606,7 @@ aug vimrc-colorscheme
 aug END
 
 fu! s:tweak_colorscheme()
-  if g:colors_name == 'solarized'
+  if exists('g:colors_name') && g:colors_name == 'solarized'
     call s:tweak_solarized()
   endif
 endfu
