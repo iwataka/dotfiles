@@ -5,4 +5,6 @@ if [[ -d $HOME/.antigen ]]; then
   antigen bundle
   antigen bundle mafredri/zsh-async
   antigen bundle sindresorhus/pure
+else
+  source $HOME/.zsh/prompt.zsh
 fi
