@@ -1,0 +1,8 @@
+inoremap jk <Esc>
+vnoremap jk <Esc>
+
+nnoremap Y y$
+nnoremap Q @q
+
+set incsearch hlsearch
+set ignorecase smartcase

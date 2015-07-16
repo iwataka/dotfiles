@@ -3,6 +3,7 @@
 set DOTFILES=%~dp0
 
 call:mklinkFile vimrc
+call:mklinkFile ideavimrc
 call:mklinkFile gitconfig
 call:mklinkFile agignore
 call:mklinkFile sbtrc

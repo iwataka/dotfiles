@@ -45,7 +45,7 @@ remove_or_backup() {
 }
 
 setup-symlinks() {
-    local vim=(vim vimperatorrc vimrc nvimrc)
+    local vim=(vim vimperatorrc vimrc nvimrc ideavimrc)
     local zsh=(zsh zshenv zshrc)
     local emacs=(emacs.d spacemacs)
     local env=(Xmodemap xsession)
