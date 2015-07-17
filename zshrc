@@ -26,16 +26,6 @@ if [ -d /usr/local/go ]; then
     export PATH=$PATH:$GOPATH/bin
 fi
 
-if [ -d /usr/local/idea ]; then
-    export IDEA_HOME=/usr/local/idea
-    export PATH=$PATH:$IDEA_HOME/bin
-fi
-
-if [ -d /usr/local/eclipse ]; then
-    export ECLIPSE_HOME=/usr/local/eclipse
-    export PATH=$PATH:$ECLIPSE_HOME
-fi
-
 #---------------------------------------------------------------
 # Key-binding
 #---------------------------------------------------------------
