@@ -547,6 +547,34 @@ fu! s:input_restart()
   silent call s:switch_input_source_to_default()
 endfu
 
+com! MarkdownPreview call s:markdown_preview()
+fu! s:markdown_preview()
+  let current_name = fnamemodify(expand('%'), ':p')
+  let target_name =  fnamemodify(current_name, ':r').'.html'
+  if executable('pandoc')
+    silent exec '!pandoc '.current_name.' -o '.target_name
+    call s:open(target_name)
+  else
+    echoe 'Require Pandoc!'
+  fi
+endfu
+
+com! -nargs=+ -complete=file Open call s:open(<q-args>)
+fu! s:open(target)
+  let command = ''
+  if has('unix')
+    let command = 'xdg-open'
+  elseif has('mac')
+    let command = 'open'
+  elseif has('win32unix')
+    let command = 'cygstart'
+  else
+    let command = 'start'
+  endif
+  silent exec '!'.command.' '.a:target
+  redraw!
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
