@@ -556,7 +556,7 @@ fu! s:markdown_preview()
     call s:open(target_name)
   else
     echoe 'Require Pandoc!'
-  fi
+  endif
 endfu
 
 com! -nargs=+ -complete=file Open call s:open(<q-args>)
