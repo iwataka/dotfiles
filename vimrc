@@ -72,7 +72,7 @@ if v:version >= 703
   Plug 'vim-ruby/vim-ruby'
 endif
 Plug 'plasticboy/vim-markdown'
-Plug 'suan/vim-instant-markdown'
+" Plug 'suan/vim-instant-markdown'
 Plug 'derekwyatt/vim-scala'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-endwise'
