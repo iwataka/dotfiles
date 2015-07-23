@@ -860,8 +860,8 @@ let g:lightline.component_function.gitgutter = 'MyGitGutter'
 let g:lightline.component_function.filename = 'MyFilename'
 let g:lightline.component_function.fugitive = 'MyFugitive'
 
-let g:lightline.separator = { 'left': "\ue0b0", 'right': "\ue0b2" }
-let g:lightline.subseparator = { 'left': "\ue0b1", 'right': "\ue0b3" }
+" let g:lightline.separator = { 'left': "\ue0b0", 'right': "\ue0b2" }
+" let g:lightline.subseparator = { 'left': "\ue0b1", 'right': "\ue0b3" }
 
 let g:lightline.tabline = {}
 let g:lightline.tabline.left = [ [ 'tabs' ] ]
