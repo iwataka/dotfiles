@@ -1,6 +1,12 @@
 #---------------------------------------------------------------
 # Source various files
 #---------------------------------------------------------------
+if [[ "$OSTYPE" == "cygwin" ]]; then
+    if [[ ! -d /tmp/tmux-0000 ]]; then
+        mkdir /tmp/tmux-0000
+    fi
+    rm -rf /tmp/tmux-*
+fi
 zsh_home=$HOME/.zsh
 zsh_files=(prompt aliases functions plugins)
 for fl in ${zsh_files}; do
