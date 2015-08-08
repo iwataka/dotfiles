@@ -552,7 +552,7 @@ fu! s:markdown_preview()
   let current_name = fnamemodify(expand('%'), ':p')
   let target_name =  fnamemodify(current_name, ':r').'.html'
   if executable('pandoc')
-    silent exec '!pandoc '.current_name.' -o '.target_name
+    silent exec '!pandoc -s '.current_name.' -o '.target_name
     call s:open(target_name)
   else
     echoe 'Require Pandoc!'
