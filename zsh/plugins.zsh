@@ -1,6 +1,7 @@
 if [[ -d $HOME/.antigen ]]; then
   source $HOME/.antigen/antigen.zsh
   antigen bundle git
+  export ZSH_TMUX_AUTOSTART=true
   antigen bundle tmux
   antigen bundle rupa/z
   antigen bundle zsh-users/zsh-syntax-highlighting
