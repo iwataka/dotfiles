@@ -3,27 +3,6 @@
 # Abort when errors are thrown
 set -e
 
-# Usage: git-clone-or-pull $url $path
-git-clone-or-pull() {
-    if [[ -d $2 ]]; then
-        cd $2
-        git pull
-    else
-        git clone https://github.com/$1 $2
-    fi
-}
-
-# Usage: git-clone-if-not-exists $url $path [$command]
-git-clone-if-not-exists() {
-    if [[ ! -d $2 ]]; then
-        git clone https://github.com/$1 $2
-        cd $2
-        if [[ $# > 2 ]]; then
-            $3
-        fi
-    fi
-}
-
 if [ $OSTYPE == "linux-gnu" ]; then
     # update apt-get itself
     sudo apt-get update
@@ -87,7 +66,16 @@ elif [[ $OSTYPE == "darwin"* ]]; then
     brew install pandoc
     # Remove outdated versions from the cellar.
     brew cleanup
+elif [[ "$OSTYPE" == "cygwin" ]]; then
+    apt-cyg update
+    apt-cyg install git
+    apt-cyg install zsh
+    apt-cyg install curl
+    apt-cyg install wget
+    apt-cyg install vim
+    apt-cyg install tmux
+    apt-cyg install tree
+    apt-cyg install ImageMagick
 fi
 
-git-clone-or-pull zsh-users/antigen ~/.antigen
-git-clone-if-not-exists powerline/fonts ~/projects/fonts ./install.sh
+git clone https://github.com/zsh-users/antigen ~/.antigen
