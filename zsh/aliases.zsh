@@ -55,7 +55,15 @@ alias mv='mv -i'
 # Reload the shell
 alias reload='exec "$SHELL" -l'
 
-# only for windows's cygwin
+alias zshrc='$EDITOR ~/.zshrc'
+
+alias -g H='| head'
+alias -g T='| tail'
+alias -g G='| grep'
+alias -g L='| less'
+alias -g M='| most'
+
+# only for cygwin
 if [[ "$OSTYPE" == "cygwin" ]]; then
     alias dl="cd $USERPROFILE/Downloads"
     alias dt="cd $USERPROFILE/Desktop"
