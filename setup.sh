@@ -51,7 +51,7 @@ setup-symlinks() {
     local env=(Xmodemap xsession)
     local sbt=(sbtrc sbt)
     local others=(agignore ctags curlrc gitconfig tmux.conf \
-        wgetrc atom editorconfig)
+        wgetrc atom editorconfig tigrc)
     local files=("${vim[@]}" "${zsh[@]}" "${emacs[@]}" "${env[@]}" \
         "${sbt[@]}" "${others[@]}")
     for file in ${files[@]}; do
