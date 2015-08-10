@@ -14,12 +14,7 @@ silent! if plug#begin('~/.vim/plugged')
 
 " Completion
 if (has('unix') || has('mac')) && has('python')
-  fu! BuildYCM(info)
-    if a:info.status == 'installed' || a:info.force
-      !./install.sh
-    endif
-  endfu
-  Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
 endif
