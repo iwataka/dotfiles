@@ -16,7 +16,7 @@ silent! if plug#begin('~/.vim/plugged')
 if (has('unix') || has('mac')) && has('python')
   fu! BuildYCM(info)
     if a:info.status == 'installed' || a:info.force
-      !./install.sh --clang-completer
+      !./install.sh
     endif
   endfu
   Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
