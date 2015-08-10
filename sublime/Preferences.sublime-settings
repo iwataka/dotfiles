@@ -1,13 +1,13 @@
 {
-	"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
-	"font_size": 10,
-	"highlight_line": true,
-	"highlight_modified_tab": true,
-	"ignored_packages":
-	[
-	],
-	"vintage_ctrl_keys": true,
-	"vintage_start_in_command_mode": true,
-	"trim_trailing_white_space_on_save": true,
-	"word_wrap": true
+    "color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+    "font_size": 10,
+    "highlight_line": true,
+    "highlight_modified_tab": true,
+    "ignored_packages":
+    [
+    ],
+    "trim_trailing_white_space_on_save": true,
+    "vintage_ctrl_keys": true,
+    "vintage_start_in_command_mode": true,
+    "word_wrap": true
 }

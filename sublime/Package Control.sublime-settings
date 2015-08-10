@@ -1,10 +1,11 @@
 {
-	"in_process_packages":
-	[
-	],
-	"installed_packages":
-	[
-		"Package Control",
-		"Vintageous"
-	]
+    "in_process_packages":
+    [
+    ],
+    "installed_packages":
+    [
+        "Git",
+        "Package Control",
+        "Vintageous"
+    ]
 }
