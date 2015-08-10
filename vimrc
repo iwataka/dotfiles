@@ -788,6 +788,9 @@ let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '~'
 let g:gitgutter_sign_removed = '-'
 nnoremap <leader>gG :GitGutterToggle<cr>
+if has('win32') || has('win64') || has('win32unix')
+    let g:gitgutter_enabled = 0
+endif
 
 " --------------------------------------------------------------
 " fugitive {{{2
