@@ -41,16 +41,9 @@ Plug 'Yggdroot/indentLine'
 " endif
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'ctrlpvim/ctrlp.vim'
-fu! BuildCMatcher(info)
-  if a:info.status == 'installed' || a:info.status == 'updated'
-    if has('win32') || has('win64')
-      !install-windows.bat
-    else
-      !./install.sh
-    endif
-  endif
-endfu
-Plug 'JazzCore/ctrlp-cmatcher', { 'do': function('BuildCMatcher') }
+if has('unix') || has('mac') || has('macunix')
+    Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
+endif
 
 " Editing
 Plug 'tpope/vim-repeat'
@@ -731,18 +724,9 @@ augroup vimrc-ctrlp
   au VimEnter * if exists(':CtrlPBookmarkDirAdd') | call s:ctrlp_bookmark_init() | endif
 augroup END
 
-fu! s:set_ctrlp_matcher()
-  let has_cmatcher = 0
-  for path in split(&rtp, ',')
-    if path =~ 'ctrlp-cmatcher'
-      let has_cmatcher = 1
-    endif
-  endfor
-  if has_cmatcher
+if has('unix') || has('mac') || has('macunix')
     let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
-  endif
-endfu
-call s:set_ctrlp_matcher()
+endif
 
 " --------------------------------------------------------------
 " YCM {{{2
