@@ -85,7 +85,7 @@ endif
 " ===============================================================
 
 " The mapleader is used as a prefix for all user mappings.
-let mapleader      = " "  " Space can be typed by both of hands.
+let mapleader      = ","  " Space key has been broken.
 let maplocalleader = "\\"  " The local mapleader is hardly used.
 
 let $LANG='en'                            " Vim should be in English
