@@ -5,3 +5,4 @@ choco install pandoc
 choco install devbox-rapidee
 choco install notepad++
 choco install launchy
+choco install sharpkeys
