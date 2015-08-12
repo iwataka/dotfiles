@@ -4,6 +4,7 @@
 
 - [Rapid Environment Editor](http://www.rapidee.com/en/about)
 - [Notepad++](https://notepad-plus-plus.org/)
+- [SharpKeys](https://sharpkeys.codeplex.com/)
 
 ## Notepad++ Plugins
 
