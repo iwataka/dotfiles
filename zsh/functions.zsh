@@ -28,3 +28,11 @@ function replace() {
 function psg() {
     ps -ef |grep "$@"
 }
+
+function mkup() {
+    for mkd in *.(md|mkd|markdown); do
+        root_name=${mkd%.*}
+        pandoc -o ${root_name}.html $mkd
+        o ${root_name}.html
+    done
+}
