@@ -23,3 +23,5 @@
     st = status
 [github]
     user = iwataka
+[hub]
+    protocol = https
