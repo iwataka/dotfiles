@@ -1,5 +1,6 @@
 if [[ -d $HOME/.antigen ]]; then
   source $HOME/.antigen/antigen.zsh
+  antigen bundle extract
   antigen bundle git
   antigen bundle github
   export ZSH_TMUX_AUTOSTART=true
