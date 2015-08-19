@@ -3,6 +3,7 @@ if [[ -d $HOME/.antigen ]]; then
   antigen bundle extract
   antigen bundle git
   antigen bundle github
+  antigen bundle gitignore
   export ZSH_TMUX_AUTOSTART=true
   antigen bundle tmux
   antigen bundle rupa/z
