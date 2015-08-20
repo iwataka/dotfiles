@@ -60,7 +60,7 @@ if v:version >= 703
   Plug 'vim-ruby/vim-ruby'
 endif
 Plug 'plasticboy/vim-markdown'
-" Plug 'suan/vim-instant-markdown'
+Plug 'suan/vim-instant-markdown'
 Plug 'derekwyatt/vim-scala'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-endwise'
@@ -982,5 +982,5 @@ let g:indentLine_color_term = 242
 " --------------------------------------------------------------
 " instant-markdown {{{2
 " --------------------------------------------------------------
-let g:instant_markdown_slow = 1
-let g:instant_markdown_autostart = 0
+let g:instant_markdown_slow = 0
+let g:instant_markdown_autostart = 1
