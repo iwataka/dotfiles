@@ -983,4 +983,4 @@ let g:indentLine_color_term = 242
 " instant-markdown {{{2
 " --------------------------------------------------------------
 let g:instant_markdown_slow = 0
-let g:instant_markdown_autostart = 1
+let g:instant_markdown_autostart = 0
