@@ -130,7 +130,6 @@ set smartcase                             " Case sensitive when containing capit
 set magic                                 " Make using regex more easier
 set incsearch                             " Enable incremental search
 set hlsearch                              " Highlight search results
-set gdefault                              " Set the g flag by default when executing substitute
 set ttyfast                               " Enable fast connection
 set foldenable                            " Enable to fold
 set foldlevel=2                           " Start folding at the second depth
