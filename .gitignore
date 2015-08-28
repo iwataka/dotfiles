@@ -16,6 +16,7 @@ vim/undo/*
 vim/backups/*
 !vim/backups/.gitignore
 vim/.netrwhist
+vim/spell
 
 # Emacs
 emacs.d/*

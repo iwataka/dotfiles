@@ -547,7 +547,7 @@ fu! s:markdown_preview()
   endif
 endfu
 
-com! -nargs=+ -complete=file Open call s:open(<q-args>)
+com! -nargs=* -complete=file Open call s:open(<q-args>)
 fu! s:open(target)
   let command = ''
   if has('unix')
@@ -559,7 +559,11 @@ fu! s:open(target)
   else
     let command = 'start'
   endif
-  silent exec '!'.command.' '.a:target
+  if a:target
+    silent exec '!'.command.' '.a:target
+  else
+    silent exec '!'.command.' '.shellescape(expand('%:p'))
+  endif
   redraw!
 endfu
 
