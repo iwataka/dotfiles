@@ -558,10 +558,10 @@ fu! s:open(target)
   else
     let command = 'start'
   endif
-  if a:target
-    silent exec '!'.command.' '.a:target
-  else
+  if empty(a:target)
     silent exec '!'.command.' '.shellescape(expand('%:p'))
+  else
+    silent exec '!'.command.' '.a:target
   endif
   redraw!
 endfu
