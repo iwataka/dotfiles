@@ -8,7 +8,7 @@ if [[ "$OSTYPE" == "cygwin" ]]; then
     rm -rf /tmp/tmux-*
 fi
 zsh_home=$HOME/.zsh
-zsh_files=(prompt aliases functions plugins)
+zsh_files=(prompt aliases functions plugins vim)
 for fl in ${zsh_files}; do
     [[ -f ${zsh_home}/${fl}.zsh ]] && source ${zsh_home}/${fl}.zsh
 done
