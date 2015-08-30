@@ -12,6 +12,8 @@ if [[ -d $HOME/.antigen ]]; then
   antigen bundle sindresorhus/pure
   antigen apply
 else
-  source $HOME/.zsh/prompt.zsh
-  source $HOME/.zsh/git.zsh
+  for _sub_plugin in $HOME/.zsh/*.sub.zsh
+  do
+    source $_sub_plugin
+  done
 fi

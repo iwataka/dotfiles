@@ -1,16 +1,18 @@
 #---------------------------------------------------------------
 # Source various files
 #---------------------------------------------------------------
+# Fix tmux problem in Cygwin
 if [[ "$OSTYPE" == "cygwin" ]]; then
     if [[ ! -d /tmp/tmux-0000 ]]; then
         mkdir /tmp/tmux-0000
     fi
     rm -rf /tmp/tmux-*
 fi
-zsh_home=$HOME/.zsh
-zsh_files=(prompt aliases functions plugins vim)
-for fl in ${zsh_files}; do
-    [[ -f ${zsh_home}/${fl}.zsh ]] && source ${zsh_home}/${fl}.zsh
+
+# Source main plugins
+for _main_plugin in $HOME/.zsh/*.main.zsh
+do
+    source $_main_plugin
 done
 
 if [ -d $HOME/.rbenv ]; then
