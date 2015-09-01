@@ -30,9 +30,19 @@ function psg() {
 }
 
 function mkup() {
-    for mkd in *.(md|mkd|markdown); do
-        root_name=${mkd%.*}
-        pandoc -o ${root_name}.html $mkd
-        o ${root_name}.html
-    done
+    if [[ "$@" == "" ]]
+    then
+        for mkd in *.(md|mkd|markdown)
+        do
+            mkup $mkd
+        done
+    else
+        for mkd in "$@"
+        do
+            root_name=${mkd%.*}
+            pandoc -s $mkd -o ${root_name}.html
+            o ${root_name}.html
+        done
+    fi
+
 }
