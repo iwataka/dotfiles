@@ -22,7 +22,7 @@ alias j="jobs"
 alias v="vim"
 
 # unzip command for files which has japanese names
-alias unzip-ja="unzip -O cp932"
+alias uzja="unzip -O cp932"
 
 # Google Chrome
 alias chrome="google-chrome-stable"
