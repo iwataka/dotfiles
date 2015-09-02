@@ -490,47 +490,47 @@ fu! s:can_complete(func, prefix)
   return !empty(type(result) == type([]) ? result : result.words)
 endfu
 
-" Settings about japanese and english input sources
-if has('unix')
-  let s:default_input_source = "mozc-jp"
-  let s:ibus = !empty(system('ibus engine 2> /dev/null'))
-  aug vimrc-jp
-    au!
-    au InsertLeave * call s:on_insert_leave()
-  aug END
-endif
+" " Settings about japanese and english input sources
+" if has('unix')
+"   let s:default_input_source = "mozc-jp"
+"   let s:ibus = !empty(system('ibus engine 2> /dev/null'))
+"   aug vimrc-jp
+"     au!
+"     au InsertLeave * call s:on_insert_leave()
+"   aug END
+" endif
 
-" Execute this when leaving from insert mode.
-fu! s:on_insert_leave()
-  silent call s:switch_input_source_to_default()
-endfu
+" " Execute this when leaving from insert mode.
+" fu! s:on_insert_leave()
+"   silent call s:switch_input_source_to_default()
+" endfu
 
-" Switch current input source to the default
-fu! s:switch_input_source_to_default()
-  if s:current_input_source() != s:default_input_source
-    if s:ibus
-      silent call system('ibus engine '.s:default_input_source)
-    endif
-  endif
-endfu
+" " Switch current input source to the default
+" fu! s:switch_input_source_to_default()
+"   if s:current_input_source() != s:default_input_source
+"     if s:ibus
+"       silent call system('ibus engine '.s:default_input_source)
+"     endif
+"   endif
+" endfu
 
-" Returns current input source
-fu! s:current_input_source()
-  if s:ibus
-    return substitute(system('ibus engine'), '\(\n\|\r\)', '', '')
-  else
-    return ''
-  endif
-endfu
+" " Returns current input source
+" fu! s:current_input_source()
+"   if s:ibus
+"     return substitute(system('ibus engine'), '\(\n\|\r\)', '', '')
+"   else
+"     return ''
+"   endif
+" endfu
 
-com! InputRestart call s:input_restart()
-fu! s:input_restart()
-  if s:ibus
-    silent call system('ibus restart')
-  endif
-  sleep 300m
-  silent call s:switch_input_source_to_default()
-endfu
+" com! InputRestart call s:input_restart()
+" fu! s:input_restart()
+"   if s:ibus
+"     silent call system('ibus restart')
+"   endif
+"   sleep 300m
+"   silent call s:switch_input_source_to_default()
+" endfu
 
 com! MarkdownPreview call s:markdown_preview()
 fu! s:markdown_preview()
