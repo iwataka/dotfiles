@@ -92,7 +92,6 @@ let $LANG='en'                            " Vim should be in English
 set encoding=utf-8                        " UTF8 is a universal encoding
 set fileencodings=utf-8,sjis              " UTF8 is first, SJIS is second
 set fileformats=unix,dos,mac              " Unix format has highest priority
-set imdisable                             " The Input Method is never used
 set timeout                               " Enable timeout settings
 set timeoutlen=1000                       " Time out on mapping after 1 second
 set ttimeoutlen=100                       " Time out on key codes after 0.1 second
