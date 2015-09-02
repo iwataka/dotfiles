@@ -985,6 +985,11 @@ nnoremap <leader>nb :NERDTreeFromBookmark
 let g:indentLine_color_term = 242
 
 " --------------------------------------------------------------
+" markdown {{{2
+" --------------------------------------------------------------
+let g:vim_markdown_no_default_key_mappings = 1
+
+" --------------------------------------------------------------
 " instant-markdown {{{2
 " --------------------------------------------------------------
 let g:instant_markdown_slow = 0
