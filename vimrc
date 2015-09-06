@@ -70,6 +70,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'othree/html5.vim'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'ap/vim-css-color'
+Plug 'mattn/emmet-vim'
 
 call plug#end()
 endif
