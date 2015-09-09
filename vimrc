@@ -282,6 +282,10 @@ nnoremap ` '
 " jk | Escaping!
 inoremap jk <Esc>
 cnoremap jk <C-c>
+if has('nvim')
+  tnoremap jk <C-\><C-n>
+  tnoremap <ESC> <C-\><C-n>
+endif
 
 " Edit vimrc
 nnoremap <leader>ev :vsplit ~/.vimrc<cr>
