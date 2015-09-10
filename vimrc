@@ -55,6 +55,7 @@ Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
+Plug 'tomasr/molokai'
 
 " Filetype
 if v:version >= 703
