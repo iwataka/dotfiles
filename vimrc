@@ -55,7 +55,6 @@ Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
-Plug 'tomasr/molokai'
 
 " Filetype
 if v:version >= 703
@@ -622,31 +621,30 @@ let g:solarized_hitrail=0
 let g:solarized_termtrans=0
 set background=dark
 
-" aug vimrc-colorscheme
-"   au!
-"   au VimEnter,ColorScheme * call s:tweak_colorscheme()
-" aug END
+aug vimrc-colorscheme
+  au!
+  au VimEnter,ColorScheme * call s:tweak_colorscheme()
+aug END
 
-" fu! s:tweak_colorscheme()
-"   if exists('g:colors_name') && g:colors_name == 'solarized'
-"     call s:tweak_solarized()
-"   endif
-" endfu
+fu! s:tweak_colorscheme()
+  if exists('g:colors_name') && g:colors_name == 'solarized'
+              \ && g:solarized_termtrans == 1 && &background == 'dark'
+    call s:tweak_solarized()
+  endif
+endfu
 
-" fu! s:tweak_solarized()
-"   if &background == 'dark'
-"     hi Comment ctermfg=242  " The original value is 239.
-"     hi vimIsCommand ctermfg=243  " The original value is 240.
-"     hi gitcommitComment ctermfg=242  " The original value is 239.
-"     hi gitcommitOnBranch ctermfg=242
-"     hi gitcommitHeader ctermfg=242
-"   endif
-" endfu
+fu! s:tweak_solarized()
+  hi Comment ctermfg=242           " The original value is 239.
+  hi vimIsCommand ctermfg=243      " The original value is 240.
+  hi gitcommitComment ctermfg=242  " The original value is 239.
+  hi gitcommitOnBranch ctermfg=242
+  hi gitcommitHeader ctermfg=242
+endfu
 
 " --------------------------------------------------------------
 " gruvbox {{{2
 " --------------------------------------------------------------
-silent! colo gruvbox
+silent! colorscheme gruvbox
 
 " --------------------------------------------------------------
 " gist {{{2
