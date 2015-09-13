@@ -699,6 +699,7 @@ if has('unix')
     \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
     \ '/usr/lib/jvm/java-[1-9]\+-oracle',
     \ '~/projects/*',
+    \ '~/lib/*',
     \ '~/dotfiles'
     \ ]
 endif
