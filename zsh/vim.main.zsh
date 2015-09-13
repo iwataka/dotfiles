@@ -1,13 +1,16 @@
 vim() {
-    if ! (( $+_has_working_nvim ))
+    if [[ $USE_NEOVIM_INSTEAD_OF_VIM == true ]]
     then
-        nvim --version &> /dev/null
-        _has_working_nvim=$(($? == 0))
-    fi
-    if (( $_has_working_nvim ))
-    then
-        nvim "$@"
-    else
-        command vim "$@"
+        if ! (( $+_has_working_nvim ))
+        then
+            nvim --version &> /dev/null
+            _has_working_nvim=$(($? == 0))
+        fi
+        if (( $_has_working_nvim ))
+        then
+            nvim "$@"
+        else
+            command vim "$@"
+        fi
     fi
 }

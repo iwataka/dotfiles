@@ -14,6 +14,7 @@ for _main_plugin in $HOME/.zsh/*.main.zsh
 do
     source $_main_plugin
 done
+export USE_NEOVIM_INSTEAD_OF_VIM=true
 
 if [ -d $HOME/.rbenv ]; then
     export PATH="$HOME/.rbenv/bin:$PATH"
