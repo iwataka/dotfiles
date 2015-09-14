@@ -10,13 +10,6 @@ pre-setup() {
     if [ ! -d ~/bin ]; then
         mkdir ~/bin
     fi
-    # Make sure that chpwd-recent-dirs file exists
-    if [ ! -e ~/.cache/shell/chpwd-recent-dirs ]; then
-        if [ ! -e ~/.cache/shell ]; then
-            mkdir -p ~/.cache/shell
-        fi
-        touch ~/.cache/shell/chpwd-recent-dirs
-    fi
 }
 
 # Make links of binaries

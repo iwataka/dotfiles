@@ -54,12 +54,13 @@ Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
 
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
 
 " Filetype
 if v:version >= 703
   Plug 'vim-ruby/vim-ruby'
 endif
-Plug 'plasticboy/vim-markdown'
+Plug 'git@github.com:iwataka/vim-markdown.git'
 Plug 'suan/vim-instant-markdown'
 Plug 'derekwyatt/vim-scala'
 Plug 'scrooloose/syntastic'
@@ -69,6 +70,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'othree/html5.vim'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'ap/vim-css-color'
+Plug 'mattn/emmet-vim'
 
 call plug#end()
 endif
@@ -92,7 +94,6 @@ let $LANG='en'                            " Vim should be in English
 set encoding=utf-8                        " UTF8 is a universal encoding
 set fileencodings=utf-8,sjis              " UTF8 is first, SJIS is second
 set fileformats=unix,dos,mac              " Unix format has highest priority
-set imdisable                             " The Input Method is never used
 set timeout                               " Enable timeout settings
 set timeoutlen=1000                       " Time out on mapping after 1 second
 set ttimeoutlen=100                       " Time out on key codes after 0.1 second
@@ -173,7 +174,7 @@ endif
 
 if has('gui_running')
   set guioptions=
-  silent! set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
+  silent! set guifont=Hack\ 12
 endif
 
 if has('mouse')
@@ -281,6 +282,10 @@ nnoremap ` '
 " jk | Escaping!
 inoremap jk <Esc>
 cnoremap jk <C-c>
+if has('nvim')
+  tnoremap jk <C-\><C-n>
+  tnoremap <ESC> <C-\><C-n>
+endif
 
 " Edit vimrc
 nnoremap <leader>ev :vsplit ~/.vimrc<cr>
@@ -490,54 +495,54 @@ fu! s:can_complete(func, prefix)
   return !empty(type(result) == type([]) ? result : result.words)
 endfu
 
-" Settings about japanese and english input sources
-if has('unix')
-  let s:default_input_source = "mozc-jp"
-  let s:ibus = !empty(system('ibus engine 2> /dev/null'))
-  aug vimrc-jp
-    au!
-    au InsertLeave * call s:on_insert_leave()
-  aug END
-endif
+" " Settings about japanese and english input sources
+" if has('unix')
+"   let s:default_input_source = "mozc-jp"
+"   let s:ibus = !empty(system('ibus engine 2> /dev/null'))
+"   aug vimrc-jp
+"     au!
+"     au InsertLeave * call s:on_insert_leave()
+"   aug END
+" endif
 
-" Execute this when leaving from insert mode.
-fu! s:on_insert_leave()
-  silent call s:switch_input_source_to_default()
-endfu
+" " Execute this when leaving from insert mode.
+" fu! s:on_insert_leave()
+"   silent call s:switch_input_source_to_default()
+" endfu
 
-" Switch current input source to the default
-fu! s:switch_input_source_to_default()
-  if s:current_input_source() != s:default_input_source
-    if s:ibus
-      silent call system('ibus engine '.s:default_input_source)
-    endif
-  endif
-endfu
+" " Switch current input source to the default
+" fu! s:switch_input_source_to_default()
+"   if s:current_input_source() != s:default_input_source
+"     if s:ibus
+"       silent call system('ibus engine '.s:default_input_source)
+"     endif
+"   endif
+" endfu
 
-" Returns current input source
-fu! s:current_input_source()
-  if s:ibus
-    return substitute(system('ibus engine'), '\(\n\|\r\)', '', '')
-  else
-    return ''
-  endif
-endfu
+" " Returns current input source
+" fu! s:current_input_source()
+"   if s:ibus
+"     return substitute(system('ibus engine'), '\(\n\|\r\)', '', '')
+"   else
+"     return ''
+"   endif
+" endfu
 
-com! InputRestart call s:input_restart()
-fu! s:input_restart()
-  if s:ibus
-    silent call system('ibus restart')
-  endif
-  sleep 300m
-  silent call s:switch_input_source_to_default()
-endfu
+" com! InputRestart call s:input_restart()
+" fu! s:input_restart()
+"   if s:ibus
+"     silent call system('ibus restart')
+"   endif
+"   sleep 300m
+"   silent call s:switch_input_source_to_default()
+" endfu
 
 com! MarkdownPreview call s:markdown_preview()
 fu! s:markdown_preview()
   let current_name = fnamemodify(expand('%'), ':p')
   let target_name =  fnamemodify(current_name, ':r').'.html'
   if executable('pandoc')
-    silent exec '!pandoc -s '.current_name.' -o '.target_name
+    silent exec '!pandoc -s -f markdown_github '.current_name.' -o '.target_name
     call s:open(target_name)
   else
     echoe 'Require Pandoc!'
@@ -613,9 +618,8 @@ endfu
 let g:solarized_termcolors=256
 let g:solarized_visibility='high'
 let g:solarized_hitrail=0
-let g:solarized_termtrans=1
+let g:solarized_termtrans=0
 set background=dark
-silent! colo solarized
 
 aug vimrc-colorscheme
   au!
@@ -624,19 +628,23 @@ aug END
 
 fu! s:tweak_colorscheme()
   if exists('g:colors_name') && g:colors_name == 'solarized'
+              \ && g:solarized_termtrans == 1 && &background == 'dark'
     call s:tweak_solarized()
   endif
 endfu
 
 fu! s:tweak_solarized()
-  if &background == 'dark'
-    hi Comment ctermfg=242  " The original value is 239.
-    hi vimIsCommand ctermfg=243  " The original value is 240.
-    hi gitcommitComment ctermfg=242  " The original value is 239.
-    hi gitcommitOnBranch ctermfg=242
-    hi gitcommitHeader ctermfg=242
-  endif
+  hi Comment ctermfg=242           " The original value is 239.
+  hi vimIsCommand ctermfg=243      " The original value is 240.
+  hi gitcommitComment ctermfg=242  " The original value is 239.
+  hi gitcommitOnBranch ctermfg=242
+  hi gitcommitHeader ctermfg=242
 endfu
+
+" --------------------------------------------------------------
+" gruvbox {{{2
+" --------------------------------------------------------------
+silent! colorscheme gruvbox
 
 " --------------------------------------------------------------
 " gist {{{2
@@ -691,6 +699,7 @@ if has('unix')
     \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
     \ '/usr/lib/jvm/java-[1-9]\+-oracle',
     \ '~/projects/*',
+    \ '~/lib/*',
     \ '~/dotfiles'
     \ ]
 endif
@@ -979,6 +988,11 @@ nnoremap <leader>nb :NERDTreeFromBookmark
 " indentLine {{{2
 " --------------------------------------------------------------
 let g:indentLine_color_term = 242
+
+" --------------------------------------------------------------
+" markdown {{{2
+" --------------------------------------------------------------
+let g:vim_markdown_no_default_key_mappings = 1
 
 " --------------------------------------------------------------
 " instant-markdown {{{2
