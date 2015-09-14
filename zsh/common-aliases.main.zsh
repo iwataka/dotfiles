@@ -19,7 +19,7 @@ alias dt="cd ~/Desktop"
 alias p="cd ~/projects"
 alias h="history"
 alias j="jobs"
-alias v="vim"
+alias v="nvim"
 
 # unzip command for files which has japanese names
 alias uzja="unzip -O cp932"
