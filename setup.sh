@@ -14,13 +14,13 @@ pre-setup() {
 
 # Make links of binaries
 setup-bins() {
-    local path="$dfsdir/bin"
-    for file in $(ls $path); do
+    local bin_directory="$dfsdir/bin"
+    for file in $(ls $bin_directory); do
         if [ -e ~/bin/$file ]; then
             rm ~/bin/$file
         fi
-        if [[ -f $path/$file ]]; then
-            ln -s $path/$file ~/bin/$file
+        if [[ -f $bin_directory/$file ]]; then
+            ln -s $bin_directory/$file ~/bin/$file
         fi
     done
 }
@@ -28,12 +28,13 @@ setup-bins() {
 # Removes it if a given path indicates a symbolic link and
 # makes a backup if it exists
 remove_or_backup() {
-    local path=$1
-    if [ -L $path ]; then
-        rm $path
+    local fpath=$1
+    if [ -L $fpath ]; then
+        rm $fpath
     fi
-    if [ -e $path ]; then
-        mv $path ${path}.bak
+    if [ -e $fpath ]; then
+        mv $fpath ${fpath}.bak
+        echo "Make ${fpath}.bak"
     fi
 }
 

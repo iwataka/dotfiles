@@ -6,9 +6,5 @@ export PAGER='less -r'
 export TERM=screen-256color-bce
 export LANG=ja_JP.UTF-8
 
-if [ -d $HOME/bin ]; then
-    export PATH=$PATH:$HOME/bin
-fi
-
 # Local config
 [[ -f ~/.zshenv.local ]] && source ~/.zshenv.local

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [[ ! -d ~/lib/neovim ]]
+then
+    git clone https://github.com/neovim/neovim ~/lib/neovim
+    cd ~/lib/neovim && make
+fi
+
+~/lib/neovim/build/bin/nvim "$@"
