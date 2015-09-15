@@ -24,7 +24,16 @@ then
     cd ~/lib/pwd.sh
     git pull origin master
 else
-    # ~/lib/pwd.sh/pwd.sh "$@"
-    echo "$0"
+    if [[ -s ./pwd.sh.safe ]]
+    then
+        export PWDSH_SAFE="pwd.sh.safe"
+    elif [[ -s ~/projects/private/pwd.sh.safe ]]
+    then
+        export PWDSH_SAFE="$HOME/projects/private/pwd.sh.safe"
+    elif [[ -s ~/lib/pwd.sh/pwd.sh.safe ]]
+    then
+        export PWDSH_SAFE="$HOME/lib/pwd.sh/pwd.sh.safe"
+    fi
+    ~/lib/pwd.sh/pwd.sh "$@"
 fi
 
