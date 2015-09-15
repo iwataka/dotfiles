@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
+set -e
+
 if [[ ! -d ~/lib/tig ]]
 then
     git clone https://github.com/jonas/tig ~/lib/tig
     cd ~/lib/tig && make
+elif [[ "$1" == "--upgrade" ]]
+then
+    cd ~/lib/tig
+    git pull origin master
+    make
+else
+    ~/lib/tig/src/tig "$@"
 fi
-
-~/lib/tig/src/tig "$@"
