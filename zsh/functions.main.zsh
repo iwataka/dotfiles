@@ -45,3 +45,12 @@ function mkup() {
         done
     fi
 }
+
+function xmodmap() {
+    if [[ "$@" == "" ]] && [[ -s $HOME/.Xmodmap ]]
+    then
+        command xmodmap $HOME/.Xmodmap
+    else
+        command xmodmap "$@"
+    fi
+}
