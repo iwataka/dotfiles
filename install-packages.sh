@@ -35,6 +35,8 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install -y build-essential cmake python-dev
     # Markdown
     sudo apt-get install -y pandoc
+    # Static analyzer for shell scripts
+    sudo apt-get install shellcheck
 elif [[ $OSTYPE == "darwin"* ]]; then
     # Some sentences derived from https://github.com/mathiasbynens/dotfiles
     brew update
@@ -64,6 +66,7 @@ elif [[ $OSTYPE == "darwin"* ]]; then
     brew install astyle
     brew install cmake
     brew install pandoc
+    brew install shellcheck
     # Remove outdated versions from the cellar.
     brew cleanup
 elif [[ "$OSTYPE" == "cygwin" ]]; then
