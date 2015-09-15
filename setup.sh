@@ -42,7 +42,6 @@ setup-symlinks() {
     local vim=(vim vimperatorrc vimrc nvimrc ideavimrc)
     local zsh=(zsh zshenv zshrc)
     local emacs=(emacs.d spacemacs)
-    local env=(Xmodmap xsession xinitrc)
     local sbt=(sbtrc sbt)
     local others=(agignore ctags curlrc gitconfig tmux.conf \
         wgetrc atom editorconfig tigrc)
