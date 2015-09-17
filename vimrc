@@ -155,6 +155,10 @@ set wildignore+=*.pyc                            " Python
 set wildignore+=*.rbc                            " Ruby
 set wildignore+=*.class                          " JVM
 
+if has('win32') || has('win64')
+  set imdisable
+endif
+
 set clipboard=unnamed
 if has('unnamedplus')
   set clipboard+=unnamedplus
