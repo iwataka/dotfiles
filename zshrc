@@ -28,6 +28,8 @@ fi
 
 [[ -s ~/.gvm/scripts/gvm ]] && source ~/.gvm/scripts/gvm
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 if [ -d /usr/local/go ]; then
     export PATH=$PATH:/usr/local/go/bin
     export GOPATH=$HOME/go

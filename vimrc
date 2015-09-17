@@ -39,6 +39,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 if has('unix') || has('mac') || has('macunix')
     Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
 endif
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
 " Editing
 Plug 'tpope/vim-repeat'
