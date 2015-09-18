@@ -134,6 +134,7 @@ set smartcase                             " Case sensitive when containing capit
 set magic                                 " Make using regex more easier
 set incsearch                             " Enable incremental search
 set hlsearch                              " Highlight search results
+nohlsearch                                " Prevetnt highlight when reloading .vimrc
 set ttyfast                               " Enable fast connection
 set foldenable                            " Enable to fold
 set foldlevel=2                           " Start folding at the second depth
@@ -345,6 +346,7 @@ nnoremap <S-tab> <c-w>W
 
 " Clear the highlighting of :set hlsearch.
 nnoremap <silent> <C-l> :nohlsearch<cr><C-l>
+nnoremap <silent> <Esc><Esc> :nohlsearch<cr><C-l>
 
 " Increment and decrement numbers by + and - keys.
 " Tmux uses <c-a> key as a prefix, so Vim can't use it.
@@ -589,6 +591,7 @@ iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
 abbrev factroy factory
 abbrev reutrn return
 abbrev netowrk network
+abbrev SpaitalNetwork SpatialNetwork
 
 " Shortcut
 aug vimrc-abbrev
