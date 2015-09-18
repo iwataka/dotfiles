@@ -39,7 +39,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 if has('unix') || has('mac') || has('macunix')
     Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
 endif
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
 " Editing
 Plug 'tpope/vim-repeat'
@@ -621,7 +620,7 @@ endfu
 " ===============================================================
 
 " --------------------------------------------------------------
-" solarized {{{2
+" ColorScheme {{{2
 " --------------------------------------------------------------
 let g:solarized_termcolors=256
 let g:solarized_visibility='high'
@@ -649,9 +648,6 @@ fu! s:tweak_solarized()
   hi gitcommitHeader ctermfg=242
 endfu
 
-" --------------------------------------------------------------
-" gruvbox {{{2
-" --------------------------------------------------------------
 silent! colorscheme gruvbox
 
 " --------------------------------------------------------------
@@ -740,7 +736,7 @@ augroup vimrc-ctrlp
 augroup END
 
 if has('unix') || has('mac') || has('macunix')
-    let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
+  let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
 endif
 
 " --------------------------------------------------------------
