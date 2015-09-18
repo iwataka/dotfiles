@@ -51,6 +51,9 @@ Plug 'Raimondi/delimitMate'
 " Plug 'terryma/vim-multiple-cursors'  " Critical performance issue
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
+" If you want to use syntastic, you must disable vim-auto-save plugin.
+" Plug 'scrooloose/syntastic'
+Plug 'vim-scripts/vim-auto-save'
 
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
@@ -64,7 +67,6 @@ endif
 Plug 'plasticboy/vim-markdown'
 Plug 'suan/vim-instant-markdown'
 Plug 'derekwyatt/vim-scala'
-Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-endwise'
 Plug 'fatih/vim-go'
 Plug 'pangloss/vim-javascript'
@@ -665,10 +667,6 @@ silent! colorscheme gruvbox
 " let g:gist_show_privates = 1
 " let g:gist_post_private = 1
 
-" if filereadable(expand('~/.vim/settings.vim'))
-"   source ~/.vim/settings.vim
-" endif
-
 " --------------------------------------------------------------
 " CtrlP {{{2
 " --------------------------------------------------------------
@@ -1005,3 +1003,10 @@ let g:vim_markdown_no_default_key_mappings = 1
 " --------------------------------------------------------------
 let g:instant_markdown_slow = 0
 let g:instant_markdown_autostart = 0
+
+" --------------------------------------------------------------
+" auto-save {{{2
+" --------------------------------------------------------------
+let g:auto_save = 1
+let g:auto_save_no_update_time = 1
+let g:auto_save_in_insert_mode = 0
