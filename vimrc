@@ -57,7 +57,7 @@ Plug 'vim-scripts/vim-auto-save'
 
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvbox'
 
 " Filetype
 if v:version >= 703
@@ -630,7 +630,7 @@ endfu
 let g:solarized_termcolors=256
 let g:solarized_visibility='high'
 let g:solarized_hitrail=0
-let g:solarized_termtrans=0
+let g:solarized_termtrans=1
 set background=dark
 
 aug vimrc-colorscheme
@@ -653,7 +653,7 @@ fu! s:tweak_solarized()
   hi gitcommitHeader ctermfg=242
 endfu
 
-silent! colorscheme gruvbox
+silent! colorscheme solarized
 
 " --------------------------------------------------------------
 " gist {{{2
