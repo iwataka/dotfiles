@@ -53,7 +53,7 @@ Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
 " If you want to use syntastic, you must disable vim-auto-save plugin.
 " Plug 'scrooloose/syntastic'
-Plug 'vim-scripts/vim-auto-save'
+" Plug 'vim-scripts/vim-auto-save'
 
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
@@ -221,8 +221,9 @@ augroup vimrcEx
 
   " Use cursorline only in the focused window.
   " This doesn't work with NERDTree.
-  autocmd WinEnter * set cursorline
-  autocmd WinLeave * set nocursorline
+  " Currently disabled because of performance issue.
+  " autocmd WinEnter * set cursorline
+  " autocmd WinLeave * set nocursorline
 
   " When editing a file, always jump to the last known cursor position.
   " do it when the position is invalid or when inside an event handler
@@ -1010,6 +1011,6 @@ let g:instant_markdown_autostart = 0
 " --------------------------------------------------------------
 " auto-save {{{2
 " --------------------------------------------------------------
-let g:auto_save = 1
-let g:auto_save_no_update_time = 1
-let g:auto_save_in_insert_mode = 0
+" let g:auto_save = 1
+" let g:auto_save_no_update_time = 1
+" let g:auto_save_in_insert_mode = 0
