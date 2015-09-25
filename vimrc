@@ -202,10 +202,10 @@ if has('persistent_undo')
   set undofile
 endif
 
-if executable('pt')
-  set grepprg=pt\ --nogroup\ --nocolor\ --column
-elseif executable('ag')
+if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --column
+elseif executable('pt')
+  set grepprg=pt\ --nogroup\ --nocolor\ --column
 elseif executable('ack')
   set grepprg=ack\ -H\ --nocolor\ --nogroup
 else
@@ -674,10 +674,10 @@ silent! colorscheme solarized
 " --------------------------------------------------------------
 " CtrlP {{{2
 " --------------------------------------------------------------
-if executable('pt')
-  let g:ctrlp_user_command = 'pt -l --follow --nocolor "" %s'
-elseif executable('ag')
+if executable('ag')
   let g:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
+elseif executable('pt')
+  let g:ctrlp_user_command = 'pt -l --follow --nocolor "" %s'
 elseif executable('ack')
   let g:ctrlp_user_command = 'ack --follow --nocolor -g "" %s'
 endif
