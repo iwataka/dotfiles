@@ -1,5 +1,6 @@
 if [[ -d $HOME/.antigen ]]; then
   source $HOME/.antigen/antigen.zsh
+  antigen bundle docker
   antigen bundle extract
   antigen bundle git
   antigen bundle github
