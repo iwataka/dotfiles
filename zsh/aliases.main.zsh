@@ -75,7 +75,7 @@ alias 8='fg %8'
 alias 9='fg %9'
 
 # docker
-alias docker-clean='docker rmi `docker ps -aq`'
+alias docker-clean='docker rm `docker ps -aq`'
 
 # only for cygwin
 if [[ "$OSTYPE" == "cygwin" ]]; then
