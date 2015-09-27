@@ -4,41 +4,27 @@
 set -e
 
 if [ $OSTYPE == "linux-gnu" ]; then
-    # update apt-get itself
-    sudo apt-get update
-    # upgrade packages
-    sudo apt-get upgrade
-    # xdg-open and so on
+    sudo apt-get update  # Update apt-get itself
+    sudo apt-get upgrade  # Upgrade packages
     sudo apt-get install -y xdg-utils
-    # necessaary to clone various projects
     sudo apt-get install -y git
-    # default shell
     sudo apt-get install -y zsh
-    # must items
     sudo apt-get install -y curl
     sudo apt-get install -y wget
-    # default editor
     sudo apt-get install -y vim
-    # cooperate with vim
     sudo apt-get install -y tmux
-    # tagbar and so on
     sudo apt-get install -y exuberant-ctags
-    # faster code-searching tool
     sudo apt-get install -y silversearcher-ag
-    # displays directory structure as a tree
     sudo apt-get install -y tree
-    # tweak images
     sudo apt-get install -y imagemagick
-    # code formatter for java, c and cpp
     sudo apt-get install -y astyle
-    # youcompleteme
-    sudo apt-get install -y build-essential cmake python-dev
-    # Markdown
+    sudo apt-get install -y build-essential cmake python-dev  # YouCompleteMe
     sudo apt-get install -y pandoc
-    # Static analyzer for shell scripts
-    sudo apt-get install shellcheck
+    sudo apt-get install -y shellcheck
+    sudo apt-get install -y docker
+    sudo apt-get install -y glances
 elif [[ $OSTYPE == "darwin"* ]]; then
-    # Some sentences derived from https://github.com/mathiasbynens/dotfiles
+    # Some of them from https://github.com/mathiasbynens/dotfiles
     brew update
     brew upgrade --all
     # Install GNU core utilities (those that come with OS X are outdated)
@@ -67,8 +53,8 @@ elif [[ $OSTYPE == "darwin"* ]]; then
     brew install cmake
     brew install pandoc
     brew install shellcheck
-    # Remove outdated versions from the cellar.
-    brew cleanup
+    brew install docker
+    brew cleanup  # Remove outdated versions from the cellar.
 elif [[ "$OSTYPE" == "cygwin" ]]; then
     apt-cyg update
     apt-cyg install git
