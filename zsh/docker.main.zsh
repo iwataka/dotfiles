@@ -1,4 +1,5 @@
 # Docker aliases most of which are from https://github.com/tcnksm/docker-alias
+alias d='docker'
 alias dps='docker ps'
 alias dpsa='docker ps -a'
 alias di='docker images'
