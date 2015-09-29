@@ -50,7 +50,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'Raimondi/delimitMate'
 " Plug 'terryma/vim-multiple-cursors'  " Critical performance issue
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
-Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
+" Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
 " If you want to use syntastic, you must disable vim-auto-save plugin.
 " Plug 'scrooloose/syntastic'
 " Plug 'vim-scripts/vim-auto-save'
@@ -581,6 +581,21 @@ fu! s:open(target)
   redraw!
 endfu
 
+nnoremap <F9> :call <sid>make()<cr>
+fu! s:make()
+  let files = split(system('ls'), '\n')
+  for file in files
+    if file == "Makefile"
+      call system('make')
+      return
+    elseif file == "Rakefile"
+      call system('rake')
+      return
+    endif
+  endfor
+  echoe "Target not found"
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
@@ -760,39 +775,39 @@ let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 
-" --------------------------------------------------------------
-" dispatch {{{2
-" --------------------------------------------------------------
-augroup vimrc-dispatch
-  autocmd!
-  autocmd FileType java,scala let b:start = 'sbt'
-  autocmd FileType closure let b:start = 'lein repl'
-  autocmd FileType python call s:dispatch_python()
-  autocmd FileType ruby call s:dispatch_ruby()
-augroup END
+" " --------------------------------------------------------------
+" " dispatch {{{2
+" " --------------------------------------------------------------
+" augroup vimrc-dispatch
+"   autocmd!
+"   autocmd FileType java,scala let b:start = 'sbt'
+"   autocmd FileType closure let b:start = 'lein repl'
+"   autocmd FileType python call s:dispatch_python()
+"   autocmd FileType ruby call s:dispatch_ruby()
+" augroup END
 
-fu! s:dispatch_python()
-  if executable('ipython')
-    let b:start = 'ipython'
-  else
-    let b:start = 'python'
-  endif
-  let b:dispatch = 'python %'
-endfu
+" fu! s:dispatch_python()
+"   if executable('ipython')
+"     let b:start = 'ipython'
+"   else
+"     let b:start = 'python'
+"   endif
+"   let b:dispatch = 'python %'
+" endfu
 
-fu! s:dispatch_ruby()
-  if executable('pry')
-    let b:start = 'pry'
-  else
-    let b:start = 'irb'
-  endif
-  let b:dispatch = 'ruby %'
-endfu
+" fu! s:dispatch_ruby()
+"   if executable('pry')
+"     let b:start = 'pry'
+"   else
+"     let b:start = 'irb'
+"   endif
+"   let b:dispatch = 'ruby %'
+" endfu
 
-nnoremap <silent> <leader>ds :Start<cr>
-nnoremap <silent> <leader>dd :Dispatch<cr>
-nnoremap <silent> <leader>dm :Make<cr>
-nnoremap <silent> <leader>dc :Copen<cr>
+" nnoremap <silent> <leader>ds :Start<cr>
+" nnoremap <silent> <leader>dd :Dispatch<cr>
+" nnoremap <silent> <leader>dm :Make<cr>
+" nnoremap <silent> <leader>dc :Copen<cr>
 
 " --------------------------------------------------------------
 " gitgutter {{{2
