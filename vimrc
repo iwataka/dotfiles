@@ -585,6 +585,9 @@ com! Todo call s:todo()
 fu! s:todo()
   silent! grep TODO
   silent! grepadd FIXME
+  silent! grepadd OPTIMIZE
+  silent! grepadd HACK
+  silent! grepadd REVIEW
 endfu
 
 " ===============================================================
