@@ -581,6 +581,12 @@ fu! s:open(target)
   redraw!
 endfu
 
+com! Todo call s:todo()
+fu! s:todo()
+  silent! grep TODO
+  silent! grepadd FIXME
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
