@@ -12,5 +12,7 @@ vim() {
         else
             command vim "$@"
         fi
+    else
+        command vim "$@"
     fi
 }
