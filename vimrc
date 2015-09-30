@@ -793,18 +793,19 @@ fu! s:dispatch_make()
   let files = split(system('ls'), '\n')
   for file in files
     if file == "Makefile"
-      Make make
+      Dispatch make
       return
     elseif file == "Rakefile"
-      Make rake
+      Dispatch rake
       return
     endif
   endfor
-  echo "Target not found"
+  Make
 endfu
 
 nnoremap <silent> <leader>ds :Start<cr>
-nnoremap <silent> <leader>dd :Dispatch<cr>
+" Dispatch command is merged into dispatch_make function.
+" nnoremap <silent> <leader>dd :Dispatch<cr>
 nnoremap <silent> <leader>dm :call <sid>dispatch_make()<cr>
 nnoremap <silent> <leader>dc :Copen<cr>
 
