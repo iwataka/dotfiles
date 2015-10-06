@@ -710,6 +710,7 @@ nnoremap <silent> <Leader>m :CtrlPMRU<CR>
 nnoremap <silent> <Leader>p :CtrlPBookmarkDir<CR>
 
 if has('unix')
+  " TODO: Use this bookmarks for NERDTree
   let s:ctrlp_bookmark_paths = [
     \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
     \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
@@ -1038,3 +1039,49 @@ let g:instant_markdown_autostart = 0
 " let g:auto_save = 1
 " let g:auto_save_no_update_time = 1
 " let g:auto_save_in_insert_mode = 0
+
+" --------------------------------------------------------------
+" unite {{{2
+" --------------------------------------------------------------
+" if executable('ag')
+"   let g:unite_source_rec_async_command =
+"     \ 'ag --follow --nocolor --nogroup -g ""'
+"   let g:unite_source_grep_command = 'ag'
+" elseif executable('ack')
+"   let g:unite_source_rec_async_command =
+"     \ 'ack --follow --nocolor --nogroup -g ""'
+"   let g:unite_source_grep_command = 'ack'
+" endif
+
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" nnoremap <silent> <leader>pp :Unite -start-insert file_rec<cr>
+" nnoremap <silent> <leader>pb :Unite -start-insert buffer<cr>
+" nnoremap <silent> <leader>pd :Unite -start-insert directory_rec/async<cr>
+" nnoremap <silent> <leader>pv :Unite -start-insert -path='~/.vim' file_rec<cr>
+
+" --------------------------------------------------------------
+" neosnippet {{{2
+" --------------------------------------------------------------
+" map <c-k> <Plug>(neosnippet_expand_or_jump)
+" smap <c-k> <Plug>(neosnippet_expand_or_jump)
+" xmap <c-k> <Plug>(neosnippet_expand_target)
+" let g:neosnippet#snippets_directory = '~/.vim/bundle/neosnippet-snippets/neosnippets'
+" imap <expr><tab> neosnippet#expandable_or_jumpable() ?
+"             \ "\<Plug>(neosnippet_expand_or_jump)"
+"             \: pumvisible() ? "\<c-n>" : "\<tab>"
+" smap <expr><tab> neosnippet#expandable_or_jumpable() ?
+"             \ "\<Plug>(neosnippet_expand_or_jump)"
+"             \: "\<tab>"
+
+" --------------------------------------------------------------
+" neocomplete {{{2
+" --------------------------------------------------------------
+" let g:neocomplete#enable_at_startup = 1
+" let g:neocomplete#enable_auto_delimiter = 0
+" let g:neocomplete#sources#syntax#min_keyword_length = 4
+" let g:neocomplete#auto_completion_start_length = 2
+" if !exists('g:neocomplete#sources')
+"     let g:neocomplete#sources = {}
+" endif
+" let g:neocomplete#sources._ = ['buffer', 'neosnippet']
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
