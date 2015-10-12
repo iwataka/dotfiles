@@ -5,3 +5,4 @@ alias c=compile
 alias C=test:compile
 alias t=testQuick
 alias T=test
+alias to=testOnly
