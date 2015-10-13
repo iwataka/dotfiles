@@ -32,6 +32,7 @@ atom/.apm
 atom/projects.cson
 atom/packages
 atom/npm-debug.log
+atom/nohup.out
 
 # Sbt
 sbt/*

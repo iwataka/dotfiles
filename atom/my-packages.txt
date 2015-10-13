@@ -8,3 +8,5 @@ merge-conflicts
 minimap
 project-manager
 vim-mode
+monokai
+todo-show
