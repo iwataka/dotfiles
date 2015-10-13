@@ -588,6 +588,10 @@ fu! s:todo()
   silent! grepadd OPTIMIZE
   silent! grepadd HACK
   silent! grepadd REVIEW
+  silent! grepadd CHANGED
+  silent! grepadd XXX
+  silent! grepadd IDEA
+  silent! grepadd NOTE
 endfu
 
 " ===============================================================
