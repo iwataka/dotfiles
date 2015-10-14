@@ -10,3 +10,4 @@ project-manager
 vim-mode
 monokai
 todo-show
+editorconfig
