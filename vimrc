@@ -50,7 +50,6 @@ Plug 'tpope/vim-sleuth'
 Plug 'Raimondi/delimitMate'
 " Plug 'terryma/vim-multiple-cursors'  " Critical performance issue
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
-Plug 'tpope/vim-dispatch', { 'on': ['Make', 'Dispatch', 'Start'] }
 " If you want to use syntastic, you must disable vim-auto-save plugin.
 " Plug 'scrooloose/syntastic'
 " Plug 'vim-scripts/vim-auto-save'
@@ -594,6 +593,21 @@ fu! s:todo()
   silent! grepadd NOTE
 endfu
 
+com! Make call <sid>make_current_project()
+fu! s:make_current_project()
+  let files = split(system('ls'), '\n')
+  for file in files
+    if file == "Makefile"
+      !make
+      return
+    elseif file == "Rakefile"
+      !rake
+      return
+    endif
+  endfor
+  make
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
@@ -708,10 +722,12 @@ let g:ctrlp_show_hidden = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 let g:ctrlp_mruf_max = 1000
 
-nnoremap <silent> <Leader>f :CtrlP<CR>
+nnoremap <silent> <Leader>p :CtrlP<CR>
+" This immitates atom, sublimeText and so on.
+nnoremap <silent> <C-p> :CtrlP<cr>
 nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :CtrlPMRU<CR>
-nnoremap <silent> <Leader>p :CtrlPBookmarkDir<CR>
+nnoremap <silent> <Leader>d :CtrlPBookmarkDir<CR>
 
 if has('unix')
   " TODO: Use this bookmarks for NERDTree
@@ -773,55 +789,6 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets"
-
-" --------------------------------------------------------------
-" dispatch {{{2
-" --------------------------------------------------------------
-augroup vimrc-dispatch
-  autocmd!
-  autocmd FileType java,scala let b:start = 'sbt'
-  autocmd FileType closure let b:start = 'lein repl'
-  autocmd FileType python call s:dispatch_python()
-  autocmd FileType ruby call s:dispatch_ruby()
-augroup END
-
-fu! s:dispatch_python()
-  if executable('ipython')
-    let b:start = 'ipython'
-  else
-    let b:start = 'python'
-  endif
-  let b:dispatch = 'python %'
-endfu
-
-fu! s:dispatch_ruby()
-  if executable('pry')
-    let b:start = 'pry'
-  else
-    let b:start = 'irb'
-  endif
-  let b:dispatch = 'ruby %'
-endfu
-
-fu! s:dispatch_make()
-  let files = split(system('ls'), '\n')
-  for file in files
-    if file == "Makefile"
-      Dispatch make
-      return
-    elseif file == "Rakefile"
-      Dispatch rake
-      return
-    endif
-  endfor
-  Make
-endfu
-
-nnoremap <silent> <leader>ds :Start<cr>
-" Dispatch command is merged into dispatch_make function.
-" nnoremap <silent> <leader>dd :Dispatch<cr>
-nnoremap <silent> <leader>dm :call <sid>dispatch_make()<cr>
-nnoremap <silent> <leader>dc :Copen<cr>
 
 " --------------------------------------------------------------
 " gitgutter {{{2
