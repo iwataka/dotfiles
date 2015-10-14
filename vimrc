@@ -270,6 +270,9 @@ augroup vimrcEx
 
   " Automatically open the quickfix window
   autocmd QuickFixCmdPost * cwindow
+
+  " Automatically remove trailing spaces when saving
+  autocmd BufWritePre * call s:preserve('%s/\s*$//')
 augroup END
 
 " ===============================================================
