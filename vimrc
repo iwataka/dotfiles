@@ -272,7 +272,8 @@ augroup vimrcEx
   autocmd QuickFixCmdPost * cwindow
 
   " Automatically remove trailing spaces when saving
-  autocmd BufWritePre * call s:preserve('%s/\s*$//')
+  " NOTE: This feature has bad effects for undo function.
+  " autocmd BufWritePre * call s:preserve('%s/\s*$//')
 augroup END
 
 " ===============================================================
