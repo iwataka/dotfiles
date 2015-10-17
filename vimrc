@@ -64,7 +64,9 @@ if v:version >= 703
 endif
 " Plug 'git@github.com:iwataka/vim-markdown.git'
 Plug 'plasticboy/vim-markdown'
-Plug 'suan/vim-instant-markdown'
+if has('unix') || has('mac')
+  Plug 'suan/vim-instant-markdown'
+endif
 Plug 'derekwyatt/vim-scala'
 Plug 'tpope/vim-endwise'
 Plug 'fatih/vim-go'
@@ -659,6 +661,29 @@ endfu
 " --------------------------------------------------------------
 " ColorScheme {{{2
 " --------------------------------------------------------------
+function! s:plug_gx()
+  let line = getline('.')
+  let sha  = matchstr(line, '^  \zs[0-9a-f]\{7}\ze ')
+  let name = empty(sha) ? matchstr(line, '^[-x+] \zs[^:]\+\ze:')
+                      \ : getline(search('^- .*:$', 'bn'))[2:-2]
+  let uri  = get(get(g:plugs, name, {}), 'uri', '')
+  if uri !~ 'github.com'
+    return
+  endif
+  let repo = matchstr(uri, '[^:/]*/'.name)
+  let url  = empty(sha) ? 'https://github.com/'.repo
+                      \ : printf('https://github.com/%s/commit/%s', repo, sha)
+  call netrw#NetrwBrowseX(url, 0)
+endfunction
+
+augroup PlugGx
+  autocmd!
+  autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
+augroup END
+
+" --------------------------------------------------------------
+" ColorScheme {{{2
+" --------------------------------------------------------------
 let g:solarized_termcolors=256
 let g:solarized_visibility='high'
 let g:solarized_hitrail=0
@@ -801,9 +826,6 @@ let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '~'
 let g:gitgutter_sign_removed = '-'
 nnoremap <leader>gG :GitGutterToggle<cr>
-if has('win32') || has('win64') || has('win32unix')
-    let g:gitgutter_enabled = 0
-endif
 
 " --------------------------------------------------------------
 " fugitive {{{2
