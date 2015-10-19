@@ -37,7 +37,9 @@ Plug 'Yggdroot/indentLine'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'ctrlpvim/ctrlp.vim'
 if has('unix') || has('mac') || has('macunix')
-    Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
+  Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
+elseif has('python')
+  Plug 'FelikZ/ctrlp-py-matcher'
 endif
 
 " Editing
@@ -798,6 +800,8 @@ augroup END
 
 if has('unix') || has('mac') || has('macunix')
   let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
+elseif has('python')
+  let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 endif
 
 " --------------------------------------------------------------
