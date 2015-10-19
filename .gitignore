@@ -17,6 +17,7 @@ vim/backups/*
 !vim/backups/.gitignore
 vim/.netrwhist
 vim/spell
+vim/shada/
 
 # Emacs
 emacs.d/*

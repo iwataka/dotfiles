@@ -40,6 +40,8 @@ if [ -d /usr/local/go ]; then
     export PATH=$PATH:$GOPATH/bin
 fi
 
+export HAXE_STD_PATH=$HOME/lib/haxe/std
+
 if [ -d $HOME/bin ]; then
     # Adds at the head of PATH.
     export PATH=$HOME/bin:$PATH

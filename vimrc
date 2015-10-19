@@ -320,8 +320,9 @@ vnoremap Q :norm @q<cr>
 nnoremap Y y$
 
 " Save
-nnoremap <leader>u :update<cr>
-nnoremap <Leader>w :w<CR>
+inoremap <C-s> <C-O>:update<cr>
+nnoremap <C-s> :update<cr>
+nnoremap <Leader>w :update<CR>
 cnoremap w!! w !sudo tee % >/dev/null
 
 " Quit
