@@ -97,7 +97,9 @@ let mapleader      = " "  " Space can be typed by both of hands.
 let maplocalleader = "\\"  " The local mapleader is hardly used.
 
 let $LANG='en'                            " Vim should be in English
-set encoding=utf-8                        " UTF8 is a universal encoding
+if has('vim_starting')
+  set encoding=utf-8
+endif
 set fileencodings=utf-8,sjis              " UTF8 is first, SJIS is second
 set fileformats=unix,dos,mac              " Unix format has highest priority
 set timeout                               " Enable timeout settings
