@@ -19,3 +19,4 @@
     useClipboardAsDefaultRegister: true
     useSmartcaseForSearch: true
   minimap: {}
+  Zen: {}
