@@ -54,6 +54,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
+Plug 'junegunn/goyo.vim'
 Plug 'Raimondi/delimitMate'
 " Plug 'terryma/vim-multiple-cursors'  " Critical performance issue
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
@@ -1035,6 +1036,7 @@ let g:indentLine_color_term = 242
 " markdown {{{2
 " --------------------------------------------------------------
 let g:vim_markdown_no_default_key_mappings = 1
+let g:vim_markdown_folding_disabled = 1
 
 " --------------------------------------------------------------
 " instant-markdown {{{2
