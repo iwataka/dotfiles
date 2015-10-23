@@ -3,6 +3,8 @@
 " <C-V>xb1 -> ±
 " <C-V>u2211 -> ∑
 " <C-V>U0001F609 -> 😉
+" Other difficult-to-input characters
+" <C-V><Enter> -> 
 " ===============================================================
 " VIM-PLUG BLOCK {{{1
 " ===============================================================
@@ -55,6 +57,8 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'junegunn/goyo.vim'
+" This plug-in causes errors while inputting japanese characters
+" in GVim, so you should execute :DelimitMateOff for it.
 Plug 'Raimondi/delimitMate'
 " Plug 'terryma/vim-multiple-cursors'  " Critical performance issue
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
