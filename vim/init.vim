@@ -1,0 +1,1117 @@
+" Direct Codepoint Entry
+" <C-V>165 -> ¥
+" <C-V>xb1 -> ±
+" <C-V>u2211 -> ∑
+" <C-V>U0001F609 -> 😉
+" Other difficult-to-input characters
+" <C-V><Enter> -> 
+" ===============================================================
+" VIM-PLUG BLOCK {{{1
+" ===============================================================
+" Use Vim settings, rather than Vi settings. This setting must be as early as
+" possible, as it has side effects.
+set nocompatible
+
+" Use ~/.vim as a runtime path even in Windows
+if has("win32") || has("win64")
+  set runtimepath+=~/.vim/
+endif
+
+silent! if plug#begin('~/.vim/plugged')
+
+" Completion
+if (has('unix') || has('mac')) && has('python')
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
+endif
+
+" Git
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+" Plug 'mattn/gist-vim', { 'on': 'Gist' }  " Not used in my workflow
+" Plug 'mattn/webapi-vim'
+
+" Fancy
+" Plug 'bling/vim-airline'  " Waste time on startup
+Plug 'itchyny/lightline.vim'
+Plug 'Yggdroot/indentLine'
+
+" Navigation
+" if v:version >= 703
+"   Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle'] }  " Hardly used
+" endif
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'ctrlpvim/ctrlp.vim'
+if has('unix') || has('mac') || has('macunix')
+  Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
+elseif has('python')
+  Plug 'FelikZ/ctrlp-py-matcher'
+endif
+
+" Editing
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-sleuth'
+Plug 'junegunn/goyo.vim'
+" This plug-in causes errors while inputting japanese characters
+" in GVim, so you should execute :DelimitMateOff for it.
+Plug 'Raimondi/delimitMate'
+" Plug 'terryma/vim-multiple-cursors'  " Critical performance issue
+Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
+" If you want to use syntastic, you must disable vim-auto-save plugin.
+" Plug 'scrooloose/syntastic'
+" Plug 'vim-scripts/vim-auto-save'
+
+" Colorscheme
+Plug 'altercation/vim-colors-solarized'
+" Plug 'morhetz/gruvbox'
+
+" Filetype
+if v:version >= 703
+  Plug 'vim-ruby/vim-ruby'
+endif
+" Plug 'git@github.com:iwataka/vim-markdown.git'
+Plug 'plasticboy/vim-markdown'
+if has('unix') || has('mac')
+  Plug 'suan/vim-instant-markdown'
+endif
+Plug 'derekwyatt/vim-scala'
+Plug 'tpope/vim-endwise'
+Plug 'fatih/vim-go'
+Plug 'pangloss/vim-javascript'
+Plug 'othree/html5.vim'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'ap/vim-css-color'
+Plug 'mattn/emmet-vim'
+
+call plug#end()
+endif
+
+filetype plugin on
+filetype indent on
+
+if findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim  " Move between if and else
+endif
+
+" ===============================================================
+" BASIC SETTINGS {{{1
+" ===============================================================
+
+" The mapleader is used as a prefix for all user mappings.
+let mapleader      = " "  " Space can be typed by both of hands.
+let maplocalleader = "\\"  " The local mapleader is hardly used.
+
+let $LANG='en'                            " Vim should be in English
+if has('vim_starting')
+  set encoding=utf-8
+endif
+set fileencodings=utf-8,sjis              " UTF8 is first, SJIS is second
+set fileformats=unix,dos,mac              " Unix format has highest priority
+set timeout                               " Enable timeout settings
+set timeoutlen=1000                       " Time out on mapping after 1 second
+set ttimeoutlen=100                       " Time out on key codes after 0.1 second
+set lazyredraw                            " Not be redrawn while executing macros and so on
+set showmatch                             " Show pairs of brackets
+set matchtime=1                           " Tenths of a second to show the mathing paren
+set textwidth=0                           " No limit for text width
+set pumheight=10                          " Limit the height of popup menu
+set splitright                            " More natural way to split a window vertically
+set splitbelow                            " More natural way to split a window horizontally
+set expandtab                             " Use spaces for indenting
+set smarttab                              " Use spaces for inserting <Tab>
+set tabstop=4                             " :retab command use this value
+set softtabstop=4                         " Number of spaces while inserting a <Tab> or using <BS>.
+set shiftwidth=4                          " Number of spaces to use for each step of (auto)indent
+set autoindent                            " Same as the above indent
+set smartindent                           " Smart autoindenting
+set noerrorbells                          " No beep or screen flash for error messages
+set visualbell t_vb=                      " No beeping, use visual bell
+set shortmess+=atI                        " Some visual settings
+set scrolloff=3                           " Keep some lines
+set showcmd                               " Show command in the last line
+set cmdheight=2                           " The height of command line
+set ruler                                 " Show the cursor position in status line
+set showmode                              " Show mode in the last line
+set laststatus=2                          " last window will have a status line
+set history=1000                          " A history in command line
+set autowrite                             " Write contents of modified files automatically
+set autoread                              " Detect changes from outside automatically
+set backspace=indent,eol,start            " Enable backspace to delete more than characters
+set hidden                                " A bufffer becomes hidden when it is abandoned
+set nostartofline                         " Jump to certain positions, not starts of line
+set ignorecase                            " Case insensitive by default
+set smartcase                             " Case sensitive when containing capitals
+set magic                                 " Make using regex more easier
+set incsearch                             " Enable incremental search
+set hlsearch                              " Highlight search results
+nohlsearch                                " Prevetnt highlight when reloading .vimrc
+set ttyfast                               " Enable fast connection
+set foldenable                            " Enable to fold
+set foldlevel=2                           " Start folding at the second depth
+set foldmethod=marker                     " Use specified markers to fold sentences
+set foldopen+=jump,search                 " Open foldings when jumping to them
+set allowrevins                           " Allow to use CTRL-_
+set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
+set colorcolumn=81
+
+set wildmenu
+set wildignorecase
+set wildmode=list:full
+set wildignore+=.git,.hg,.svn,.bzr,_darcs        " VCS
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.spl                            " compiled spelling word lists
+set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*.DS_Store                       " OSX
+set wildignore+=*.luac                           " Lua
+set wildignore+=*.pyc                            " Python
+set wildignore+=*.rbc                            " Ruby
+set wildignore+=*.class                          " JVM
+
+if has('win32') || has('win64')
+  set imdisable
+endif
+
+set clipboard=unnamed
+if has('unnamedplus')
+  set clipboard+=unnamedplus
+endif
+
+set number
+if exists('&relativenumber')
+  set relativenumber
+endif
+
+if has('title')
+  set title
+endif
+
+if (&t_Co > 2 || has('gui_running')) && !exists('syntax_on')
+  syntax on
+endif
+
+if has('gui_running')
+  set guioptions=
+  silent! set guifont=Hack\ 12
+endif
+
+if has('mouse')
+  set mouse=a
+  set mousehide
+endif
+
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j  " Delete comment character when joining commented line
+endif
+
+set backupdir=~/.vim/backups
+set directory=~/.vim/swaps
+if has('persistent_undo')
+  set undodir=~/.vim/undo
+  set undolevels=100
+  set undofile
+endif
+
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
+elseif executable('pt')
+  set grepprg=pt\ --nogroup\ --nocolor\ --column
+elseif executable('ack')
+  set grepprg=ack\ -H\ --nocolor\ --nogroup
+else
+  set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
+endif
+
+" ===============================================================
+" AUTOCMD {{{1
+" ===============================================================
+
+augroup vimrcEx
+  autocmd!
+
+  " Use cursorline only in the focused window.
+  " This doesn't work with NERDTree.
+  " Currently disabled because of performance issue.
+  " autocmd WinEnter * set cursorline
+  " autocmd WinLeave * set nocursorline
+
+  " When editing a file, always jump to the last known cursor position.
+  " do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+  " Enable spellchecking and word wrapping for Markdown
+  autocmd FileType mkd setlocal spell
+
+  " Automatically wrap at 72 characters and spell check git commit messages
+  autocmd FileType gitcommit setlocal textwidth=72
+  autocmd FileType gitcommit setlocal spell
+
+  " Quit help buffer by typing just q.
+  autocmd FileType help
+    \ if &readonly | nnoremap <buffer> q :q<cr> | endif
+
+  autocmd FileType scala
+    \ setlocal tabstop=2 |
+    \ setlocal softtabstop=2 |
+    \ setlocal shiftwidth=2
+
+  autocmd FileType java,c,cpp
+    \ if executable('astyle') |
+    \   setlocal formatprg='astyle' |
+    \ endif
+
+  " Set some filetypes for some cetain files
+  autocmd BufRead,BufNew *spacemacs setlocal filetype=lisp
+  autocmd BufRead,BufNew *.gradle setlocal filetype=groovy
+  autocmd BufRead,BufNew *editorconfig setlocal filetype=jproperties
+
+  " write comments easily for any files
+  autocmd BufRead,BufNewFile * set formatoptions+=ro
+
+  " emphasize comments
+  autocmd BufRead,BufNew * hi Comment term=bold
+
+  " prevent from conflicting multiple edit
+  autocmd SwapExists * let v:swapchoice = 'o'
+
+  " Full-width spaces
+  autocmd BufRead,BufNew * hi FullWidthSpace cterm=underline ctermbg=red guibg=#666666
+  autocmd BufRead,BufNew * match FullWidthSpace /　/
+
+  " Automatically open the quickfix window
+  autocmd QuickFixCmdPost * cwindow
+
+  " Automatically remove trailing spaces when saving
+  " NOTE: This feature has bad effects for undo function.
+  " autocmd BufWritePre * call s:preserve('%s/\s*$//')
+augroup END
+
+" ===============================================================
+" MAPPINGS {{{1
+" ===============================================================
+
+" More reasonable cursor moving
+nnoremap j gj
+nnoremap k gk
+nnoremap <Down> gj
+nnoremap <Up> gk
+
+" Prevent to override registers by one character
+nnoremap x "_x
+
+" Better jumping to marks
+nnoremap ' `
+nnoremap ` '
+
+" jk | Escaping!
+inoremap jk <Esc>
+cnoremap jk <C-c>
+if has('nvim')
+  tnoremap jk <C-\><C-n>
+  tnoremap <ESC> <C-\><C-n>
+endif
+
+" Edit vimrc
+nnoremap <leader>ev :vsplit ~/.vim/init.vim<cr>
+" Source vimrc
+nnoremap <leader>sv :source ~/.vimrc<cr>
+" Source the current buffer
+nnoremap <leader>sc :source %<cr>
+
+" qq to record, Q to replay
+nnoremap Q @q
+vnoremap Q :norm @q<cr>
+
+" Make Y behave like other capitals
+nnoremap Y y$
+
+" Save
+if has('nvim')
+  inoremap <C-s> <C-O>:update<cr>
+  nnoremap <C-s> :update<cr>
+  nnoremap <Leader>w :update<CR>
+else
+  " update command causes unknown error in Vim.
+  inoremap <C-s> <C-O>:w<cr>
+  nnoremap <C-s> :w<cr>
+  nnoremap <Leader>w :w<CR>
+endif
+cnoremap w!! w !sudo tee % >/dev/null
+
+" Quit
+nnoremap <leader>q :q<cr>
+
+" Hide other visibie buffers
+nnoremap <leader>o :only<cr>
+
+" Command line
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
+cnoremap <C-K> <C-U>
+cnoremap <C-P> <Up>
+cnoremap <C-N> <Down>
+cnoremap <expr> %% expand("%")
+
+" Scroll horizontally
+nnoremap zl zL
+nnoremap zh zH
+nnoremap zL zl
+nnoremap zH zh
+
+" Scroll vertically
+nnoremap <c-y> 3<c-y>
+nnoremap <c-e> 3<c-e>
+
+" Circular window navigation
+nnoremap <tab> <c-w>w
+nnoremap <S-tab> <c-w>W
+
+" Clear the highlighting of :set hlsearch.
+nnoremap <silent> <C-l> :nohlsearch<cr><C-l>
+nnoremap <silent> <Esc><Esc> :nohlsearch<cr><C-l>
+
+" Increment and decrement numbers by + and - keys.
+" Tmux uses <c-a> key as a prefix, so Vim can't use it.
+nnoremap + <c-a>
+nnoremap - <c-x>
+
+" Changes the current working directory to the directory of focused buffer
+nnoremap <leader>cd  :cd %:h<cr>
+
+" Make <C-u> behave like being on command line
+inoremap <C-u> <C-g>u<C-u>
+
+" Search in visual mode
+xnoremap <silent> * :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal n<cr>
+xnoremap <silent> # :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal N<cr>
+
+" K to grep files
+nnoremap <silent> K :grep <cword><cr>
+xnoremap <silent> K :<C-u>exe 'grep "'.<sid>get_grep_pattern().'"'<cr>
+
+" Double <BS> to remove trailing spaces
+nnoremap <silent> <BS><BS> :call <sid>preserve('%s/\s*$//')<cr>
+
+" :checktime is frequently used
+nnoremap <leader>ct :checktime<cr>
+
+" Some mappings for user-defined commands
+nnoremap <silent> <leader>cb :CheckboxToggle<cr>
+nnoremap <silent> <leader>rt :Root<cr>
+if !maparg('<tab>', 'i') | inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", "\<tab>") | endif
+if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>", "\<tab>") | endif
+
+" ===============================================================
+" FUNCTIONS & COMMANDS {{{1
+" ===============================================================
+
+" Clear all buffers by bdelete command.
+" If unsaved buffers exist, this command fails.
+com! BufClear call s:bufclear()
+function! s:bufclear()
+  let lastnr = bufnr('$')
+  silent exe '0,'.lastnr.'bdelete'
+endfunction
+
+" Changes the current directory to the project root
+com! Root call s:cd_root()
+fu! s:cd_root()
+  let cwd = fnamemodify(expand('%'), ':p:h')
+  let root = s:root(cwd)
+  if empty(root)
+    echom 'Not in a project'
+  else
+    echom 'Changes the current directory to: '.root
+    silent exe 'cd '.root
+  endif
+endfu
+fu! s:root(cwd)
+  let rmarkers = ['.git', '.hg', '.svn', '.bzr', '_darcs']
+  for mark in rmarkers
+    let rdir = finddir(mark, a:cwd.';')
+    if !empty(rdir)
+      retu fnamemodify(rdir, ':h')
+    endif
+  endfor
+  retu ''
+endfu
+
+com! Tab2Spaces call s:tab_to_spaces()
+fu! s:tab_to_spaces()
+  if search('\t', 'n')
+    let num = &tabstop
+    let spaces = ''
+    for i in range(num)
+      let spaces = spaces.' '
+    endfor
+    silent exe '%s/\t/'.spaces.'/'
+  endif
+endfu
+
+" Execute a given command with the cursor position and the search register
+" preserved.
+fu! s:preserve(cmd)
+  let _s = @/
+  let l = line(".")
+  let c = col(".")
+  exe a:cmd
+  let @/ = _s
+  call cursor(l, c)
+endfu
+
+" Returns the text in the current visual selection.
+fu! s:get_visual_selection()
+  let [lnum1, col1] = getpos("'<")[1:2]
+  let [lnum2, col2] = getpos("'>")[1:2]
+  let lines = getline(lnum1, lnum2)
+  let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][col1 - 1 :]
+  return lines
+endfu
+
+fu! s:get_search_pattern()
+  let lines = map(s:get_visual_selection(), "escape(v:val, ' \\/.*$^~[]')")
+  retu join(lines, '\n')
+endfu
+
+fu! s:get_grep_pattern()
+  let lines = s:get_visual_selection()
+  let lines = map(lines, "escape(v:val, '\\')")
+  let lines = map(lines, "escape(v:val, ' /.*+#$?^~\[\]()|')")
+  let lines = map(lines, "escape(v:val, '\\')")
+  " Escape single quotes.
+  let lines = map(lines, "escape(v:val, \"''\")")
+  " Escape double quotes.
+  let lines = map(lines, "escape(v:val, '\"')")
+  retu join(lines, '\n')
+endfu
+
+com! CheckboxToggle call s:toggle_check_box(line('.'))
+fu! s:toggle_check_box(linenr)
+  let line = getline(a:linenr)
+  if line =~ '[-+*]\s*\[x\]'
+    let line = substitute(line, '\([-+*]\s*\[\)x\(\]\)', '\1'.' '.'\2', '')
+  elseif line =~ '[-+*]\s*\[\s*\]'
+    let line = substitute(line, '\([-+*]\s*\[\)\s*\(\]\)', '\1'.'x'.'\2', '')
+  endif
+  call setline(a:linenr, line)
+endfu
+
+" derived from junegunn's vimrc
+fu! s:super_duper_tab(k, o)
+  if pumvisible()
+    return a:k
+  endif
+  let line = getline('.')
+  let col = col('.') - 2
+  if empty(line) || line[col] !~ '\k\|[/~.]' || line[col + 1] =~ '\k'
+    return a:o
+  endif
+  let prefix = expand(matchstr(line[0:col], '\S*$'))
+  if prefix =~ '^[~/.]'
+    return "\<c-x>\<c-f>"
+  endif
+  if s:can_complete(&omnifunc, prefix)
+    return "\<c-x>\<c-o>"
+  endif
+  if s:can_complete(&completefunc, prefix)
+    return "\<c-x>\<c-u>"
+  endif
+  return a:k
+endfu
+
+fu! s:can_complete(func, prefix)
+  if empty(a:func) || call(a:func, [1, '']) < 0
+    return 0
+  endif
+  let result = call(a:func, [0, matchstr(a:prefix, '\k\+$')])
+  return !empty(type(result) == type([]) ? result : result.words)
+endfu
+
+" " Settings about japanese and english input sources
+" if has('unix')
+"   let s:default_input_source = "mozc-jp"
+"   let s:ibus = !empty(system('ibus engine 2> /dev/null'))
+"   aug vimrc-jp
+"     au!
+"     au InsertLeave * call s:on_insert_leave()
+"   aug END
+" endif
+
+" " Execute this when leaving from insert mode.
+" fu! s:on_insert_leave()
+"   silent call s:switch_input_source_to_default()
+" endfu
+
+" " Switch current input source to the default
+" fu! s:switch_input_source_to_default()
+"   if s:current_input_source() != s:default_input_source
+"     if s:ibus
+"       silent call system('ibus engine '.s:default_input_source)
+"     endif
+"   endif
+" endfu
+
+" " Returns current input source
+" fu! s:current_input_source()
+"   if s:ibus
+"     return substitute(system('ibus engine'), '\(\n\|\r\)', '', '')
+"   else
+"     return ''
+"   endif
+" endfu
+
+" com! InputRestart call s:input_restart()
+" fu! s:input_restart()
+"   if s:ibus
+"     silent call system('ibus restart')
+"   endif
+"   sleep 300m
+"   silent call s:switch_input_source_to_default()
+" endfu
+
+com! MarkdownPreview call s:markdown_preview()
+fu! s:markdown_preview()
+  let current_name = fnamemodify(expand('%'), ':p')
+  let target_name =  fnamemodify(current_name, ':r').'.html'
+  if executable('pandoc')
+    silent exec '!pandoc -s -f markdown_github '.current_name.' -o '.target_name
+    call s:open(target_name)
+  else
+    echoe 'Require Pandoc!'
+  endif
+endfu
+
+com! -nargs=* -complete=file Open call s:open(<q-args>)
+fu! s:open(target)
+  let command = ''
+  if has('unix')
+    let command = 'xdg-open'
+  elseif has('mac')
+    let command = 'open'
+  elseif has('win32unix')
+    let command = 'cygstart'
+  else
+    let command = 'start'
+  endif
+  if empty(a:target)
+    silent exec '!'.command.' '.shellescape(expand('%:p'))
+  else
+    silent exec '!'.command.' '.a:target
+  endif
+  redraw!
+endfu
+
+com! Todo call s:todo()
+fu! s:todo()
+  silent! grep TODO
+  silent! grepadd FIXME
+  silent! grepadd OPTIMIZE
+  silent! grepadd HACK
+  silent! grepadd REVIEW
+  silent! grepadd CHANGED
+  silent! grepadd XXX
+  silent! grepadd IDEA
+  silent! grepadd NOTE
+endfu
+
+com! Make call <sid>make_current_project()
+fu! s:make_current_project()
+  let files = split(system('ls'), '\n')
+  for file in files
+    if file == "Makefile"
+      !make
+      return
+    elseif file == "Rakefile"
+      !rake
+      return
+    endif
+  endfor
+  make
+endfu
+
+" ===============================================================
+" ABBREVIATIONS {{{1
+" ===============================================================
+
+" Insert the current date and time.
+iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
+
+" Spelling
+abbrev factroy factory
+abbrev reutrn return
+abbrev netowrk network
+abbrev SpaitalNetwork SpatialNetwork
+
+" Shortcut
+aug vimrc-abbrev
+  au!
+  au FileType java call s:abbrev_java()
+  au FileType scala call s:abbrev_scala()
+aug END
+
+fu! s:abbrev_java()
+  iab <buffer> ijm jp.ac.keio.ae.iijima
+  iab <buffer> ijmb jp.ac.keio.ae.iijima.besim
+  iab <buffer> cvj com.vividsolutions.jts
+  iab <buffer> cvjg com.vividsolutions.jts.geom
+  iab <buffer> cvja com.vividsolutions.jts.algorithm
+  iab <buffer> cvjm com.vividsolutions.jts.math
+  iab <buffer> cvjgu com.vividsolutions.jts.geom.util
+  iab <buffer> sfn sim.field.network
+  iab <buffer> sfg sim.field.grid
+  iab <buffer> sfc sim.field.continuous
+  iab <buffer> oij openifctools.com.openifcjavatoolbox
+  iab <buffer> jvec javax.vecmath
+endfu
+
+fu! s:abbrev_scala()
+  call s:abbrev_java()
+  iab <buffer> jconv scala.collection.JavaConversions._
+endfu
+
+" ===============================================================
+" PLUGINS {{{1
+" ===============================================================
+
+" --------------------------------------------------------------
+" ColorScheme {{{2
+" --------------------------------------------------------------
+function! s:plug_gx()
+  let line = getline('.')
+  let sha  = matchstr(line, '^  \zs[0-9a-f]\{7}\ze ')
+  let name = empty(sha) ? matchstr(line, '^[-x+] \zs[^:]\+\ze:')
+                      \ : getline(search('^- .*:$', 'bn'))[2:-2]
+  let uri  = get(get(g:plugs, name, {}), 'uri', '')
+  if uri !~ 'github.com'
+    return
+  endif
+  let repo = matchstr(uri, '[^:/]*/'.name)
+  let url  = empty(sha) ? 'https://github.com/'.repo
+                      \ : printf('https://github.com/%s/commit/%s', repo, sha)
+  call netrw#NetrwBrowseX(url, 0)
+endfunction
+
+augroup PlugGx
+  autocmd!
+  autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
+augroup END
+
+" --------------------------------------------------------------
+" ColorScheme {{{2
+" --------------------------------------------------------------
+let g:solarized_termcolors=256
+let g:solarized_visibility='high'
+let g:solarized_hitrail=0
+let g:solarized_termtrans=1
+set background=dark
+
+aug vimrc-colorscheme
+  au!
+  au VimEnter,ColorScheme * call s:tweak_colorscheme()
+aug END
+
+fu! s:tweak_colorscheme()
+  if exists('g:colors_name') && g:colors_name == 'solarized'
+              \ && g:solarized_termtrans == 1 && &background == 'dark'
+    call s:tweak_solarized()
+  endif
+endfu
+
+fu! s:tweak_solarized()
+  hi Comment ctermfg=242           " The original value is 239.
+  hi vimIsCommand ctermfg=243      " The original value is 240.
+  hi gitcommitComment ctermfg=242  " The original value is 239.
+  hi gitcommitOnBranch ctermfg=242
+  hi gitcommitHeader ctermfg=242
+endfu
+
+silent! colorscheme solarized
+
+" --------------------------------------------------------------
+" gist {{{2
+" --------------------------------------------------------------
+" if has('mac')
+"   let g:gist_clip_command = 'pbcopy'
+" elseif has('unix')
+"   let g:gist_clip_command = 'xclip -selection clipboard'
+" else
+"   let g:gist_clip_command = 'putclip'
+" endif
+" let g:gist_detect_filetype = 1
+" let g:gist_open_browser_after_post = 0
+" let g:gist_show_privates = 1
+" let g:gist_post_private = 1
+
+" --------------------------------------------------------------
+" CtrlP {{{2
+" --------------------------------------------------------------
+if executable('ag')
+  let g:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
+elseif executable('pt')
+  let g:ctrlp_user_command = 'pt -l --follow --nocolor "" %s'
+elseif executable('ack')
+  let g:ctrlp_user_command = 'ack --follow --nocolor -g "" %s'
+endif
+
+" default ignored directories
+let g:ctrlp_custom_ignore = {
+    \ 'dir': '\.gradle$\|build$\|project$\|target$\|out$\|libs$\|\.git$',
+    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
+\ }
+let g:ctrlp_map = ''
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode='wr'
+let g:ctrlp_by_filename = 0
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+let g:ctrlp_mruf_max = 1000
+
+nnoremap <silent> <Leader>p :CtrlP<CR>
+" This immitates atom, sublimeText and so on.
+nnoremap <silent> <C-p> :CtrlP<cr>
+nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
+nnoremap <silent> <Leader>m :CtrlPMRU<CR>
+nnoremap <silent> <Leader>d :CtrlPBookmarkDir<CR>
+
+let s:ctrlp_bookmark_common_paths = [
+  \ '~/projects/*',
+  \ '~/lib/*',
+  \ '~/dotfiles'
+  \ ]
+
+if has('unix')
+  let s:ctrlp_bookmark_paths = [
+    \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
+    \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
+    \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
+    \ '/usr/lib/jvm/java-[1-9]\+-oracle'
+    \ ]
+endif
+
+if exists('s:ctrlp_bookmark_paths')
+  call extend(s:ctrlp_bookmark_paths, s:ctrlp_bookmark_common_paths)
+else
+  let s:ctrlp_bookmark_paths = s:ctrlp_bookmark_common_paths
+endif
+
+com! CtrlPBookmarkReload call s:ctrlp_bookmark_init()
+fu! s:ctrlp_bookmark_init()
+  if exists('s:ctrlp_bookmark_paths')
+    for path in s:ctrlp_bookmark_paths
+      let dirs = split(expand(path), '\n')
+      let dirs = map(dirs, 'resolve(v:val)')
+      call s:ctrlp_bookmark_add(dirs)
+    endfor
+  endif
+  call s:ctrlp_bookmark_add(split(&rtp, ','))
+endf
+
+fu! s:ctrlp_bookmark_add(dirs)
+  for dir in a:dirs
+    if isdirectory(dir)
+      silent exe 'CtrlPBookmarkDirAdd! '.dir
+    endif
+  endfor
+endfu
+
+augroup vimrc-ctrlp
+  au!
+  au VimEnter * if exists(':CtrlPBookmarkDirAdd') | call s:ctrlp_bookmark_init() | endif
+augroup END
+
+if has('unix') || has('mac') || has('macunix')
+  let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
+elseif has('python')
+  let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endif
+
+" --------------------------------------------------------------
+" YCM {{{2
+" --------------------------------------------------------------
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_key_detailed_diagnostics = ''
+
+" --------------------------------------------------------------
+" Ultisnips {{{2
+" --------------------------------------------------------------
+let g:UltiSnipsListSnippets="<c-tab>"
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsSnippetsDir="~/.vim/snippets"
+
+" --------------------------------------------------------------
+" gitgutter {{{2
+" --------------------------------------------------------------
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = '-'
+nnoremap <leader>gG :GitGutterToggle<cr>
+
+" --------------------------------------------------------------
+" fugitive {{{2
+" --------------------------------------------------------------
+nnoremap <Leader>gs :Gstatus<CR>5j
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <leader>gD :Gsplit! diff<cr>
+nnoremap <Leader>gg :Ggrep<Space>
+nnoremap <Leader>gc :Gcommit<CR>
+nnoremap <Leader>gr :Gread<CR>
+nnoremap <leader>gR :Gremove<cr>
+nnoremap <Leader>gw :Gwrite<CR>
+nnoremap <Leader>gl :Glog<CR>
+nnoremap <leader>gL :Gsplit! log -n 100<cr>
+nnoremap <leader>ga :Gcommit --amend<cr>
+nnoremap <leader>gA :Git add --all<cr>
+
+" --------------------------------------------------------------
+" repeat {{{2
+" --------------------------------------------------------------
+sil! call repeat#set("\<Plug>(EasyAlign)", v:count)
+
+" --------------------------------------------------------------
+" airline {{{2
+" --------------------------------------------------------------
+" let g:airline_theme = 'understated'
+" let g:airline_powerline_fonts = 1
+" let g:airline#extensions#tabline#buffer_nr_show = 1
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#fnamemod = ':t'
+
+" --------------------------------------------------------------
+" lightline {{{2
+" --------------------------------------------------------------
+let g:lightline = {}
+
+let g:lightline.colorscheme = 'solarized'
+
+let g:lightline.active = {}
+let g:lightline.active.left = [
+  \   ['mode', 'paste'],
+  \   ['gitgutter', 'fugitive'],
+  \   ['filename']
+  \ ]
+let g:lightline.active.right = [
+  \   ['lineinfo', 'syntastic'],
+  \   ['percent'],
+  \   ['fileformat', 'fileencoding', 'filetype']
+  \ ]
+
+let g:lightline.component_function = {}
+let g:lightline.component_function.syntastic = 'SyntasticStatuslineFlag'
+let g:lightline.component_function.gitgutter = 'MyGitGutter'
+let g:lightline.component_function.filename = 'MyFilename'
+let g:lightline.component_function.fugitive = 'MyFugitive'
+
+" let g:lightline.separator = { 'left': "\ue0b0", 'right': "\ue0b2" }
+" let g:lightline.subseparator = { 'left': "\ue0b1", 'right': "\ue0b3" }
+
+let g:lightline.tabline = {}
+let g:lightline.tabline.left = [ [ 'tabs' ] ]
+let g:lightline.tabline.right = [ [ 'close' ] ]
+
+let g:lightline.tab = {}
+let g:lightline.tab.active = [ 'tabnum', 'filename', 'modified' ]
+let g:lightline.tab.inactive = [ 'tabnum', 'filename', 'modified' ]
+
+let g:lightline.component_expand = {}
+let g:lightline.component_expand.tabs = 'lightline#tabs'
+
+let g:lightline.component_type = {}
+let g:lightline.component_type.tabs = 'tabsel'
+let g:lightline.component_type.close = 'raw'
+
+let g:lightline.tab_component_function = {}
+let g:lightline.tab_component_function.filename = 'lightline#tab#filename'
+let g:lightline.tab_component_function.modified = 'lightline#tab#modified'
+let g:lightline.tab_component_function.readonly = 'lightline#tab#readonly'
+let g:lightline.tab_component_function.tabnum = 'lightline#tab#tabnum'
+
+let g:lightline.enable = {}
+let g:lightline.enable.statusline = 1
+let g:lightline.enable.tabline = 1
+
+let g:ctrlp_buffer_func = {'enter': 'CtrlPEnter'}
+function! CtrlPEnter()
+  let w:lightline = 0
+endfunction
+
+function! MyFugitive()
+  if exists('*fugitive#head')
+    let _ = fugitive#head()
+    return strlen(_) ? ''._ : ''
+  endif
+  return ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+    \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+    \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyReadonly()
+  return &readonly ? '' : ''
+endfunction
+
+function! MyModified()
+  return &modifiable && &modified ? '+' : ''
+endfunction
+
+function! MyGitGutter()
+  if !exists('*GitGutterGetHunkSummary')
+      \ || !get(g:, 'gitgutter_enabled', 0)
+      \ || winwidth('.') <= 90
+    return ''
+  en
+  let symbols = [
+    \ g:gitgutter_sign_added . ' ',
+    \ g:gitgutter_sign_modified . ' ',
+    \ g:gitgutter_sign_removed . ' '
+    \ ]
+  let hunks = GitGutterGetHunkSummary()
+  let ret = []
+  for i in [0, 1, 2]
+    call add(ret, symbols[i].hunks[i])
+  endfo
+  return join(ret, ' ')
+endf
+
+" --------------------------------------------------------------
+" delimitMate {{{2
+" --------------------------------------------------------------
+let g:delimitMate_expand_space = 1
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_inside_quotes = 0
+aug vimrc-delimitMate
+  au!
+  au FileType mkd let b:delimitMate_expand_space = 0
+aug END
+
+" --------------------------------------------------------------
+" scala {{{2
+" --------------------------------------------------------------
+aug vimrc-scala
+  au!
+  au FileType java,scala nnoremap <silent><buffer> <Leader>si :SortScalaImports<CR>
+aug END
+let g:scala_sort_across_groups = 1
+
+" --------------------------------------------------------------
+" syntastic {{{2
+" --------------------------------------------------------------
+let g:syntastic_mode_map = {
+  \ "mode": "passive",
+  \ "active_filetypes": ['ruby', 'python'],
+  \ "passive_filetypes": []
+  \ }
+let g:syntastic_check_on_open = 0
+let g:syntastic_enable_signs = 1
+
+if executable('rubocop')
+  let g:syntastic_ruby_checkers = ['rubocop']
+endif
+if executable('flake8')
+  let g:syntastic_python_checkers = ['flake8']
+endif
+
+" --------------------------------------------------------------
+" tagbar {{{2
+" --------------------------------------------------------------
+" if v:version >= 703
+"   nnoremap <silent> <leader>t :TagbarToggle<cr>
+"   let g:tagbar_sort = 0
+"   let g:tagbar_show_linenumbers = 2
+"   let g:tagbar_autofocus = 1
+"   let g:tagbar_autoclose = 1
+" endif
+
+" --------------------------------------------------------------
+" nerdtree {{{2
+" --------------------------------------------------------------
+nnoremap <leader>nt :NERDTreeToggle<cr>
+nnoremap <leader>nf :NERDTreeFind<cr>
+nnoremap <leader>nm :NERDTreeMirror<cr>
+nnoremap <leader>nc :NERDTreeCWD<cr>
+nnoremap <leader>nb :NERDTreeFromBookmark
+
+" --------------------------------------------------------------
+" indentLine {{{2
+" --------------------------------------------------------------
+let g:indentLine_color_term = 242
+
+" --------------------------------------------------------------
+" markdown {{{2
+" --------------------------------------------------------------
+let g:vim_markdown_no_default_key_mappings = 1
+let g:vim_markdown_folding_disabled = 1
+
+" --------------------------------------------------------------
+" instant-markdown {{{2
+" --------------------------------------------------------------
+let g:instant_markdown_slow = 0
+let g:instant_markdown_autostart = 0
+
+" --------------------------------------------------------------
+" auto-save {{{2
+" --------------------------------------------------------------
+" let g:auto_save = 1
+" let g:auto_save_no_update_time = 1
+" let g:auto_save_in_insert_mode = 0
+
+" --------------------------------------------------------------
+" unite {{{2
+" --------------------------------------------------------------
+" if executable('ag')
+"   let g:unite_source_rec_async_command =
+"     \ 'ag --follow --nocolor --nogroup -g ""'
+"   let g:unite_source_grep_command = 'ag'
+" elseif executable('ack')
+"   let g:unite_source_rec_async_command =
+"     \ 'ack --follow --nocolor --nogroup -g ""'
+"   let g:unite_source_grep_command = 'ack'
+" endif
+
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" nnoremap <silent> <leader>pp :Unite -start-insert file_rec<cr>
+" nnoremap <silent> <leader>pb :Unite -start-insert buffer<cr>
+" nnoremap <silent> <leader>pd :Unite -start-insert directory_rec/async<cr>
+" nnoremap <silent> <leader>pv :Unite -start-insert -path='~/.vim' file_rec<cr>
+
+" --------------------------------------------------------------
+" neosnippet {{{2
+" --------------------------------------------------------------
+" map <c-k> <Plug>(neosnippet_expand_or_jump)
+" smap <c-k> <Plug>(neosnippet_expand_or_jump)
+" xmap <c-k> <Plug>(neosnippet_expand_target)
+" let g:neosnippet#snippets_directory = '~/.vim/bundle/neosnippet-snippets/neosnippets'
+" imap <expr><tab> neosnippet#expandable_or_jumpable() ?
+"             \ "\<Plug>(neosnippet_expand_or_jump)"
+"             \: pumvisible() ? "\<c-n>" : "\<tab>"
+" smap <expr><tab> neosnippet#expandable_or_jumpable() ?
+"             \ "\<Plug>(neosnippet_expand_or_jump)"
+"             \: "\<tab>"
+
+" --------------------------------------------------------------
+" neocomplete {{{2
+" --------------------------------------------------------------
+" let g:neocomplete#enable_at_startup = 1
+" let g:neocomplete#enable_auto_delimiter = 0
+" let g:neocomplete#sources#syntax#min_keyword_length = 4
+" let g:neocomplete#auto_completion_start_length = 2
+" if !exists('g:neocomplete#sources')
+"     let g:neocomplete#sources = {}
+" endif
+" let g:neocomplete#sources._ = ['buffer', 'neosnippet']
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"

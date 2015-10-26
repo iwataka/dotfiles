@@ -52,8 +52,8 @@ setup-symlinks() {
         ln -s $dfsdir/$file ~/.$file
     done
     # symlink for neovim
-    remove_or_backup ~/.nvim
-    ln -s $dfsdir/vim ~/.nvim
+    remove_or_backup ~/.config/nvim
+    ln -s $dfsdir/vim ~/.config/nvim
 }
 
 if [[ ! -d $dfsdir ]]; then
