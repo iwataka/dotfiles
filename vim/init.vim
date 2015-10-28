@@ -68,7 +68,7 @@ Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
-" Plug 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 
 " Filetype
 if v:version >= 703
@@ -732,7 +732,11 @@ fu! s:tweak_solarized()
   hi gitcommitHeader ctermfg=242
 endfu
 
-silent! colorscheme solarized
+if has('gui_running')
+  silent! colorscheme gruvbox
+else
+  silent! colorscheme solarized
+endif
 
 " --------------------------------------------------------------
 " gist {{{2
