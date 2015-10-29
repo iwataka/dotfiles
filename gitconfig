@@ -15,12 +15,39 @@
 [color]
     ui = auto
 [alias]
+    a = add
     aa = add --all
-    ca = commit --amend
-    cm = commit -m
-    co = checkout
-    cp = cherry-pick
+    apa = add --patch
     st = status
+    sb = status -sb
+    b = branch
+    ba = branch -a
+    c = commit -v
+    cmsg = commit -m
+    ca = commit --amend
+    p = push
+    l = pull
+    m = merge
+    r = remote
+    ra = remote add
+    rset = remote set-url
+    rb = rebase
+    rbi = rebase -i
+    rh = reset HEAD
+    rhh = reset HEAD --hard
+    lg = log --stat --color
+    lgp = log --stat --color -p
+    lgg = log --graph --color
+    lgga = log --graph --decorate --all
+    lgm = log --graph --max-count=10
+    lo = log --oneline --decorate --color
+    lol = log --graph --pretty=format:\"%Cred%h%Creset\\ -%C(yellow)%d%Creset\\ %s\\ %Cgreen(%cr)\\ %C(bold blue)<%an>%Creset\" --abbrev-commit
+    lola = log --graph --pretty=format:\"%Cred%h%Creset\\ -%C(yellow)%d%Creset\\ %s\\ %Cgreen(%cr)\\ %C(bold blue)<%an>%Creset\" --abbrev-commit --all
+    cl = clone --recursive
+    co = checkout
+    cb = checkout -b
+    cp = cherry-pick
+    aa = add --all
     sf = submodule foreach
 [github]
     user = iwataka
