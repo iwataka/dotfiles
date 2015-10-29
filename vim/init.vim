@@ -56,7 +56,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
-Plug 'junegunn/goyo.vim'
 " This plug-in causes errors while inputting japanese characters
 " in GVim, so you should execute :DelimitMateOff for it.
 Plug 'Raimondi/delimitMate'
@@ -68,7 +67,6 @@ Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
-Plug 'morhetz/gruvbox'
 
 " Filetype
 if v:version >= 703
@@ -732,11 +730,7 @@ fu! s:tweak_solarized()
   hi gitcommitHeader ctermfg=242
 endfu
 
-if has('gui_running')
-  silent! colorscheme gruvbox
-else
-  silent! colorscheme solarized
-endif
+silent! colorscheme solarized
 
 " --------------------------------------------------------------
 " gist {{{2
