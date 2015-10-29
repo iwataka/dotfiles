@@ -21,6 +21,7 @@
     co = checkout
     cp = cherry-pick
     st = status
+    sf = submodule foreach
 [github]
     user = iwataka
 [hub]
