@@ -12,19 +12,6 @@ pre-setup() {
     fi
 }
 
-# Make links of binaries
-setup-bins() {
-    local bin_directory="$dfsdir/bin"
-    for file in $(ls $bin_directory); do
-        if [ -e ~/bin/$file ]; then
-            rm ~/bin/$file
-        fi
-        if [[ -f $bin_directory/$file ]]; then
-            ln -s $bin_directory/$file ~/bin/$file
-        fi
-    done
-}
-
 # Removes it if a given path indicates a symbolic link and
 # makes a backup if it exists
 remove_or_backup() {
@@ -34,8 +21,19 @@ remove_or_backup() {
     fi
     if [ -e $fpath ]; then
         mv $fpath ${fpath}.bak
-        echo "Make ${fpath}.bak"
+        echo "Make backup file: ${fpath}.bak"
     fi
+}
+
+# Make links of binaries
+setup-bins() {
+    local bin_directory="$dfsdir/bin"
+    for file in $(ls $bin_directory); do
+        remove_or_backup ~/bin/$file
+        if [[ -f $bin_directory/$file ]]; then
+            ln -s $bin_directory/$file ~/bin/$file
+        fi
+    done
 }
 
 setup-symlinks() {
@@ -48,7 +46,7 @@ setup-symlinks() {
     local files=("${vim[@]}" "${zsh[@]}" "${emacs[@]}" "${env[@]}" \
         "${sbt[@]}" "${others[@]}")
     for file in ${files[@]}; do
-        remove_or_backup "$HOME/.$file"
+        remove_or_backup $HOME/.$file
         ln -s $dfsdir/$file ~/.$file
     done
     # symlink for neovim
