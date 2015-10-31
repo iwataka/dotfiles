@@ -752,12 +752,19 @@ let g:gist_post_private = 1
 " CtrlP {{{2
 " --------------------------------------------------------------
 if executable('ag')
-  let g:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
+  let s:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
 elseif executable('pt')
-  let g:ctrlp_user_command = 'pt -l --follow --nocolor "" %s'
+  let s:ctrlp_user_command = 'pt -l --follow --nocolor "" %s'
 elseif executable('ack')
-  let g:ctrlp_user_command = 'ack --follow --nocolor -g "" %s'
+  let s:ctrlp_user_command = 'ack --follow --nocolor -g "" %s'
 endif
+let g:ctrlp_user_command = {
+  \ 'types': {
+    \ 1: ['.git', 'cd %s && git ls-files'],
+    \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+    \ },
+  \ 'fallback': s:ctrlp_user_command
+  \ }
 
 " default ignored directories
 let g:ctrlp_custom_ignore = {
