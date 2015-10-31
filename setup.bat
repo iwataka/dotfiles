@@ -13,6 +13,7 @@ call:mklinkFile editorconfig
 call:mklinkDir sbt
 call:mklinkDir vim
 call:mklinkDir atom
+goto end
 
 :mklinkDir
 if exist %USERPROFILE%\.%~1 rmdir %USERPROFILE%\.%~1
@@ -23,3 +24,5 @@ goto:eof
 if exist %USERPROFILE%\.%~1 del %USERPROFILE%\.%~1
 mklink %USERPROFILE%\.%~1 %DOTFILES%%~1
 goto:eof
+
+:end
