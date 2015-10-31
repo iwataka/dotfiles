@@ -704,10 +704,11 @@ augroup END
 " --------------------------------------------------------------
 " ColorScheme {{{2
 " --------------------------------------------------------------
-let g:solarized_termcolors=256
-let g:solarized_visibility='high'
-let g:solarized_hitrail=0
-let g:solarized_termtrans=1
+let g:solarized_termcolors = 256
+let g:solarized_visibility = 'high'
+let g:solarized_hitrail = 0
+let g:solarized_termtrans = 1
+let g:solarized_italic = 0
 set background=dark
 
 aug vimrc-colorscheme
