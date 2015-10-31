@@ -37,14 +37,10 @@ setup-bins() {
 }
 
 setup-symlinks() {
-    local vim=(vim vimperatorrc vimrc nvimrc ideavimrc)
-    local zsh=(zsh zshenv zshrc)
-    local emacs=(emacs.d spacemacs)
-    local sbt=(sbtrc sbt)
-    local others=(agignore ctags curlrc gitconfig tmux.conf \
+    local files=(vim vimperatorrc vimrc ideavimrc \
+        zsh zshenv zshrc emacs.d spacemacs sbtrc sbt \
+        agignore ctags curlrc gitconfig tmux.conf \
         wgetrc atom editorconfig tigrc)
-    local files=("${vim[@]}" "${zsh[@]}" "${emacs[@]}" "${env[@]}" \
-        "${sbt[@]}" "${others[@]}")
     for file in ${files[@]}; do
         remove_or_backup $HOME/.$file
         ln -s $dfsdir/$file ~/.$file
