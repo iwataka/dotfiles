@@ -1,2 +1,4 @@
 // Write global settings for SBT.
-testOptions in Test += Tests.Argument("-oI")
+
+// This option causes some bugs when using scalameter.
+// testOptions in Test += Tests.Argument("-oI")
