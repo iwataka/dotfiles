@@ -758,13 +758,20 @@ elseif executable('pt')
 elseif executable('ack')
   let s:ctrlp_user_command = 'ack --follow --nocolor -g "" %s'
 endif
-let g:ctrlp_user_command = {
-  \ 'types': {
-    \ 1: ['.git', 'cd %s && git ls-files'],
-    \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-    \ },
-  \ 'fallback': s:ctrlp_user_command
+let s:ctrlp_vcs_user_commands = {
+  \ 1: ['.git', 'cd %s && git ls-files'],
+  \ 2: ['.hg', 'hg --cwd %s locate -I .'],
   \ }
+if exists('s:ctrlp_user_command')
+  let g:ctrlp_user_command = {
+    \ 'types': s:ctrlp_vcs_user_commands,
+    \ 'fallback': s:ctrlp_user_command
+    \ }
+else
+  let g:ctrlp_user_command = {
+    \ 'types': s:ctrlp_vcs_user_commands
+    \ }
+endif
 
 " default ignored directories
 let g:ctrlp_custom_ignore = {
