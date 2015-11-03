@@ -18,6 +18,7 @@
     a = add
     aa = add --all
     apa = add --patch
+    d = diff
     st = status
     sb = status -sb
     b = branch
