@@ -61,6 +61,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'Raimondi/delimitMate'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
+Plug 'mbbill/undotree'
 " If you want to use syntastic, you must disable vim-auto-save plugin.
 " Plug 'scrooloose/syntastic'
 " Plug 'vim-scripts/vim-auto-save'
@@ -1080,6 +1081,12 @@ let g:vim_markdown_folding_disabled = 1
 " --------------------------------------------------------------
 let g:instant_markdown_slow = 0
 let g:instant_markdown_autostart = 0
+
+" --------------------------------------------------------------
+" undotree {{{2
+" --------------------------------------------------------------
+let g:undotree_SetFocusWhenToggle = 1
+nnoremap <leader>u :UndotreeToggle<cr>
 
 " --------------------------------------------------------------
 " auto-save {{{2
