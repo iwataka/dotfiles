@@ -708,30 +708,10 @@ augroup END
 let g:solarized_termcolors = 256
 let g:solarized_visibility = 'high'
 let g:solarized_hitrail = 0
-let g:solarized_termtrans = 1
+let g:solarized_termtrans = 0
 let g:solarized_italic = 0
-set background=dark
 
-aug vimrc-colorscheme
-  au!
-  au VimEnter,ColorScheme * call s:tweak_colorscheme()
-aug END
-
-fu! s:tweak_colorscheme()
-  if exists('g:colors_name') && g:colors_name == 'solarized'
-              \ && g:solarized_termtrans == 1 && &background == 'dark'
-    call s:tweak_solarized()
-  endif
-endfu
-
-fu! s:tweak_solarized()
-  hi Comment ctermfg=242           " The original value is 239.
-  hi vimIsCommand ctermfg=243      " The original value is 240.
-  hi gitcommitComment ctermfg=242  " The original value is 239.
-  hi gitcommitOnBranch ctermfg=242
-  hi gitcommitHeader ctermfg=242
-endfu
-
+set background=light
 silent! colorscheme solarized
 
 " --------------------------------------------------------------
