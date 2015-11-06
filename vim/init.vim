@@ -330,6 +330,10 @@ vnoremap Q :norm @q<cr>
 " Make Y behave like other capitals
 nnoremap Y y$
 
+" Eacy way to move between tabs
+nnoremap <S-h> gT
+nnoremap <S-l> gt
+
 " Save
 if has('nvim')
   inoremap <C-s> <C-O>:update<cr>
