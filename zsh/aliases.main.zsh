@@ -31,16 +31,13 @@ alias h="history"
 alias j="jobs"
 alias v="vim"
 
-# Additional Git
-alias gsfpull='git submodule foreach git pull origin $(current_branch)'
-alias gsfpush='git submodule foreach git push origin $(current_branch)'
-alias gsfst='git submodule foreach git status -s'
-
 # unzip command for files which has japanese names
 alias uzja="unzip -O cp932"
 
 # Google Chrome
 alias chrome="google-chrome-stable"
+
+alias mkdir="mkdir -p"
 
 # Enables to display result in human-readable format.
 alias df='df -h'
