@@ -123,9 +123,6 @@ set splitright                            " More natural way to split a window v
 set splitbelow                            " More natural way to split a window horizontally
 set expandtab                             " Use spaces for indenting
 set smarttab                              " Use spaces for inserting <Tab>
-set tabstop=4                             " :retab command use this value
-set softtabstop=4                         " Number of spaces while inserting a <Tab> or using <BS>.
-set shiftwidth=4                          " Number of spaces to use for each step of (auto)indent
 set autoindent                            " Same as the above indent
 set smartindent                           " Smart autoindenting
 set noerrorbells                          " No beep or screen flash for error messages
@@ -255,11 +252,6 @@ augroup vimrcEx
   autocmd FileType help
     \ if &readonly | nnoremap <buffer> q :q<cr> | endif
 
-  autocmd FileType scala
-    \ setlocal tabstop=2 |
-    \ setlocal softtabstop=2 |
-    \ setlocal shiftwidth=2
-
   autocmd FileType java,c,cpp
     \ if executable('astyle') |
     \   setlocal formatprg='astyle' |
@@ -329,10 +321,6 @@ vnoremap Q :norm @q<cr>
 
 " Make Y behave like other capitals
 nnoremap Y y$
-
-" Eacy way to move between tabs
-nnoremap <S-h> gT
-nnoremap <S-l> gt
 
 " Save
 if has('nvim')
@@ -639,6 +627,17 @@ fu! s:make_current_project()
   make
 endfu
 
+com! Run call <sid>run_this_script()
+fu! s:run_this_script()
+  if &filetype == 'python'
+    !python %
+  elseif &filetype == 'ruby'
+    !ruby %
+  else
+    !%
+  endif
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
@@ -715,7 +714,7 @@ let g:solarized_hitrail = 0
 let g:solarized_termtrans = 0
 let g:solarized_italic = 0
 
-set background=light
+set background=dark
 silent! colorscheme solarized
 
 " --------------------------------------------------------------
@@ -844,8 +843,7 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_key_detailed_diagnostics = ''
-
-nnoremap <leader>jd :YcmCompleter GoTo<cr>
+nnoremap gd :YcmCompleter GoToDeclaration<cr>
 
 " --------------------------------------------------------------
 " Ultisnips {{{2
@@ -854,6 +852,7 @@ let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 
 " --------------------------------------------------------------
