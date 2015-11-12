@@ -59,7 +59,7 @@ Plug 'tpope/vim-sleuth'
 " This plug-in causes errors while inputting japanese characters
 " in GVim, so you should execute :DelimitMateOff for it.
 Plug 'Raimondi/delimitMate'
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'terryma/vim-multiple-cursors'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'mbbill/undotree'
 " If you want to use syntastic, you must disable vim-auto-save plugin.
@@ -381,10 +381,6 @@ inoremap <C-u> <C-g>u<C-u>
 " Search in visual mode
 xnoremap <silent> * :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal n<cr>
 xnoremap <silent> # :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal N<cr>
-
-" K to grep files
-nnoremap <silent> K :grep <cword><cr>
-xnoremap <silent> K :<C-u>exe 'grep "'.<sid>get_grep_pattern().'"'<cr>
 
 " Double <BS> to remove trailing spaces
 nnoremap <silent> <BS><BS> :call <sid>preserve('%s/\s*$//')<cr>
