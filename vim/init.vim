@@ -79,6 +79,7 @@ if has('unix') || has('mac')
   Plug 'suan/vim-instant-markdown'
 endif
 Plug 'derekwyatt/vim-scala'
+Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-endwise'
 Plug 'fatih/vim-go'
 Plug 'pangloss/vim-javascript'
