@@ -41,7 +41,7 @@ Plug 'Yggdroot/indentLine'
 " if v:version >= 703
 "   Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle'] }  " Hardly used
 " endif
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
 if has('unix') || has('mac') || has('macunix')
   Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
