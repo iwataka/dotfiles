@@ -140,3 +140,5 @@ if [[ "$OSTYPE" == "cygwin" ]]; then
 fi
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+[ -s "/home/iwataka/.dnx/dnvm/dnvm.sh" ] && . "/home/iwataka/.dnx/dnvm/dnvm.sh" # Load dnvm
