@@ -21,7 +21,7 @@ silent! if plug#begin('~/.vim/plugged')
 
 " Completion
 if (has('unix') || has('mac')) && has('python')
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --omnisharp-completer' }
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
 endif
