@@ -1047,6 +1047,7 @@ nnoremap <leader>nf :NERDTreeFind<cr>
 nnoremap <leader>nm :NERDTreeMirror<cr>
 nnoremap <leader>nc :NERDTreeCWD<cr>
 nnoremap <leader>nb :NERDTreeFromBookmark
+let g:NERDTreeShowHidden = 1
 
 " --------------------------------------------------------------
 " indentLine {{{2
