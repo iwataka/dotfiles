@@ -87,6 +87,7 @@ Plug 'othree/html5.vim'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'ap/vim-css-color'
 Plug 'mattn/emmet-vim'
+Plug 'solarnz/thrift.vim'
 
 call plug#end()
 endif
