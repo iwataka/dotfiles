@@ -648,6 +648,7 @@ abbrev factroy factory
 abbrev reutrn return
 abbrev netowrk network
 abbrev SpaitalNetwork SpatialNetwork
+abbrev nwe new
 
 " Shortcut
 aug vimrc-abbrev
