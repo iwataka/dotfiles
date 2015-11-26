@@ -636,6 +636,55 @@ fu! s:run_this_script()
   endif
 endfu
 
+com! A call <sid>alternate(expand('%'), 'edit')
+" Test files are detected by the suffixes `Test` or `Spec`.
+fu! s:alternate(fname, cmd)
+  let root_name = fnamemodify(a:fname, ':p:r')
+  let extension = fnamemodify(a:fname, ':e')
+
+  " C language source and header files
+  if extension == 'c'
+    exe a:cmd.' '.root_name.'.h'
+    return
+  elseif extension == 'h'
+    exe a:cmd.' '.root_name.'.c'
+    return
+  endif
+
+  " General source and test files
+  let is_test = (root_name =~ '.*\(Test\|Spec\|_test\|_spec\)')
+  if is_test
+    let root_name = substitute(root_name, '/test/', '/main/', '')
+    let root_name = substitute(root_name, '\(Test\|Spec\|_test\|_spec\)$', '', '')
+    exe a:cmd.' '.root_name.'.'.extension
+  else
+    let root_name = substitute(root_name, '/main/', '/test/', '')
+    " Possible test patterns
+    let camel_test = root_name.'Test.'.extension
+    let camel_spec = root_name.'Spec.'.extension
+    let snake_test = root_name.'_test.'.extension
+    let snake_spec = root_name.'_spec.'.extension
+    " Determine the most reasonable pattern by the current file type
+    let finally_created = ''
+    if &ft == 'java' || &ft == 'scala'
+      let finally_created = camel_test
+    elseif &ft == 'go'
+      let finally_created = snake_test
+    endif
+    if filereadable(camel_test)
+      exe a:cmd.' '.camel_test
+    elseif filereadable(camel_spec)
+      exe a:cmd.' '.camel_spec
+    elseif filereadable(snake_test)
+      exe a:cmd.' '.snake_test
+    elseif filereadable(snake_spec)
+      exe a:cmd.' '.snake_spec
+    elseif finally_created != ''
+      exe a:cmd.' '.finally_created
+    endif
+  endif
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
