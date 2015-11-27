@@ -644,43 +644,48 @@ fu! s:alternate(fname, cmd)
 
   " C language source and header files
   if extension == 'c'
-    exe a:cmd.' '.root_name.'.h'
+    silent exe a:cmd.' '.root_name.'.h'
     return
   elseif extension == 'h'
-    exe a:cmd.' '.root_name.'.c'
+    silent exe a:cmd.' '.root_name.'.c'
     return
+  endif
+
+  " File separator depends on OS
+  let separator = '/'
+  if has('win32') || has('win64')
+    let separator = '\'
   endif
 
   " General source and test files
   let is_test = (root_name =~ '.*\(Test\|Spec\|_test\|_spec\)')
   if is_test
-    let root_name = substitute(root_name, '/test/', '/main/', '')
+    let root_name = substitute(root_name, 'test'.separator, 'main'.separator, '')
     let root_name = substitute(root_name, '\(Test\|Spec\|_test\|_spec\)$', '', '')
-    exe a:cmd.' '.root_name.'.'.extension
+    silent exe a:cmd.' '.root_name.'.'.extension
   else
-    let root_name = substitute(root_name, '/main/', '/test/', '')
+    let root_name = substitute(root_name, 'main'.separator, 'test'.separator, '')
     " Possible test patterns
     let camel_test = root_name.'Test.'.extension
     let camel_spec = root_name.'Spec.'.extension
     let snake_test = root_name.'_test.'.extension
     let snake_spec = root_name.'_spec.'.extension
     " Determine the most reasonable pattern by the current file type
-    let finally_created = ''
     if &ft == 'java' || &ft == 'scala'
       let finally_created = camel_test
     elseif &ft == 'go'
       let finally_created = snake_test
     endif
     if filereadable(camel_test)
-      exe a:cmd.' '.camel_test
+      silent exe a:cmd.' '.camel_test
     elseif filereadable(camel_spec)
-      exe a:cmd.' '.camel_spec
+      silent exe a:cmd.' '.camel_spec
     elseif filereadable(snake_test)
-      exe a:cmd.' '.snake_test
+      silent exe a:cmd.' '.snake_test
     elseif filereadable(snake_spec)
-      exe a:cmd.' '.snake_spec
-    elseif finally_created != ''
-      exe a:cmd.' '.finally_created
+      silent exe a:cmd.' '.snake_spec
+    elseif exists('finally_created')
+      silent exe a:cmd.' '.finally_created
     endif
   endif
 endfu
