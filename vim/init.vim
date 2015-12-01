@@ -1106,11 +1106,12 @@ let g:NERDTreeShowHidden = 1
 
 augroup vimrc-nerdtree
   autocmd!
+  autocmd FileType nerdtree com! -buffer NERDTreePromote call s:nerdtree_promote()
+  autocmd FileType nerdtree com! -buffer NERDTreeDemote call s:nerdtree_demote()
   autocmd FileType nerdtree nnoremap <silent> <buffer> << :NERDTreePromote<cr>
   autocmd Filetype nerdtree nnoremap <silent> <buffer> >> :NERDTreeDemote<cr>
 augroup END
 
-com! NERDTreePromote call s:nerdtree_promote()
 fu! s:nerdtree_promote()
   let curNode = g:NERDTreeFileNode.GetSelected()
   let newNodeDir = fnamemodify(curNode.path.str(), ':h:h')
@@ -1131,7 +1132,6 @@ fu! s:nerdtree_promote()
   endtry
 endfu
 
-com! NERDTreeDemote call s:nerdtree_demote()
 fu! s:nerdtree_demote()
   let curNode = g:NERDTreeFileNode.GetSelected()
   let newNodeDir = fnamemodify(curNode.path.str(), ':h')
