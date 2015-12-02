@@ -10,6 +10,7 @@ call:mklinkFile sbtrc
 call:mklinkFile vimperatorrc
 call:mklinkFile ctags
 call:mklinkFile editorconfig
+call:mklinkFile bashrc
 call:mklinkDir sbt
 call:mklinkDir vim
 call:mklinkDir atom
