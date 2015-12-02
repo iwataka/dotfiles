@@ -17,4 +17,9 @@ else
   do
     source $_sub_plugin
   done
+  # Load the common shell configurations if unable to use antigen.
+  for _sh_file in $HOME/.sh/*.sh
+  do
+    source $_sh_file
+  done
 fi

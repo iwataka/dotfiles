@@ -9,8 +9,8 @@ if [[ "$OSTYPE" == "cygwin" ]]; then
     rm -rf /tmp/tmux-*
 fi
 
-# Load the configuration for bash
-source ~/.bashrc
+# Load the common configuration for both of bash and zsh
+source ~/.shrc
 
 # Source main plugins
 for _main_plugin in $HOME/.zsh/*.main.zsh

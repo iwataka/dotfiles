@@ -11,9 +11,11 @@ call:mklinkFile vimperatorrc
 call:mklinkFile ctags
 call:mklinkFile editorconfig
 call:mklinkFile bashrc
+call:mklinkFile shrc
 call:mklinkDir sbt
 call:mklinkDir vim
 call:mklinkDir atom
+call:mklinkDir sh
 goto end
 
 :mklinkDir
