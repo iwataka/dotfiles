@@ -1,3 +1,26 @@
+" Awesome vimrc
+" junegunn - https://github.com/junegunn/dotfiles/blob/master/vimrc
+" martin-svk - https://github.com/martin-svk/dot-files/blob/master/neovim/init.vim
+" amix - https://github.com/amix/vimrc
+
+" Awesome color scheme
+" vim-hybrid - https://github.com/w0ng/vim-hybrid
+" molokai -
+" monokai -
+" jellybeans -
+" gruvbox -
+" iceberg -
+" vividchalk -
+" zenburn -
+" base16 -
+" wombat -
+" badwolf -
+" lucius -
+" atom-dark -
+
+" Color scheme gallery
+" vimcolor - http://vimcolor.com
+
 " Direct Codepoint Entry
 " <C-V>165 -> ¥
 " <C-V>xb1 -> ±
@@ -5,6 +28,7 @@
 " <C-V>U0001F609 -> 😉
 " Other difficult-to-input characters
 " <C-V><Enter> -> 
+
 " ===============================================================
 " VIM-PLUG BLOCK {{{1
 " ===============================================================
