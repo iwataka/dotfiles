@@ -267,8 +267,9 @@ augroup vimrcEx
   " (happens when dropping a file on gvim).
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-  " Enable spellchecking and word wrapping for Markdown
+  " Markdown
   autocmd FileType mkd setlocal spell
+  autocmd FileType mkd setlocal commentstring=<!--\ %s\ -->
 
   " Automatically wrap at 72 characters and spell check git commit messages
   autocmd FileType gitcommit setlocal textwidth=72
