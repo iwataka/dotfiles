@@ -859,8 +859,11 @@ else
   let s:ctrlp_bookmark_paths = s:ctrlp_bookmark_common_paths
 endif
 
-com! CtrlPBookmarkReload call s:ctrlp_bookmark_init()
-fu! s:ctrlp_bookmark_init()
+com! -bang CtrlPBookmarkReload call s:ctrlp_bookmark_init(<bang>0)
+fu! s:ctrlp_bookmark_init(bang)
+  if a:bang != 0
+    call delete(expand('~/.cache/ctrlp/bkd/cache.txt'))
+  endif
   if exists('s:ctrlp_bookmark_paths')
     for path in s:ctrlp_bookmark_paths
       let dirs = split(expand(path), '\n')
