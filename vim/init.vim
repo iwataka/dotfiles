@@ -250,6 +250,9 @@ augroup vimrcEx
   autocmd FileType gitcommit setlocal textwidth=72
   autocmd FileType gitcommit setlocal spell
 
+  " Comment strings
+  autocmd FileType dosbatch setlocal commentstring=rem\ %s
+
   " Quit help buffer by typing just q.
   autocmd FileType help
     \ if &readonly | nnoremap <buffer> q :q<cr> | endif
