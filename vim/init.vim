@@ -85,7 +85,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'Raimondi/delimitMate'
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
-Plug 'mbbill/undotree'
+Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeForcus'] }
 " If you want to use syntastic, you must disable vim-auto-save plugin.
 " Plug 'scrooloose/syntastic'
 " Plug 'vim-scripts/vim-auto-save'
@@ -102,16 +102,16 @@ Plug 'plasticboy/vim-markdown'
 if has('unix') || has('mac')
   Plug 'suan/vim-instant-markdown'
 endif
-Plug 'derekwyatt/vim-scala'
-Plug 'tpope/vim-fireplace'
+Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'tpope/vim-endwise'
-Plug 'fatih/vim-go'
-Plug 'pangloss/vim-javascript'
-Plug 'othree/html5.vim'
-Plug 'ekalinin/Dockerfile.vim'
-Plug 'ap/vim-css-color'
-Plug 'mattn/emmet-vim'
-Plug 'solarnz/thrift.vim'
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'othree/html5.vim', { 'for': 'html' }
+Plug 'ekalinin/Dockerfile.vim', { 'for': 'docker' }
+Plug 'ap/vim-css-color', { 'for': 'css' }
+Plug 'mattn/emmet-vim', { 'for': 'html' }
+Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 
 call plug#end()
 endif
