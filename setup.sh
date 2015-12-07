@@ -38,7 +38,7 @@ setup-bins() {
 
 setup-symlinks() {
     local files=(vim vimperatorrc vimrc ideavimrc \
-        zsh zshenv zshrc emacs.d spacemacs sbtrc sbt \
+        zsh zshenv zshrc sh shrc bashrc emacs.d spacemacs sbtrc sbt \
         agignore ctags curlrc gitconfig tmux.conf \
         wgetrc atom editorconfig tigrc)
     for file in ${files[@]}; do
