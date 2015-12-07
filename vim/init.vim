@@ -430,10 +430,23 @@ if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>"
 
 " Clear all buffers by bdelete command.
 " If unsaved buffers exist, this command fails.
-com! BufClear call s:bufclear()
-function! s:bufclear()
+com! -bang BufClear call s:bufclear(<bang>0)
+function! s:bufclear(bang)
   let lastnr = bufnr('$')
-  silent exe '0,'.lastnr.'bdelete'
+  " buffer number starts from 1
+  let i = 1
+  wh i <= lastnr
+    if a:bang
+      if bufexists(i)
+        silent exe 'bwipeout '.i
+      endif
+    else
+      if bufloaded(i)
+        silent exe 'bdelete '.i
+      endif
+    endif
+    let i = i + 1
+  endwh
 endfunction
 
 " Changes the current directory to the project root
