@@ -909,7 +909,7 @@ endfu
 
 augroup vimrc-ctrlp
   au!
-  au VimEnter * if exists(':CtrlPBookmarkDirAdd') | call s:ctrlp_bookmark_init() | endif
+  au VimEnter * if exists(':CtrlPBookmarkDirAdd') | call s:ctrlp_bookmark_init(0) | endif
 augroup END
 
 if has('unix') || has('mac') || has('macunix')
