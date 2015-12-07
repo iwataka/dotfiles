@@ -430,20 +430,18 @@ if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>"
 
 " Clear all buffers by bdelete command.
 " If unsaved buffers exist, this command fails.
-com! -bang BufClear call s:bufclear(<bang>0)
-function! s:bufclear(bang)
+com! -bang -complete=file -nargs=? BufClear call s:bufclear(<bang>0, <q-args>)
+function! s:bufclear(bang, path)
   let lastnr = bufnr('$')
+  let abs_path = a:path == '' ? '' : fnamemodify(expand(a:path), ':p')
   " buffer number starts from 1
   let i = 1
   wh i <= lastnr
-    if a:bang
-      if bufexists(i)
-        silent exe 'bwipeout '.i
-      endif
-    else
-      if bufloaded(i)
-        silent exe 'bdelete '.i
-      endif
+    let name = fnamemodify(bufname(i), ':p')
+    if bufexists(i) && (abs_path == '' || (filereadable(name) && name =~ abs_path.'*'))
+      silent exe 'bwipeout '.i
+    elseif a:bang && bufloaded(i)
+      silent exe 'bdelete '.i
     endif
     let i = i + 1
   endwh
