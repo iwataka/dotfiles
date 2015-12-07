@@ -30,7 +30,7 @@ alias p="cd ~/projects"
 alias h="history"
 alias j="jobs"
 # Vim
-if [[ "$OSTYPE" -eq "msys" ]]; then
+if [[ "$OSTYPE" == "msys" ]]; then
     alias v="gvim"
 else
     alias v="vim"
