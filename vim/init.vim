@@ -999,7 +999,7 @@ let g:lightline.active = {}
 let g:lightline.active.left = [
   \   ['mode', 'paste'],
   \   ['gitgutter', 'fugitive'],
-  \   ['filename']
+  \   ['pwd', 'filename']
   \ ]
 let g:lightline.active.right = [
   \   ['lineinfo', 'syntastic'],
@@ -1011,6 +1011,7 @@ let g:lightline.component_function = {}
 let g:lightline.component_function.syntastic = 'SyntasticStatuslineFlag'
 let g:lightline.component_function.gitgutter = 'MyGitGutter'
 let g:lightline.component_function.filename = 'MyFilename'
+let g:lightline.component_function.pwd = 'MyPWD'
 let g:lightline.component_function.fugitive = 'MyFugitive'
 
 " let g:lightline.separator = { 'left': "\ue0b0", 'right': "\ue0b2" }
@@ -1059,6 +1060,14 @@ function! MyFilename()
     \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
     \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
+
+fu! MyPWD()
+  if winwidth('.') <= 90
+    return ''
+  else
+    return substitute(getcwd(), '^'.expand('~'), '~', '')
+  endif
+endfu
 
 function! MyReadonly()
   return &readonly ? '' : ''
@@ -1139,6 +1148,8 @@ endif
 " --------------------------------------------------------------
 " nerdtree {{{2
 " --------------------------------------------------------------
+" If you get the error like 'Undefined variable b:NERDTree',
+" you should run the command like ':NERDTree .'.
 nnoremap <leader>nt :NERDTreeToggle<cr>
 nnoremap <leader>nf :NERDTreeFind<cr>
 nnoremap <leader>nm :NERDTreeMirror<cr>
