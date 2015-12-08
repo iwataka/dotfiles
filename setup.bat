@@ -12,10 +12,16 @@ call:mklinkFile ctags
 call:mklinkFile editorconfig
 call:mklinkFile bashrc
 call:mklinkFile shrc
+call:mklinkFile curlrc
+call:mklinkFile tmux.conf
+call:mklinkFile spacemacs
+call:mklinkFile wgetrc
+call:mklinkFile tigrc
 call:mklinkDir sbt
 call:mklinkDir vim
 call:mklinkDir atom
 call:mklinkDir sh
+call:mklinkDir gnupg
 goto end
 
 :mklinkDir
