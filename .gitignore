@@ -43,3 +43,7 @@ sbt/0.13/*
 !sbt/0.13/plugins
 sbt/0.13/plugins/*
 !sbt/0.13/plugins/plugins.sbt
+
+# GnuPG
+gnupg/*
+!gnupg/gpg.conf

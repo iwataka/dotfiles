@@ -40,7 +40,7 @@ setup-symlinks() {
     local files=(vim vimperatorrc vimrc ideavimrc \
         zsh zshenv zshrc sh shrc bashrc emacs.d spacemacs sbtrc sbt \
         agignore ctags curlrc gitconfig tmux.conf \
-        wgetrc atom editorconfig tigrc)
+        wgetrc atom editorconfig tigrc gnupg)
     for file in ${files[@]}; do
         remove_or_backup $HOME/.$file
         ln -s $dfsdir/$file ~/.$file
