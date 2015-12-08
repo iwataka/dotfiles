@@ -402,6 +402,9 @@ nnoremap <silent> <Esc><Esc> :nohlsearch<cr><C-l>
 nnoremap + <c-a>
 nnoremap - <c-x>
 
+" Select all.
+nnoremap <c-a> gg^vG$
+
 " Changes the current working directory to the directory of focused buffer
 nnoremap <leader>cd  :cd %:h<cr>
 
@@ -438,10 +441,14 @@ function! s:bufclear(bang, path)
   let i = 1
   wh i <= lastnr
     let name = fnamemodify(bufname(i), ':p')
-    if bufexists(i) && (abs_path == '' || (filereadable(name) && name =~ abs_path.'*'))
-      silent exe 'bwipeout '.i
-    elseif a:bang && bufloaded(i)
-      silent exe 'bdelete '.i
+    " Terminal buffers can't be deleted automatically.
+    if getbufvar(i, "&buftype") != "terminal"
+      if bufexists(i) &&
+          \ (abs_path == '' || (filereadable(name) && name =~ abs_path.'*'))
+        silent exe 'bwipeout '.i
+      elseif a:bang && bufloaded(i)
+        silent exe 'bdelete '.i
+      endif
     endif
     let i = i + 1
   endwh
@@ -1154,6 +1161,7 @@ nnoremap <leader>nt :NERDTreeToggle<cr>
 nnoremap <leader>nf :NERDTreeFind<cr>
 nnoremap <leader>nm :NERDTreeMirror<cr>
 nnoremap <leader>nc :NERDTreeCWD<cr>
+nnoremap <leader>nx :NERDTreeClose<cr>
 nnoremap <leader>nb :NERDTreeFromBookmark
 let g:NERDTreeShowHidden = 1
 
