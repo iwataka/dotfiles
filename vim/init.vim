@@ -44,11 +44,9 @@ endif
 silent! if plug#begin('~/.vim/plugged')
 
 " Completion
-if (has('unix') || has('mac')) && has('python')
-  Plug 'Valloric/YouCompleteMe'
-  Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
-endif
+Plug 'Valloric/YouCompleteMe'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " Git
 Plug 'airblade/vim-gitgutter'
