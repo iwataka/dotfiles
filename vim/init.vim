@@ -44,9 +44,11 @@ endif
 silent! if plug#begin('~/.vim/plugged')
 
 " Completion
-Plug 'Valloric/YouCompleteMe'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+if has('python')
+  Plug 'Valloric/YouCompleteMe'
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
+endif
 
 " Git
 Plug 'airblade/vim-gitgutter'
@@ -669,14 +671,14 @@ fu! s:make_current_project()
   make
 endfu
 
-com! Run call <sid>run_this_script()
-fu! s:run_this_script()
+com! -nargs=* Run call <sid>run_this_script(<q-args>)
+fu! s:run_this_script(args)
   if &filetype == 'python'
-    !python %
+    exe '!python '.expand('%').' '.args
   elseif &filetype == 'ruby'
-    !ruby %
+    exe '!ruby '.expand('%').' '.args
   else
-    !%
+    exe '!'.expand('%').' '.args
   endif
 endfu
 
