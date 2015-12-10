@@ -278,6 +278,9 @@ augroup vimrcEx
   " Comment strings
   autocmd FileType dosbatch setlocal commentstring=rem\ %s
 
+  " Allows C-style comment
+  autocmd FileType json setlocal commentstring=//\ %s
+
   " Quit help buffer by typing just q.
   autocmd FileType help
     \ if &readonly | nnoremap <buffer> q :q<cr> | endif
@@ -682,7 +685,9 @@ fu! s:run_this_script(args)
   endif
 endfu
 
-com! A call <sid>alternate(expand('%'), 'edit')
+com! A call s:alternate(expand('%'), 'edit')
+com! AV call s:alternate(expand('%'), 'vsplit')
+com! AS call s:alternate(expand('%'), 'split')
 " Test files are detected by the suffixes `Test` or `Spec`.
 fu! s:alternate(fname, cmd)
   let root_name = fnamemodify(a:fname, ':p:r')
@@ -708,7 +713,7 @@ fu! s:alternate(fname, cmd)
   if is_test
     let root_name = substitute(root_name, 'test'.separator, 'main'.separator, '')
     let root_name = substitute(root_name, '\(Test\|Spec\|_test\|_spec\)$', '', '')
-    silent exe a:cmd.' '.root_name.'.'.extension
+    call s:open_file(root_name.'.'.extension, a:cmd)
   else
     let root_name = substitute(root_name, 'main'.separator, 'test'.separator, '')
     " Possible test patterns
@@ -723,18 +728,40 @@ fu! s:alternate(fname, cmd)
       let finally_created = snake_test
     endif
     if filereadable(camel_test)
-      silent exe a:cmd.' '.camel_test
+      call s:open_file(camel_test, a:cmd)
     elseif filereadable(camel_spec)
-      silent exe a:cmd.' '.camel_spec
+      call s:open_file(camel_spec, a:cmd)
     elseif filereadable(snake_test)
-      silent exe a:cmd.' '.snake_test
+      call s:open_file(snake_test, a:cmd)
     elseif filereadable(snake_spec)
-      silent exe a:cmd.' '.snake_spec
+      call s:open_file(snake_spec, a:cmd)
     elseif exists('finally_created')
-      silent exe a:cmd.' '.finally_created
+      call s:open_file(finally_created, a:cmd)
     endif
   endif
 endfu
+
+" Opens the specified file with its parent directory created.
+fu! s:open_file(fname, cmd)
+  let parent_dir = fnamemodify(expand(a:fname), ':p:h')
+  if !isdirectory(parent_dir)
+    call mkdir(parent_dir, 'p')
+  endif
+  silent exe a:cmd.' '.a:fname
+endfu
+
+if has('python')
+  com! -nargs=? JavaDoc call s:javadoc(8, <q-args>)
+  fu! s:javadoc(version, class)
+    let class = ''
+    if a:class != ''
+      let class = substitute(a:class, '\.', '/', 'g').'.html'
+    endif
+    let url = 'http://docs.oracle.com/javase/'.a:version.'/docs/api/'.class
+    py import webbrowser, vim
+    py webbrowser.open(vim.eval("url"), new=2)
+  endfu
+endif
 
 " ===============================================================
 " ABBREVIATIONS {{{1
