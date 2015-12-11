@@ -60,6 +60,7 @@ Plug 'mattn/webapi-vim'
 " Fancy
 " Plug 'bling/vim-airline'  " Waste time on startup
 Plug 'itchyny/lightline.vim'
+Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'Yggdroot/indentLine'
 
 " Navigation
@@ -1302,6 +1303,12 @@ let g:instant_markdown_autostart = 0
 " --------------------------------------------------------------
 let g:undotree_SetFocusWhenToggle = 1
 nnoremap <leader>u :UndotreeToggle<cr>
+
+" --------------------------------------------------------------
+" calendar {{{2
+" --------------------------------------------------------------
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
 
 " --------------------------------------------------------------
 " auto-save {{{2
