@@ -45,15 +45,16 @@ silent! if plug#begin('~/.vim/plugged')
 
 " Completion
 if has('python')
-  Plug 'Valloric/YouCompleteMe'
-  Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
+  Plug 'Valloric/YouCompleteMe', { 'on': [] }
+  Plug 'SirVer/ultisnips', { 'on': [] }
+  Plug 'honza/vim-snippets', { 'on': [] }
 endif
 
 " Git
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
-Plug 'mattn/gist-vim'
+Plug 'mattn/gist-vim', { 'on': ['Gist'] }
 Plug 'mattn/webapi-vim'
 
 " Fancy
@@ -95,12 +96,11 @@ Plug 'altercation/vim-colors-solarized'
 
 " Filetype
 if v:version >= 703
-  Plug 'vim-ruby/vim-ruby'
+  Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 endif
-" Plug 'git@github.com:iwataka/vim-markdown.git'
-Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown', { 'for': 'mkd' }
 if has('unix') || has('mac')
-  Plug 'suan/vim-instant-markdown'
+  Plug 'suan/vim-instant-markdown', { 'for': 'mkd' }
 endif
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
@@ -809,6 +809,21 @@ endfu
 " ===============================================================
 
 " --------------------------------------------------------------
+" Plug {{{2
+" --------------------------------------------------------------
+
+augroup PlugGx
+  autocmd!
+  autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
+augroup END
+
+com! PlugYcm call s:load_ycm()
+fu! s:load_ycm()
+  call plug#load('YouCompleteMe', 'ultisnips', 'vim-snippets')
+  call youcompleteme#Enable()
+endfu
+
+" --------------------------------------------------------------
 " ColorScheme {{{2
 " --------------------------------------------------------------
 function! s:plug_gx()
@@ -825,11 +840,6 @@ function! s:plug_gx()
                       \ : printf('https://github.com/%s/commit/%s', repo, sha)
   call netrw#NetrwBrowseX(url, 0)
 endfunction
-
-augroup PlugGx
-  autocmd!
-  autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
-augroup END
 
 " --------------------------------------------------------------
 " ColorScheme {{{2
@@ -990,10 +1000,17 @@ let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 " --------------------------------------------------------------
 " gitgutter {{{2
 " --------------------------------------------------------------
-let g:gitgutter_sign_added = '+'
-let g:gitgutter_sign_modified = '~'
-let g:gitgutter_sign_removed = '-'
-nnoremap <leader>gG :GitGutterToggle<cr>
+" let g:gitgutter_sign_added = '+'
+" let g:gitgutter_sign_modified = '~'
+" let g:gitgutter_sign_removed = '-'
+" nnoremap <leader>gG :GitGutterToggle<cr>
+
+" --------------------------------------------------------------
+" signify {{{2
+" --------------------------------------------------------------
+let g:signify_sign_add = '+'
+let g:signify_sign_change = '~'
+let g:signify_sign_delete = '-'
 
 " --------------------------------------------------------------
 " fugitive {{{2
@@ -1035,7 +1052,7 @@ let g:lightline.colorscheme = 'solarized'
 let g:lightline.active = {}
 let g:lightline.active.left = [
   \   ['mode', 'paste'],
-  \   ['gitgutter', 'fugitive'],
+  \   ['signify', 'fugitive'],
   \   ['pwd', 'filename']
   \ ]
 let g:lightline.active.right = [
@@ -1046,7 +1063,8 @@ let g:lightline.active.right = [
 
 let g:lightline.component_function = {}
 let g:lightline.component_function.syntastic = 'SyntasticStatuslineFlag'
-let g:lightline.component_function.gitgutter = 'MyGitGutter'
+" let g:lightline.component_function.gitgutter = 'MyGitGutter'
+let g:lightline.component_function.signify = 'MySignify'
 let g:lightline.component_function.filename = 'MyFilename'
 let g:lightline.component_function.pwd = 'MyPWD'
 let g:lightline.component_function.fugitive = 'MyFugitive'
@@ -1132,6 +1150,25 @@ function! MyGitGutter()
   endfo
   return join(ret, ' ')
 endf
+
+fu! MySignify()
+  if !exists('*sy#repo#get_stats')
+      \ || !get(b:, 'sy').active
+      \ || winwidth('.') <= 90
+    return ''
+  endif
+  let symbols = [
+    \ get(g:, 'signify_sign_add', '+').' ',
+    \ get(g:, 'signify_sign_change', '~').' ',
+    \ get(g:, 'signify_sign_delete', '-').' '
+    \ ]
+  let hunks = sy#repo#get_stats()
+  let ret = []
+  for i in [0, 1, 2]
+    call add(ret, symbols[i].hunks[i])
+  endfor
+  return join(ret, ' ')
+endfu
 
 " --------------------------------------------------------------
 " delimitMate {{{2
