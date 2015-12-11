@@ -1153,7 +1153,7 @@ endf
 
 fu! MySignify()
   if !exists('*sy#repo#get_stats')
-      \ || !get(b:, 'sy').active
+      \ || !(exists('b:sy.active') && b:sy.active)
       \ || winwidth('.') <= 90
     return ''
   endif
