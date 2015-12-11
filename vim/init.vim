@@ -906,7 +906,10 @@ nnoremap <silent> <Leader>d :CtrlPBookmarkDir<CR>
 let s:ctrlp_bookmark_common_paths = [
   \ '~/projects/*',
   \ '~/lib/*',
-  \ '~/dotfiles'
+  \ '~/dotfiles',
+  \ '~/gdrive',
+  \ '$JAVA_HOME/src',
+  \ '$GOROOT/src'
   \ ]
 
 if has('unix')
