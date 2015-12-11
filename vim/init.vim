@@ -930,11 +930,6 @@ if has('unix')
     \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
     \ '/usr/lib/jvm/java-[1-9]\+-oracle'
     \ ]
-elseif has('win32') || has('win64')
-  let s:ctrlp_bookmark_paths = [
-    \ 'C:\projects\*',
-    \ 'C:\lib\*'
-    \ ]
 endif
 
 if exists('s:ctrlp_bookmark_paths')
