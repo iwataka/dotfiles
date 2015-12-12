@@ -1155,12 +1155,15 @@ fu! MySignify()
       \ || winwidth('.') <= 90
     return ''
   endif
+  let hunks = sy#repo#get_stats()
+  if hunks[0] == -1 || hunks[1] == -1 || hunks[2] == -1
+    return ''
+  endif
   let symbols = [
     \ get(g:, 'signify_sign_add', '+').' ',
     \ get(g:, 'signify_sign_change', '~').' ',
     \ get(g:, 'signify_sign_delete', '-').' '
     \ ]
-  let hunks = sy#repo#get_stats()
   let ret = []
   for i in [0, 1, 2]
     call add(ret, symbols[i].hunks[i])
