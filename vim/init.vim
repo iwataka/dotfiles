@@ -113,6 +113,7 @@ Plug 'ekalinin/Dockerfile.vim', { 'for': 'docker' }
 Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
+Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
 
 call plug#end()
 endif
@@ -295,6 +296,7 @@ augroup vimrcEx
   autocmd BufRead,BufNew *spacemacs setlocal filetype=lisp
   autocmd BufRead,BufNew *.gradle setlocal filetype=groovy
   autocmd BufRead,BufNew *editorconfig setlocal filetype=jproperties
+  autocmd BufRead,BufNew *.gpg setlocal filetype=gnupg
 
   " write comments easily for any files
   autocmd BufRead,BufNewFile * set formatoptions+=ro
