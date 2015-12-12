@@ -280,9 +280,6 @@ augroup vimrcEx
   " Comment strings
   autocmd FileType dosbatch setlocal commentstring=rem\ %s
 
-  " Allows C-style comment
-  autocmd FileType json setlocal commentstring=//\ %s
-
   " Quit help buffer by typing just q.
   autocmd FileType help
     \ if &readonly | nnoremap <buffer> q :q<cr> | endif
@@ -297,12 +294,10 @@ augroup vimrcEx
   autocmd BufRead,BufNew *.gradle setlocal filetype=groovy
   autocmd BufRead,BufNew *editorconfig setlocal filetype=jproperties
   autocmd BufRead,BufNew *.gpg setlocal filetype=gnupg
+  autocmd BufRead,BufNew *.json setlocal filetype=javascript
 
   " write comments easily for any files
   autocmd BufRead,BufNewFile * set formatoptions+=ro
-
-  " emphasize comments
-  autocmd BufRead,BufNew * hi Comment term=bold
 
   " prevent from conflicting multiple edit
   autocmd SwapExists * let v:swapchoice = 'o'
@@ -931,6 +926,10 @@ if has('unix')
     \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
     \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
     \ '/usr/lib/jvm/java-[1-9]\+-oracle'
+    \ ]
+elseif has('win32') || has('win64')
+  let s:ctrlp_bookmark_paths = [
+    \ 'C:\lib\*'
     \ ]
 endif
 
