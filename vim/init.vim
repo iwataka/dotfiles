@@ -952,7 +952,7 @@ fu! s:ctrlp_bookmark_init(bang)
       call s:ctrlp_bookmark_add(dirs)
     endfor
   endif
-  call s:ctrlp_bookmark_add(split(&rtp, ','))
+  call s:ctrlp_bookmark_add(map(split(&rtp, ','), 'resolve(expand(v:val))'))
 endf
 
 fu! s:ctrlp_bookmark_add(dirs)
