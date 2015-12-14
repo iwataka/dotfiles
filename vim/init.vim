@@ -64,9 +64,9 @@ Plug 'Yggdroot/indentLine'
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 
 " Navigation
-" if v:version >= 703
-"   Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle'] }  " Hardly used
-" endif
+if v:version >= 703
+  Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle'] }  " Hardly used
+endif
 Plug 'scrooloose/nerdtree', { 'on': [
   \ 'NERDTreeToggle',
   \ 'NERDTreeFind',
@@ -79,7 +79,6 @@ if has('unix') || has('mac') || has('macunix')
 elseif has('python')
   Plug 'FelikZ/ctrlp-py-matcher'
 endif
-Plug 'dyng/ctrlsf.vim'
 
 " Editing
 Plug 'tpope/vim-repeat'
@@ -767,13 +766,33 @@ if has('python')
   endfu
 endif
 
+" Use this command after executing grep.
 com! -nargs=+ Replace call s:replace(<f-args>)
 fu! s:replace(old, new)
-  let qfl = getqflist()
-  silent exe 'grep! '.a:old
-  silent exe 'cfdo %s/'.a:old.'/'.a:new.'/g'
-  call setqflist(qfl)
-  update
+  let _ignorecase = &ignorecase
+  set noignorecase
+  let files = {}
+  for d in getqflist()
+    let bufnr = d.bufnr
+    let bufname = bufname(bufnr)
+    if filereadable(bufname)
+      let lnum = d.lnum
+      let content = []
+      if has_key(files, bufnr)
+        let content = files[bufnr]
+      else
+        let content = readfile(bufname)
+      endif
+      let line = content[lnum - 1]
+      let new_line = substitute(line, a:old, a:new, 'g')
+      let content[lnum - 1] = new_line
+      let files[bufnr] = content
+    endif
+  endfor
+  for [bufnr, content] in items(files)
+    silent call writefile(content, bufname(str2nr(bufnr)))
+  endfor
+  let &ignorecase = _ignorecase
 endfu
 
 " ===============================================================
@@ -1226,13 +1245,13 @@ endif
 " --------------------------------------------------------------
 " tagbar {{{2
 " --------------------------------------------------------------
-" if v:version >= 703
-"   nnoremap <silent> <leader>t :TagbarToggle<cr>
-"   let g:tagbar_sort = 0
-"   let g:tagbar_show_linenumbers = 2
-"   let g:tagbar_autofocus = 1
-"   let g:tagbar_autoclose = 1
-" endif
+if v:version >= 703
+  nnoremap <silent> <leader>t :TagbarToggle<cr>
+  let g:tagbar_sort = 0
+  let g:tagbar_show_linenumbers = 2
+  let g:tagbar_autofocus = 1
+  let g:tagbar_autoclose = 1
+endif
 
 " --------------------------------------------------------------
 " nerdtree {{{2
