@@ -34,6 +34,7 @@ atom/projects.cson
 atom/packages
 atom/npm-debug.log
 atom/nohup.out
+atom/blob-store
 
 # Sbt
 sbt/*
