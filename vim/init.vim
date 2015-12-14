@@ -767,12 +767,16 @@ if has('python')
 endif
 
 " Use this command after executing grep.
-com! -nargs=+ Replace call s:replace(<f-args>)
-fu! s:replace(old, new)
+aug vimrc-replace
+  autocmd!
+  autocmd FileType qf com! -buffer -nargs=+ -range Replace call s:replace(<line1>, <line2>, <f-args>)
+aug END
+com! -nargs=+ Replace call s:replace(1, 0, <f-args>)
+fu! s:replace(line1, line2, old, new)
   let _ignorecase = &ignorecase
   set noignorecase
   let files = {}
-  for d in getqflist()
+  for d in getqflist()[(a:line1 - 1):(a:line2 - 1)]
     let bufnr = d.bufnr
     let bufname = bufname(bufnr)
     if filereadable(bufname)
