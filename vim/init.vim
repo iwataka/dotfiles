@@ -60,20 +60,26 @@ Plug 'mattn/webapi-vim'
 " Fancy
 " Plug 'bling/vim-airline'  " Waste time on startup
 Plug 'itchyny/lightline.vim'
-Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'Yggdroot/indentLine'
+Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 
 " Navigation
 " if v:version >= 703
 "   Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle'] }  " Hardly used
 " endif
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': [
+  \ 'NERDTreeToggle',
+  \ 'NERDTreeFind',
+  \ 'NERDTreeCWD',
+  \ 'NERDTreeFromBookmark'
+  \ ] }
 Plug 'ctrlpvim/ctrlp.vim'
 if has('unix') || has('mac') || has('macunix')
   Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
 elseif has('python')
   Plug 'FelikZ/ctrlp-py-matcher'
 endif
+Plug 'dyng/ctrlsf.vim'
 
 " Editing
 Plug 'tpope/vim-repeat'
@@ -760,6 +766,15 @@ if has('python')
     py webbrowser.open(vim.eval("url"), new=2)
   endfu
 endif
+
+com! -nargs=+ Replace call s:replace(<f-args>)
+fu! s:replace(old, new)
+  let qfl = getqflist()
+  silent exe 'grep! '.a:old
+  silent exe 'cfdo %s/'.a:old.'/'.a:new.'/g'
+  call setqflist(qfl)
+  update
+endfu
 
 " ===============================================================
 " ABBREVIATIONS {{{1
