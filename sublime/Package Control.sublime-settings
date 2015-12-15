@@ -5,7 +5,13 @@
 	],
 	"installed_packages":
 	[
+		"All Autocomplete",
+		"AutoFileName",
+		"DocBlockr",
+		"EditorConfig",
 		"Git",
+		"GitGutter",
+		"Origami",
 		"Package Control",
 		"Vintageous"
 	]
