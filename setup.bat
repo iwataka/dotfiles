@@ -22,6 +22,7 @@ call:mklinkDir vim
 call:mklinkDir atom
 call:mklinkDir sh
 call:mklinkDir gnupg
+call:mklinkSublime
 goto end
 
 :mklinkDir
@@ -32,6 +33,10 @@ goto:eof
 :mklinkFile
 if exist %USERPROFILE%\.%~1 del %USERPROFILE%\.%~1
 mklink %USERPROFILE%\.%~1 %DOTFILES%%~1
+goto:eof
+
+:mklinkSublime
+if exist "%APPDATA%\Sublime Text 3\" mklink /D "%APPDATA%\Sublime Text 3\Packages\User" %DOTFILES%sublime
 goto:eof
 
 :end
