@@ -5,6 +5,7 @@
 	],
 	"installed_packages":
 	[
+		"AdvancedNewFile",
 		"All Autocomplete",
 		"AutoFileName",
 		"DocBlockr",
@@ -13,6 +14,7 @@
 		"GitGutter",
 		"Origami",
 		"Package Control",
+		"Theme - Spacegray",
 		"Vintageous"
 	]
 }
