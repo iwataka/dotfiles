@@ -61,7 +61,6 @@ Plug 'mattn/webapi-vim'
 " Plug 'bling/vim-airline'  " Waste time on startup
 Plug 'itchyny/lightline.vim'
 Plug 'Yggdroot/indentLine'
-Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 
 " Navigation
 if v:version >= 703
@@ -93,6 +92,7 @@ Plug 'Raimondi/delimitMate'
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeForcus'] }
+Plug 'terryma/vim-multiple-cursors'
 " If you want to use syntastic, you must disable vim-auto-save plugin.
 " Plug 'scrooloose/syntastic'
 " Plug 'vim-scripts/vim-auto-save'
@@ -119,6 +119,9 @@ Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
+
+" WEB
+Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 
 call plug#end()
 endif
@@ -344,12 +347,12 @@ if has('nvim')
   tnoremap <ESC> <C-\><C-n>
 endif
 
-" Edit vimrc
-nnoremap <leader>ev :vsplit ~/.vim/init.vim<cr>
-" Source vimrc
-nnoremap <leader>sv :source ~/.vimrc<cr>
-" Source the current buffer
-nnoremap <leader>sc :source %<cr>
+" " Edit vimrc
+" nnoremap <leader>ev :vsplit ~/.vim/init.vim<cr>
+" " Source vimrc
+" nnoremap <leader>sv :source $MYVIMRC<cr>
+" " Source the current buffer
+" nnoremap <leader>sc :source %<cr>
 
 " qq to record, Q to replay
 nnoremap Q @q
@@ -799,6 +802,8 @@ fu! s:replace(line1, line2, old, new)
   let &ignorecase = _ignorecase
 endfu
 
+com! Reload source $MYVIMRC
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
@@ -944,7 +949,8 @@ let g:ctrlp_mruf_max = 1000
 
 nnoremap <silent> <Leader>p :CtrlP<CR>
 " This immitates atom, sublimeText and so on.
-nnoremap <silent> <C-p> :CtrlP<cr>
+" Conflict with vim-multiple-cursors
+" nnoremap <silent> <C-p> :CtrlP<cr>
 nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :CtrlPMRU<CR>
 nnoremap <silent> <Leader>d :CtrlPBookmarkDir<CR>
