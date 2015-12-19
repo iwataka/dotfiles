@@ -7,12 +7,14 @@ function mkd() {
 # location
 function o() {
     local cmd=""
-    if [[ $OSTYPE == "linux-gnu" ]]; then
+    if [[ "$OSTYPE" == "linux-gnu" ]]; then
         cmd="xdg-open"
-    elif [[ $OSTYPE == "cygwin" ]]; then
+    elif [[ "$OSTYPE" == "cygwin" ]]; then
         cmd="cygstart"
-    else
+    elif [[ "$OSTYPE" == "darwin" ]]; then
         cmd="open"
+    else
+        cmd="start"
     fi
     if [ $# -eq 0 ]; then
         $cmd .
@@ -27,23 +29,6 @@ function replace() {
 
 function psg() {
     ps -ef |grep "$@"
-}
-
-function mkup() {
-    if [[ "$@" == "" ]]
-    then
-        for markdown in *.(md|mkd|markdown)
-        do
-            mkup $markdown
-        done
-    else
-        for markdown in "$@"
-        do
-            root_name=${markdown%.*}
-            pandoc -s -f markdown_github -o ${root_name}.html $markdown
-            o ${root_name}.html
-        done
-    fi
 }
 
 function xmodmap() {
