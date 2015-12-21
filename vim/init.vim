@@ -51,8 +51,8 @@ if has('python')
 endif
 
 " Git
-" Plug 'airblade/vim-gitgutter'
-Plug 'mhinz/vim-signify'
+Plug 'airblade/vim-gitgutter'
+" Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/gist-vim', { 'on': ['Gist'] }
 Plug 'mattn/webapi-vim'
@@ -1048,10 +1048,10 @@ let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 " --------------------------------------------------------------
 " gitgutter {{{2
 " --------------------------------------------------------------
-" let g:gitgutter_sign_added = '+'
-" let g:gitgutter_sign_modified = '~'
-" let g:gitgutter_sign_removed = '-'
-" nnoremap <leader>gG :GitGutterToggle<cr>
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = '-'
+nnoremap <leader>gG :GitGutterToggle<cr>
 
 " --------------------------------------------------------------
 " signify {{{2
@@ -1100,7 +1100,7 @@ let g:lightline.colorscheme = 'solarized'
 let g:lightline.active = {}
 let g:lightline.active.left = [
   \   ['mode', 'paste'],
-  \   ['signify', 'fugitive'],
+  \   ['gitgutter', 'fugitive'],
   \   ['pwd', 'filename']
   \ ]
 let g:lightline.active.right = [
@@ -1111,7 +1111,7 @@ let g:lightline.active.right = [
 
 let g:lightline.component_function = {}
 let g:lightline.component_function.syntastic = 'SyntasticStatuslineFlag'
-" let g:lightline.component_function.gitgutter = 'MyGitGutter'
+let g:lightline.component_function.gitgutter = 'MyGitGutter'
 let g:lightline.component_function.signify = 'MySignify'
 let g:lightline.component_function.filename = 'MyFilename'
 let g:lightline.component_function.pwd = 'MyPWD'
