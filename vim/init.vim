@@ -89,9 +89,9 @@ Plug 'tpope/vim-sleuth'
 " This plug-in causes errors while inputting japanese characters
 " in GVim, so you should execute :DelimitMateOff for it.
 Plug 'Raimondi/delimitMate'
-" Plug 'terryma/vim-multiple-cursors'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeForcus'] }
+" This plugin is low-performance with YCM.
 Plug 'terryma/vim-multiple-cursors'
 " If you want to use syntastic, you must disable vim-auto-save plugin.
 " Plug 'scrooloose/syntastic'
@@ -362,16 +362,9 @@ vnoremap Q :norm @q<cr>
 nnoremap Y y$
 
 " Save
-if has('nvim')
-  inoremap <C-s> <C-O>:update<cr>
-  nnoremap <C-s> :update<cr>
-  nnoremap <Leader>w :update<CR>
-else
-  " update command causes unknown error in Vim.
-  inoremap <C-s> <C-O>:w<cr>
-  nnoremap <C-s> :w<cr>
-  nnoremap <Leader>w :w<CR>
-endif
+inoremap <C-s> <C-O>:w<cr>
+nnoremap <C-s> :w<cr>
+nnoremap <Leader>w :w<CR>
 cnoremap w!! w !sudo tee % >/dev/null
 
 " Quit
@@ -806,8 +799,6 @@ fu! s:replace(line1, line2, old, new)
   endfor
   let &ignorecase = _ignorecase
 endfu
-
-com! Reload source $MYVIMRC
 
 " ===============================================================
 " ABBREVIATIONS {{{1
@@ -1282,6 +1273,7 @@ nnoremap <leader>nc :NERDTreeCWD<cr>
 nnoremap <leader>nx :NERDTreeClose<cr>
 nnoremap <leader>nb :NERDTreeFromBookmark
 let g:NERDTreeShowHidden = 1
+let g:NERDTreeWinSize = 40
 
 augroup vimrc-nerdtree
   autocmd!
@@ -1359,6 +1351,13 @@ nnoremap <leader>u :UndotreeToggle<cr>
 " --------------------------------------------------------------
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
+
+" --------------------------------------------------------------
+" multiple-cursors {{{2
+" --------------------------------------------------------------
+let g:multi_cursor_exit_from_insert_mode = 0
+let g:multi_cursor_quit_key = 'q'
+let g:multi_cursor_insert_maps = { 'j': 1 }
 
 " --------------------------------------------------------------
 " auto-save {{{2
