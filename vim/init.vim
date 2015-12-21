@@ -698,6 +698,7 @@ endfu
 com! A call s:alternate(expand('%'), 'edit')
 com! AV call s:alternate(expand('%'), 'vsplit')
 com! AS call s:alternate(expand('%'), 'split')
+com! AT call s:alternate(expand('%'), 'tabedit')
 " Test files are detected by the suffixes `Test` or `Spec`.
 fu! s:alternate(fname, cmd)
   let root_name = fnamemodify(a:fname, ':p:r')
