@@ -1,22 +1,24 @@
 "*":
-  editor:
-    invisibles: {}
-    showInvisibles: true
-    showIndentGuide: true
-    softWrap: true
-    fontFamily: "Hack"
+  Zen: {}
+  "autocomplete-plus": {}
   core:
     themes: [
-      "one-dark-ui"
-      "monokai"
+      "atom-dark-ui"
+      "atom-dark-syntax"
     ]
+  editor:
+    fontFamily: "Hack"
+    invisibles: {}
+    showIndentGuide: true
+    showInvisibles: true
+    softWrap: true
   "exception-reporting":
     userId: "16cdba16-a2b1-eff3-7d6f-92f60c2fcfc9"
-  welcome:
-    showOnStartup: false
-  "autocomplete-plus": {}
+  "fuzzy-finder": {}
+  minimap: {}
   "vim-mode":
     useClipboardAsDefaultRegister: true
     useSmartcaseForSearch: true
-  minimap: {}
-  Zen: {}
+  "vim-surround": {}
+  welcome:
+    showOnStartup: false
