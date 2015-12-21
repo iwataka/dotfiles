@@ -863,11 +863,13 @@ augroup PlugGx
   autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
 augroup END
 
-com! PlugYcm call s:load_ycm()
-fu! s:load_ycm()
-  call plug#load('YouCompleteMe', 'ultisnips', 'vim-snippets')
-  call youcompleteme#Enable()
-endfu
+if ('python')
+  com! PlugYcm call s:load_ycm()
+  fu! s:load_ycm()
+    call plug#load('YouCompleteMe', 'ultisnips', 'vim-snippets')
+    call youcompleteme#Enable()
+  endfu
+endif
 
 " --------------------------------------------------------------
 " ColorScheme {{{2
