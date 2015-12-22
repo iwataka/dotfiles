@@ -1,0 +1,9 @@
+Host gitlab
+        HostName gitlab.com
+        Port 22
+        User git
+
+Host github
+        HostName github.com
+        Port 22
+        User git

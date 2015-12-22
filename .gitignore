@@ -7,35 +7,6 @@
 # temporary directory
 /tmp/
 
-# Vim
-vim/plugged/*
-vim/swaps/*
-!vim/swaps/.gitignore
-vim/undo/*
-!vim/undo/.gitignore
-vim/backups/*
-!vim/backups/.gitignore
-vim/.netrwhist
-vim/spell
-vim/shada/
-
-# Emacs
-emacs.d/*
-!emacs.d/init.el
-
-# Atom
-atom/storage
-atom/compile-cache
-atom/dev
-atom/.npm
-atom/.node-gyp
-atom/.apm
-atom/projects.cson
-atom/packages
-atom/npm-debug.log
-atom/nohup.out
-atom/blob-store
-
 # Sbt
 sbt/*
 !sbt/0.13

@@ -1,0 +1,11 @@
+storage/
+compile-cache/
+dev/
+.npm/
+.node-gyp/
+.apm/
+projects.cson
+packages/
+npm-debug.log
+nohup.out
+blob-store/

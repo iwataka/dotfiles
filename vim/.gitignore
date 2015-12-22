@@ -6,3 +6,5 @@ undo/*
 backups/*
 !backups/.gitignore
 .netrwhist
+spell/
+shada/
