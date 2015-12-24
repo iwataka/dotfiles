@@ -52,10 +52,14 @@ endif
 
 " Git
 Plug 'airblade/vim-gitgutter'
-" Plug 'mhinz/vim-signify'
+" if v:version >= 703
+"   Plug 'mhinz/vim-signify'
+" endif
 Plug 'tpope/vim-fugitive'
-Plug 'mattn/gist-vim', { 'on': ['Gist'] }
-Plug 'mattn/webapi-vim'
+
+" Note Taking
+" Plug 'mattn/gist-vim', { 'on': ['Gist'] }
+" Plug 'mattn/webapi-vim'
 
 " Fancy
 " Plug 'bling/vim-airline'  " Waste time on startup
@@ -84,7 +88,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sleuth'
 " This plug-in causes errors while inputting japanese characters
 " in GVim, so you should execute :DelimitMateOff for it.
@@ -103,13 +107,13 @@ Plug 'altercation/vim-colors-solarized'
 " Filetype
 if v:version >= 703
   Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+  Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 endif
 Plug 'plasticboy/vim-markdown', { 'for': 'mkd' }
 if has('unix') || has('mac')
   Plug 'suan/vim-instant-markdown', { 'for': 'mkd' }
 endif
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'tpope/vim-endwise'
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
@@ -1054,7 +1058,7 @@ let g:signify_sign_delete = '-'
 " --------------------------------------------------------------
 " fugitive {{{2
 " --------------------------------------------------------------
-nnoremap <Leader>gs :Gstatus<CR>5j
+nnoremap gs :Gstatus<CR>
 nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <leader>gD :Gsplit! diff<cr>
 nnoremap <Leader>gg :Ggrep<Space>
@@ -1070,7 +1074,7 @@ nnoremap <leader>gA :Git add --all<cr>
 " --------------------------------------------------------------
 " repeat {{{2
 " --------------------------------------------------------------
-sil! call repeat#set("\<Plug>(EasyAlign)", v:count)
+" sil! call repeat#set("\<Plug>(EasyAlign)", v:count)
 
 " --------------------------------------------------------------
 " airline {{{2
