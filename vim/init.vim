@@ -59,11 +59,11 @@ Plug 'airblade/vim-gitgutter'
 "   Plug 'mhinz/vim-signify'
 " endif
 Plug 'tpope/vim-fugitive'
+Plug 'gregsexton/gitv', { 'on': ['Gitv'] }
 
 " Note Taking
-" Plug 'mattn/gist-vim', { 'on': ['Gist'] }
-" Plug 'mattn/vimplenote-vim', { 'on': ['VimpleNote'] }
-" Plug 'mattn/webapi-vim'
+Plug 'mattn/gist-vim', { 'on': ['Gist'] }
+Plug 'mattn/webapi-vim'
 
 " Fancy
 " Plug 'bling/vim-airline'  " Waste time on startup
@@ -1060,7 +1060,7 @@ let g:signify_sign_change = '~'
 let g:signify_sign_delete = '-'
 
 " --------------------------------------------------------------
-" fugitive {{{2
+" Git {{{2
 " --------------------------------------------------------------
 nnoremap gs :Gstatus<CR>
 nnoremap <Leader>gd :Gdiff<CR>
@@ -1074,6 +1074,24 @@ nnoremap <Leader>gl :Glog<CR>
 nnoremap <leader>gL :Gpedit! log -n 100 --stat<cr><c-w>p
 nnoremap <leader>ga :Gcommit --amend<cr>
 nnoremap <leader>gA :Git add --all<cr>
+nnoremap <leader>gv :Gitv --all<cr>
+nnoremap <leader>gV :Gitv! --all<cr>
+vnoremap <leader>gV :Gitv! --all<cr>
+
+com! -nargs=+ Gdlist call s:git_diff_list(<f-args>)
+fu! s:git_diff_list(...)
+  let repo = fugitive#repo()
+  let git_dir = fnamemodify(repo.dir(), ':h')
+  let rev1 = a:0 > 1 ? a:1 : 'HEAD'
+  let rev2 = a:0 > 1 ? a:2 : a:1
+  let results = split(repo.git_chomp('diff', rev1, rev2, '--name-status'), '\n')
+  let modified_results = filter(copy(results), 'v:val =~ "^M"')
+  let modified_files = map(modified_results, 'substitute(v:val, "^M\\s*", "", "")')
+  for fl in modified_files
+    silent exe 'tabedit '.git_dir.'/'.fl
+    silent exe 'Gdiff '.rev2
+  endfor
+endfu
 
 " --------------------------------------------------------------
 " repeat {{{2
