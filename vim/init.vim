@@ -1,3 +1,6 @@
+" Introduction {{{1
+" ===============================================================
+
 " Awesome vimrc
 " junegunn - https://github.com/junegunn/dotfiles/blob/master/vimrc
 " martin-svk - https://github.com/martin-svk/dot-files/blob/master/neovim/init.vim
@@ -59,6 +62,7 @@ Plug 'tpope/vim-fugitive'
 
 " Note Taking
 " Plug 'mattn/gist-vim', { 'on': ['Gist'] }
+" Plug 'mattn/vimplenote-vim', { 'on': ['VimpleNote'] }
 " Plug 'mattn/webapi-vim'
 
 " Fancy
@@ -88,7 +92,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 " This plug-in causes errors while inputting japanese characters
 " in GVim, so you should execute :DelimitMateOff for it.
@@ -188,9 +192,9 @@ set hlsearch                              " Highlight search results
 nohlsearch                                " Prevetnt highlight when reloading .vimrc
 set ttyfast                               " Enable fast connection
 set foldenable                            " Enable to fold
-set foldlevel=2                           " Start folding at the second depth
+set foldlevel=0                           " Start folding at the second depth
 set foldmethod=marker                     " Use specified markers to fold sentences
-set foldopen+=jump,search                 " Open foldings when jumping to them
+" set foldopen+=jump,search                 " Open foldings when jumping to them
 set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
 set colorcolumn=81
@@ -890,7 +894,7 @@ endfunction
 let g:solarized_termcolors = 256
 let g:solarized_visibility = 'high'
 let g:solarized_hitrail = 0
-let g:solarized_termtrans = 0
+let g:solarized_termtrans = 1
 let g:solarized_italic = 0
 
 set background=dark
@@ -1067,7 +1071,7 @@ nnoremap <Leader>gr :Gread<CR>
 nnoremap <leader>gR :Gremove<cr>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gl :Glog<CR>
-nnoremap <leader>gL :Gsplit! log -n 100<cr>
+nnoremap <leader>gL :Gpedit! log -n 100 --stat<cr><c-w>p
 nnoremap <leader>ga :Gcommit --amend<cr>
 nnoremap <leader>gA :Git add --all<cr>
 
