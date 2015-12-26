@@ -305,6 +305,7 @@ augroup vimrcEx
     \   setlocal formatprg='astyle' |
     \ endif
 
+  " Set nolist in some situations
   autocmd FileType calendar,git,gitv setlocal nolist
 
   " Set some filetypes for some cetain files
@@ -1076,21 +1077,6 @@ nnoremap <leader>gA :Git add --all<cr>
 nnoremap <leader>gv :Gitv --all<cr>
 nnoremap <leader>gV :Gitv! --all<cr>
 vnoremap <leader>gV :Gitv! --all<cr>
-
-com! -nargs=+ Gdlist call s:git_diff_list(<f-args>)
-fu! s:git_diff_list(...)
-  let repo = fugitive#repo()
-  let git_dir = fnamemodify(repo.dir(), ':h')
-  let rev1 = a:0 > 1 ? a:1 : 'HEAD'
-  let rev2 = a:0 > 1 ? a:2 : a:1
-  let results = split(repo.git_chomp('diff', rev1, rev2, '--name-status'), '\n')
-  let modified_results = filter(copy(results), 'v:val =~ "^M"')
-  let modified_files = map(modified_results, 'substitute(v:val, "^M\\s*", "", "")')
-  for fl in modified_files
-    silent exe 'tabedit '.git_dir.'/'.fl
-    silent exe 'Gdiff '.rev2
-  endfor
-endfu
 
 " --------------------------------------------------------------
 " repeat {{{2
