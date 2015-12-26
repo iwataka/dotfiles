@@ -872,9 +872,6 @@ if ('python')
   endfu
 endif
 
-" --------------------------------------------------------------
-" ColorScheme {{{2
-" --------------------------------------------------------------
 function! s:plug_gx()
   let line = getline('.')
   let sha  = matchstr(line, '^  \zs[0-9a-f]\{7}\ze ')
