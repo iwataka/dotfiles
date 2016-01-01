@@ -40,7 +40,7 @@
 set nocompatible
 
 " Use ~/.vim as a runtime path even in Windows
-if has("win32") || has("win64")
+if has('win32') && !has('nvim')
   set runtimepath+=~/.vim/
 endif
 

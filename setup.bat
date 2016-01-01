@@ -14,7 +14,6 @@ call:mklinkFile bashrc
 call:mklinkFile shrc
 call:mklinkFile curlrc
 call:mklinkFile tmux.conf
-call:mklinkFile spacemacs
 call:mklinkFile wgetrc
 call:mklinkFile tigrc
 call:mklinkDir sbt
@@ -23,6 +22,8 @@ call:mklinkDir atom
 call:mklinkDir sh
 call:mklinkDir gnupg
 call:mklinkSublime
+call:mklinkNvim
+call:mklinkSpacemacs
 goto end
 
 :mklinkDir
@@ -38,5 +39,13 @@ goto:eof
 :mklinkSublime
 if exist "%APPDATA%\Sublime Text 3\" mklink /D "%APPDATA%\Sublime Text 3\Packages\User" %DOTFILES%sublime
 goto:eof
+
+:mklinkNvim
+if exist "%LOCALAPPDATA%\nvim" rmdir "%LOCALAPPDATA%\nvim"
+mklink /D "%LOCALAPPDATA%\nvim" "%DOTFILES%\vim"
+goto:eof
+
+:mklinkSpacemacs
+mklink "%USERPROFILE%\.spacemacs" "%DOTFILES%\spacemacs"
 
 :end
