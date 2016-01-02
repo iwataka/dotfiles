@@ -8,14 +8,12 @@
 
 " Awesome color scheme
 " vim-hybrid - https://github.com/w0ng/vim-hybrid
-" molokai -
-" monokai -
-" jellybeans -
-" gruvbox -
-" iceberg -
-" vividchalk -
-" zenburn -
-" base16 -
+" molokai - https://github.com/tomasr/molokai
+" tomorrow - https://github.com/chriskempson/vim-tomorrow-theme
+" jellybeans - https://github.com/nanotech/jellybeans.vim
+" gruvbox - https://github.com/morhetz/gruvbox
+" zenburn - https://github.com/jnurmine/Zenburn
+" base16 - https://github.com/chriskempson/base16-vim
 " wombat -
 " badwolf -
 " lucius -
@@ -61,10 +59,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', { 'on': ['Gitv'] }
 
-" Note Taking
-Plug 'mattn/gist-vim', { 'on': ['Gist'] }
-Plug 'mattn/webapi-vim'
-
 " Fancy
 " Plug 'bling/vim-airline'  " Waste time on startup
 Plug 'itchyny/lightline.vim'
@@ -107,6 +101,7 @@ Plug 'terryma/vim-multiple-cursors'
 
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
 
 " Filetype
 if v:version >= 703
@@ -128,8 +123,10 @@ Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
 
-" WEB
+" Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
+Plug 'mattn/gist-vim', { 'on': ['Gist'] }
+Plug 'mattn/webapi-vim'
 
 call plug#end()
 endif
@@ -897,8 +894,14 @@ let g:solarized_hitrail = 0
 let g:solarized_termtrans = 1
 let g:solarized_italic = 0
 
-set background=dark
-silent! colorscheme solarized
+if !exists('g:colors_name')
+  set background=dark
+  if has('gui_running')
+    silent! colorscheme gruvbox
+  else
+    silent! colorschem solarized
+  endif
+endif
 
 " --------------------------------------------------------------
 " gist {{{2
@@ -1088,7 +1091,11 @@ vnoremap <leader>gV :Gitv! --all<cr>
 " --------------------------------------------------------------
 let g:lightline = {}
 
-let g:lightline.colorscheme = 'solarized'
+if has('gui_running')
+  let g:lightline.colorscheme = 'wombat'
+else
+  let g:lightline.colorscheme = 'solarized'
+endif
 
 let g:lightline.active = {}
 let g:lightline.active.left = [
