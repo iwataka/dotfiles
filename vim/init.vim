@@ -664,7 +664,27 @@ let s:browse_url_list = [
   \ 'http://google.com'
   \ ]
 fu! s:UrlComplete(A, L, P)
-  return filter(copy(s:browse_url_list), 'v:val =~ "'.a:A.'"')
+  let bookmark_list = filter(s:chrome_bookmark_list(), 'v:val =~ "'.a:A.'"')
+  let url_list = filter(copy(s:browse_url_list), 'v:val =~ "'.a:A.'"')
+  let result = []
+  call extend(result, bookmark_list)
+  call extend(result, url_list)
+  return result
+endfu
+fu! s:chrome_bookmark_list()
+  let bookmark_fname = ''
+  if has('win32')
+    let bookmark_fname = $LOCALAPPDATA.'/Google/Chrome/User Data/Default/Bookmarks'
+  else
+    echoe 'Chrome bookmark file not found'
+  endif
+  if exists('*webapi#json#decode')
+    let bookmark = webapi#json#decode(join(readfile(bookmark_fname), ''))
+    let children = bookmark.roots.bookmark_bar.children
+    return map(children, 'v:val.url')
+  else
+    echoe 'Require webapi'
+  endif
 endfu
 
 com! Todo call s:todo()
