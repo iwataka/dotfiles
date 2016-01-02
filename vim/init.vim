@@ -688,14 +688,14 @@ com! -nargs=* Run call <sid>run_this_script(<q-args>)
 fu! s:run_this_script(args)
   let fname = expand('%')
   if &filetype == 'python'
-    exe '!python '.fname.' '.args
+    exe '!python '.fname.' '.a:args
   elseif &filetype == 'ruby'
-    exe '!ruby '.fname.' '.args
+    exe '!ruby '.fname.' '.a:args
   elseif &filetype == 'vim'
     " Put 'silent!' at the head because sourcing .vimrc must cause an error.
     silent! exe 'source '.fname
   else
-    exe '!'.fname.' '.args
+    exe '!'.fname.' '.a:args
   endif
 endfu
 
