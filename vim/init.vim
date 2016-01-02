@@ -632,6 +632,7 @@ fu! s:markdown_preview()
   endif
 endfu
 
+cabbrev o Open
 com! -nargs=* -complete=file Open call s:open(<q-args>)
 fu! s:open(target)
   let command = ''
@@ -642,14 +643,28 @@ fu! s:open(target)
   elseif has('win32unix')
     let command = 'cygstart'
   else
-    let command = 'start'
+    if executable('rundll32')
+      let command = 'rundll32 url.dll,FileProtocolHandler'
+    else
+      let command = 'start'
+    endif
   endif
   if empty(a:target)
-    silent exec '!'.command.' '.shellescape(expand('%:p'))
+    silent exec '!'.command.' "'.shellescape(expand('%:p')).'"'
   else
-    silent exec '!'.command.' '.a:target
+    silent exec '!'.command.' "'.a:target.'"'
   endif
   redraw!
+endfu
+
+com! -nargs=* -complete=customlist,s:UrlComplete Browse call s:open(<q-args>)
+let s:browse_url_list = [
+  \ 'http://youtube.com',
+  \ 'http://www.iijima.ae.keio.ac.jp/studio/',
+  \ 'http://google.com'
+  \ ]
+fu! s:UrlComplete(A, L, P)
+  return filter(copy(s:browse_url_list), 'v:val =~ "'.a:A.'"')
 endfu
 
 com! Todo call s:todo()
