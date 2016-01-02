@@ -46,9 +46,8 @@ silent! if plug#begin('~/.vim/plugged')
 
 " Completion
 if has('python')
-  Plug 'Valloric/YouCompleteMe', { 'on': [] }
-  Plug 'SirVer/ultisnips', { 'on': [] }
-  Plug 'honza/vim-snippets', { 'on': [] }
+  " Plug 'Valloric/YouCompleteMe', { 'on': [] }
+  Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 endif
 
 " Git
