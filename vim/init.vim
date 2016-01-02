@@ -237,7 +237,7 @@ endif
 
 if has('gui_running')
   set guioptions=
-  silent! set guifont=Hack\ 12
+  silent! set guifont=Hack:h9:cANSI
 endif
 
 if has('mouse')
