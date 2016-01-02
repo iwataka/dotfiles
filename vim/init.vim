@@ -906,13 +906,15 @@ let g:solarized_termcolors = 256
 let g:solarized_visibility = 'high'
 let g:solarized_hitrail = 0
 let g:solarized_termtrans = 1
-let g:solarized_italic = 0
+let g:solarized_italic = 1
+call togglebg#map('<F5>')
 
 if !exists('g:colors_name')
-  set background=dark
   if has('gui_running')
+    set background=light
     silent! colorscheme gruvbox
   else
+    set background=dark
     silent! colorschem solarized
   endif
 endif
