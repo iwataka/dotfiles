@@ -1,6 +1,3 @@
-" Introduction {{{1
-" ===============================================================
-
 " Awesome vimrc
 " junegunn - https://github.com/junegunn/dotfiles/blob/master/vimrc
 " martin-svk - https://github.com/martin-svk/dot-files/blob/master/neovim/init.vim
@@ -1073,6 +1070,10 @@ fu! s:ctrlp_bookmark_init(bang)
     endfor
   endif
   call s:ctrlp_bookmark_add(map(split(&rtp, ','), 'resolve(expand(v:val))'))
+  if exists('g:plugs')
+    let dirs = map(values(g:plugs), 'v:val.dir')
+    call s:ctrlp_bookmark_add(dirs)
+  endif
 endf
 
 fu! s:ctrlp_bookmark_add(dirs)
