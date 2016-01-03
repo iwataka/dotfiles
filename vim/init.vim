@@ -7,6 +7,7 @@
 " amix - https://github.com/amix/vimrc
 
 " Awesome color scheme
+" solarized - https://github.com/altercation/vim-colors-solarized
 " vim-hybrid - https://github.com/w0ng/vim-hybrid
 " molokai - https://github.com/tomasr/molokai
 " tomorrow - https://github.com/chriskempson/vim-tomorrow-theme
@@ -699,6 +700,16 @@ fu! s:google_search(...)
   call s:open(url)
 endfu
 
+com! -nargs=? JavaDoc call s:javadoc(8, <q-args>)
+fu! s:javadoc(version, class)
+  let class = ''
+  if a:class != ''
+    let class = substitute(a:class, '\.', '/', 'g').'.html'
+  endif
+  let url = 'http://docs.oracle.com/javase/'.a:version.'/docs/api/'.class
+  call s:open(url)
+endfu
+
 com! Todo call s:todo()
 fu! s:todo()
   silent! grep TODO
@@ -807,19 +818,6 @@ fu! s:open_file(fname, cmd)
   endif
   silent exe a:cmd.' '.a:fname
 endfu
-
-if has('python')
-  com! -nargs=? JavaDoc call s:javadoc(8, <q-args>)
-  fu! s:javadoc(version, class)
-    let class = ''
-    if a:class != ''
-      let class = substitute(a:class, '\.', '/', 'g').'.html'
-    endif
-    let url = 'http://docs.oracle.com/javase/'.a:version.'/docs/api/'.class
-    py import webbrowser, vim
-    py webbrowser.open(vim.eval("url"), new=2)
-  endfu
-endif
 
 " Use this command after executing grep.
 aug vimrc-replace
