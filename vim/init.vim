@@ -198,16 +198,16 @@ set colorcolumn=81
 set wildmenu
 set wildignorecase
 set wildmode=list:full
-set wildignore+=.git,.hg,.svn,.bzr,_darcs        " VCS
-set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-set wildignore+=*.spl                            " compiled spelling word lists
-set wildignore+=*.sw?                            " Vim swap files
-set wildignore+=*.DS_Store                       " OSX
-set wildignore+=*.luac                           " Lua
-set wildignore+=*.pyc                            " Python
-set wildignore+=*.rbc                            " Ruby
-set wildignore+=*.class                          " JVM
+" set wildignore+=.git,.hg,.svn,.bzr,_darcs        " VCS
+" set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+" set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+" set wildignore+=*.spl                            " compiled spelling word lists
+" set wildignore+=*.sw?                            " Vim swap files
+" set wildignore+=*.DS_Store                       " OSX
+" set wildignore+=*.luac                           " Lua
+" set wildignore+=*.pyc                            " Python
+" set wildignore+=*.rbc                            " Ruby
+" set wildignore+=*.class                          " JVM
 
 if has('win32') || has('win64')
   set imdisable
