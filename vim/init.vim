@@ -650,7 +650,7 @@ fu! s:open(...)
       let command = 'start'
     endif
   endif
-  let target = join(a:000, ' ')
+  let target = join(map(copy(a:000), 'expand(v:val)'), ' ')
   if empty(target)
     silent exec '!'.command.' "'.expand('%:p').'"'
   else
