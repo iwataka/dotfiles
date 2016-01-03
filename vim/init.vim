@@ -687,6 +687,18 @@ fu! s:chrome_bookmark_list()
   endif
 endfu
 
+com! -nargs=* Google call s:google_search(<f-args>)
+fu! s:google_search(...)
+  let keywords = join(a:000, '+')
+  let url = ""
+  if keywords == ""
+    let url = "https://www.google.com"
+  else
+    let url = "https://www.google.com/search?q=".keywords
+  endif
+  call s:open(url)
+endfu
+
 com! Todo call s:todo()
 fu! s:todo()
   silent! grep TODO
