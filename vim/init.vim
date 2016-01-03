@@ -339,6 +339,8 @@ nnoremap j gj
 nnoremap k gk
 nnoremap <Down> gj
 nnoremap <Up> gk
+nnoremap gj j
+nnoremap gk k
 
 " Prevent to override registers by one character
 nnoremap x "_x
