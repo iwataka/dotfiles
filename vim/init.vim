@@ -14,10 +14,6 @@
 " gruvbox - https://github.com/morhetz/gruvbox
 " zenburn - https://github.com/jnurmine/Zenburn
 " base16 - https://github.com/chriskempson/base16-vim
-" wombat -
-" badwolf -
-" lucius -
-" atom-dark -
 
 " Color scheme gallery
 " vimcolor - http://vimcolor.com
@@ -101,6 +97,9 @@ Plug 'terryma/vim-multiple-cursors'
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
+" Switching colorscheme includes an error caused by a bug in Vim.
+" This plugin resolves it.
+Plug 'xolox/vim-colorscheme-switcher'
 
 " Filetype
 if v:version >= 703
@@ -126,6 +125,7 @@ Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/gist-vim', { 'on': ['Gist'] }
 Plug 'mattn/webapi-vim'
+Plug 'xolox/vim-misc'
 
 call plug#end()
 endif
@@ -929,6 +929,8 @@ let g:solarized_termtrans = 1
 let g:solarized_italic = 1
 call togglebg#map('<F5>')
 
+let g:gruvbox_improved_warnings = 1
+
 if !exists('g:colors_name')
   if has('gui_running')
     set background=light
@@ -1403,3 +1405,9 @@ let g:calendar_google_task = 1
 let g:multi_cursor_exit_from_insert_mode = 0
 let g:multi_cursor_quit_key = 'q'
 let g:multi_cursor_insert_maps = { 'j': 1 }
+
+" --------------------------------------------------------------
+" colorscheme-switcher {{{2
+" --------------------------------------------------------------
+let g:colorscheme_switcher_define_mappings = 1
+let g:colorscheme_switcher_exclude_builtins = 1
