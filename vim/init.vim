@@ -634,8 +634,8 @@ fu! s:markdown_preview()
 endfu
 
 cabbrev o Open
-com! -nargs=* -complete=file Open call s:open(<q-args>)
-fu! s:open(target)
+com! -nargs=* -complete=file Open call s:open(<f-args>)
+fu! s:open(...)
   let command = ''
   if has('unix')
     let command = 'xdg-open'
@@ -650,10 +650,11 @@ fu! s:open(target)
       let command = 'start'
     endif
   endif
-  if empty(a:target)
-    silent exec '!'.command.' "'.shellescape(expand('%:p')).'"'
+  let target = join(a:000, ' ')
+  if empty(target)
+    silent exec '!'.command.' "'.expand('%:p').'"'
   else
-    silent exec '!'.command.' "'.a:target.'"'
+    silent exec '!'.command.' "'.target.'"'
   endif
   redraw!
 endfu
