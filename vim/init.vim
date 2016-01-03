@@ -679,13 +679,13 @@ fu! s:chrome_bookmark_list()
   else
     echoe 'Chrome bookmark file not found'
   endif
-  if exists('*webapi#json#decode')
+  try
     let bookmark = webapi#json#decode(join(readfile(bookmark_fname), ''))
     let children = bookmark.roots.bookmark_bar.children
     return map(children, 'v:val.url')
-  else
+  catch /^Unknown function/
     echoe 'Require webapi'
-  endif
+  endtry
 endfu
 
 com! -nargs=* Google call s:google_search(<f-args>)
