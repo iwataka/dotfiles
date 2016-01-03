@@ -687,7 +687,7 @@ fu! s:chrome_bookmark_list()
     let children = bookmark.roots.bookmark_bar.children
     return map(children, 'v:val.url')
   catch /^Unknown function/
-    echoe 'Require webapi'
+    echoe 'Require webapi-vim'
   endtry
 endfu
 
@@ -820,6 +820,23 @@ fu! s:open_file(fname, cmd)
     call mkdir(parent_dir, 'p')
   endif
   silent exe a:cmd.' '.a:fname
+endfu
+
+com! -nargs=* -complete=customlist,s:TempEditComplete Tedit call s:open_file(s:tempname(<q-args>), 'edit')
+com! -nargs=* -complete=customlist,s:TempEditComplete Tsplit call s:open_file(s:tempname(<q-args>), 'split')
+com! -nargs=* -complete=customlist,s:TempEditComplete Tvsplit call s:open_file(s:tempname(<q-args>), 'vsplit')
+com! -nargs=* -complete=customlist,s:TempEditComplete Ttabedit call s:open_file(s:tempname(<q-args>), 'tabedit')
+fu! s:tempdir()
+  let dirname = 'myvim_tmp'
+  return fnamemodify(tempname(), ':h').'/'.dirname
+endfu
+fu! s:tempname(fname)
+  return s:tempdir().'/'.a:fname
+endfu
+fu! s:TempEditComplete(A, L, P)
+  let files = split(glob(s:tempdir().'/*'), '\n')
+  let files = map(files, 'fnamemodify(v:val, ":t")')
+  return filter(files, 'v:val =~ a:A')
 endfu
 
 " Use this command after executing grep.
