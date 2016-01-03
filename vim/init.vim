@@ -1140,7 +1140,7 @@ vnoremap <leader>gV :Gitv! --all<cr>
 let g:lightline = {}
 
 if has('gui_running')
-  let g:lightline.colorscheme = 'wombat'
+  let g:lightline.colorscheme = 'gruvbox'
 else
   let g:lightline.colorscheme = 'solarized'
 endif
