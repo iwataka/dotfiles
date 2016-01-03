@@ -12,6 +12,10 @@
 " gruvbox - https://github.com/morhetz/gruvbox
 " zenburn - https://github.com/jnurmine/Zenburn
 " base16 - https://github.com/chriskempson/base16-vim
+" pencil - https://github.com/reedes/vim-colors-pencil
+" papercolor - https://github.com/NLKNguyen/papercolor-theme
+" lucius - https://github.com/jonathanfilip/vim-lucius
+" gotham - https://github.com/whatyouhide/vim-gotham
 
 " Color scheme gallery
 " vimcolor - http://vimcolor.com
@@ -95,6 +99,7 @@ Plug 'terryma/vim-multiple-cursors'
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
+Plug 'whatyouhide/vim-gotham'
 " Switching colorscheme includes an error caused by a bug in Vim.
 " This plugin resolves it.
 Plug 'xolox/vim-colorscheme-switcher'
@@ -869,6 +874,11 @@ fu! s:replace(line1, line2, old, new)
   let &ignorecase = _ignorecase
 endfu
 
+fu! s:is_midnight()
+  let hour = str2nr(strftime("%H"))
+  return hour > 22 || hour < 6
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
@@ -960,8 +970,12 @@ let g:gruvbox_improved_warnings = 1
 
 if !exists('g:colors_name')
   if has('gui_running')
-    set background=light
-    silent! colorscheme gruvbox
+    set background=dark
+    if s:is_midnight()
+      silent! colorscheme gotham256
+    else
+      silent! colorscheme gruvbox
+    endif
   else
     set background=dark
     silent! colorschem solarized
@@ -1161,7 +1175,11 @@ vnoremap <leader>gV :Gitv! --all<cr>
 let g:lightline = {}
 
 if has('gui_running')
-  let g:lightline.colorscheme = 'gruvbox'
+  if s:is_midnight()
+    let g:lightline.colorscheme = 'gotham256'
+  else
+    let g:lightline.colorscheme = 'gruvbox'
+  endif
 else
   let g:lightline.colorscheme = 'solarized'
 endif
