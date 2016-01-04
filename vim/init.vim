@@ -1175,7 +1175,7 @@ nnoremap <Leader>gr :Gread<CR>
 nnoremap <leader>gR :Gremove<cr>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gl :Glog<CR>
-nnoremap <leader>gL :Gpedit! log -n 100 --stat<cr><c-w>p
+nnoremap <leader>gL :Gpedit! log -n 10 --stat<cr><c-w>p
 nnoremap <leader>ga :Gcommit --amend<cr>
 nnoremap <leader>gA :Git add --all<cr>
 
