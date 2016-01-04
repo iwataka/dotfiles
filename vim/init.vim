@@ -91,7 +91,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeForcus'] }
 " This plugin is low-performance with YCM.
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'terryma/vim-multiple-cursors'
 " If you want to use syntastic, you must disable vim-auto-save plugin.
 " Plug 'scrooloose/syntastic'
 " Plug 'vim-scripts/vim-auto-save'
@@ -132,7 +132,6 @@ Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/gist-vim', { 'on': ['Gist'] }
 Plug 'mattn/webapi-vim'
 Plug 'xolox/vim-misc'
-Plug 'justinmk/vim-sneak'
 
 call plug#end()
 endif
@@ -1481,16 +1480,3 @@ nnoremap <leader>u :UndotreeToggle<cr>
 " --------------------------------------------------------------
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
-
-" --------------------------------------------------------------
-" multiple-cursors {{{2
-" --------------------------------------------------------------
-let g:multi_cursor_exit_from_insert_mode = 0
-let g:multi_cursor_quit_key = 'q'
-let g:multi_cursor_insert_maps = { 'j': 1 }
-
-" --------------------------------------------------------------
-" sneak {{{2
-" --------------------------------------------------------------
-let g:sneak#stream = 1
-let g:sneak#use_ic_scs = 1
