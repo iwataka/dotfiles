@@ -123,7 +123,7 @@ Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
-if ('clientserver')
+if has('clientserver')
   Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 endif
 
