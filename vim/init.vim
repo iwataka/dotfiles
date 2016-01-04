@@ -419,9 +419,6 @@ nnoremap - <c-x>
 " Select all.
 nnoremap <c-a> gg^vG$
 
-" Changes the current working directory to the directory of focused buffer
-nnoremap <leader>cd  :cd %:h<cr>
-
 " Make <C-u> behave like being on command line
 inoremap <C-u> <C-g>u<C-u>
 
@@ -469,15 +466,15 @@ function! s:bufclear(bang, path)
 endfunction
 
 " Changes the current directory to the project root
-com! Root call s:cd_root()
-fu! s:cd_root()
-  let cwd = fnamemodify(expand('%'), ':p:h')
-  let root = s:root(cwd)
+com! Root call s:cd_root(expand('%:p:h'))
+fu! s:cd_root(path)
+  let root = s:root(a:path)
   if empty(root)
+    silent exe 'cd '.a:path
     echom 'Not in a project'
   else
-    echom 'Changes the current directory to: '.root
     silent exe 'cd '.root
+    echom 'Changes the current directory to: '.root
   endif
 endfu
 fu! s:root(cwd)
