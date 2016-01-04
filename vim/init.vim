@@ -1086,19 +1086,23 @@ fu! s:ctrlp_bookmark_init(bang)
       call s:ctrlp_bookmark_add(dirs)
     endfor
   endif
-  call s:ctrlp_bookmark_add(map(split(&rtp, ','), 'resolve(expand(v:val))'))
+  call s:ctrlp_bookmark_add($VIMRUNTIME)
   if exists('g:plugs')
     let dirs = map(values(g:plugs), 'v:val.dir')
     call s:ctrlp_bookmark_add(dirs)
   endif
 endf
 
-fu! s:ctrlp_bookmark_add(dirs)
-  for dir in a:dirs
-    if isdirectory(dir)
-      silent exe 'CtrlPBookmarkDirAdd! '.dir
-    endif
-  endfor
+fu! s:ctrlp_bookmark_add(dir)
+  if type(a:dir) == type([])
+    for d in a:dir
+      if isdirectory(d)
+        silent exe 'CtrlPBookmarkDirAdd! '.d
+      endif
+    endfor
+  elseif type(a:dir) == type('')
+    silent exe 'CtrlPBookmarkDirAdd! '.a:dir
+  endif
 endfu
 
 augroup vimrc-ctrlp
