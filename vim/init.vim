@@ -1109,6 +1109,19 @@ elseif has('python')
   let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 endif
 
+fu! CtrlPOpenFiles(action, line)
+  if a:action == 'h'
+    let fname = fnameescape(fnamemodify(a:line, ':p'))
+    call ctrlp#exit()
+    call s:open(fname)
+  else
+    call call('ctrlp#acceptfile', [a:action, a:line])
+  endif
+endfu
+let g:ctrlp_open_func = {
+  \ 'files': 'CtrlPOpenFiles'
+  \ }
+
 " --------------------------------------------------------------
 " YCM {{{2
 " --------------------------------------------------------------
