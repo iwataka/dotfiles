@@ -320,6 +320,7 @@ augroup vimrcEx
   autocmd BufRead,BufNew *editorconfig setlocal filetype=jproperties
   autocmd BufRead,BufNew *.gpg setlocal filetype=gnupg
   autocmd BufRead,BufNew *.json setlocal filetype=javascript
+  autocmd BufRead,BufNew *.tex setlocal filetype=tex
 
   " write comments easily for any files
   autocmd BufRead,BufNewFile * set formatoptions+=ro
@@ -1381,6 +1382,7 @@ if v:version >= 703
   let g:tagbar_autoclose = 1
 endif
 let g:vimtex_view_enabled = 0
+let g:vimtex_index_split_width = 40
 fu! s:toggle_navigation_bar()
   if &ft == 'tex' || &ft == 'latex'
     VimtexTocToggle
