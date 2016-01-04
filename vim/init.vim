@@ -1131,14 +1131,6 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 
 " --------------------------------------------------------------
-" gitgutter {{{2
-" --------------------------------------------------------------
-let g:gitgutter_sign_added = '+'
-let g:gitgutter_sign_modified = '~'
-let g:gitgutter_sign_removed = '-'
-nnoremap <leader>gG :GitGutterToggle<cr>
-
-" --------------------------------------------------------------
 " signify {{{2
 " --------------------------------------------------------------
 let g:signify_sign_add = '+'
@@ -1160,9 +1152,15 @@ nnoremap <Leader>gl :Glog<CR>
 nnoremap <leader>gL :Gpedit! log -n 100 --stat<cr><c-w>p
 nnoremap <leader>ga :Gcommit --amend<cr>
 nnoremap <leader>gA :Git add --all<cr>
+
 nnoremap <leader>gv :Gitv --all<cr>
 nnoremap <leader>gV :Gitv! --all<cr>
 vnoremap <leader>gV :Gitv! --all<cr>
+
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = '-'
+nnoremap <leader>gG :GitGutterToggle<cr>
 
 " --------------------------------------------------------------
 " repeat {{{2
