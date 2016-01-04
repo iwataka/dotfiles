@@ -640,27 +640,24 @@ endfu
 cabbrev o Open
 com! -nargs=* -complete=file Open call s:open(<f-args>)
 fu! s:open(...)
-  let command = ''
+  let target = join(map(copy(a:000), 's:quote_fname(expand(v:val))'), ' ')
+  let target = empty(target) ? '"'.expand('%:p').'"' : target
   if has('unix')
-    let command = 'xdg-open'
+    silent exec '!xdg-open '.target
   elseif has('mac')
-    let command = 'open'
+    silent exec '!open '.target
   elseif has('win32unix')
-    let command = 'cygstart'
+    silent exec '!cygstart '.target
   else
-    if executable('rundll32')
-      let command = 'rundll32 url.dll,FileProtocolHandler'
-    else
-      let command = 'start'
+    silent! exec '!start '.target
+    if v:shell_error
+      silent exec '!rundll32 url.dll,FileProtocolHandler '.target
     endif
   endif
-  let target = join(map(copy(a:000), 'expand(v:val)'), ' ')
-  if empty(target)
-    silent exec '!'.command.' "'.expand('%:p').'"'
-  else
-    silent exec '!'.command.' "'.target.'"'
-  endif
   redraw!
+endfu
+fu! s:quote_fname(str)
+  return filereadable(a:str) ? '"'.a:str.'"' : a:str
 endfu
 
 com! -nargs=* -complete=customlist,s:UrlComplete Browse call s:open(<q-args>)
