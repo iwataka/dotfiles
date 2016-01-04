@@ -129,6 +129,7 @@ Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/gist-vim', { 'on': ['Gist'] }
 Plug 'mattn/webapi-vim'
 Plug 'xolox/vim-misc'
+Plug 'justinmk/vim-sneak'
 
 call plug#end()
 endif
@@ -1472,3 +1473,9 @@ let g:calendar_google_task = 1
 let g:multi_cursor_exit_from_insert_mode = 0
 let g:multi_cursor_quit_key = 'q'
 let g:multi_cursor_insert_maps = { 'j': 1 }
+
+" --------------------------------------------------------------
+" sneak {{{2
+" --------------------------------------------------------------
+let g:sneak#stream = 1
+let g:sneak#use_ic_scs = 1
