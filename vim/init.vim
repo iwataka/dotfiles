@@ -63,7 +63,7 @@ Plug 'Yggdroot/indentLine'
 
 " Navigation
 if v:version >= 703
-  Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle'] }  " Hardly used
+  Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle'] }
 endif
 Plug 'scrooloose/nerdtree', { 'on': [
   \ 'NERDTreeToggle',
@@ -123,6 +123,9 @@ Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
+if ('clientserver')
+  Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
+endif
 
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
@@ -1366,15 +1369,23 @@ if executable('flake8')
 endif
 
 " --------------------------------------------------------------
-" tagbar {{{2
+" Navigation {{{2
 " --------------------------------------------------------------
 if v:version >= 703
-  nnoremap <silent> <leader>t :TagbarToggle<cr>
+  nnoremap <silent> <leader>t :call <sid>toggle_navigation_bar()<cr>
   let g:tagbar_sort = 0
   let g:tagbar_show_linenumbers = 2
   let g:tagbar_autofocus = 1
   let g:tagbar_autoclose = 1
 endif
+let g:vimtex_view_enabled = 0
+fu! s:toggle_navigation_bar()
+  if &ft == 'tex' || &ft == 'latex'
+    VimtexTocToggle
+  else
+    TagbarToggle
+  endif
+endfu
 
 " --------------------------------------------------------------
 " nerdtree {{{2
