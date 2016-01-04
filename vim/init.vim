@@ -976,6 +976,12 @@ if !exists('g:colors_name')
   endif
 endif
 
+let g:colorscheme_switcher_define_mappings = 1
+let g:colorscheme_switcher_exclude_builtins = 1
+if has('gui_running') || g:solarized_termcolors == 256
+  let g:colorscheme_switcher_exclude = ['gotham']
+endif
+
 " --------------------------------------------------------------
 " gist {{{2
 " --------------------------------------------------------------
@@ -1448,9 +1454,3 @@ let g:calendar_google_task = 1
 let g:multi_cursor_exit_from_insert_mode = 0
 let g:multi_cursor_quit_key = 'q'
 let g:multi_cursor_insert_maps = { 'j': 1 }
-
-" --------------------------------------------------------------
-" colorscheme-switcher {{{2
-" --------------------------------------------------------------
-let g:colorscheme_switcher_define_mappings = 1
-let g:colorscheme_switcher_exclude_builtins = 1
