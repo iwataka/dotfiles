@@ -242,7 +242,11 @@ endif
 
 if has('gui_running')
   set guioptions=
-  silent! set guifont=Hack:h9:cANSI
+  if has('win32')
+    silent! set guifont=Hack:h9:cANSI
+  else
+    silent! set guifont=Hack\ 11
+  endif
 endif
 
 if has('mouse')
