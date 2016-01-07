@@ -653,7 +653,9 @@ fu! s:open(...)
   let target = join(map(copy(a:000), 's:quote_fname(expand(v:val))'), ' ')
   let target = empty(target) ? '"'.expand('%:p').'"' : target
   if has('unix')
-    silent exec '!xdg-open '.target
+    " This line does not work at all and I don't know the reason.
+    " silent exec '!xdg-open '.target
+    call system('xdg-open '.target)
   elseif has('mac')
     silent exec '!open '.target
   elseif has('win32unix')
