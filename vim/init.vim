@@ -690,6 +690,8 @@ fu! s:chrome_bookmark_list()
   let bookmark_fname = ''
   if has('win32')
     let bookmark_fname = $LOCALAPPDATA.'/Google/Chrome/User Data/Default/Bookmarks'
+  elseif has('unix')
+    let bookmark_fname = expand('~/.config/google-chrome/Default/Bookmarks')
   else
     echoe 'Chrome bookmark file not found'
   endif
