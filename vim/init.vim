@@ -973,6 +973,8 @@ let g:solarized_italic = 1
 call togglebg#map('<F5>')
 
 let g:gruvbox_improved_warnings = 1
+let g:gruvbox_contrast_light = 'soft'
+let g:gruvbox_contrast_dark = 'soft'
 
 if !exists('g:colors_name')
   if has('gui_running')
