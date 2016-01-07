@@ -318,12 +318,12 @@ augroup vimrcEx
   autocmd FileType calendar,git,gitv setlocal nolist
 
   " Set some filetypes for some cetain files
-  autocmd BufRead,BufNew *spacemacs setlocal filetype=lisp
-  autocmd BufRead,BufNew *.gradle setlocal filetype=groovy
-  autocmd BufRead,BufNew *editorconfig setlocal filetype=jproperties
-  autocmd BufRead,BufNew *.gpg setlocal filetype=gnupg
-  autocmd BufRead,BufNew *.json setlocal filetype=javascript
-  autocmd BufRead,BufNew *.tex setlocal filetype=tex
+  autocmd BufRead,BufNewFile *spacemacs set filetype=lisp
+  autocmd BufRead,BufNewFile *.gradle set filetype=groovy
+  autocmd BufRead,BufNewFile *editorconfig set filetype=jproperties
+  autocmd BufRead,BufNewFile *.gpg set filetype=gnupg
+  autocmd BufRead,BufNewFile *.json set filetype=javascript
+  autocmd BufRead,BufNewFile *.tex set filetype=tex
 
   " write comments easily for any files
   autocmd BufRead,BufNewFile * set formatoptions+=ro
