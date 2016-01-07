@@ -66,6 +66,7 @@ if v:version >= 703
   Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle'] }
 endif
 Plug 'scrooloose/nerdtree', { 'on': [
+  \ 'NERDTree',
   \ 'NERDTreeToggle',
   \ 'NERDTreeFind',
   \ 'NERDTreeCWD',
