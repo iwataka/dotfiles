@@ -100,10 +100,9 @@ Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeForcus'] }
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
-Plug 'whatyouhide/vim-gotham'
 " Switching colorscheme includes an error caused by a bug in Vim.
 " This plugin resolves it.
-Plug 'xolox/vim-colorscheme-switcher'
+" Plug 'xolox/vim-colorscheme-switcher'
 
 " Filetype
 if v:version >= 703
@@ -878,11 +877,6 @@ fu! s:replace(line1, line2, old, new)
   let &ignorecase = _ignorecase
 endfu
 
-fu! s:is_midnight()
-  let hour = str2nr(strftime("%H"))
-  return hour > 22 || hour < 6
-endfu
-
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
@@ -975,21 +969,11 @@ let g:gruvbox_improved_warnings = 1
 if !exists('g:colors_name')
   if has('gui_running')
     set background=dark
-    if s:is_midnight()
-      silent! colorscheme gotham256
-    else
-      silent! colorscheme gruvbox
-    endif
+    silent! colorscheme gruvbox
   else
     set background=dark
     silent! colorschem solarized
   endif
-endif
-
-let g:colorscheme_switcher_define_mappings = 1
-let g:colorscheme_switcher_exclude_builtins = 1
-if has('gui_running') || g:solarized_termcolors == 256
-  let g:colorscheme_switcher_exclude = ['gotham']
 endif
 
 " --------------------------------------------------------------
@@ -1200,11 +1184,7 @@ nnoremap <leader>gG :GitGutterToggle<cr>
 let g:lightline = {}
 
 if has('gui_running')
-  if s:is_midnight()
-    let g:lightline.colorscheme = 'gotham256'
-  else
-    let g:lightline.colorscheme = 'gruvbox'
-  endif
+  let g:lightline.colorscheme = 'gruvbox'
 else
   let g:lightline.colorscheme = 'solarized'
 endif
