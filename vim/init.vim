@@ -1088,8 +1088,8 @@ fu! s:ctrlp_bookmark_init(bang)
     endfor
   endif
   call s:ctrlp_bookmark_add($VIMRUNTIME)
-  if exists('g:plugs')
-    let dirs = map(values(g:plugs), 'v:val.dir')
+  if exists('g:plug_home')
+    let dirs = split(globpath(g:plug_home, '*'))
     call s:ctrlp_bookmark_add(dirs)
   endif
 endf
