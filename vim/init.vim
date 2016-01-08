@@ -737,20 +737,22 @@ fu! s:todo()
   silent! grepadd NOTE
 endfu
 
-com! Make call <sid>make_current_project()
-fu! s:make_current_project()
-  let files = split(system('ls'), '\n')
-  for file in files
-    if file == "Makefile"
-      !make
-      return
-    elseif file == "Rakefile"
-      !rake
-      return
-    endif
-  endfor
-  make
-endfu
+" This has the same name as Make command in vim-dispatch and it causes
+" some annoyances.
+" com! Make call <sid>make_current_project()
+" fu! s:make_current_project()
+"   let files = split(system('ls'), '\n')
+"   for file in files
+"     if file == "Makefile"
+"       !make
+"       return
+"     elseif file == "Rakefile"
+"       !rake
+"       return
+"     endif
+"   endfor
+"   make
+" endfu
 
 com! -nargs=* Run call <sid>run_this_script(<q-args>)
 fu! s:run_this_script(args)
