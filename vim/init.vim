@@ -401,7 +401,8 @@ cnoremap <C-E> <End>
 cnoremap <C-K> <C-U>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
-cnoremap <expr> %% expand("%")
+" This annoys me a little
+" cnoremap <expr> %% expand("%")
 
 " Scroll horizontally
 nnoremap zl zL
