@@ -301,7 +301,6 @@ augroup vimrcEx
   " Comment strings
   autocmd FileType *markdown setlocal commentstring=<!--%s-->
   autocmd FileType dosbatch setlocal commentstring=rem%s
-  autocmd FileType tex setlocal commentstring=%%%s
 
   " Quit help buffer by typing just q.
   autocmd FileType help
@@ -1422,14 +1421,6 @@ let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 
 " --------------------------------------------------------------
-" commentary {{{2
-" --------------------------------------------------------------
-aug vimrc-commentary
-  au!
-  au Filetype tex let b:commentary_format = '% %s'
-aug END
-
-" --------------------------------------------------------------
 " Misc {{{1
 " --------------------------------------------------------------
 " --------------------------------------------------------------
@@ -1443,8 +1434,7 @@ fu! s:separator_insert(char, enter_insert_mode_key)
   let width = get(b:, 'separator_width',
         \ get(g:, 'separator_width', s:separator_width()))
   let w = use_curline_width && curline_width != 0 ? curline_width : width
-  let format = get(b:, 'separator_format',
-        \ get(g:, 'separator_format', s:separator_format()))
+  let format = s:separator_format()
   let sep = printf(format, repeat(a:char, w / len(a:char)))
   silent exe 'normal! '.a:enter_insert_mode_key.sep
   call setline(line('.'), getline('.')[0:(w - 1)])
@@ -1457,10 +1447,12 @@ endfu
 fu! s:separator_format()
   if empty(&cms)
     return '%s'
-  elseif s:insert_seprator_use_commentary_style()
-    return s:separator_commentary_format()
+  endif
+  let format = get(b:, 'separator_format', get(g:, 'separator_format', &cms))
+  if s:insert_seprator_use_commentary_style()
+    return s:separator_commentary_format(format)
   else
-    return &cms
+    return format
   endif
 endfu
 fu! s:insert_seprator_use_commentary_style()
@@ -1468,9 +1460,9 @@ fu! s:insert_seprator_use_commentary_style()
         \ get(b:, 'separator_use_commentary_style',
         \ get(g:, 'separator_use_commentary_style', 0))
 endfu
-fu! s:separator_commentary_format()
+fu! s:separator_commentary_format(ft)
   " Stealed from vim-commentary
-  return substitute(substitute(&cms, '\S\zs%s',' %s',''), '%s\ze\S', '%s ', '')
+  return substitute(substitute(a:ft, '\S\zs%s',' %s',''), '%s\ze\S', '%s ', '')
 endfu
 if get(g:, 'separator_use_default_mappings', 1)
   nnoremap <silent> [= :call <sid>separator_insert('=', 'O')<cr>
@@ -1481,10 +1473,11 @@ if get(g:, 'separator_use_default_mappings', 1)
   nnoremap <silent> g- :call <sid>separator_insert('-', 'I')<cr>
 endif
 if get(g:, 'separator_use_default_autocommands', 1)
-  aug seprator
+  aug Separator
     au!
     au Filetype *markdown,text
           \ let b:separator_format = '%s' |
           \ let b:separator_use_curline_width = 1
+    au Filetype tex let b:separator_format = '%%%s'
   aug END
 endif
