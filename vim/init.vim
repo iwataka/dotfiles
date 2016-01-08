@@ -101,7 +101,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
 " Switching colorscheme includes an error caused by a bug in Vim.
 " This plugin resolves it.
-" Plug 'xolox/vim-colorscheme-switcher'
+" Plug 'xolox/vim-misc' || Plug 'xolox/vim-colorscheme-switcher'
 
 " Filetype
 if v:version >= 703
@@ -130,7 +130,6 @@ endif
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/gist-vim', { 'on': ['Gist'] }
 Plug 'mattn/webapi-vim'
-Plug 'xolox/vim-misc'
 
 call plug#end()
 endif
