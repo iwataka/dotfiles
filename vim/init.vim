@@ -1426,43 +1426,58 @@ let g:calendar_google_task = 1
 " Misc {{{1
 " --------------------------------------------------------------
 " --------------------------------------------------------------
-" insert-separator {{{2
+" separator {{{2
 " --------------------------------------------------------------
-nnoremap <silent> [~ :call <sid>insert_separator('~', 'O')<cr>
-nnoremap <silent> ]~ :call <sid>insert_separator('~', 'o')<cr>
-nnoremap <silent> [= :call <sid>insert_separator('=', 'O')<cr>
-nnoremap <silent> ]= :call <sid>insert_separator('=', 'o')<cr>
-nnoremap <silent> [- :call <sid>insert_separator('-', 'O')<cr>
-nnoremap <silent> ]- :call <sid>insert_separator('-', 'o')<cr>
-fu! s:insert_separator(char, enter_insert_mode_key)
-  let line = line('.')
-  let col = col('.')
-  let width = len(substitute(getline(line('.')), '\s*$', '', 'g'))
-  let n = width == 0 ? get(b:, 'insert_separator_width',
-    \ get(g:, 'insert_separator_width', s:insert_separator_width())) : width
-  let format = get(b:, 'insert_separator_format',
-    \ get(g:, 'insert_separator_format', s:insert_separator_format()))
-  let sep = printf(format, repeat(a:char, n))
+fu! s:separator_insert(char, enter_insert_mode_key)
+  normal! m`
+  let use_curline_width = get(b:, 'separator_use_curline_width',
+        \ get(g:, 'separator_use_curline_width', 0))
+  let curline_width = len(substitute(getline(line('.')), '\s*$', '', 'g'))
+  let width = get(b:, 'separator_width',
+        \ get(g:, 'separator_width', s:separator_width()))
+  let w = use_curline_width && curline_width != 0 ? curline_width : width
+  let format = get(b:, 'separator_format',
+        \ get(g:, 'separator_format', s:separator_format()))
+  let sep = printf(format, repeat(a:char, w / len(a:char)))
   silent exe 'normal! '.a:enter_insert_mode_key.sep
-  call setline(line('.'), getline('.')[0:(n - 1)])
-  call cursor(line, col)
+  call setline(line('.'), getline('.')[0:(w - 1)])
+  normal! ``
 endfu
-fu! s:insert_separator_width()
+fu! s:separator_width()
   let cc = min(map(split(&cc, ','), 'str2nr(v:val)')) - 1
   return &tw == 0 ? &tw + cc : &tw
 endfu
-fu! s:insert_separator_format()
+fu! s:separator_format()
   if empty(&cms)
     return '%s'
-  elseif exists(':Commentary')
-    " Stealed from vim-commentary
-    return substitute(substitute(&cms, '\S\zs%s',' %s','') ,'%s\ze\S', '%s ', '')
+  elseif s:insert_seprator_use_commentary_style()
+    return s:separator_commentary_format()
   else
     return &cms
   endif
 endfu
-aug insert-seprator
-  au!
-  au Filetype *markdown let b:insert_separator_format = '%s'
-  au Filetype text let b:insert_separator_format = '%s'
-aug END
+fu! s:insert_seprator_use_commentary_style()
+  return exists(':Commentary') ||
+        \ get(b:, 'separator_use_commentary_style',
+        \ get(g:, 'separator_use_commentary_style', 0))
+endfu
+fu! s:separator_commentary_format()
+  " Stealed from vim-commentary
+  return substitute(substitute(&cms, '\S\zs%s',' %s',''), '%s\ze\S', '%s ', '')
+endfu
+if get(g:, 'separator_use_default_mappings', 1)
+  nnoremap <silent> [= :call <sid>separator_insert('=', 'O')<cr>
+  nnoremap <silent> ]= :call <sid>separator_insert('=', 'o')<cr>
+  nnoremap <silent> g= :call <sid>separator_insert('=', 'I')<cr>
+  nnoremap <silent> [- :call <sid>separator_insert('-', 'O')<cr>
+  nnoremap <silent> ]- :call <sid>separator_insert('-', 'o')<cr>
+  nnoremap <silent> g- :call <sid>separator_insert('-', 'I')<cr>
+endif
+if get(g:, 'separator_use_default_autocommands', 1)
+  aug seprator
+    au!
+    au Filetype *markdown,text
+          \ let b:separator_format = '%s' |
+          \ let b:separator_use_curline_width = 1
+  aug END
+endif
