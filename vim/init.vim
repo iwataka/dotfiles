@@ -1428,16 +1428,17 @@ let g:calendar_google_task = 1
 " --------------------------------------------------------------
 fu! s:separator_insert(char, enter_insert_mode_key)
   normal! m`
-  let use_curline_width = get(b:, 'separator_use_curline_width',
-        \ get(g:, 'separator_use_curline_width', 0))
-  let curline_width = len(substitute(getline(line('.')), '\s*$', '', 'g'))
+  let use_cursorline_width = get(b:, 'separator_use_cursorline_width',
+        \ get(g:, 'separator_use_cursorline_width', 0))
+  let cursorline_width = len(substitute(getline(line('.')), '\s*$', '', 'g'))
   let width = get(b:, 'separator_width',
         \ get(g:, 'separator_width', s:separator_width()))
-  let w = use_curline_width && curline_width != 0 ? curline_width : width
+  let w = use_cursorline_width && cursorline_width != 0 ?
+        \ cursorline_width : width
   let format = s:separator_format()
   let sep = printf(format, repeat(a:char, w / len(a:char)))
-  silent exe 'normal! '.a:enter_insert_mode_key.sep
-  call setline(line('.'), getline('.')[0:(w - 1)])
+  silent noautocmd exe 'normal! '.a:enter_insert_mode_key.sep
+  noautocmd call setline(line('.'), getline('.')[0:(w - 1)])
   normal! ``
 endfu
 fu! s:separator_width()
