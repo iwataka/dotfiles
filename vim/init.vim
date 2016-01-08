@@ -1442,3 +1442,48 @@ nnoremap <leader>u :UndotreeToggle<cr>
 " --------------------------------------------------------------
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
+
+" --------------------------------------------------------------
+" Misc {{{1
+" --------------------------------------------------------------
+" --------------------------------------------------------------
+" insert-separator {{{2
+" --------------------------------------------------------------
+nnoremap <silent> [~ :call <sid>insert_separator('~', 'O')<cr>
+nnoremap <silent> ]~ :call <sid>insert_separator('~', 'o')<cr>
+nnoremap <silent> [= :call <sid>insert_separator('=', 'O')<cr>
+nnoremap <silent> ]= :call <sid>insert_separator('=', 'o')<cr>
+nnoremap <silent> [- :call <sid>insert_separator('-', 'O')<cr>
+nnoremap <silent> ]- :call <sid>insert_separator('-', 'o')<cr>
+fu! s:insert_separator(char, enter_insert_mode_key)
+  let line = line('.')
+  let col = col('.')
+  let width = len(substitute(getline(line('.')), '\s*$', '', 'g'))
+  let n = width == 0 ? get(b:, 'insert_separator_width',
+    \ get(g:, 'insert_separator_width', s:insert_separator_width())) : width
+  let format = get(b:, 'insert_separator_format',
+    \ get(g:, 'insert_separator_format', s:insert_separator_format()))
+  let sep = printf(format, repeat(a:char, n))
+  silent exe 'normal! '.a:enter_insert_mode_key.sep
+  call setline(line('.'), getline('.')[0:(n - 1)])
+  call cursor(line, col)
+endfu
+fu! s:insert_separator_width()
+  let cc = min(map(split(&cc, ','), 'str2nr(v:val)')) - 1
+  return &tw == 0 ? &tw + cc : &tw
+endfu
+fu! s:insert_separator_format()
+  if empty(&cms)
+    return '%s'
+  elseif exists(':Commentary')
+    " Stealed from vim-commentary
+    return substitute(substitute(&cms, '\S\zs%s',' %s','') ,'%s\ze\S', '%s ', '')
+  else
+    return &cms
+  endif
+endfu
+aug insert-seprator
+  au!
+  au Filetype *markdown let b:insert_separator_format = '%s'
+  au Filetype text let b:insert_separator_format = '%s'
+aug END
