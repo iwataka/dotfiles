@@ -109,9 +109,9 @@ if v:version >= 703
   Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 endif
-Plug 'plasticboy/vim-markdown', { 'for': 'mkd' }
+Plug 'plasticboy/vim-markdown', { 'for': '*markdown' }
 if has('unix') || has('mac')
-  Plug 'suan/vim-instant-markdown', { 'for': 'mkd' }
+  Plug 'suan/vim-instant-markdown', { 'for': '*markdown' }
 endif
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'tpope/vim-endwise'
@@ -295,8 +295,8 @@ augroup vimrcEx
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
   " Markdown
-  autocmd FileType mkd setlocal spell
-  autocmd FileType mkd setlocal commentstring=<!--\ %s\ -->
+  autocmd FileType *markdown setlocal spell
+  autocmd FileType *markdown setlocal commentstring=<!--\ %s\ -->
 
   " Automatically wrap at 72 characters and spell check git commit messages
   autocmd FileType gitcommit setlocal textwidth=72
