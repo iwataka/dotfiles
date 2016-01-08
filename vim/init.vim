@@ -292,16 +292,16 @@ augroup vimrcEx
   " (happens when dropping a file on gvim).
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-  " Markdown
-  autocmd FileType *markdown setlocal spell
-  autocmd FileType *markdown setlocal commentstring=<!--\ %s\ -->
-
-  " Automatically wrap at 72 characters and spell check git commit messages
+  " spell, textwidth and other things
   autocmd FileType gitcommit setlocal textwidth=72
   autocmd FileType gitcommit setlocal spell
+  autocmd FileType *markdown setlocal spell
+  autocmd FileType calendar,git,gitv setlocal nolist
 
   " Comment strings
-  autocmd FileType dosbatch setlocal commentstring=rem\ %s
+  autocmd FileType *markdown setlocal commentstring=<!--%s-->
+  autocmd FileType dosbatch setlocal commentstring=rem%s
+  autocmd FileType tex setlocal commentstring=%%%s
 
   " Quit help buffer by typing just q.
   autocmd FileType help
@@ -312,16 +312,14 @@ augroup vimrcEx
     \   setlocal formatprg='astyle' |
     \ endif
 
-  " Set nolist in some situations
-  autocmd FileType calendar,git,gitv setlocal nolist
-
-  " Set some filetypes for some cetain files
+  " Set filetype
   autocmd BufRead,BufNewFile *spacemacs set filetype=lisp
   autocmd BufRead,BufNewFile *.gradle set filetype=groovy
   autocmd BufRead,BufNewFile *editorconfig set filetype=jproperties
   autocmd BufRead,BufNewFile *.gpg set filetype=gnupg
   autocmd BufRead,BufNewFile *.json set filetype=javascript
   autocmd BufRead,BufNewFile *.tex set filetype=tex
+  autocmd FileType text set filetype=markdown
 
   " write comments easily for any files
   autocmd BufRead,BufNewFile * set formatoptions+=ro
