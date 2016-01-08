@@ -1153,13 +1153,6 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 
 " --------------------------------------------------------------
-" signify {{{2
-" --------------------------------------------------------------
-let g:signify_sign_add = '+'
-let g:signify_sign_change = '~'
-let g:signify_sign_delete = '-'
-
-" --------------------------------------------------------------
 " Git {{{2
 " --------------------------------------------------------------
 nnoremap gs :Gstatus<CR>
@@ -1215,7 +1208,6 @@ let g:lightline.active.right = [
 let g:lightline.component_function = {}
 let g:lightline.component_function.syntastic = 'SyntasticStatuslineFlag'
 let g:lightline.component_function.gitgutter = 'MyGitGutter'
-let g:lightline.component_function.signify = 'MySignify'
 let g:lightline.component_function.filename = 'MyFilename'
 let g:lightline.component_function.pwd = 'MyPWD'
 let g:lightline.component_function.fugitive = 'MyFugitive'
@@ -1301,28 +1293,6 @@ function! MyGitGutter()
   endfo
   return join(ret, ' ')
 endf
-
-fu! MySignify()
-  if !exists('*sy#repo#get_stats')
-      \ || !(exists('b:sy.active') && b:sy.active)
-      \ || winwidth('.') <= 90
-    return ''
-  endif
-  let hunks = sy#repo#get_stats()
-  if hunks[0] == -1 || hunks[1] == -1 || hunks[2] == -1
-    return ''
-  endif
-  let symbols = [
-    \ get(g:, 'signify_sign_add', '+').' ',
-    \ get(g:, 'signify_sign_change', '~').' ',
-    \ get(g:, 'signify_sign_delete', '-').' '
-    \ ]
-  let ret = []
-  for i in [0, 1, 2]
-    call add(ret, symbols[i].hunks[i])
-  endfor
-  return join(ret, ' ')
-endfu
 
 " --------------------------------------------------------------
 " delimitMate {{{2
