@@ -365,8 +365,9 @@ nnoremap ` '
 " jk | Escaping!
 inoremap jk <Esc>
 cnoremap jk <C-c>
-vnoremap jk <Esc>
-xnoremap jk <Esc>
+" These lines cause motion delay in Visual mode.
+" vnoremap jk <Esc>
+" xnoremap jk <Esc>
 if has('nvim')
   tnoremap jk <C-\><C-n>
   tnoremap <ESC> <C-\><C-n>
