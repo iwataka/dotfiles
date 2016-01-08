@@ -188,13 +188,14 @@ set ignorecase                            " Case insensitive by default
 set smartcase                             " Case sensitive when containing capitals
 set magic                                 " Make using regex more easier
 set incsearch                             " Enable incremental search
+set wrapscan                              " Enable wrap scan
 set hlsearch                              " Highlight search results
-nohlsearch                                " Prevetnt highlight when reloading .vimrc
+nohlsearch                                " Prevent highlight when reloading .vimrc
 set ttyfast                               " Enable fast connection
 set foldenable                            " Enable to fold
 set foldlevel=0                           " Start folding at the second depth
 set foldmethod=marker                     " Use specified markers to fold sentences
-" set foldopen+=jump,search                 " Open foldings when jumping to them
+" set foldopen+=jump,search               " Open foldings when jumping to them
 set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
 set colorcolumn=81
