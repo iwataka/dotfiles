@@ -90,7 +90,6 @@ Plug 'tpope/vim-sleuth'
 " in GVim, so you should execute :DelimitMateOff for it.
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
-Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeForcus'] }
 " This plugin is low-performance with YCM.
 " Plug 'terryma/vim-multiple-cursors'
 " If you want to use syntastic, you must disable vim-auto-save plugin.
@@ -1430,12 +1429,6 @@ let g:vim_markdown_folding_disabled = 1
 " --------------------------------------------------------------
 let g:instant_markdown_slow = 0
 let g:instant_markdown_autostart = 0
-
-" --------------------------------------------------------------
-" undotree {{{2
-" --------------------------------------------------------------
-let g:undotree_SetFocusWhenToggle = 1
-nnoremap <leader>u :UndotreeToggle<cr>
 
 " --------------------------------------------------------------
 " calendar {{{2
