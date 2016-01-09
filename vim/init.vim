@@ -1430,6 +1430,8 @@ let g:calendar_google_task = 1
 " separator {{{2
 " --------------------------------------------------------------
 fu! s:separator_insert(char, enter_insert_mode_key)
+  let fo = &fo
+  let &fo = ''
   normal! m`
   let use_cursorline_width = get(b:, 'separator_use_cursorline_width',
         \ get(g:, 'separator_use_cursorline_width', 0))
@@ -1443,6 +1445,7 @@ fu! s:separator_insert(char, enter_insert_mode_key)
   silent noautocmd exe 'normal! '.a:enter_insert_mode_key.sep
   noautocmd call setline(line('.'), getline('.')[0:(w - 1)])
   normal! ``
+  let &fo = fo
 endfu
 fu! s:separator_width()
   let cc = min(map(split(&cc, ','), 'str2nr(v:val)')) - 1
