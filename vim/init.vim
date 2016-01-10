@@ -333,7 +333,8 @@ augroup vimrcEx
   autocmd BufRead,BufNew * match FullWidthSpace /　/
 
   " Automatically open the quickfix window
-  autocmd QuickFixCmdPost * cwindow
+  autocmd QuickFixCmdPost grep,Ggrep cwindow
+  autocmd QuickFixCmdPost lgrep,Glgrep lwindow
 
   " Automatically remove trailing spaces when saving
   " NOTE: This feature has bad effects for undo function.
