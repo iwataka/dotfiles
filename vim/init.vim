@@ -1398,7 +1398,7 @@ let g:calendar_google_task = 1
 " --------------------------------------------------------------
 " separator {{{2
 " --------------------------------------------------------------
-fu! s:separator_insert(char, enter_insert_mode_key)
+fu! s:separator_insert(char, enter_insert_mode_key) abort
   let fo = &fo
   let &fo = ''
   normal! m`
@@ -1416,11 +1416,11 @@ fu! s:separator_insert(char, enter_insert_mode_key)
   normal! ``
   let &fo = fo
 endfu
-fu! s:separator_width()
+fu! s:separator_width() abort
   let cc = min(map(split(&cc, ','), 'str2nr(v:val)')) - 1
   return &tw == 0 ? &tw + cc : &tw
 endfu
-fu! s:separator_format()
+fu! s:separator_format() abort
   if empty(&cms)
     return '%s'
   endif
@@ -1431,12 +1431,12 @@ fu! s:separator_format()
     return format
   endif
 endfu
-fu! s:insert_seprator_use_commentary_style()
+fu! s:insert_seprator_use_commentary_style() abort
   return exists(':Commentary') ||
         \ get(b:, 'separator_use_commentary_style',
         \ get(g:, 'separator_use_commentary_style', 0))
 endfu
-fu! s:separator_commentary_format(ft)
+fu! s:separator_commentary_format(ft) abort
   " Stealed from vim-commentary
   return substitute(substitute(a:ft, '\S\zs%s',' %s',''), '%s\ze\S', '%s ', '')
 endfu
