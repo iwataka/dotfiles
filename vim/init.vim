@@ -130,6 +130,10 @@ endif
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/gist-vim', { 'on': ['Gist'] }
 Plug 'mattn/webapi-vim'
+Plug 'junegunn/vader.vim'
+
+" My Plugins
+Plug 'git@github.com:iwataka/vim-replace.git'
 
 call plug#end()
 endif
@@ -1457,54 +1461,3 @@ if get(g:, 'separator_use_default_autocommands', 1)
     au Filetype tex let b:separator_format = '%%%s'
   aug END
 endif
-
-" --------------------------------------------------------------
-" replace {{{2
-" --------------------------------------------------------------
-" Use this command after executing grep.
-aug Replace
-  au!
-  au FileType qf com! -buffer -nargs=+ -range
-        \ Replace call s:replace(<line1>, <line2>, getqflist(), <f-args>)
-  au FileType qf com! -buffer -nargs=+ -range
-        \ LReplace call s:replace(<line1>, <line2>, getloclist(0), <f-args>)
-aug END
-com! -nargs=+ Replace call s:replace(1, 0, getqflist(), <f-args>)
-com! -nargs=+ LReplace call s:replace(1, 0, getloclist(0), <f-args>)
-fu! s:replace(line1, line2, list, old, new)
-  let _ignorecase = &ignorecase
-  set noignorecase
-  try
-    let files = {}
-    let qflist = a:list[(a:line1 - 1):(a:line2 - 1)]
-    for d in qflist
-      let bufnr = d.bufnr
-      let bufname = bufname(bufnr)
-      if filereadable(bufname)
-        let lnum = d.lnum
-        let content = []
-        if has_key(files, bufnr)
-          let content = files[bufnr]
-        else
-          let content = readfile(bufname)
-        endif
-        let line = content[lnum - 1]
-        if d.text !~# '^.*'.line.'.*$'
-          throw 'At least one buffer is modified. Run grep again!'
-        endif
-        let new_line = substitute(line, a:old, a:new, 'g')
-        let content[lnum - 1] = new_line
-        let files[bufnr] = content
-      endif
-    endfor
-    for [bufnr, content] in items(files)
-      silent call writefile(content, bufname(str2nr(bufnr)))
-    endfor
-    for d in qflist
-      let d.text = substitute(d.text, a:old, a:new, 'g')
-    endfor
-    call setqflist(qflist)
-  finally
-    let &ignorecase = _ignorecase
-  endtry
-endfu
