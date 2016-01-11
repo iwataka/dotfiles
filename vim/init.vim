@@ -1213,8 +1213,9 @@ endfunction
 
 function! MyFugitive()
   if exists('*fugitive#head')
-    let _ = fugitive#head()
-    return strlen(_) ? (empty(&guifont) ? 'Git-'._ : ''._) : ''
+    let h = fugitive#head()
+    let prefix = has('gui_running') && empty(&guifont) ? 'Git-' : ''
+    return empty(h) ? '' : prefix.h
   endif
   return ''
 endfunction
@@ -1234,7 +1235,8 @@ fu! MyPWD()
 endfu
 
 function! MyReadonly()
-  return &readonly ? (empty(&guifont) ? '[RO]' : '') : ''
+  let ro = has('gui_running') && empty(&guifont) ? '[RO]' : ''
+  return &readonly ? ro : ''
 endfunction
 
 function! MyModified()
