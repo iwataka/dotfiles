@@ -939,16 +939,22 @@ endfunction
 " --------------------------------------------------------------
 " ColorScheme {{{2
 " --------------------------------------------------------------
+" Italic style on Windows has low-visibility and disable it.
+let s:italic = 1
+if has('win32')
+  let s:italic = 0
+endif
 let g:solarized_termcolors = 256
 let g:solarized_visibility = 'high'
 let g:solarized_hitrail = 0
 let g:solarized_termtrans = 1
-let g:solarized_italic = 1
+let g:solarized_italic = s:italic
 call togglebg#map('<F5>')
 
 let g:gruvbox_improved_warnings = 1
 let g:gruvbox_contrast_light = 'soft'
 let g:gruvbox_contrast_dark = 'soft'
+let g:gruvbox_italic = s:italic
 
 if !exists('g:colors_name')
   if has('gui_running')
