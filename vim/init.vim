@@ -247,7 +247,8 @@ endif
 if has('gui_running')
   set guioptions=
   if has('win32')
-    silent! set guifont=Hack:h9:cANSI
+    " Hack font can't show Japanese characters properly on Windows.
+    " silent! set guifont=Hack:h11:cANSI
   else
     silent! set guifont=Hack\ 11
   endif
@@ -1207,7 +1208,7 @@ endfunction
 function! MyFugitive()
   if exists('*fugitive#head')
     let _ = fugitive#head()
-    return strlen(_) ? ''._ : ''
+    return strlen(_) ? (empty(&guifont) ? 'Git-'._ : ''._) : ''
   endif
   return ''
 endfunction
@@ -1227,7 +1228,7 @@ fu! MyPWD()
 endfu
 
 function! MyReadonly()
-  return &readonly ? '' : ''
+  return &readonly ? (empty(&guifont) ? '[RO]' : '') : ''
 endfunction
 
 function! MyModified()
