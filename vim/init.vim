@@ -42,6 +42,9 @@ endif
 
 silent! if plug#begin('~/.vim/plugged')
 
+" My Plugins
+Plug 'iwataka/vim-replace'
+
 " Completion
 if has('python')
   " Plug 'Valloric/YouCompleteMe', { 'on': [] }
@@ -131,9 +134,6 @@ Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/gist-vim', { 'on': ['Gist'] }
 Plug 'mattn/webapi-vim'
 Plug 'junegunn/vader.vim'
-
-" My Plugins
-Plug 'git@github.com:iwataka/vim-replace.git'
 
 call plug#end()
 endif
