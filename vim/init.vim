@@ -111,9 +111,9 @@ if v:version >= 703
   Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 endif
-Plug 'plasticboy/vim-markdown', { 'for': '*markdown' }
+Plug 'plasticboy/vim-markdown'
 if has('unix') || has('mac')
-  Plug 'suan/vim-instant-markdown', { 'for': '*markdown' }
+  Plug 'suan/vim-instant-markdown'
 endif
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'tpope/vim-endwise'
@@ -125,9 +125,6 @@ Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
-if has('clientserver')
-  Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
-endif
 
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
@@ -324,7 +321,6 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile *editorconfig set filetype=jproperties
   autocmd BufRead,BufNewFile *.gpg set filetype=gnupg
   autocmd BufRead,BufNewFile *.json set filetype=javascript
-  autocmd BufRead,BufNewFile *.tex set filetype=tex
   autocmd FileType text set filetype=markdown
 
   " write comments easily for any files
@@ -1304,21 +1300,12 @@ endif
 " Navigation {{{2
 " --------------------------------------------------------------
 if v:version >= 703
-  nnoremap <silent> <leader>t :call <sid>toggle_navigation_bar()<cr>
+  nnoremap <silent> <leader>t :TagbarToggle<cr>
   let g:tagbar_sort = 0
   let g:tagbar_show_linenumbers = 2
   let g:tagbar_autofocus = 1
   let g:tagbar_autoclose = 1
 endif
-let g:vimtex_view_enabled = 0
-let g:vimtex_index_split_width = 40
-fu! s:toggle_navigation_bar()
-  if &ft == 'tex' || &ft == 'latex'
-    VimtexTocToggle
-  else
-    TagbarToggle
-  endif
-endfu
 
 " --------------------------------------------------------------
 " nerdtree {{{2
