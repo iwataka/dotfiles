@@ -65,9 +65,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'Yggdroot/indentLine'
 
 " Navigation
-if v:version >= 703
-  Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle'] }
-endif
 Plug 'scrooloose/nerdtree', { 'on': [
   \ 'NERDTree',
   \ 'NERDTreeToggle',
@@ -100,7 +97,6 @@ Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 " Plug 'vim-scripts/vim-auto-save'
 
 " Colorscheme
-Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
 " Switching colorscheme includes an error caused by a bug in Vim.
 " This plugin resolves it.
@@ -935,30 +931,22 @@ endfunction
 " --------------------------------------------------------------
 " ColorScheme {{{2
 " --------------------------------------------------------------
-" Italic style on Windows has low-visibility and disable it.
-let s:italic = 1
-if has('win32')
-  let s:italic = 0
-endif
-let g:solarized_termcolors = 256
-let g:solarized_visibility = 'high'
-let g:solarized_hitrail = 0
-let g:solarized_termtrans = 1
-let g:solarized_italic = s:italic
-call togglebg#map('<F5>')
-
 let g:gruvbox_improved_warnings = 1
 let g:gruvbox_contrast_light = 'soft'
 let g:gruvbox_contrast_dark = 'soft'
-let g:gruvbox_italic = s:italic
+" Italic style on Windows has low-visibility and disable it.
+if has('win32')
+  let g:gruvbox_italic = 0
+else
+  let g:gruvbox_italic = 1
+endif
 
 if !exists('g:colors_name')
+  silent! colorscheme gruvbox
   if has('gui_running')
-    set background=dark
-    silent! colorscheme gruvbox
+    set background=light
   else
     set background=dark
-    silent! colorschem solarized
   endif
 endif
 
@@ -1148,13 +1136,7 @@ nnoremap <leader>gG :GitGutterToggle<cr>
 " lightline {{{2
 " --------------------------------------------------------------
 let g:lightline = {}
-
-if has('gui_running')
-  let g:lightline.colorscheme = 'gruvbox'
-else
-  let g:lightline.colorscheme = 'solarized'
-endif
-
+let g:lightline.colorscheme = 'gruvbox'
 let g:lightline.active = {}
 let g:lightline.active.left = [
   \   ['mode', 'paste'],
