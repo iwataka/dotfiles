@@ -1270,17 +1270,6 @@ if executable('flake8')
 endif
 
 " --------------------------------------------------------------
-" Navigation {{{2
-" --------------------------------------------------------------
-if v:version >= 703
-  nnoremap <silent> <leader>t :TagbarToggle<cr>
-  let g:tagbar_sort = 0
-  let g:tagbar_show_linenumbers = 2
-  let g:tagbar_autofocus = 1
-  let g:tagbar_autoclose = 1
-endif
-
-" --------------------------------------------------------------
 " nerdtree {{{2
 " --------------------------------------------------------------
 " If you get the error like 'Undefined variable b:NERDTree',
