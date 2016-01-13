@@ -107,9 +107,9 @@ if v:version >= 703
   Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 endif
-Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 if has('unix') || has('mac')
-  Plug 'suan/vim-instant-markdown'
+  Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
 endif
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'tpope/vim-endwise'
@@ -295,11 +295,11 @@ augroup vimrcEx
   " spell, textwidth and other things
   autocmd FileType gitcommit setlocal textwidth=72
   autocmd FileType gitcommit setlocal spell
-  autocmd FileType *markdown setlocal spell
+  autocmd FileType markdown setlocal spell
   autocmd FileType calendar,git,gitv setlocal nolist
 
   " Comment strings
-  autocmd FileType *markdown setlocal commentstring=<!--%s-->
+  autocmd FileType markdown setlocal commentstring=<!--%s-->
   autocmd FileType dosbatch setlocal commentstring=rem%s
 
   " Quit help buffer by typing just q.
@@ -1413,7 +1413,7 @@ endif
 if get(g:, 'separator_use_default_autocommands', 1)
   aug Separator
     au!
-    au Filetype *markdown,text
+    au Filetype markdown,text
           \ let b:separator_format = '%s' |
           \ let b:separator_use_curline_width = 1
     au Filetype tex let b:separator_format = '%%%s'
