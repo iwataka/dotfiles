@@ -217,7 +217,7 @@ if has('win32') || has('win64')
 endif
 
 set clipboard=unnamed
-if has('unnamedplus')
+if has('unnamedplus') || has('nvim')
   set clipboard+=unnamedplus
 endif
 
