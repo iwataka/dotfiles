@@ -476,6 +476,7 @@ function! s:bufclear(bang, path)
 endfunction
 
 " Changes the current directory to the project root
+cabbrev r Root
 com! Root call s:cd_root(expand('%:p:h'))
 fu! s:cd_root(path)
   let root = s:root(a:path)
