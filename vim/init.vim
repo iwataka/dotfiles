@@ -200,7 +200,7 @@ set colorcolumn=+1
 
 set wildmenu
 set wildignorecase
-set wildmode=list:full
+set wildmode=list:longest,full
 " set wildignore+=.git,.hg,.svn,.bzr,_darcs        " VCS
 " set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
 " set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
