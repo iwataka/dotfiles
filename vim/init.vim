@@ -197,8 +197,7 @@ set foldmethod=marker                     " Use specified markers to fold senten
 " set foldopen+=jump,search               " Open foldings when jumping to them
 set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
-set textwidth=80
-set colorcolumn=+1
+set colorcolumn=81
 
 set wildmenu
 set wildignorecase
