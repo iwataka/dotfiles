@@ -852,6 +852,12 @@ fu! s:TempEditComplete(A, L, P)
   return filter(files, 'v:val =~ a:A')
 endfu
 
+com! XmlFormat call s:xml_format()
+fu! s:xml_format()
+  %s/></>\r</g
+  normal! gg=G
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
