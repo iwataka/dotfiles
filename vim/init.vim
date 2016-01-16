@@ -1281,7 +1281,7 @@ let g:vimtex_view_enabled = 0
 let g:vimtex_index_split_width = 40
 aug vimrc-vimtex
   au!
-  au FileType tex nnoremap <leader>t :VimtexTocToggle<cr>
+  au FileType tex nnoremap <buffer> <leader>t :VimtexTocToggle<cr>
 aug END
 
 " --------------------------------------------------------------
