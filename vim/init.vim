@@ -120,6 +120,9 @@ Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
+if has('clientserver')
+  Plug 'lervag/vimtex', { 'for': 'tex' }
+endif
 
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
@@ -1271,6 +1274,16 @@ let g:instant_markdown_autostart = 0
 " --------------------------------------------------------------
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
+
+" --------------------------------------------------------------
+" vimtex {{{2
+" --------------------------------------------------------------
+let g:vimtex_view_enabled = 0
+let g:vimtex_index_split_width = 40
+aug vimrc-vimtex
+  au!
+  au FileType tex nnoremap <leader>t :VimtexTocToggle<cr>
+aug END
 
 " --------------------------------------------------------------
 " Misc {{{1
