@@ -760,9 +760,10 @@ fu! s:run_this_script(args)
     exe '!python '.fname.' '.a:args
   elseif &filetype == 'ruby'
     exe '!ruby '.fname.' '.a:args
-  elseif &filetype == 'vim'
+  " Use `so %` instead of this
+  " elseif &filetype == 'vim'
     " Put 'silent!' at the head because sourcing .vimrc must cause an error.
-    silent! exe 'source '.fname
+    " silent! exe 'source '.fname
   else
     exe '!'.fname.' '.a:args
   endif
