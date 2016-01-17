@@ -83,7 +83,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sleuth'
 " This plug-in causes errors while inputting japanese characters
 " in GVim, so you should execute :DelimitMateOff for it.
