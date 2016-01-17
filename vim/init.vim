@@ -85,6 +85,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sleuth'
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 " This plug-in causes errors while inputting japanese characters
 " in GVim, so you should execute :DelimitMateOff for it.
 Plug 'Raimondi/delimitMate'
@@ -1295,6 +1296,11 @@ aug vimrc-vimtex
   au!
   au FileType tex nnoremap <buffer> <leader>t :VimtexTocToggle<cr>
 aug END
+
+" --------------------------------------------------------------
+" goyo {{{2
+" --------------------------------------------------------------
+let g:goyo_linenr = 1
 
 " --------------------------------------------------------------
 " Misc {{{1
