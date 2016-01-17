@@ -120,6 +120,7 @@ Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
+Plug 'junegunn/vader.vim', { 'for': 'vader' }
 if has('clientserver')
   Plug 'lervag/vimtex', { 'for': 'tex' }
 endif
@@ -128,7 +129,6 @@ endif
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/gist-vim', { 'on': ['Gist'] }
 Plug 'mattn/webapi-vim'
-Plug 'junegunn/vader.vim'
 
 call plug#end()
 endif
