@@ -1150,6 +1150,8 @@ if has('win32') && has('gui_running')
 else
   let g:airline_powerline_fonts = 1
 endif
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 " --------------------------------------------------------------
 " delimitMate {{{2
