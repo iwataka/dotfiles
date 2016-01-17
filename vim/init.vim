@@ -941,8 +941,6 @@ endfunction
 " ColorScheme {{{2
 " --------------------------------------------------------------
 let g:gruvbox_improved_warnings = 1
-let g:gruvbox_contrast_light = 'hard'
-let g:gruvbox_contrast_dark = 'hard'
 " Italic style on Windows has low-visibility and disable it.
 if has('win32')
   let g:gruvbox_italic = 0
