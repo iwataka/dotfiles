@@ -1144,7 +1144,9 @@ nnoremap <leader>gG :GitGutterToggle<cr>
 " --------------------------------------------------------------
 " airline {{{2
 " --------------------------------------------------------------
-let g:airline_theme = 'gruvbox'
+if !exists('g:airline_theme')
+  let g:airline_theme = 'gruvbox'
+endif
 if has('win32') && has('gui_running')
   let g:airline_powerline_fonts = 0
 else
