@@ -99,7 +99,7 @@ Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'morhetz/gruvbox'
 " Switching colorscheme includes an error caused by a bug in Vim.
 " This plugin resolves it.
-" Plug 'xolox/vim-misc' || Plug 'xolox/vim-colorscheme-switcher'
+" Plug 'xolox/vim-misc' | Plug 'xolox/vim-colorscheme-switcher'
 
 " Filetype
 if v:version >= 703
@@ -456,17 +456,17 @@ if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>"
 " Clear all buffers by bdelete command.
 " If unsaved buffers exist, this command fails.
 com! -bang -complete=file -nargs=? BufClear call s:bufclear(<bang>0, <q-args>)
-function! s:bufclear(bang, path)
+fu! s:bufclear(bang, path)
   let lastnr = bufnr('$')
-  let abs_path = a:path == '' ? '' : fnamemodify(expand(a:path), ':p')
+  let dpath = a:path == '' ? '' : fnamemodify(expand(a:path), ':p')
   " buffer number starts from 1
   let i = 1
   wh i <= lastnr
-    let name = fnamemodify(bufname(i), ':p')
+    let fpath = fnamemodify(bufname(i), ':p')
     " Terminal buffers can't be deleted automatically.
     if getbufvar(i, "&buftype") != "terminal"
       if bufexists(i) &&
-          \ (abs_path == '' || (filereadable(name) && name =~ abs_path.'*'))
+            \ (dpath == '' || (filereadable(fpath) && s:is_under(dpath, fpath)))
         silent exe 'bwipeout '.i
       elseif a:bang && bufloaded(i)
         silent exe 'bdelete '.i
@@ -474,7 +474,17 @@ function! s:bufclear(bang, path)
     endif
     let i = i + 1
   endwh
-endfunction
+endfu
+
+" Check if a:fpath is under a:dpath
+" a:dpath and a:fpath must be expanded path.
+fu! s:is_under(dpath, fpath)
+  if has('win32')
+    return a:fpath =~? '^'.a:dpath.'.*'
+  else
+    return a:fpath =~# '^'.a:dpath.'.*'
+  endif
+endfu
 
 " Changes the current directory to the project root
 cabbrev r Root
