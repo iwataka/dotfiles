@@ -226,7 +226,7 @@ endif
 
 " Some features are disabled to improve scrolling performance
 let g:loaded_matchparen = 1
-set number
+" set number
 " This contains a performance issue
 " if exists('&relativenumber')
 "   set relativenumber
