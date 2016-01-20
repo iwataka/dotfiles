@@ -646,17 +646,21 @@ endfu
 "   silent call s:switch_input_source_to_default()
 " endfu
 
-com! MarkdownPreview call s:markdown_preview()
-fu! s:markdown_preview()
-  let current_name = fnamemodify(expand('%'), ':p')
-  let target_name =  fnamemodify(current_name, ':r').'.html'
-  if executable('pandoc')
-    silent exec '!pandoc -s -f markdown_github '.current_name.' -o '.target_name
-    call s:open(target_name)
-  else
-    echoe 'Require Pandoc!'
-  endif
-endfu
+if executable('pandoc')
+  com! MarkdownPreview call s:markdown_preview()
+  fu! s:markdown_preview()
+    let current_name = fnamemodify(expand('%'), ':p')
+    if !exists('b:markdown_preview_dest_name')
+      while !exists('b:markdown_preview_dest_name') ||
+            \ filereadable(b:markdown_preview_dest_name)
+        let b:markdown_preview_dest_name =  tempname().'.html'
+      endwh
+    endif
+    let com = '!pandoc -s -f markdown_github'
+    silent exec com.' '.current_name.' -o '.b:markdown_preview_dest_name
+    call s:open(b:markdown_preview_dest_name)
+  endfu
+endif
 
 cabbrev o Open
 com! -nargs=* -complete=file Open call s:open(<f-args>)
