@@ -195,6 +195,7 @@ set ttyfast                               " Enable fast connection
 set foldenable                            " Enable to fold
 set foldlevel=0                           " Start folding at the second depth
 set foldmethod=marker                     " Use specified markers to fold sentences
+set conceallevel=0
 " set foldopen+=jump,search               " Open foldings when jumping to them
 set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
@@ -1163,6 +1164,7 @@ else
 endif
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#wordcount#enabled = 0
 
 " --------------------------------------------------------------
 " delimitMate {{{2
@@ -1273,7 +1275,10 @@ let g:indentLine_color_term = 242
 " markdown {{{2
 " --------------------------------------------------------------
 let g:vim_markdown_no_default_key_mappings = 1
-let g:vim_markdown_folding_disabled = 1
+nnoremap ]] <Plug>Markdown_MoveToNextHeader
+nnoremap [[ <Plug>Markdown_MoveToPreviousHeader
+nnoremap ][ <Plug>Markdown_MoveToNextSiblingHeader
+nnoremap [] <Plug>Markdown_MoveToPreviousSiblingHeader
 
 " --------------------------------------------------------------
 " instant-markdown {{{2
