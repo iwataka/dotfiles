@@ -98,6 +98,7 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
+Plug 'altercation/vim-colors-solarized'
 " Switching colorscheme includes an error caused by a bug in Vim.
 " This plugin resolves it.
 " Plug 'xolox/vim-misc' | Plug 'xolox/vim-colorscheme-switcher'
@@ -970,16 +971,29 @@ endfunction
 " --------------------------------------------------------------
 " ColorScheme {{{2
 " --------------------------------------------------------------
-let g:gruvbox_improved_warnings = 1
-" Italic style on Windows has low-visibility and disable it.
-if has('win32')
-  let g:gruvbox_italic = 0
+" gruvbox colorscheme has some issues on terminal Vim (not neovim).
+if !(has('gui_running') || has('nvim'))
+  let s:colors_name = 'solarized'
 else
-  let g:gruvbox_italic = 1
+  let s:colors_name = 'gruvbox'
 endif
+" Italic style on Windows has low-visibility and disable it.
+let s:italic = 1
+if has('win32') || !(has('gui_running') || has('nvim'))
+  let s:italic = 0
+endif
+let g:gruvbox_improved_warnings = 1
+let g:gruvbox_italic = s:italic
+
+let g:solarized_termcolors = 256
+let g:solarized_visibility = 'high'
+let g:solarized_hitrail = 0
+let g:solarized_termtrans = 1
+let g:solarized_italic = s:italic
+call togglebg#map('<F5>')
 
 if !exists('g:colors_name')
-  silent! colorscheme gruvbox
+  silent! exe 'colorscheme '.s:colors_name
   if has('gui_running')
     set background=light
   else
@@ -1173,7 +1187,7 @@ silent! call repeat#set("\<Plug>(EasyAlign)", v:count)
 " airline {{{2
 " --------------------------------------------------------------
 if !exists('g:airline_theme')
-  let g:airline_theme = 'gruvbox'
+  let g:airline_theme = s:colors_name
 endif
 if has('win32') && has('gui_running')
   let g:airline_powerline_fonts = 0
