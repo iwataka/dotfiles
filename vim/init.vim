@@ -386,16 +386,16 @@ vnoremap Q :norm @q<cr>
 nnoremap Y y$
 
 " Save
-inoremap <C-s> <C-O>:w<cr>
-nnoremap <C-s> :w<cr>
-nnoremap <Leader>w :w<CR>
+inoremap <C-s> <C-O>:<c-u>w<cr>
+nnoremap <C-s> :<c-u>w<cr>
+nnoremap <Leader>w :<c-u>w<CR>
 cnoremap w!! w !sudo tee % >/dev/null
 
 " Quit
-nnoremap <leader>q :q<cr>
+nnoremap <leader>q :<c-u>q<cr>
 
 " Hide other visibie buffers
-nnoremap <leader>o :only<cr>
+nnoremap <leader>o :<c-u>only<cr>
 
 " Command line
 cnoremap <C-A> <Home>
@@ -421,8 +421,8 @@ nnoremap <tab> <c-w>w
 nnoremap <S-tab> <c-w>W
 
 " Clear the highlighting of :set hlsearch.
-nnoremap <silent> <C-l> :nohlsearch<cr><C-l>
-nnoremap <silent> <Esc><Esc> :nohlsearch<cr><C-l>
+nnoremap <silent> <C-l> :<c-u>nohlsearch<cr><C-l>
+nnoremap <silent> <Esc><Esc> :<c-u>nohlsearch<cr><C-l>
 
 " Increment and decrement numbers by + and - keys.
 " Tmux uses <c-a> key as a prefix, so Vim can't use it.
@@ -440,14 +440,14 @@ xnoremap <silent> * :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal n<cr>
 xnoremap <silent> # :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal N<cr>
 
 " Double <BS> to remove trailing spaces
-nnoremap <silent> <BS><BS> :call <sid>preserve('%s/\s*$//')<cr>
+nnoremap <silent> <BS><BS> :<c-u>call <sid>preserve('%s/\s*$//')<cr>
 
 " :checktime is frequently used
-nnoremap <leader>ct :checktime<cr>
+nnoremap <leader>ct :<c-u>checktime<cr>
 
 " Some mappings for user-defined commands
-nnoremap <silent> <leader>cb :CheckboxToggle<cr>
-nnoremap <silent> <leader>rt :Root<cr>
+nnoremap <silent> <leader>cb :<c-u>CheckboxToggle<cr>
+nnoremap <silent> <leader>rt :<c-u>Root<cr>
 if !maparg('<tab>', 'i') | inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", "\<tab>") | endif
 if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>", "\<tab>") | endif
 
@@ -1040,13 +1040,13 @@ let g:ctrlp_show_hidden = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 let g:ctrlp_mruf_max = 1000
 
-nnoremap <silent> <Leader>p :CtrlP<CR>
+nnoremap <silent> <Leader>p :<c-u>CtrlP<CR>
 " This immitates atom, sublimeText and so on.
 " Conflict with vim-multiple-cursors
 " nnoremap <silent> <C-p> :CtrlP<cr>
-nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
-nnoremap <silent> <Leader>m :CtrlPMRU<CR>
-nnoremap <silent> <Leader>d :CtrlPBookmarkDir<CR>
+nnoremap <silent> <Leader>b :<c-u>CtrlPBuffer<CR>
+nnoremap <silent> <Leader>m :<c-u>CtrlPMRU<CR>
+nnoremap <silent> <Leader>d :<c-u>CtrlPBookmarkDir<CR>
 
 let s:ctrlp_bookmark_common_paths = [
   \ '~/projects/*',
@@ -1127,7 +1127,7 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_key_detailed_diagnostics = ''
-nnoremap gd :YcmCompleter GoToDeclaration<cr>
+nnoremap gd :<c-u>YcmCompleter GoToDeclaration<cr>
 
 " --------------------------------------------------------------
 " Ultisnips {{{2
@@ -1142,27 +1142,27 @@ let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 " --------------------------------------------------------------
 " Git {{{2
 " --------------------------------------------------------------
-nnoremap gs :Gstatus<CR>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <leader>gD :Gsplit! diff<cr>
-nnoremap <Leader>gg :Ggrep<Space>
-nnoremap <Leader>gc :Gcommit<CR>
-nnoremap <Leader>gr :Gread<CR>
-nnoremap <leader>gR :Gremove<cr>
-nnoremap <Leader>gw :Gwrite<CR>
-nnoremap <Leader>gl :Glog<CR>
-nnoremap <leader>gL :Gpedit! log -n 10 --stat<cr><c-w>p
-nnoremap <leader>ga :Gcommit --amend<cr>
-nnoremap <leader>gA :Git add --all<cr>
+nnoremap gs :<c-u>Gstatus<CR>
+nnoremap <Leader>gd :<c-u>Gdiff<CR>
+nnoremap <leader>gD :<c-u>Gsplit! diff<cr>
+nnoremap <Leader>gg :<c-u>Ggrep<Space>
+nnoremap <Leader>gc :<c-u>Gcommit<CR>
+nnoremap <Leader>gr :<c-u>Gread<CR>
+nnoremap <leader>gR :<c-u>Gremove<cr>
+nnoremap <Leader>gw :<c-u>Gwrite<CR>
+nnoremap <Leader>gl :<c-u>Glog<CR>
+nnoremap <leader>gL :<c-u>Gpedit! log -n 10 --stat<cr><c-w>p
+nnoremap <leader>ga :<c-u>Gcommit --amend<cr>
+nnoremap <leader>gA :<c-u>Git add --all<cr>
 
-nnoremap <leader>gv :Gitv --all<cr>
-nnoremap <leader>gV :Gitv! --all<cr>
-vnoremap <leader>gV :Gitv! --all<cr>
+nnoremap <leader>gv :<c-u>Gitv --all<cr>
+nnoremap <leader>gV :<c-u>Gitv! --all<cr>
+vnoremap <leader>gV :<c-u>Gitv! --all<cr>
 
 let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '~'
 let g:gitgutter_sign_removed = '-'
-nnoremap <leader>gG :GitGutterToggle<cr>
+nnoremap <leader>gG :<c-u>GitGutterToggle<cr>
 
 " --------------------------------------------------------------
 " repeat {{{2
@@ -1200,7 +1200,7 @@ aug END
 " --------------------------------------------------------------
 aug vimrc-scala
   au!
-  au FileType java,scala nnoremap <silent><buffer> <Leader>si :SortScalaImports<CR>
+  au FileType java,scala nnoremap <silent><buffer> <Leader>si :<c-u>SortScalaImports<CR>
 aug END
 let g:scala_sort_across_groups = 1
 
@@ -1227,12 +1227,12 @@ endif
 " --------------------------------------------------------------
 " If you get the error like 'Undefined variable b:NERDTree',
 " you should run the command like ':NERDTree .'.
-nnoremap <leader>nt :NERDTreeToggle<cr>
-nnoremap <leader>nf :NERDTreeFind<cr>
-nnoremap <leader>nm :NERDTreeMirror<cr>
-nnoremap <leader>nc :NERDTreeCWD<cr>
-nnoremap <leader>nx :NERDTreeClose<cr>
-nnoremap <leader>nb :NERDTreeFromBookmark
+nnoremap <leader>nt :<c-u>NERDTreeToggle<cr>
+nnoremap <leader>nf :<c-u>NERDTreeFind<cr>
+nnoremap <leader>nm :<c-u>NERDTreeMirror<cr>
+nnoremap <leader>nc :<c-u>NERDTreeCWD<cr>
+nnoremap <leader>nx :<c-u>NERDTreeClose<cr>
+nnoremap <leader>nb :<c-u>NERDTreeFromBookmark
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeWinSize = 40
 
@@ -1240,8 +1240,8 @@ augroup vimrc-nerdtree
   autocmd!
   autocmd FileType nerdtree com! -buffer NERDTreePromote call s:nerdtree_promote()
   autocmd FileType nerdtree com! -buffer NERDTreeDemote call s:nerdtree_demote()
-  autocmd FileType nerdtree nnoremap <silent> <buffer> << :NERDTreePromote<cr>
-  autocmd Filetype nerdtree nnoremap <silent> <buffer> >> :NERDTreeDemote<cr>
+  autocmd FileType nerdtree nnoremap <silent> <buffer> << :<c-u>NERDTreePromote<cr>
+  autocmd Filetype nerdtree nnoremap <silent> <buffer> >> :<c-u>NERDTreeDemote<cr>
 augroup END
 
 fu! s:nerdtree_promote()
@@ -1323,7 +1323,7 @@ let g:vimtex_view_enabled = 0
 let g:vimtex_index_split_width = 40
 aug vimrc-vimtex
   au!
-  au FileType tex nnoremap <buffer> <leader>t :VimtexTocToggle<cr>
+  au FileType tex nnoremap <buffer> <leader>t :<c-u>VimtexTocToggle<cr>
 aug END
 
 " --------------------------------------------------------------
@@ -1417,12 +1417,12 @@ fu! s:separator_commentary_format(ft) abort
   return substitute(substitute(a:ft, '\S\zs%s',' %s',''), '%s\ze\S', '%s ', '')
 endfu
 if get(g:, 'separator_use_default_mappings', 1)
-  nnoremap <silent> [= :call <sid>separator_insert('=', 'O')<cr>
-  nnoremap <silent> ]= :call <sid>separator_insert('=', 'o')<cr>
-  nnoremap <silent> g= :call <sid>separator_insert('=', 'I')<cr>
-  nnoremap <silent> [- :call <sid>separator_insert('-', 'O')<cr>
-  nnoremap <silent> ]- :call <sid>separator_insert('-', 'o')<cr>
-  nnoremap <silent> g- :call <sid>separator_insert('-', 'I')<cr>
+  nnoremap <silent> [= :<c-u>call <sid>separator_insert('=', 'O')<cr>
+  nnoremap <silent> ]= :<c-u>call <sid>separator_insert('=', 'o')<cr>
+  nnoremap <silent> g= :<c-u>call <sid>separator_insert('=', 'I')<cr>
+  nnoremap <silent> [- :<c-u>call <sid>separator_insert('-', 'O')<cr>
+  nnoremap <silent> ]- :<c-u>call <sid>separator_insert('-', 'o')<cr>
+  nnoremap <silent> g- :<c-u>call <sid>separator_insert('-', 'I')<cr>
 endif
 if get(g:, 'separator_use_default_autocommands', 1)
   aug Separator
