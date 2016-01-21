@@ -1,8 +1,8 @@
 #---------------------------------------------------------------
 # Source various files
 #---------------------------------------------------------------
-if [[ -d $HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh ]]; then
-    source $HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh
+if [[ -s "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh" ]]; then
+    source "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh" > /dev/null
 fi
 # Fix tmux problem in Cygwin
 if [[ "$OSTYPE" == "cygwin" ]]; then
