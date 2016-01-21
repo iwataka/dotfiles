@@ -452,8 +452,8 @@ if !maparg('<tab>', 'i') | inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", 
 if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>", "\<tab>") | endif
 
 " Make gt and gT support both tabline and bufline
-nnoremap <silent> gt :call <sid>move_tab_or_buffer('next')<cr>
-nnoremap <silent> gT :call <sid>move_tab_or_buffer('previous')<cr>
+nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
+nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
 
 " ===============================================================
 " FUNCTIONS & COMMANDS {{{1
@@ -880,12 +880,13 @@ fu! s:xml_format()
   normal! gg=G
 endfu
 
-fu! s:move_tab_or_buffer(suffix)
+fu! s:move_tab_or_buffer(suffix, count)
   let tab_exists = tabpagenr('$') != 1
+  let c = a:count == 0 ? '' : a:count
   if tab_exists
-    silent exe 'tab'.a:suffix
+    silent exe 'tab'.a:suffix.' '.c
   else
-    silent exe 'b'.a:suffix
+    silent exe 'b'.a:suffix.' '.c
   endif
 endfu
 
