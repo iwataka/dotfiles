@@ -1153,7 +1153,7 @@ nnoremap <leader>gG :GitGutterToggle<cr>
 " --------------------------------------------------------------
 " repeat {{{2
 " --------------------------------------------------------------
-" sil! call repeat#set("\<Plug>(EasyAlign)", v:count)
+silent! call repeat#set("\<Plug>(EasyAlign)", v:count)
 
 " --------------------------------------------------------------
 " airline {{{2
