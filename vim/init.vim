@@ -1333,12 +1333,14 @@ let g:calendar_google_task = 1
 " --------------------------------------------------------------
 " vimtex {{{2
 " --------------------------------------------------------------
-let g:vimtex_view_enabled = 0
-let g:vimtex_index_split_width = 40
-aug vimrc-vimtex
-  au!
-  au FileType tex nnoremap <buffer> <leader>t :<c-u>VimtexTocToggle<cr>
-aug END
+if has('clientserver')
+  let g:vimtex_view_enabled = 0
+  let g:vimtex_index_split_width = 40
+  aug vimrc-vimtex
+    au!
+    au FileType tex nnoremap <buffer> <leader>t :<c-u>VimtexTocToggle<cr>
+  aug END
+endif
 
 " --------------------------------------------------------------
 " goyo {{{2
