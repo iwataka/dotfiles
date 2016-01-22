@@ -5,3 +5,5 @@ do
 done
 
 alias ..='cd ..'
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
