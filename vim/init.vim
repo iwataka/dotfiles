@@ -891,6 +891,16 @@ fu! s:move_tab_or_buffer(suffix, count)
   endif
 endfu
 
+com! Average call s:average(getline('.'))
+fu! s:average(line)
+  let nums = map(split(a:line, ','), 'str2float(v:val)')
+  let sum = 0
+  for n in nums
+    let sum += n
+  endfor
+  echo sum / len(nums)
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
