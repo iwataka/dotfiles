@@ -891,9 +891,17 @@ fu! s:move_tab_or_buffer(suffix, count)
   endif
 endfu
 
-com! Average call s:average(getline('.'))
-fu! s:average(line)
-  let nums = map(split(a:line, ','), 'str2float(v:val)')
+com! -range Average call s:average(getline(<line1>, <line2>))
+fu! s:average(lines)
+  if type(a:lines) == type('')
+    let line = a:lines
+  elseif type(a:lines) == type([])
+    let line = ''
+    for l in a:lines
+      let line .= l.','
+    endfor
+  endif
+  let nums = map(split(line, ','), 'str2float(v:val)')
   let sum = 0
   for n in nums
     let sum += n
