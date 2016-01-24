@@ -891,8 +891,17 @@ fu! s:move_tab_or_buffer(suffix, count)
   endif
 endfu
 
-com! -range Average call s:average(getline(<line1>, <line2>))
-fu! s:average(lines)
+com! -range Average call s:show_avg(getline(<line1>, <line2>))
+com! -range Stddev call s:show_stddev(getline(<line1>, <line2>))
+fu! s:show_avg(lines)
+  let avg = s:avg(s:nums(a:lines))
+  echo 'The average is '.string(avg)
+endfu
+fu! s:show_stddev(lines)
+  let stddev = s:stddev(s:nums(a:lines))
+  echo 'The standard deviation is '.string(stddev)
+endfu
+fu! s:nums(lines)
   if type(a:lines) == type('')
     let line = a:lines
   elseif type(a:lines) == type([])
@@ -901,12 +910,22 @@ fu! s:average(lines)
       let line .= l.','
     endfor
   endif
-  let nums = map(split(line, ','), 'str2float(v:val)')
+  return map(split(line, ','), 'str2float(v:val)')
+endfu
+fu! s:avg(nums)
+  return s:sum(a:nums) / len(a:nums)
+endfu
+fu! s:stddev(nums)
+  let avg = s:avg(a:nums)
+  let devs = map(a:nums, 'pow(v:val - avg, 2)')
+  return s:sum(devs) / len(a:nums)
+endfu
+fu! s:sum(nums)
   let sum = 0
-  for n in nums
+  for n in a:nums
     let sum += n
   endfor
-  echo sum / len(nums)
+  return sum
 endfu
 
 " ===============================================================
