@@ -891,15 +891,23 @@ fu! s:move_tab_or_buffer(suffix, count)
   endif
 endfu
 
-com! -range Average call s:show_avg(getline(<line1>, <line2>))
-com! -range Stddev call s:show_stddev(getline(<line1>, <line2>))
-fu! s:show_avg(lines)
-  let avg = s:avg(s:nums(a:lines))
-  echo 'The average is '.string(avg)
+com! -range Average call s:register_avg(getline(<line1>, <line2>))
+com! -range Var call s:register_var(getline(<line1>, <line2>))
+com! -range Stddev call s:register_stddev(getline(<line1>, <line2>))
+fu! s:register_avg(lines)
+  let avg = string(s:avg(s:nums(a:lines)))
+  let @+ = avg
+  echo 'The average is ['.avg.']'
 endfu
-fu! s:show_stddev(lines)
-  let stddev = s:stddev(s:nums(a:lines))
-  echo 'The standard deviation is '.string(stddev)
+fu! s:register_var(lines)
+  let var = string(s:var(s:nums(a:lines)))
+  let @+ = var
+  echo 'The variance is ['.var.']'
+endfu
+fu! s:register_stddev(lines)
+  let stddev = string(s:stddev(s:nums(a:lines)))
+  let @+ = stddev
+  echo 'The standard deviation is ['.stddev.']'
 endfu
 fu! s:nums(lines)
   if type(a:lines) == type('')
@@ -910,15 +918,18 @@ fu! s:nums(lines)
       let line .= l.','
     endfor
   endif
-  return map(split(line, ','), 'str2float(v:val)')
+  return map(filter(split(line, ','), 'v:val != ""'), 'str2float(v:val)')
 endfu
 fu! s:avg(nums)
   return s:sum(a:nums) / len(a:nums)
 endfu
-fu! s:stddev(nums)
+fu! s:var(nums)
   let avg = s:avg(a:nums)
   let devs = map(a:nums, 'pow(v:val - avg, 2)')
-  return s:sum(devs) / len(a:nums)
+  return s:sum(devs) / (len(a:nums) - 1)
+endfu
+fu! s:stddev(nums)
+  return pow(s:var(a:nums), 0.5)
 endfu
 fu! s:sum(nums)
   let sum = 0
