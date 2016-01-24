@@ -414,8 +414,8 @@ nnoremap zL zl
 nnoremap zH zh
 
 " Scroll vertically
-nnoremap <c-y> 3<c-y>
-nnoremap <c-e> 3<c-e>
+" nnoremap <c-y> 3<c-y>
+" nnoremap <c-e> 3<c-e>
 
 " Circular window navigation
 nnoremap <tab> <c-w>w
