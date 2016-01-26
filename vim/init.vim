@@ -941,6 +941,8 @@ fu! s:sum(nums)
   return sum
 endfu
 
+com! -range=% Punct call s:preserve('<line1>,<line2>s/、/,/g | <line1>,<line2>s/。/./g')
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
