@@ -359,6 +359,10 @@ nnoremap x "_x
 nnoremap ' `
 nnoremap ` '
 
+" Saner search
+nnoremap <expr> n 'Nn'[v:searchforward].'zvzz'
+nnoremap <expr> N 'nN'[v:searchforward].'zvzz'
+
 " jk | Escaping!
 inoremap jk <Esc>
 cnoremap jk <C-c>
