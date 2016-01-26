@@ -888,7 +888,7 @@ fu! s:move_tab_or_buffer(suffix, count)
   let c = a:count == 0 ? '' : a:count
   if tab_exists
     silent exe 'tab'.a:suffix.' '.c
-  else
+  elseif buflisted(bufnr('%'))
     silent exe 'b'.a:suffix.' '.c
   endif
 endfu
