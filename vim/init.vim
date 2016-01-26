@@ -1,3 +1,5 @@
+" DESCRIPTION {{{1
+" ===============================================================
 " Awesome vimrc
 " junegunn - https://github.com/junegunn/dotfiles/blob/master/vimrc
 " martin-svk - https://github.com/martin-svk/dot-files/blob/master/neovim/init.vim
@@ -57,6 +59,7 @@ Plug 'airblade/vim-gitgutter'
 "   Plug 'mhinz/vim-signify'
 " endif
 Plug 'tpope/vim-fugitive'
+Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'gregsexton/gitv', { 'on': ['Gitv'] }
 
 " Fancy
@@ -64,13 +67,7 @@ Plug 'bling/vim-airline'
 Plug 'Yggdroot/indentLine'
 
 " Navigation
-Plug 'scrooloose/nerdtree', { 'on': [
-  \ 'NERDTree',
-  \ 'NERDTreeToggle',
-  \ 'NERDTreeFind',
-  \ 'NERDTreeCWD',
-  \ 'NERDTreeFromBookmark'
-  \ ] }
+Plug 'justinmk/vim-dirvish'
 Plug 'ctrlpvim/ctrlp.vim'
 if has('unix') || has('mac') || has('macunix')
   Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
@@ -86,6 +83,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 " This plug-in causes errors while inputting japanese characters
 " in GVim, so you should execute :DelimitMateOff for it.
 Plug 'Raimondi/delimitMate'
@@ -97,8 +95,11 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 " Plug 'vim-scripts/vim-auto-save'
 
 " Colorscheme
-Plug 'morhetz/gruvbox'
-Plug 'altercation/vim-colors-solarized'
+if !(has('nvim') || has('gui_running'))
+  Plug 'altercation/vim-colors-solarized'
+else
+  Plug 'morhetz/gruvbox'
+endif
 " Switching colorscheme includes an error caused by a bug in Vim.
 " This plugin resolves it.
 " Plug 'xolox/vim-misc' | Plug 'xolox/vim-colorscheme-switcher'
@@ -123,9 +124,6 @@ Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
-if has('clientserver')
-  Plug 'lervag/vimtex', { 'for': 'tex' }
-endif
 
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
@@ -1038,7 +1036,7 @@ let g:solarized_visibility = 'high'
 let g:solarized_hitrail = 0
 let g:solarized_termtrans = 1
 let g:solarized_italic = s:italic
-call togglebg#map('<F5>')
+silent! call togglebg#map('<F5>')
 
 if !exists('g:colors_name')
   silent! exe 'colorscheme '.s:colors_name
@@ -1285,68 +1283,6 @@ if executable('flake8')
 endif
 
 " --------------------------------------------------------------
-" nerdtree {{{2
-" --------------------------------------------------------------
-" If you get the error like 'Undefined variable b:NERDTree',
-" you should run the command like ':NERDTree .'.
-nnoremap <leader>nt :<c-u>NERDTreeToggle<cr>
-nnoremap <leader>nf :<c-u>NERDTreeFind<cr>
-nnoremap <leader>nm :<c-u>NERDTreeMirror<cr>
-nnoremap <leader>nc :<c-u>NERDTreeCWD<cr>
-nnoremap <leader>nx :<c-u>NERDTreeClose<cr>
-nnoremap <leader>nb :<c-u>NERDTreeFromBookmark
-let g:NERDTreeShowHidden = 1
-let g:NERDTreeWinSize = 40
-
-augroup vimrc-nerdtree
-  autocmd!
-  autocmd FileType nerdtree com! -buffer NERDTreePromote call s:nerdtree_promote()
-  autocmd FileType nerdtree com! -buffer NERDTreeDemote call s:nerdtree_demote()
-  autocmd FileType nerdtree nnoremap <silent> <buffer> << :<c-u>NERDTreePromote<cr>
-  autocmd Filetype nerdtree nnoremap <silent> <buffer> >> :<c-u>NERDTreeDemote<cr>
-augroup END
-
-fu! s:nerdtree_promote()
-  let curNode = g:NERDTreeFileNode.GetSelected()
-  let newNodeDir = fnamemodify(curNode.path.str(), ':h:h')
-  let newNodeName = fnamemodify(curNode.path.str(), ':t')
-  let newNodePath = ''
-  if has('win32') || ('win64')
-    let newNodePath = join([newNodeDir, newNodeName], '\')
-  else
-    let newNodePath = join([newNodeDir, newNodeName], '/')
-  endif
-  try
-    call curNode.rename(newNodePath)
-    call NERDTreeRender()
-    call curNode.putCursorHere(1, 0)
-    redraw
-  catch /^NERDTree/
-    echoe 'Node Not Promoted'
-  endtry
-endfu
-
-fu! s:nerdtree_demote()
-  let curNode = g:NERDTreeFileNode.GetSelected()
-  let newNodeDir = fnamemodify(curNode.path.str(), ':h')
-  let newNodeDest = input('New Directory? ')
-  let newNodeName = fnamemodify(curNode.path.str(), ':t')
-  if has('win32') || ('win64')
-    let newNodePath = join([newNodeDir, newNodeDest, newNodeName], '\')
-  else
-    let newNodePath = join([newNodeDir, newNodeDest, newNodeName], '/')
-  endif
-  try
-    call curNode.rename(newNodePath)
-    call NERDTreeRender()
-    call curNode.putCursorHere(1, 0)
-    redraw
-  catch /^NERDTree/
-    echoe 'Node Not Promoted'
-  endtry
-endfu
-
-" --------------------------------------------------------------
 " indentLine {{{2
 " --------------------------------------------------------------
 let g:indentLine_color_term = 242
@@ -1377,18 +1313,6 @@ let g:instant_markdown_autostart = 0
 " --------------------------------------------------------------
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
-
-" --------------------------------------------------------------
-" vimtex {{{2
-" --------------------------------------------------------------
-if has('clientserver')
-  let g:vimtex_view_enabled = 0
-  let g:vimtex_index_split_width = 40
-  aug vimrc-vimtex
-    au!
-    au FileType tex nnoremap <buffer> <leader>t :<c-u>VimtexTocToggle<cr>
-  aug END
-endif
 
 " --------------------------------------------------------------
 " goyo {{{2
@@ -1431,6 +1355,35 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign with a Vim movement
 nmap ga <Plug>(EasyAlign)
 nmap gaa ga_
+
+" --------------------------------------------------------------
+" dirvish {{{2
+" --------------------------------------------------------------
+if has('conceal')
+  let g:dirvish_relative_paths = 1
+endif
+aug vimrc-dirvish
+  au!
+  " Map t to "open in new tab".
+  au FileType dirvish nnoremap <buffer> t
+      \ :tabnew <C-R>=fnameescape(getline('.'))<CR><CR>
+
+  " Map CTRL-R to reload the Dirvish buffer.
+  au FileType dirvish nnoremap <buffer> <C-R> :<C-U>Dirvish %<CR>
+
+  " Map gh to hide "hidden" files.
+  au FileType dirvish nnoremap <buffer> gh
+      \ :set ma<bar>g@\v/\.[^\/]+/?$@d<cr>:set noma<cr>
+aug END
+
+" --------------------------------------------------------------
+" limelight {{{2
+" --------------------------------------------------------------
+aug vimrc-limelight
+  au!
+  autocmd! User GoyoEnter Limelight
+  autocmd! User GoyoLeave Limelight!
+aug END
 
 " --------------------------------------------------------------
 " Misc {{{1
