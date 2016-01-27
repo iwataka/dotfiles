@@ -47,12 +47,6 @@ silent! if plug#begin('~/.vim/plugged')
 " My Plugins
 Plug 'iwataka/vim-replace'
 
-" Completion
-if has('python')
-  " Plug 'Valloric/YouCompleteMe', { 'on': [] }
-  Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-endif
-
 " Git
 Plug 'airblade/vim-gitgutter'
 " if v:version >= 703
@@ -60,13 +54,10 @@ Plug 'airblade/vim-gitgutter'
 " endif
 Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim'
-Plug 'gregsexton/gitv', { 'on': ['Gitv'] }
-
-" Fancy
-Plug 'bling/vim-airline'
-Plug 'Yggdroot/indentLine'
+Plug 'junegunn/gv.vim', { 'on': ['GV'] }
 
 " Navigation
+Plug 'bling/vim-airline'
 Plug 'justinmk/vim-dirvish'
 Plug 'ctrlpvim/ctrlp.vim'
 if has('unix') || has('mac') || has('macunix')
@@ -85,7 +76,9 @@ Plug 'tpope/vim-sleuth'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 " This plug-in causes errors while inputting japanese characters
 " in GVim, so you should execute :DelimitMateOff for it.
-Plug 'Raimondi/delimitMate'
+" Related to the Vim's bug
+" Plug 'Raimondi/delimitMate'
+Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 " This plugin is low-performance with YCM.
 " Plug 'terryma/vim-multiple-cursors'
@@ -109,9 +102,6 @@ if v:version >= 703
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 endif
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-if has('unix') || has('mac')
-  Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
-endif
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'tpope/vim-endwise'
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -123,6 +113,7 @@ Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
+Plug 'matze/vim-tex-fold', { 'for': 'tex' }
 
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
@@ -653,7 +644,6 @@ endfu
 " endfu
 
 if executable('pandoc')
-  com! MarkdownPreview call s:markdown_preview()
   fu! s:markdown_preview()
     let current_name = fnamemodify(expand('%'), ':p')
     if !exists('b:markdown_preview_dest_name')
@@ -666,6 +656,11 @@ if executable('pandoc')
     silent exec com.' '.current_name.' -o '.b:markdown_preview_dest_name
     call s:open(b:markdown_preview_dest_name)
   endfu
+  aug markdown-preview
+    au!
+    au FileType markdown
+          \ com! -buffer MarkdownPreview call s:markdown_preview()
+  aug END
 endif
 
 cabbrev o Open
@@ -942,16 +937,35 @@ endfu
 
 " Japanese-specific commands
 com! -range=% Punct call s:preserve('<line1>,<line2>s/、/,/g | <line1>,<line2>s/。/./g')
-com! -range=% Number call s:preserve(
-      \ '<line1>,<line2>s/[１一]/1/g |
-      \ <line1>,<line2>s/[２二]/2/g |
-      \ <line1>,<line2>s/[３三]/3/g |
-      \ <line1>,<line2>s/[４四]/4/g |
-      \ <line1>,<line2>s/[５五]/5/g |
-      \ <line1>,<line2>s/[６六]/6/g |
-      \ <line1>,<line2>s/[７七]/7/g |
-      \ <line1>,<line2>s/[８八]/8/g |
-      \ <line1>,<line2>s/[９九]/9/g')
+fu! s:convert_punct(line1, line2, ...)
+  let map = {
+        \ '、': ',',
+        \ '。': '.'
+        \ }
+  let flag = a:0 ? a:1 : 'g'
+  call s:substitute_map(a:line1, a:line2, map, flag)
+endfu
+com! -range=% -nargs=? Number call s:convert_number(<line1>, <line2>, <f-args>)
+fu! s:convert_number(line1, line2, ...)
+  let map = {
+        \ '[１一]': '1',
+        \ '[２二]': '2',
+        \ '[３三]': '3',
+        \ '[４四]': '4',
+        \ '[５五]': '5',
+        \ '[６六]': '6',
+        \ '[７七]': '7',
+        \ '[８八]': '8',
+        \ '[９九]': '9'
+        \ }
+  let flag = a:0 ? a:1 : 'gc'
+  call s:substitute_map(a:line1, a:line2, map, flag)
+endfu
+fu! s:substitute_map(line1, line2, map, flag)
+  for [key, value] in items(a:map)
+    silent! exe a:line1.','.a:line2.'s/'.key.'/'.value.'/'.a:flag
+  endfor
+endfu
 
 " ===============================================================
 " ABBREVIATIONS {{{1
@@ -1006,14 +1020,6 @@ augroup PlugGx
   autocmd!
   autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
 augroup END
-
-if ('python')
-  com! PlugYcm call s:load_ycm()
-  fu! s:load_ycm()
-    call plug#load('YouCompleteMe', 'ultisnips', 'vim-snippets')
-    call youcompleteme#Enable()
-  endfu
-endif
 
 function! s:plug_gx()
   let line = getline('.')
@@ -1206,22 +1212,12 @@ let g:ycm_key_detailed_diagnostics = ''
 nnoremap gd :<c-u>YcmCompleter GoToDeclaration<cr>
 
 " --------------------------------------------------------------
-" Ultisnips {{{2
-" --------------------------------------------------------------
-let g:UltiSnipsListSnippets="<c-tab>"
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetsDir="~/.vim/snippets"
-
-" --------------------------------------------------------------
 " Git {{{2
 " --------------------------------------------------------------
 nnoremap gs :<c-u>Gstatus<CR>
 nnoremap <Leader>gd :<c-u>Gdiff<CR>
 nnoremap <leader>gD :<c-u>Gsplit! diff<cr>
-nnoremap <Leader>gg :<c-u>Ggrep<Space>
+nnoremap <leader>gg :<c-u>Ggrep<space>
 nnoremap <Leader>gc :<c-u>Gcommit<CR>
 nnoremap <Leader>gr :<c-u>Gread<CR>
 nnoremap <leader>gR :<c-u>Gremove<cr>
@@ -1231,9 +1227,8 @@ nnoremap <leader>gL :<c-u>Gpedit! log -n 10 --stat<cr><c-w>p
 nnoremap <leader>ga :<c-u>Gcommit --amend<cr>
 nnoremap <leader>gA :<c-u>Git add --all<cr>
 
-nnoremap <leader>gv :<c-u>Gitv --all<cr>
-nnoremap <leader>gV :<c-u>Gitv! --all<cr>
-vnoremap <leader>gV :<c-u>Gitv! --all<cr>
+nnoremap <leader>gv :<c-u>GV<cr>
+xnoremap <leader>gv :GV<cr>
 
 let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '~'
@@ -1261,21 +1256,6 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#wordcount#enabled = 0
 
 " --------------------------------------------------------------
-" delimitMate {{{2
-" --------------------------------------------------------------
-let g:delimitMate_expand_space = 1
-let g:delimitMate_expand_cr = 1
-let g:delimitMate_expand_inside_quotes = 0
-aug vimrc-delimitMate
-  au!
-  au FileType markdown
-        \ let b:delimitMate_expand_space = 0
-  au FileType text,markdown,tex
-        \ let b:delimitMate_autoclose = 0 |
-        \ let b:loaded_delimitMate = 1
-aug END
-
-" --------------------------------------------------------------
 " scala {{{2
 " --------------------------------------------------------------
 aug vimrc-scala
@@ -1301,11 +1281,6 @@ endif
 if executable('flake8')
   let g:syntastic_python_checkers = ['flake8']
 endif
-
-" --------------------------------------------------------------
-" indentLine {{{2
-" --------------------------------------------------------------
-let g:indentLine_color_term = 242
 
 " --------------------------------------------------------------
 " markdown {{{2
@@ -1337,7 +1312,7 @@ let g:calendar_google_task = 1
 " --------------------------------------------------------------
 " goyo {{{2
 " --------------------------------------------------------------
-let g:goyo_linenr = 1
+let g:goyo_linenr = 0
 
 " --------------------------------------------------------------
 " easy-align {{{2
@@ -1396,6 +1371,14 @@ aug vimrc-dirvish
       \ :set ma<bar>g@\v/\.[^\/]+/?$@d<cr>:set noma<cr>
 aug END
 
+" --------------------------------------------------------------
+" auto-pairs {{{2
+" --------------------------------------------------------------
+aug vimrc-auto-pairs
+  au!
+  au FileType tex,markdown,text
+        \ let b:autopairs_loaded = 1
+aug END
 " --------------------------------------------------------------
 " Misc {{{1
 " --------------------------------------------------------------
