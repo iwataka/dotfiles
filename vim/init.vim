@@ -940,7 +940,18 @@ fu! s:sum(nums)
   return sum
 endfu
 
+" Japanese-specific commands
 com! -range=% Punct call s:preserve('<line1>,<line2>s/、/,/g | <line1>,<line2>s/。/./g')
+com! -range=% Number call s:preserve(
+      \ '<line1>,<line2>s/[１一]/1/g |
+      \ <line1>,<line2>s/[２二]/2/g |
+      \ <line1>,<line2>s/[３三]/3/g |
+      \ <line1>,<line2>s/[４四]/4/g |
+      \ <line1>,<line2>s/[５五]/5/g |
+      \ <line1>,<line2>s/[６六]/6/g |
+      \ <line1>,<line2>s/[７七]/7/g |
+      \ <line1>,<line2>s/[８八]/8/g |
+      \ <line1>,<line2>s/[９九]/9/g')
 
 " ===============================================================
 " ABBREVIATIONS {{{1
