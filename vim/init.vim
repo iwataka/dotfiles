@@ -83,7 +83,6 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
-Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 " This plug-in causes errors while inputting japanese characters
 " in GVim, so you should execute :DelimitMateOff for it.
 Plug 'Raimondi/delimitMate'
@@ -1261,6 +1260,7 @@ aug vimrc-delimitMate
   au FileType markdown
         \ let b:delimitMate_expand_space = 0
   au FileType text,markdown,tex
+        \ let b:delimitMate_autoclose = 0 |
         \ let b:loaded_delimitMate = 1
 aug END
 
@@ -1383,15 +1383,6 @@ aug vimrc-dirvish
   " Map gh to hide "hidden" files.
   au FileType dirvish nnoremap <buffer> gh
       \ :set ma<bar>g@\v/\.[^\/]+/?$@d<cr>:set noma<cr>
-aug END
-
-" --------------------------------------------------------------
-" limelight {{{2
-" --------------------------------------------------------------
-aug vimrc-limelight
-  au!
-  autocmd! User GoyoEnter Limelight
-  autocmd! User GoyoLeave Limelight!
 aug END
 
 " --------------------------------------------------------------
