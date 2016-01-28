@@ -936,8 +936,8 @@ fu! s:sum(nums)
 endfu
 
 " Japanese-specific commands
-com! -range=% Punct call s:preserve('<line1>,<line2>s/、/,/g | <line1>,<line2>s/。/./g')
-fu! s:convert_punct(line1, line2, ...)
+com! -range=% -nargs=? Punct call s:substitute_punct(<line1>, <line2>, <f-args>)
+fu! s:substitute_punct(line1, line2, ...)
   let map = {
         \ '、': ',',
         \ '。': '.'
@@ -945,8 +945,8 @@ fu! s:convert_punct(line1, line2, ...)
   let flag = a:0 ? a:1 : 'g'
   call s:substitute_map(a:line1, a:line2, map, flag)
 endfu
-com! -range=% -nargs=? Number call s:convert_number(<line1>, <line2>, <f-args>)
-fu! s:convert_number(line1, line2, ...)
+com! -range=% -nargs=? Number call s:substitute_number(<line1>, <line2>, <f-args>)
+fu! s:substitute_number(line1, line2, ...)
   let map = {
         \ '[１一]': '1',
         \ '[２二]': '2',
