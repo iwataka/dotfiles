@@ -74,7 +74,6 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
-Plug 'glidenote/memolist.vim', { 'on': ['MemoNew', 'MemoList', 'MemoGrep'] }
 " This plug-in causes errors while inputting japanese characters
 " in GVim, so you should execute :DelimitMateOff for it.
 " Related to the Vim's bug
@@ -430,7 +429,9 @@ xnoremap <silent> * :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal n<cr>
 xnoremap <silent> # :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal N<cr>
 
 " Double <BS> to remove trailing spaces
-nnoremap <silent> <BS><BS> :<c-u>call <sid>preserve('%s/[　\s]*$//')<cr>
+" This doesn't work as you wish.
+" nnoremap <silent> <BS><BS> :<c-u>call <sid>preserve('%s/[　\s]*$//')<cr>
+nnoremap <silent> <BS><BS> :<c-u>call <sid>preserve('%s/\s*$//')<cr>
 
 " :checktime is frequently used
 nnoremap <leader>ct :<c-u>checktime<cr>
@@ -945,17 +946,17 @@ endfu
 com! -range=% -nargs=? Number call s:substitute_number(<line1>, <line2>, <f-args>)
 fu! s:substitute_number(line1, line2, ...)
   let map = {
-        \ '[１一]': '1',
-        \ '[２二]': '2',
-        \ '[３三]': '3',
-        \ '[４四]': '4',
-        \ '[５五]': '5',
-        \ '[６六]': '6',
-        \ '[７七]': '7',
-        \ '[８八]': '8',
-        \ '[９九]': '9'
+        \ '１': '1',
+        \ '２': '2',
+        \ '３': '3',
+        \ '４': '4',
+        \ '５': '5',
+        \ '６': '6',
+        \ '７': '7',
+        \ '８': '8',
+        \ '９': '9'
         \ }
-  let flag = a:0 ? a:1 : 'gc'
+  let flag = a:0 ? a:1 : 'g'
   call s:substitute_map(a:line1, a:line2, map, flag)
 endfu
 fu! s:substitute_map(line1, line2, map, flag)
@@ -1367,16 +1368,6 @@ aug vimrc-dirvish
   au FileType dirvish nnoremap <buffer> gh
       \ :set ma<bar>g@\v/\.[^\/]+/?$@d<cr>:set noma<cr>
 aug END
-
-" --------------------------------------------------------------
-" memolist {{{2
-" --------------------------------------------------------------
-let g:memolist_memo_suffix = 'md'
-let g:memolist_ex_cmd = 'CtrlP'
-let g:memolist_path = '~/gdrive/notes'
-nnoremap <leader>nn :MemoNew<cr>
-nnoremap <leader>nl :MemoList<cr>
-nnoremap <leader>ng :MemoGrep<cr>
 
 " --------------------------------------------------------------
 " Misc {{{1
