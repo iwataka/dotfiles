@@ -74,6 +74,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+Plug 'glidenote/memolist.vim', { 'on': ['MemoNew', 'MemoList', 'MemoGrep'] }
 " This plug-in causes errors while inputting japanese characters
 " in GVim, so you should execute :DelimitMateOff for it.
 " Related to the Vim's bug
@@ -1366,6 +1367,16 @@ aug vimrc-dirvish
   au FileType dirvish nnoremap <buffer> gh
       \ :set ma<bar>g@\v/\.[^\/]+/?$@d<cr>:set noma<cr>
 aug END
+
+" --------------------------------------------------------------
+" memolist {{{2
+" --------------------------------------------------------------
+let g:memolist_memo_suffix = 'md'
+let g:memolist_ex_cmd = 'CtrlP'
+let g:memolist_path = '~/gdrive/notes'
+nnoremap <leader>nn :MemoNew<cr>
+nnoremap <leader>nl :MemoList<cr>
+nnoremap <leader>ng :MemoGrep<cr>
 
 " --------------------------------------------------------------
 " Misc {{{1
