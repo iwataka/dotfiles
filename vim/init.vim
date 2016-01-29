@@ -78,7 +78,6 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 " in GVim, so you should execute :DelimitMateOff for it.
 " Related to the Vim's bug
 " Plug 'Raimondi/delimitMate'
-Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 " This plugin is low-performance with YCM.
 " Plug 'terryma/vim-multiple-cursors'
@@ -87,11 +86,8 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 " Plug 'vim-scripts/vim-auto-save'
 
 " Colorscheme
-if !(has('nvim') || has('gui_running'))
-  Plug 'altercation/vim-colors-solarized'
-else
-  Plug 'morhetz/gruvbox'
-endif
+Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
 " Switching colorscheme includes an error caused by a bug in Vim.
 " This plugin resolves it.
 " Plug 'xolox/vim-misc' | Plug 'xolox/vim-colorscheme-switcher'
@@ -433,7 +429,7 @@ xnoremap <silent> * :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal n<cr>
 xnoremap <silent> # :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal N<cr>
 
 " Double <BS> to remove trailing spaces
-nnoremap <silent> <BS><BS> :<c-u>call <sid>preserve('%s/\s*$//')<cr>
+nnoremap <silent> <BS><BS> :<c-u>call <sid>preserve('%s/[　\s]*$//')<cr>
 
 " :checktime is frequently used
 nnoremap <leader>ct :<c-u>checktime<cr>
@@ -939,8 +935,8 @@ endfu
 com! -range=% -nargs=? Punct call s:substitute_punct(<line1>, <line2>, <f-args>)
 fu! s:substitute_punct(line1, line2, ...)
   let map = {
-        \ '、': ',',
-        \ '。': '.'
+        \ '、': '，',
+        \ '。': '．'
         \ }
   let flag = a:0 ? a:1 : 'g'
   call s:substitute_map(a:line1, a:line2, map, flag)
@@ -1058,7 +1054,7 @@ let g:solarized_visibility = 'high'
 let g:solarized_hitrail = 0
 let g:solarized_termtrans = 1
 let g:solarized_italic = s:italic
-silent! call togglebg#map('<F5>')
+call togglebg#map('<F5>')
 
 if !exists('g:colors_name')
   silent! exe 'colorscheme '.s:colors_name
@@ -1371,14 +1367,6 @@ aug vimrc-dirvish
       \ :set ma<bar>g@\v/\.[^\/]+/?$@d<cr>:set noma<cr>
 aug END
 
-" --------------------------------------------------------------
-" auto-pairs {{{2
-" --------------------------------------------------------------
-aug vimrc-auto-pairs
-  au!
-  au FileType tex,markdown,text
-        \ let b:autopairs_loaded = 1
-aug END
 " --------------------------------------------------------------
 " Misc {{{1
 " --------------------------------------------------------------
