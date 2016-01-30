@@ -45,7 +45,12 @@ endif
 silent! if plug#begin('~/.vim/plugged')
 
 " My Plugins
+if !has('win32')
+  let g:plug_url_format = 'git@github.com:%s.git'
+endif
 Plug 'iwataka/vim-replace'
+Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteGrep', 'NoteDelete'] }
+unlet! g:plug_url_format
 
 " Git
 Plug 'airblade/vim-gitgutter'
@@ -1336,6 +1341,15 @@ aug vimrc-dirvish
 aug END
 
 " --------------------------------------------------------------
+" airnote {{{2
+" --------------------------------------------------------------
+let g:airnote_path = expand('~/gdrive/notes')
+let g:airnote_suffix = 'md'
+nnoremap <leader>nn :Note<cr>
+nnoremap <leader>nd :NoteDelete<cr>
+nnoremap <leader>ng :NoteGrep<cr>
+
+" --------------------------------------------------------------
 " Misc {{{1
 " --------------------------------------------------------------
 " --------------------------------------------------------------
@@ -1400,92 +1414,3 @@ if get(g:, 'separator_use_default_autocommands', 1)
     au Filetype tex let b:separator_format = '%%%s'
   aug END
 endif
-
-" --------------------------------------------------------------
-" note {{{2
-" --------------------------------------------------------------
-let g:note_path = expand('~/gdrive/notes')
-let g:note_grep_format = 'grep %s %s'
-let g:note_suffix = ''
-let g:note_date_format = '%c'
-if !isdirectory(g:note_path)
-  call mkdir(g:note_path, 'p')
-endif
-let g:note_edit_prompt = 'Edit> '
-let g:note_delete_prompt = 'Delete> '
-let g:note_grep_prompt = 'Grep> '
-com! -nargs=? -complete=customlist,NoteComplete Note call s:edit_note(<f-args>)
-com! -nargs=? -complete=customlist,NoteComplete NoteDelete call s:delete_note(<f-args>)
-com! -nargs=? NoteGrep call s:grep_note(<f-args>)
-fu! s:edit_note(...)
-  let fname = a:0 ? a:1 : input(g:note_edit_prompt, '', 'customlist,NoteComplete')
-  if !empty(fname)
-    if empty(fnamemodify(fname, ':e'))
-      let fname .= s:note_ext()
-    endif
-    let path = s:note_dir().fname
-    silent exe 'edit '.path
-    if !filereadable(path)
-      let time = strftime(g:note_date_format)
-      if !empty(time)
-        let line = printf(&commentstring, time)
-        call setline(1, line)
-      endif
-    endif
-  endif
-endfu
-fu! s:delete_note(...)
-  let fname = a:0 ? a:1 : input(g:note_delete_prompt, '', 'customlist,NoteComplete')
-  if !empty(fname)
-    if empty(fnamemodify(fname, ':e'))
-      let fname .= s:note_ext()
-    endif
-    let path = s:note_dir().fname
-    if !filereadable(path)
-      echo "\n".fname.' is not a existing file.'
-    else
-      echo "\rReally want to delete ".fname.'? (y/n)'
-      let reply = nr2char(getchar())
-      if reply =~ '[yY]'
-        if delete(path)
-          echoe "\rFailed to delete ".fname
-        else
-          if bufexists(bufnr(path))
-            silent exe 'bwipeout '.bufnr(path)
-          endif
-          echo "\rSucceeded to delete ".fname
-        endif
-      endif
-    endif
-  endif
-endfu
-fu! s:grep_note(...)
-  let keyword = a:0 ? a:1 : input(g:note_grep_prompt)
-  if !empty(keyword)
-    silent exe printf(g:note_grep_format, keyword, g:note_path)
-  endif
-endfu
-fu! s:note_dir()
-  if g:note_path =~ '.*/$'
-    return g:note_path
-  else
-    return g:note_path.'/'
-  endif
-endfu
-fu! s:note_ext()
-  if empty(g:note_suffix) || g:note_suffix =~ '^\..*'
-    return g:note_suffix
-  else
-    return '.'.g:note_suffix
-  endif
-endfu
-fu! NoteComplete(A, L, P)
-  let path = fnamemodify(g:note_path, ':p')
-  let len = len(path)
-  let cands = split(globpath(g:note_path, a:A.'*'))
-  return map(map(cands, 'isdirectory(v:val) ? v:val."/" : v:val'),
-        \ 'strpart(v:val, len)')
-endfu
-nnoremap <leader>nn :Note<cr>
-nnoremap <leader>nd :NoteDelete<cr>
-nnoremap <leader>ng :NoteGrep<cr>
