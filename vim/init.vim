@@ -186,7 +186,7 @@ set hlsearch                              " Highlight search results
 nohlsearch                                " Prevent highlight when reloading .vimrc
 set ttyfast                               " Enable fast connection
 set foldenable                            " Enable to fold
-set foldlevel=1                           " Start folding at the second depth
+set foldlevel=0                           " Start folding at the second depth
 set foldmethod=marker                     " Use specified markers to fold sentences
 set conceallevel=0
 " set foldopen+=jump,search               " Open foldings when jumping to them
@@ -288,14 +288,13 @@ augroup vimrcEx
   " (happens when dropping a file on gvim).
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-  " spell, textwidth and other things
   autocmd FileType gitcommit setlocal textwidth=72
   autocmd FileType gitcommit setlocal spell
-  autocmd FileType markdown setlocal spell
+  autocmd FileType markdown
+        \ setlocal spell |
+        \ setlocal commentstring=<!--%s--> |
   autocmd FileType calendar,git,gitv setlocal nolist
 
-  " Comment strings
-  autocmd FileType markdown setlocal commentstring=<!--%s-->
   autocmd FileType dosbatch setlocal commentstring=rem%s
 
   " Quit help buffer by typing just q.
