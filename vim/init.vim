@@ -140,7 +140,9 @@ let mapleader      = " "  " Space can be typed by both of hands.
 let maplocalleader = "\\"  " The local mapleader is hardly used.
 
 let $LANG='en'                            " Vim should be in English
-language time en_US.UTF8
+if !has('win32')
+  language time en_US.UTF8
+endif
 if has('vim_starting')
   set encoding=utf-8
 endif
@@ -1322,69 +1324,3 @@ let g:airnote_suffix = 'md'
 nnoremap <leader>nn :Note<cr>
 nnoremap <leader>nd :NoteDelete<cr>
 nnoremap <leader>ng :NoteGrep<cr>
-
-" --------------------------------------------------------------
-" Misc {{{1
-" --------------------------------------------------------------
-" --------------------------------------------------------------
-" separator {{{2
-" --------------------------------------------------------------
-fu! s:separator_insert(char, enter_insert_mode_key) abort
-  let fo = &fo
-  let &fo = ''
-  normal! m`
-  let use_cursorline_width = get(b:, 'separator_use_cursorline_width',
-        \ get(g:, 'separator_use_cursorline_width', 0))
-  let cursorline_width = len(substitute(getline(line('.')), '\s*$', '', 'g'))
-  let width = get(b:, 'separator_width',
-        \ get(g:, 'separator_width', s:separator_width()))
-  let w = use_cursorline_width && cursorline_width != 0 ?
-        \ cursorline_width : width
-  let format = s:separator_format()
-  let sep = printf(format, repeat(a:char, w / len(a:char)))
-  silent noautocmd exe 'normal! '.a:enter_insert_mode_key.sep
-  noautocmd call setline(line('.'), getline('.')[0:(w - 1)])
-  normal! ``
-  let &fo = fo
-endfu
-fu! s:separator_width() abort
-  let cc = min(map(split(&cc, ','), 'str2nr(v:val)')) - 1
-  return &tw == 0 ? &tw + cc : &tw
-endfu
-fu! s:separator_format() abort
-  if empty(&cms)
-    return '%s'
-  endif
-  let format = get(b:, 'separator_format', get(g:, 'separator_format', &cms))
-  if s:insert_seprator_use_commentary_style()
-    return s:separator_commentary_format(format)
-  else
-    return format
-  endif
-endfu
-fu! s:insert_seprator_use_commentary_style() abort
-  return exists(':Commentary') ||
-        \ get(b:, 'separator_use_commentary_style',
-        \ get(g:, 'separator_use_commentary_style', 0))
-endfu
-fu! s:separator_commentary_format(ft) abort
-  " Stealed from vim-commentary
-  return substitute(substitute(a:ft, '\S\zs%s',' %s',''), '%s\ze\S', '%s ', '')
-endfu
-if get(g:, 'separator_use_default_mappings', 1)
-  nnoremap <silent> [= :<c-u>call <sid>separator_insert('=', 'O')<cr>
-  nnoremap <silent> ]= :<c-u>call <sid>separator_insert('=', 'o')<cr>
-  nnoremap <silent> g= :<c-u>call <sid>separator_insert('=', 'I')<cr>
-  nnoremap <silent> [- :<c-u>call <sid>separator_insert('-', 'O')<cr>
-  nnoremap <silent> ]- :<c-u>call <sid>separator_insert('-', 'o')<cr>
-  nnoremap <silent> g- :<c-u>call <sid>separator_insert('-', 'I')<cr>
-endif
-if get(g:, 'separator_use_default_autocommands', 1)
-  aug Separator
-    au!
-    au Filetype markdown,text
-          \ let b:separator_format = '%s' |
-          \ let b:separator_use_curline_width = 1
-    au Filetype tex let b:separator_format = '%%%s'
-  aug END
-endif
