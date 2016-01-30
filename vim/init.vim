@@ -102,7 +102,9 @@ if v:version >= 703
   Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 endif
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+" Unknown bug (syntax line continuation defined twice)
+" Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'tpope/vim-endwise'
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -184,7 +186,7 @@ set hlsearch                              " Highlight search results
 nohlsearch                                " Prevent highlight when reloading .vimrc
 set ttyfast                               " Enable fast connection
 set foldenable                            " Enable to fold
-set foldlevel=0                           " Start folding at the second depth
+set foldlevel=1                           " Start folding at the second depth
 set foldmethod=marker                     " Use specified markers to fold sentences
 set conceallevel=0
 " set foldopen+=jump,search               " Open foldings when jumping to them
@@ -1260,17 +1262,7 @@ let g:scala_sort_across_groups = 1
 " --------------------------------------------------------------
 " markdown {{{2
 " --------------------------------------------------------------
-let g:vim_markdown_no_default_key_mappings = 1
-let g:vim_markdown_folding_style_pythonic = 1
-let g:vim_markdown_frontmatter=1
-aug vimrc-markdown
-  au!
-  au! FileType markdown
-        \ nmap ]] <Plug>Markdown_MoveToNextHeader |
-        \ nmap [[ <Plug>Markdown_MoveToPreviousHeader |
-        \ nmap ][ <Plug>Markdown_MoveToNextSiblingHeader |
-        \ nmap [] <Plug>Markdown_MoveToPreviousSiblingHeader
-aug END
+let g:markdown_folding = 1
 
 " --------------------------------------------------------------
 " calendar {{{2
