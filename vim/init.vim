@@ -669,6 +669,12 @@ aug markdown-preview
         \ com! -buffer MarkdownCompile call s:markdown_compile()
 aug END
 
+nnoremap gx :call <sid>open_url(getline(line('.'))[(col('.') - 1):])<cr>
+fu! s:open_url(line)
+  let pat = '\v^.*(http[s]?://[a-zA-Z1-9/\.\?]+).*$'
+  let url = substitute(a:line, pat, '\1', '')
+  call s:open(url)
+endfu
 cabbrev o Open
 com! -nargs=* -complete=file Open call s:open(<f-args>)
 fu! s:open(...)
