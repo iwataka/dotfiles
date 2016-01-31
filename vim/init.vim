@@ -49,7 +49,7 @@ if !has('win32')
   let g:plug_url_format = 'git@github.com:%s.git'
 endif
 Plug 'iwataka/vim-replace'
-Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteGrep', 'NoteDelete'] }
+Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 unlet! g:plug_url_format
 
 " Git
@@ -1323,4 +1323,3 @@ let g:airnote_path = expand('~/gdrive/notes')
 let g:airnote_suffix = 'md'
 nnoremap <leader>nn :Note<cr>
 nnoremap <leader>nd :NoteDelete<cr>
-nnoremap <leader>ng :NoteGrep<cr>
