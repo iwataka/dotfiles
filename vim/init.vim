@@ -672,8 +672,10 @@ aug END
 nnoremap gx :call <sid>open_url(getline(line('.'))[(col('.') - 1):])<cr>
 fu! s:open_url(line)
   let pat = '\v^.*(http[s]?://[a-zA-Z1-9/\.\?]+).*$'
-  let url = substitute(a:line, pat, '\1', '')
-  call s:open(url)
+  if a:line =~ pat
+    let url = substitute(a:line, pat, '\1', '')
+    call s:open(url)
+  endif
 endfu
 cabbrev o Open
 com! -nargs=* -complete=file Open call s:open(<f-args>)
