@@ -648,25 +648,30 @@ endfu
 "   silent call s:switch_input_source_to_default()
 " endfu
 
-if executable('pandoc')
-  fu! s:markdown_preview()
-    let current_name = fnamemodify(expand('%'), ':p')
-    if !exists('b:markdown_preview_dest_name')
-      while !exists('b:markdown_preview_dest_name') ||
-            \ filereadable(b:markdown_preview_dest_name)
-        let b:markdown_preview_dest_name =  tempname().'.html'
-      endwh
-    endif
-    let com = '!pandoc -s -f markdown_github'
-    silent exec com.' '.current_name.' -o '.b:markdown_preview_dest_name
-    call s:open(b:markdown_preview_dest_name)
-  endfu
-  aug markdown-preview
-    au!
-    au FileType markdown
-          \ com! -buffer MarkdownPreview call s:markdown_preview()
-  aug END
-endif
+fu! s:markdown_compile() abort
+  if !executable('pandoc')
+    throw 'Require pandoc'
+  endif
+  let current_name = fnamemodify(expand('%'), ':p')
+  if !exists('b:markdown_preview_dest_name')
+    while !exists('b:markdown_preview_dest_name') ||
+          \ filereadable(b:markdown_preview_dest_name)
+      let b:markdown_preview_dest_name =  tempname().'.html'
+    endwh
+  endif
+  let cmd = 'pandoc -s -f markdown_github'
+  call system(cmd.' '.current_name.' -o '.b:markdown_preview_dest_name)
+endfu
+fu! s:markdown_preview() abort
+  call s:markdown_compile()
+  call s:open(b:markdown_preview_dest_name)
+endfu
+aug markdown-preview
+  au!
+  au FileType markdown
+        \ com! -buffer MarkdownPreview call s:markdown_preview() |
+        \ com! -buffer MarkdownCompile call s:markdown_compile()
+aug END
 
 cabbrev o Open
 com! -nargs=* -complete=file Open call s:open(<f-args>)
