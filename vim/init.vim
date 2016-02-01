@@ -669,7 +669,7 @@ aug markdown-preview
         \ com! -buffer MarkdownCompile call s:markdown_compile()
 aug END
 
-nnoremap gx :call <sid>open_url(getline(line('.'))[(col('.') - 1):])<cr>
+nnoremap gx :call <sid>open_url(expand('<cWORD>'))<cr>
 fu! s:open_url(line)
   let pat = '\v^.*(http[s]?://[a-zA-Z1-9/\.\?]+).*$'
   if a:line =~ pat
@@ -1328,7 +1328,7 @@ aug END
 " --------------------------------------------------------------
 " airnote {{{2
 " --------------------------------------------------------------
-let g:airnote_path = expand('~/gdrive/notes')
+let g:airnote_path = expand('~/projects/mynote')
 let g:airnote_suffix = 'md'
 nnoremap <leader>nn :Note<cr>
 nnoremap <leader>nd :NoteDelete<cr>
