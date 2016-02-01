@@ -46,7 +46,8 @@ silent! if plug#begin('~/.vim/plugged')
 
 " My Plugins
 if !has('win32')
-  let g:plug_url_format = 'git@github.com:%s.git'
+  " Require my .ssh/config file.
+  let g:plug_url_format = 'github:%s.git'
 endif
 Plug 'iwataka/vim-replace'
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
