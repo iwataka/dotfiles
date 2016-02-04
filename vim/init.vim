@@ -1204,7 +1204,7 @@ endif
 " Git {{{2
 " --------------------------------------------------------------
 nnoremap gs :<c-u>Gstatus<CR>
-nnoremap <Leader>gd :<c-u>Gdiff<CR>
+nnoremap gd :<c-u>Gdiff<CR>
 nnoremap <leader>gD :<c-u>Gsplit! diff<cr>
 nnoremap <leader>gg :<c-u>Ggrep<space>
 nnoremap <Leader>gc :<c-u>Gcommit<CR>
