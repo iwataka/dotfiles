@@ -103,9 +103,9 @@ if v:version >= 703
   Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 endif
-" Unknown bug (syntax line continuation defined twice)
-" Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+" This is being actively developed and may have some issues, so I fork this.
+Plug 'iwataka/vim-markdown', { 'for': 'markdown' }
+" Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'tpope/vim-endwise'
 Plug 'fatih/vim-go', { 'for': 'go' }
