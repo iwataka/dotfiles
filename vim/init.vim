@@ -1256,7 +1256,17 @@ let g:scala_sort_across_groups = 1
 " --------------------------------------------------------------
 " markdown {{{2
 " --------------------------------------------------------------
-let g:markdown_folding = 1
+let g:vim_markdown_no_default_key_mappings = 1
+let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_frontmatter=1
+aug vimrc-markdown
+  au!
+  au! FileType markdown
+        \ nmap ]] <Plug>Markdown_MoveToNextHeader |
+        \ nmap [[ <Plug>Markdown_MoveToPreviousHeader |
+        \ nmap ][ <Plug>Markdown_MoveToNextSiblingHeader |
+        \ nmap [] <Plug>Markdown_MoveToPreviousSiblingHeader
+aug END
 
 " --------------------------------------------------------------
 " calendar {{{2
