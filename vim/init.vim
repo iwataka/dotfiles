@@ -1073,7 +1073,7 @@ let g:solarized_visibility = 'high'
 let g:solarized_hitrail = 0
 let g:solarized_termtrans = 1
 let g:solarized_italic = s:italic
-call togglebg#map('<F5>')
+silent! call togglebg#map('<F5>')
 
 if !exists('g:colors_name')
   silent! exe 'colorscheme '.s:colors_name
