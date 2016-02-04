@@ -119,6 +119,9 @@ Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
 Plug 'matze/vim-tex-fold', { 'for': 'tex' }
+if !has('win32')
+  Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
+endif
 
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
