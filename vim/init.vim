@@ -672,7 +672,7 @@ aug END
 
 nnoremap gx :call <sid>open_url(expand('<cWORD>'))<cr>
 fu! s:open_url(line)
-  let pat = '\v^.*(http[s]?://[a-zA-Z1-9/\.\?]+).*$'
+  let pat = '\v^.*(http[s]?://[a-zA-Z0-9/\.\?=&]+).*$'
   if a:line =~ pat
     let url = substitute(a:line, pat, '\1', '')
     call s:open(url)
