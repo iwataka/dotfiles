@@ -47,5 +47,6 @@ goto:eof
 
 :mklinkSpacemacs
 mklink "%USERPROFILE%\.spacemacs" "%DOTFILES%\spacemacs"
+goto:eof
 
 :end
