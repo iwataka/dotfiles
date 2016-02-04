@@ -45,12 +45,16 @@ endif
 silent! if plug#begin('~/.vim/plugged')
 
 " My Plugins
-if !has('win32')
-  " Require my .ssh/config file.
+" Require my .ssh/config file.
+if has('win32')
+  let g:plug_url_format = 'git@github.com:%s.git'
+else
   let g:plug_url_format = 'github:%s.git'
 endif
 Plug 'iwataka/vim-replace'
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
+" This is being actively developed and may have some issues, so I fork this.
+Plug 'iwataka/vim-markdown', { 'for': 'markdown' }
 unlet! g:plug_url_format
 
 " Git
@@ -103,9 +107,6 @@ if v:version >= 703
   Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 endif
-" This is being actively developed and may have some issues, so I fork this.
-Plug 'iwataka/vim-markdown', { 'for': 'markdown' }
-" Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'tpope/vim-endwise'
 Plug 'fatih/vim-go', { 'for': 'go' }
