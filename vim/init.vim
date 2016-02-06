@@ -105,6 +105,7 @@ Plug 'morhetz/gruvbox'
 if v:version >= 703
   Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+  Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 endif
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'tpope/vim-endwise'
@@ -1207,7 +1208,7 @@ endif
 " Git {{{2
 " --------------------------------------------------------------
 nnoremap gs :<c-u>Gstatus<CR>
-nnoremap gd :<c-u>Gdiff<CR>
+nnoremap <leader>gd :<c-u>Gdiff<CR>
 nnoremap <leader>gD :<c-u>Gsplit! diff<cr>
 nnoremap <leader>gg :<c-u>Ggrep<space>
 nnoremap <Leader>gc :<c-u>Gcommit<CR>
@@ -1352,3 +1353,14 @@ nnoremap <leader>nd :NoteDelete<cr>
 " --------------------------------------------------------------
 " CJK-language causes errors with mappings from <BS>
 let g:AutoPairsMapBS = 0
+
+" --------------------------------------------------------------
+" jedi {{{2
+" --------------------------------------------------------------
+let g:jedi#goto_command = 'gd'
+let g:jedi#goto_assignments_command = ''
+let g:jedi#goto_definitions_command = ''
+let g:jedi#documentation_command = ''
+let g:jedi#usages_command = ''
+let g:jedi#completions_command = ''
+let g:jedi#rename_command = 'gr'
