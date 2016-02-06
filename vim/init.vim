@@ -59,10 +59,11 @@ Plug 'iwataka/vim-markdown', { 'for': 'markdown' }
 unlet! g:plug_url_format
 
 " Git
-Plug 'airblade/vim-gitgutter'
-" if v:version >= 703
-"   Plug 'mhinz/vim-signify'
-" endif
+" This doesn't work correctly on Windows.
+" Plug 'airblade/vim-gitgutter'
+if v:version >= 703
+  Plug 'mhinz/vim-signify'
+endif
 Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'junegunn/gv.vim', { 'on': ['GV'] }
@@ -1224,10 +1225,14 @@ nnoremap <leader>gA :<c-u>Git add --all<cr>
 nnoremap <leader>gv :<c-u>GV<cr>
 xnoremap <leader>gv :GV<cr>
 
-let g:gitgutter_sign_added = '+'
-let g:gitgutter_sign_modified = '~'
-let g:gitgutter_sign_removed = '-'
-nnoremap <leader>gG :<c-u>GitGutterToggle<cr>
+" let g:gitgutter_sign_added = '+'
+" let g:gitgutter_sign_modified = '~'
+" let g:gitgutter_sign_removed = '-'
+" nnoremap <leader>gG :<c-u>GitGutterToggle<cr>
+
+let g:signify_sign_add = '+'
+let g:signify_sign_delete = '-'
+let g:signify_sign_change = '~'
 
 " --------------------------------------------------------------
 " repeat {{{2
