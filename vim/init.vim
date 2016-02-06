@@ -4,6 +4,7 @@
 " junegunn - https://github.com/junegunn/dotfiles/blob/master/vimrc
 " martin-svk - https://github.com/martin-svk/dot-files/blob/master/neovim/init.vim
 " amix - https://github.com/amix/vimrc
+" mhinz - https://github.com/mhinz/dotfiles/blob/master/vim/vimrc
 
 " Awesome color scheme
 " solarized - https://github.com/altercation/vim-colors-solarized
@@ -84,11 +85,9 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
-" This plug-in causes errors while inputting japanese characters
-" in GVim, so you should execute :DelimitMateOff for it.
-" Related to the Vim's bug
-" Plug 'Raimondi/delimitMate'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'jiangmiao/auto-pairs'
+Plug 'AndrewRadev/splitjoin.vim'
 " This plugin is low-performance with YCM.
 " Plug 'terryma/vim-multiple-cursors'
 " If you want to use syntastic, you must disable vim-auto-save plugin.
@@ -119,9 +118,6 @@ Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
 Plug 'matze/vim-tex-fold', { 'for': 'tex' }
-if !has('win32')
-  Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
-endif
 
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
@@ -453,6 +449,9 @@ if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>"
 " Make gt and gT support both tabline and bufline
 nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
 nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
+
+" grep
+nnoremap K :<c-u>silent exe 'grep '.expand('<cword>')<cr>
 
 " ===============================================================
 " FUNCTIONS & COMMANDS {{{1
@@ -1347,3 +1346,9 @@ let g:airnote_path = expand('~/projects/mynote')
 let g:airnote_suffix = 'md'
 nnoremap <leader>nn :Note<cr>
 nnoremap <leader>nd :NoteDelete<cr>
+
+" --------------------------------------------------------------
+" auto-pairs {{{2
+" --------------------------------------------------------------
+" CJK-language causes errors with mappings from <BS>
+let g:AutoPairsMapBS = 0
