@@ -195,6 +195,7 @@ set conceallevel=0
 set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
 set colorcolumn=81
+set completeopt-=preview
 
 set wildmenu
 set wildignorecase
