@@ -694,7 +694,7 @@ endfu
 cabbrev o Open
 com! -nargs=* -complete=file Open call s:open(<f-args>)
 fu! s:open(...)
-  let target = join(map(copy(a:000), 's:quote_fname(expand(v:val))'), ' ')
+  let target = join(map(copy(a:000), 's:quote_path(v:val)'), ' ')
   let target = empty(target) ? '"'.expand('%:p').'"' : target
   if has('unix')
     " This line does not work at all and I don't know the reason.
@@ -705,15 +705,24 @@ fu! s:open(...)
   elseif has('win32unix')
     silent exec '!cygstart '.target
   else
-    silent! exec '!start '.target
-    if v:shell_error
-      silent exec '!rundll32 url.dll,FileProtocolHandler '.target
+    if target =~ '\v\.exe"$'
+      let cwd = getcwd()
+      silent exe 'cd '.fnamemodify(target[1:-2], ':h')
+      let target = fnamemodify(target[1:-2], ':t')
+      silent exe '!'.target
+      silent exe 'cd '.cwd
+    else
+      silent! exec '!start '.target
+      if v:shell_error
+        silent exec '!rundll32 url.dll,FileProtocolHandler '.target
+      endif
     endif
   endif
   redraw!
 endfu
-fu! s:quote_fname(str)
-  return filereadable(a:str) ? '"'.a:str.'"' : a:str
+fu! s:quote_path(str)
+  return filereadable(a:str) || isdirectory(a:str) ?
+        \ '"'.fnamemodify(expand(a:str), ':p').'"' : a:str
 endfu
 
 com! -nargs=* -complete=customlist,s:UrlComplete Browse call s:open(<q-args>)
