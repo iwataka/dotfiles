@@ -70,7 +70,12 @@ Plug 'junegunn/gv.vim', { 'on': ['GV'] }
 
 " Navigation
 Plug 'bling/vim-airline'
-Plug 'justinmk/vim-dirvish'
+Plug 'scrooloose/nerdtree', { 'on': [
+      \ 'NERDTreeToggle',
+      \ 'NERDTreeFind',
+      \ 'NERDTreeCWD',
+      \ 'NERDTreeFromBookmark'
+      \ ] }
 Plug 'ctrlpvim/ctrlp.vim'
 if has('unix') || has('mac') || has('macunix')
   Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
@@ -89,6 +94,7 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'jiangmiao/auto-pairs'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'wellle/targets.vim'
 " This plugin is low-performance with YCM.
 " Plug 'terryma/vim-multiple-cursors'
 " If you want to use syntastic, you must disable vim-auto-save plugin.
@@ -300,6 +306,7 @@ augroup vimrcEx
   autocmd FileType calendar,git,gitv setlocal nolist
 
   autocmd FileType dosbatch setlocal commentstring=rem%s
+  autocmd FileType dot setlocal commentstring=//\ %s
 
   " Quit help buffer by typing just q.
   autocmd FileType help
@@ -1233,6 +1240,7 @@ xnoremap <leader>gv :GV<cr>
 let g:signify_sign_add = '+'
 let g:signify_sign_delete = '-'
 let g:signify_sign_change = '~'
+let g:signify_cursorhold_normal = 1
 
 " --------------------------------------------------------------
 " repeat {{{2
@@ -1327,24 +1335,16 @@ nmap ga <Plug>(EasyAlign)
 nmap gaa ga_
 
 " --------------------------------------------------------------
-" dirvish {{{2
+" nerdtree {{{2
 " --------------------------------------------------------------
-if has('conceal')
-  let g:dirvish_relative_paths = 1
-endif
-aug vimrc-dirvish
-  au!
-  " Map t to "open in new tab".
-  au FileType dirvish nnoremap <buffer> t
-      \ :tabnew <C-R>=fnameescape(getline('.'))<CR><CR>
-
-  " Map CTRL-R to reload the Dirvish buffer.
-  au FileType dirvish nnoremap <buffer> <C-R> :<C-U>Dirvish %<CR>
-
-  " Map gh to hide "hidden" files.
-  au FileType dirvish nnoremap <buffer> gh
-      \ :set ma<bar>g@\v/\.[^\/]+/?$@d<cr>:set noma<cr>
-aug END
+nnoremap <leader>nt :<c-u>NERDTreeToggle<cr>
+nnoremap <leader>nf :<c-u>NERDTreeFind<cr>
+nnoremap <leader>nm :<c-u>NERDTreeMirror<cr>
+nnoremap <leader>nc :<c-u>NERDTreeCWD<cr>
+nnoremap <leader>nx :<c-u>NERDTreeClose<cr>
+nnoremap <leader>nb :<c-u>NERDTreeFromBookmark
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeWinSize = 40
 
 " --------------------------------------------------------------
 " airnote {{{2
