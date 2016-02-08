@@ -46,16 +46,16 @@ endif
 silent! if plug#begin('~/.vim/plugged')
 
 " My Plugins
-" Require my .ssh/config file.
-if has('win32')
-  let g:plug_url_format = 'git@github.com:%s.git'
-else
+" Windows can't access automatically via ssh
+if !has('win32')
+  " Require my .ssh/config file.
   let g:plug_url_format = 'github:%s.git'
 endif
 Plug 'iwataka/vim-replace'
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 " This is being actively developed and may have some issues, so I fork this.
-Plug 'iwataka/vim-markdown', { 'for': 'markdown' }
+" plasticboy's vim-markdown gives low-performance on Windows.
+" Plug 'iwataka/vim-markdown', { 'for': 'markdown' }
 unlet! g:plug_url_format
 
 " Git
@@ -70,12 +70,7 @@ Plug 'junegunn/gv.vim', { 'on': ['GV'] }
 
 " Navigation
 Plug 'bling/vim-airline'
-Plug 'scrooloose/nerdtree', { 'on': [
-      \ 'NERDTreeToggle',
-      \ 'NERDTreeFind',
-      \ 'NERDTreeCWD',
-      \ 'NERDTreeFromBookmark'
-      \ ] }
+Plug 'justinmk/vim-dirvish'
 Plug 'ctrlpvim/ctrlp.vim'
 if has('unix') || has('mac') || has('macunix')
   Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
@@ -116,6 +111,7 @@ if v:version >= 703
 endif
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'othree/html5.vim', { 'for': 'html' }
@@ -303,6 +299,7 @@ augroup vimrcEx
   autocmd FileType markdown
         \ setlocal spell |
         \ setlocal commentstring=<!--%s--> |
+        \ setlocal foldlevel=1
   autocmd FileType calendar,git,gitv setlocal nolist
 
   autocmd FileType dosbatch setlocal commentstring=rem%s
@@ -1249,7 +1246,6 @@ xnoremap <leader>gv :GV<cr>
 let g:signify_sign_add = '+'
 let g:signify_sign_delete = '-'
 let g:signify_sign_change = '~'
-let g:signify_cursorhold_normal = 1
 
 " --------------------------------------------------------------
 " repeat {{{2
@@ -1283,17 +1279,7 @@ let g:scala_sort_across_groups = 1
 " --------------------------------------------------------------
 " markdown {{{2
 " --------------------------------------------------------------
-let g:vim_markdown_no_default_key_mappings = 1
-let g:vim_markdown_folding_style_pythonic = 1
-let g:vim_markdown_frontmatter=1
-aug vimrc-markdown
-  au!
-  au! FileType markdown
-        \ nmap ]] <Plug>Markdown_MoveToNextHeader |
-        \ nmap [[ <Plug>Markdown_MoveToPreviousHeader |
-        \ nmap ][ <Plug>Markdown_MoveToNextSiblingHeader |
-        \ nmap [] <Plug>Markdown_MoveToPreviousSiblingHeader
-aug END
+let g:markdown_folding = 1
 
 " --------------------------------------------------------------
 " calendar {{{2
@@ -1346,14 +1332,21 @@ nmap gaa ga_
 " --------------------------------------------------------------
 " nerdtree {{{2
 " --------------------------------------------------------------
-nnoremap <leader>nt :<c-u>NERDTreeToggle<cr>
-nnoremap <leader>nf :<c-u>NERDTreeFind<cr>
-nnoremap <leader>nm :<c-u>NERDTreeMirror<cr>
-nnoremap <leader>nc :<c-u>NERDTreeCWD<cr>
-nnoremap <leader>nx :<c-u>NERDTreeClose<cr>
-nnoremap <leader>nb :<c-u>NERDTreeFromBookmark
-let g:NERDTreeShowHidden = 1
-let g:NERDTreeWinSize = 40
+" If you set 1 to this, / and ? mappings don't work correctly.
+let g:dirvish_relative_paths = 0
+aug vimrc-dirvish
+  au!
+  " Map t to "open in new tab".
+  au FileType dirvish nnoremap <buffer> t
+      \ :tabnew <C-R>=fnameescape(getline('.'))<CR><CR>
+
+  " Map CTRL-R to reload the Dirvish buffer.
+  au FileType dirvish nnoremap <buffer> <C-R> :<C-U>Dirvish %<CR>
+
+  " Map gh to hide "hidden" files.
+  au FileType dirvish nnoremap <buffer> gh
+      \ :set ma<bar>g@\v/\.[^\/]+/?$@d<cr>:set noma<cr>
+aug END
 
 " --------------------------------------------------------------
 " airnote {{{2
