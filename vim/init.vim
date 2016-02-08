@@ -683,17 +683,17 @@ aug markdown-preview
 aug END
 
 nnoremap gx :call <sid>open_url(expand('<cWORD>'))<cr>
+let s:url_pattern = '\v^.*(http[s]?://[a-zA-Z0-9/\.\?=_&-]+).*$'
 fu! s:open_url(line)
-  let pat = '\v^.*(http[s]?://[a-zA-Z0-9/\.\?=&]+).*$'
-  if a:line =~ pat
-    let url = substitute(a:line, pat, '\1', '')
+  if a:line =~ s:url_pattern
+    let url = substitute(a:line, s:url_pattern, '\1', '')
     call s:open(url)
   endif
 endfu
 cabbrev o Open
 com! -nargs=* -complete=file Open call s:open(<f-args>)
 fu! s:open(...)
-  let args = join(map(copy(a:000), 's:quote_path(v:val)'), ' ')
+  let args = join(map(copy(a:000), 's:quote_path_or_url(v:val)'), ' ')
   let args = empty(args) ? '"'.expand('%:p').'"' : args
   if has('unix')
     " This line does not work at all and I don't know the reason.
@@ -722,9 +722,15 @@ fu! s:open_win(args)
     silent exec '!rundll32 url.dll,FileProtocolHandler '.a:args
   endif
 endfu
-fu! s:quote_path(str)
-  return filereadable(a:str) || isdirectory(a:str) ?
-        \ '"'.fnamemodify(expand(a:str), ':p').'"' : a:str
+fu! s:quote_path_or_url(str)
+  let path = expand(a:str)
+  if filereadable(path) || isdirectory(path)
+    return '"'.fnamemodify(resolve(path), ':p').'"'
+  elseif a:str =~ s:url_pattern
+    return '"'.a:str.'"'
+  else
+    return a:str
+  endif
 endfu
 
 com! -nargs=* -complete=customlist,s:UrlComplete Browse call s:open(<q-args>)
