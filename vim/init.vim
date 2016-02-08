@@ -119,8 +119,10 @@ Plug 'ekalinin/Dockerfile.vim', { 'for': 'docker' }
 Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
-Plug 'jamessan/vim-gnupg', { 'for': 'gnupg' }
-Plug 'junegunn/vader.vim', { 'for': 'vader' }
+if !has('win32')
+  Plug 'jamessan/vim-gnupg'
+endif
+Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
 Plug 'matze/vim-tex-fold', { 'for': 'tex' }
 
 " Utility
