@@ -691,31 +691,34 @@ endfu
 cabbrev o Open
 com! -nargs=* -complete=file Open call s:open(<f-args>)
 fu! s:open(...)
-  let target = join(map(copy(a:000), 's:quote_path(v:val)'), ' ')
-  let target = empty(target) ? '"'.expand('%:p').'"' : target
+  let args = join(map(copy(a:000), 's:quote_path(v:val)'), ' ')
+  let args = empty(args) ? '"'.expand('%:p').'"' : args
   if has('unix')
     " This line does not work at all and I don't know the reason.
-    " silent exec '!xdg-open '.target
-    call system('xdg-open '.target)
+    " silent exec '!xdg-open '.args
+    call system('xdg-open '.args)
   elseif has('mac')
-    silent exec '!open '.target
+    silent exec '!open '.args
   elseif has('win32unix')
-    silent exec '!cygstart '.target
+    silent exec '!cygstart '.args
   else
-    if target =~ '\v\.exe"$'
+    if filereadable(args[1:-2]) || isdirectory(args[1:-2])
       let cwd = getcwd()
-      silent exe 'cd '.fnamemodify(target[1:-2], ':h')
-      let target = fnamemodify(target[1:-2], ':t')
-      silent exe '!'.target
+      silent exe 'cd '.fnamemodify(args[1:-2], ':h')
+      let args = fnamemodify(args[1:-2], ':t')
+      call s:open_win(args)
       silent exe 'cd '.cwd
     else
-      silent! exec '!start '.target
-      if v:shell_error
-        silent exec '!rundll32 url.dll,FileProtocolHandler '.target
-      endif
+      call s:open_win(args)
     endif
   endif
   redraw!
+endfu
+fu! s:open_win(args)
+  silent! exe '!start '.a:args
+  if v:shell_error
+    silent exec '!rundll32 url.dll,FileProtocolHandler '.a:args
+  endif
 endfu
 fu! s:quote_path(str)
   return filereadable(a:str) || isdirectory(a:str) ?
