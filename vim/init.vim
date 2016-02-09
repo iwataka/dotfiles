@@ -1124,6 +1124,30 @@ endif
 let g:gruvbox_improved_warnings = 1
 let g:gruvbox_italic = s:italic
 
+com! -nargs=? -complete=customlist,s:ToggleContrastComplete
+      \ ToggleContrast call s:toggle_contrast(<f-args>)
+fu! s:toggle_contrast(...)
+  if g:colors_name == 'gruvbox'
+    if &background == 'dark'
+      let cont = g:gruvbox_contrast_dark
+      let next = cont == 'soft' ? 'medium' : (cont == 'medium' ? 'hard' : 'soft')
+      let next = a:0 ? a:1 : next
+      silent exe 'let g:gruvbox_contrast_dark = "'.next.'"'
+    else
+      let cont = g:gruvbox_contrast_light
+      let next = cont == 'soft' ? 'medium' : (cont == 'medium' ? 'hard' : 'soft')
+      let next = a:0 ? a:1 : next
+      silent exe 'let g:gruvbox_contrast_light = "'.next.'"'
+    endif
+    colorscheme gruvbox
+  endif
+endfu
+fu! s:ToggleContrastComplete(A, L, P)
+  if g:colors_name == 'gruvbox'
+    return filter(['soft', 'medium', 'hard'], 'v:val =~ "'.a:A.'"')
+  endif
+endfu
+
 let g:solarized_termcolors = 256
 let g:solarized_visibility = 'high'
 let g:solarized_hitrail = 0
