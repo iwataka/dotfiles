@@ -69,7 +69,6 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'junegunn/gv.vim', { 'on': ['GV'] }
 
 " Navigation
-Plug 'bling/vim-airline'
 Plug 'justinmk/vim-dirvish'
 Plug 'ctrlpvim/ctrlp.vim'
 if has('unix') || has('mac') || has('macunix')
@@ -119,9 +118,6 @@ Plug 'ekalinin/Dockerfile.vim', { 'for': 'docker' }
 Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
-if !has('win32')
-  Plug 'jamessan/vim-gnupg'
-endif
 Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
 Plug 'matze/vim-tex-fold', { 'for': 'tex' }
 
@@ -277,6 +273,43 @@ elseif executable('ack')
 else
   set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
 endif
+
+fu! S_fugitive()
+  if exists('g:loaded_fugitive')
+    return '['.fugitive#head().']'
+  else
+    return ''
+  endif
+endfu
+
+fu! S_signify()
+  if exists('b:sy') && get(b:sy, 'active', 0) && exists('b:sy.stats')
+    let [add, ch, del] = b:sy.stats
+    let sign_add = get(g:, 'signify_sign_add', '+')
+    let sign_ch = get(g:, 'signify_sign_change', '~')
+    let sign_del = get(g:, 'signify_sign_delete', '-')
+    return '['.sign_add.add.' '.sign_ch.ch.' '.sign_del.del.']'
+  else
+    return ''
+  endif
+endfu
+
+fu! MyStatusLine()
+  let mod = &mod ? '[+]' : (&ma ? '' : '[-]')
+  let ro = &ro ? '[RO]' : ''
+  let sig = '%{S_signify()}'
+  let fug = '%{S_fugitive()}'
+  let sep = ' %= '
+  let ft = &ft
+  let ff = '['.&ff.']'
+  let pos = ' %l,%c%V '
+  let pct = ' %P '
+  let left = ' [%n] %f'.mod.' %<'.ro.sig.fug
+  let right = ft.ff.pos.pct
+  return left.sep.right
+endfu
+
+set statusline=%!MyStatusLine()
 
 " ===============================================================
 " AUTOCMD {{{1
