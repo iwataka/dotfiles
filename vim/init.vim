@@ -276,10 +276,12 @@ endif
 
 fu! S_fugitive()
   if exists('g:loaded_fugitive')
-    return '['.fugitive#head().']'
-  else
-    return ''
+    let head = fugitive#head()
+    if !empty(head)
+      return '[Git('.fugitive#head().')]'
+    endif
   endif
+  return ''
 endfu
 
 fu! S_signify()
@@ -355,7 +357,6 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile *editorconfig set filetype=jproperties
   autocmd BufRead,BufNewFile *.gpg set filetype=gnupg
   autocmd BufRead,BufNewFile *.json set filetype=javascript
-  autocmd FileType text set filetype=markdown
 
   " write comments easily for any files
   autocmd BufRead,BufNewFile * set formatoptions+=ro
@@ -715,14 +716,6 @@ aug markdown-preview
         \ com! -buffer MarkdownCompile call s:markdown_compile()
 aug END
 
-nnoremap gx :call <sid>open_url(expand('<cWORD>'))<cr>
-let s:url_pattern = '\v^.*(http[s]?://[a-zA-Z0-9/\.\?=_&-]+).*$'
-fu! s:open_url(line)
-  if a:line =~ s:url_pattern
-    let url = substitute(a:line, s:url_pattern, '\1', '')
-    call s:open(url)
-  endif
-endfu
 cabbrev o Open
 com! -nargs=* -complete=file Open call s:open(<f-args>)
 fu! s:open(...)
