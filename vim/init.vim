@@ -1,35 +1,8 @@
-" DESCRIPTION {{{1
+" PHILOSOPHY {{{1
 " ===============================================================
-" Awesome vimrc
-" junegunn - https://github.com/junegunn/dotfiles/blob/master/vimrc
-" martin-svk - https://github.com/martin-svk/dot-files/blob/master/neovim/init.vim
-" amix - https://github.com/amix/vimrc
-" mhinz - https://github.com/mhinz/dotfiles/blob/master/vim/vimrc
-
-" Awesome color scheme
-" solarized - https://github.com/altercation/vim-colors-solarized
-" vim-hybrid - https://github.com/w0ng/vim-hybrid
-" molokai - https://github.com/tomasr/molokai
-" tomorrow - https://github.com/chriskempson/vim-tomorrow-theme
-" jellybeans - https://github.com/nanotech/jellybeans.vim
-" gruvbox - https://github.com/morhetz/gruvbox
-" zenburn - https://github.com/jnurmine/Zenburn
-" base16 - https://github.com/chriskempson/base16-vim
-" pencil - https://github.com/reedes/vim-colors-pencil
-" papercolor - https://github.com/NLKNguyen/papercolor-theme
-" lucius - https://github.com/jonathanfilip/vim-lucius
-" gotham - https://github.com/whatyouhide/vim-gotham
-
-" Color scheme gallery
-" vimcolor - http://vimcolor.com
-
-" Direct Codepoint Entry
-" <C-V>165 -> ¥
-" <C-V>xb1 -> ±
-" <C-V>u2211 -> ∑
-" <C-V>U0001F609 -> 😉
-" Other difficult-to-input characters
-" <C-V><Enter> -> 
+" I use Windows frequently as well as other Unix-based OS, so it is required that Vim performs well even on Windows.
+" Windows is slow compared with other OS, so Vim must be as simple as possible.
+" Unused plug-ins and settings will be removed and I utilize lazy loading by vim-plug to speed up start-up time.
 
 " ===============================================================
 " VIM-PLUG BLOCK {{{1
@@ -87,8 +60,8 @@ Plug 'tpope/vim-sleuth'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'jiangmiao/auto-pairs'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'wellle/targets.vim'
+Plug 'chrisbra/unicode.vim',
+      \ { 'on': ['SearchUnicode', 'UnicodeName', 'UnicodeTable', 'Digraphs'] }
 " This plugin is low-performance with YCM.
 " Plug 'terryma/vim-multiple-cursors'
 " If you want to use syntastic, you must disable vim-auto-save plugin.
