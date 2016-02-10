@@ -44,10 +44,12 @@ Plug 'junegunn/gv.vim', { 'on': ['GV'] }
 " Navigation
 Plug 'justinmk/vim-dirvish'
 Plug 'ctrlpvim/ctrlp.vim'
-if has('unix') || has('mac') || has('macunix')
-  Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
-elseif has('python')
-  Plug 'FelikZ/ctrlp-py-matcher'
+if has('python')
+  if has('unix') || has('mac') || has('macunix')
+    Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
+  else
+    Plug 'FelikZ/ctrlp-py-matcher'
+  endif
 endif
 
 " Editing
@@ -1251,10 +1253,12 @@ augroup vimrc-ctrlp
   au VimEnter * if exists(':CtrlPBookmarkDirAdd') | call s:ctrlp_bookmark_init(0) | endif
 augroup END
 
-if has('unix') || has('mac') || has('macunix')
-  let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
-elseif has('python')
-  let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+if has('python')
+  if has('unix') || has('mac') || has('macunix')
+    let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
+  else
+    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+  endif
 endif
 
 " --------------------------------------------------------------
