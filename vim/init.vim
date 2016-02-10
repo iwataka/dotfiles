@@ -1016,6 +1016,27 @@ fu! s:substitute_map(line1, line2, map, flag)
   endfor
 endfu
 
+if has('patch7.4.1128')
+  com! -nargs=+ -complete=dir Rmdir call s:rmdir(<f-args>)
+  fu! s:rmdir(...)
+    for path in a:000
+      if isdirectory(path)
+        if delete(path, 'd')
+          echo 'Really delete '.path.'? (y/n)'
+          let rep = nr2char(getchar())
+          if rep =~# '[yY]'
+            if delete(path, 'rf')
+              echoe 'Fail to delete '.path
+            endif
+          endif
+        endif
+      else
+        echoe path.' is not a directory'
+      endif
+    endfor
+  endfu
+endif
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
