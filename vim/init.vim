@@ -1097,27 +1097,31 @@ endif
 let g:gruvbox_improved_warnings = 1
 let g:gruvbox_italic = s:italic
 
+nnoremap <silent> <C-F5> :call <sid>toggle_contrast()<cr>
 com! -nargs=? -complete=customlist,s:ToggleContrastComplete
       \ ToggleContrast call s:toggle_contrast(<f-args>)
 fu! s:toggle_contrast(...)
   if g:colors_name == 'gruvbox'
-    if &background == 'dark'
-      let cont = g:gruvbox_contrast_dark
-      let next = cont == 'soft' ? 'medium' : (cont == 'medium' ? 'hard' : 'soft')
-      let next = a:0 ? a:1 : next
-      silent exe 'let g:gruvbox_contrast_dark = "'.next.'"'
-    else
-      let cont = g:gruvbox_contrast_light
-      let next = cont == 'soft' ? 'medium' : (cont == 'medium' ? 'hard' : 'soft')
-      let next = a:0 ? a:1 : next
-      silent exe 'let g:gruvbox_contrast_light = "'.next.'"'
-    endif
+    exe 'let cont = g:gruvbox_contrast_'.&bg
+    let next = cont == 'soft' ? 'medium' : (cont == 'medium' ? 'hard' : 'soft')
+    let next = a:0 ? a:1 : next
+    exe 'let g:gruvbox_contrast_'.&bg.' = "'.next.'"'
     colorscheme gruvbox
+    redraw | exe 'echo "Current contrast: ".g:gruvbox_contrast_'.&bg
+  elseif g:colors_name == 'solarized'
+    let cont = g:solarized_contrast
+    let next = cont == 'low' ? 'normal' : (cont == 'normal' ? 'high' : 'low')
+    let next = a:0 ? a:1 : next
+    let g:solarized_contrast = next
+    colorscheme solarized
+    redraw | echo 'Current contrast: '.g:solarized_contrast
   endif
 endfu
 fu! s:ToggleContrastComplete(A, L, P)
   if g:colors_name == 'gruvbox'
     return filter(['soft', 'medium', 'hard'], 'v:val =~ "'.a:A.'"')
+  elseif g:colors_name == 'solarized'
+    return filter(['low', 'normal', 'high'], 'v:val =~ "'.a:A.'"')
   endif
 endfu
 
