@@ -1141,6 +1141,10 @@ fu! s:toggle_contrast(...)
     let g:solarized_contrast = next
     colorscheme solarized
     redraw | echo 'Current contrast: '.g:solarized_contrast
+  else
+    echohl WarningMsg
+    echo g:colors_name.' is not supported.'
+    echohl Normal
   endif
 endfu
 fu! s:ToggleContrastComplete(A, L, P)
