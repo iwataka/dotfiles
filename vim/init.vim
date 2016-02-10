@@ -282,10 +282,11 @@ fu! MyStatusLine()
   let sep = ' %= '
   let ft = &ft
   let ff = '['.&ff.']'
-  let pos = ' %l,%c%V '
-  let pct = ' %P '
+  let fenc = '['.&fenc.']'
+  let pos = '%l,%c%V'
+  let pct = '%P'
   let left = ' [%n] %f'.mod.' %<'.ro.sig.fug
-  let right = ft.ff.pos.pct
+  let right = ft.ff.fenc.' '.pos.' '.pct
   return left.sep.right
 endfu
 
