@@ -172,6 +172,9 @@ set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
 set colorcolumn=81
 set completeopt-=preview
+if has('patch7.4.092')
+  set spelllang=en,cjk
+endif
 
 set wildmenu
 set wildignorecase
