@@ -1486,21 +1486,6 @@ let g:signify_sign_change = '~'
 silent! call repeat#set("\<Plug>(EasyAlign)", v:count)
 
 " --------------------------------------------------------------
-" airline {{{2
-" --------------------------------------------------------------
-if !exists('g:airline_theme')
-  let g:airline_theme = s:colors_name
-endif
-if has('win32') && has('gui_running')
-  let g:airline_powerline_fonts = 0
-else
-  let g:airline_powerline_fonts = 1
-endif
-let g:airline#extensions#tabline#enabled = 0
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#wordcount#enabled = 0
-
-" --------------------------------------------------------------
 " scala {{{2
 " --------------------------------------------------------------
 aug vimrc-scala
@@ -1558,7 +1543,7 @@ nmap ga <Plug>(EasyAlign)
 nmap gaa ga_
 
 " --------------------------------------------------------------
-" nerdtree {{{2
+" dirvish {{{2
 " --------------------------------------------------------------
 " If you set 1 to this, / and ? mappings don't work correctly.
 let g:dirvish_relative_paths = 0
