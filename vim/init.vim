@@ -1,8 +1,17 @@
 " PHILOSOPHY {{{1
 " ===============================================================
+" # Cross-Platform
 " I use Windows frequently as well as other Unix-based OS, so it is required that Vim performs well even on Windows.
 " Windows is slow compared with other OS, so Vim must be as simple as possible.
-" Unused plug-ins and settings will be removed and I utilize lazy loading by vim-plug to speed up start-up time.
+" Unused plug-ins and settings should be removed and I utilize lazy loading by vim-plug to speed up start-up time.
+
+" # Writing-Purpose
+" I use Vim for writing plain-texts as well as for coding and some of the features are for it
+
+" # Vim is not just a text editor but a rich user interface
+" I use Vim to manipulate google-calendar and so on.
+
+" # Consistent and Intuitive
 
 " ===============================================================
 " VIM-PLUG BLOCK {{{1
@@ -59,7 +68,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'jiangmiao/auto-pairs'
 Plug 'chrisbra/unicode.vim',
@@ -1357,11 +1365,6 @@ let g:markdown_folding = 1
 " --------------------------------------------------------------
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
-
-" --------------------------------------------------------------
-" goyo {{{2
-" --------------------------------------------------------------
-let g:goyo_linenr = 0
 
 " --------------------------------------------------------------
 " easy-align {{{2
