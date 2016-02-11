@@ -280,9 +280,9 @@ fu! MyStatusLine()
   let sig = '%{S_signify()}'
   let fug = '%{S_fugitive()}'
   let sep = ' %= '
-  let ft = &ft
-  let ff = '['.&ff.']'
-  let fenc = '['.&fenc.']'
+  let ft = '%{&ft}'
+  let ff = '[%{&ff}]'
+  let fenc = '[%{&fenc}]'
   let pos = '%l,%c%V'
   let pct = '%P'
   let left = ' [%n] %f'.mod.' %<'.ro.sig.fug
