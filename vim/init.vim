@@ -238,6 +238,7 @@ if has('mouse')
   set mousehide
 endif
 
+set formatoptions+=ro
 if v:version > 703 || v:version == 703 && has("patch541")
   set formatoptions+=j  " Delete comment character when joining commented line
 endif
@@ -344,9 +345,6 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile *editorconfig set filetype=jproperties
   autocmd BufRead,BufNewFile *.gpg set filetype=gnupg
   autocmd BufRead,BufNewFile *.json set filetype=javascript
-
-  " write comments easily for any files
-  autocmd BufRead,BufNewFile * set formatoptions+=ro
 
   " prevent from conflicting multiple edit
   autocmd SwapExists * let v:swapchoice = 'o'
