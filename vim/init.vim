@@ -35,14 +35,9 @@ if !has('win32')
 endif
 Plug 'iwataka/vim-replace'
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
-" This is being actively developed and may have some issues, so I fork this.
-" plasticboy's vim-markdown gives low-performance on Windows.
-" Plug 'iwataka/vim-markdown', { 'for': 'markdown' }
 unlet! g:plug_url_format
 
 " Git
-" This doesn't work correctly on Windows.
-" Plug 'airblade/vim-gitgutter'
 if v:version >= 703
   Plug 'mhinz/vim-signify'
 endif
@@ -72,18 +67,14 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'jiangmiao/auto-pairs'
 Plug 'chrisbra/unicode.vim',
       \ { 'on': ['SearchUnicode', 'UnicodeName', 'UnicodeTable', 'Digraphs'] }
-" This plugin is low-performance with YCM.
-" Plug 'terryma/vim-multiple-cursors'
-" If you want to use syntastic, you must disable vim-auto-save plugin.
-" Plug 'scrooloose/syntastic'
-" Plug 'vim-scripts/vim-auto-save'
+" Vim's folding feature slows down inserting characters, especially cjk.
+" This plug-in prevents it and enableds to fold without any effects to the
+" performance. Really nice!
+Plug 'Konfekt/FastFold'
 
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
-" Switching colorscheme includes an error caused by a bug in Vim.
-" This plugin resolves it.
-" Plug 'xolox/vim-misc' | Plug 'xolox/vim-colorscheme-switcher'
 
 " Filetype
 if v:version >= 703
@@ -1470,11 +1461,6 @@ nnoremap <leader>gA :<c-u>Git add --all<cr>
 
 nnoremap <leader>gv :<c-u>GV<cr>
 xnoremap <leader>gv :GV<cr>
-
-" let g:gitgutter_sign_added = '+'
-" let g:gitgutter_sign_modified = '~'
-" let g:gitgutter_sign_removed = '-'
-" nnoremap <leader>gG :<c-u>GitGutterToggle<cr>
 
 let g:signify_sign_add = '+'
 let g:signify_sign_delete = '-'
