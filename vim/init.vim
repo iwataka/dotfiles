@@ -1398,22 +1398,24 @@ else
   let s:ctrlp_bookmark_paths = s:ctrlp_bookmark_common_paths
 endif
 
-com! -bang CtrlPBookmarkReload call s:ctrlp_bookmark_init(<bang>0)
-fu! s:ctrlp_bookmark_init(bang)
-  if a:bang != 0
-    call delete(expand('~/.cache/ctrlp/bkd/cache.txt'))
-  endif
-  if exists('s:ctrlp_bookmark_paths')
-    for path in s:ctrlp_bookmark_paths
-      let dirs = split(expand(path), '\n')
-      let dirs = map(dirs, 'resolve(v:val)')
+com! -bang CtrlPBookmarkReload call s:ctrlp_bookmark_init(<bang>0, 1)
+fu! s:ctrlp_bookmark_init(bang, force)
+  if a:force || !filereadable(expand('~/.cache/ctrlp/bkd/cache.txt'))
+    if a:bang != 0
+      call delete(expand('~/.cache/ctrlp/bkd/cache.txt'))
+    endif
+    if exists('s:ctrlp_bookmark_paths')
+      for path in s:ctrlp_bookmark_paths
+        let dirs = split(expand(path), '\n')
+        let dirs = map(dirs, 'resolve(v:val)')
+        call s:ctrlp_bookmark_add(dirs)
+      endfor
+    endif
+    call s:ctrlp_bookmark_add($VIMRUNTIME)
+    if exists('g:plug_home')
+      let dirs = split(globpath(g:plug_home, '*'))
       call s:ctrlp_bookmark_add(dirs)
-    endfor
-  endif
-  call s:ctrlp_bookmark_add($VIMRUNTIME)
-  if exists('g:plug_home')
-    let dirs = split(globpath(g:plug_home, '*'))
-    call s:ctrlp_bookmark_add(dirs)
+    endif
   endif
 endf
 
@@ -1421,7 +1423,7 @@ fu! s:ctrlp_bookmark_add(dir)
   if type(a:dir) == type([])
     for d in a:dir
       if isdirectory(d)
-        silent exe 'CtrlPBookmarkDirAdd! '.d
+        call s:ctrlp_bookmark_add(d)
       endif
     endfor
   elseif type(a:dir) == type('')
@@ -1431,7 +1433,7 @@ endfu
 
 augroup vimrc-ctrlp
   au!
-  au VimEnter * if exists(':CtrlPBookmarkDirAdd') | call s:ctrlp_bookmark_init(0) | endif
+  au VimEnter * if exists(':CtrlPBookmarkDirAdd') | call s:ctrlp_bookmark_init(0, 0) | endif
 augroup END
 
 if has('python')
