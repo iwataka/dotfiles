@@ -175,6 +175,11 @@ set completeopt-=preview
 if has('patch7.4.092')
   set spelllang=en,cjk
 endif
+if has('nvim')
+  set shada='1000
+else
+  set viminfo='1000,<1000,s100,:100
+endif
 
 set wildmenu
 set wildignorecase
