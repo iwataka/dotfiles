@@ -283,8 +283,8 @@ fu! S_signify()
 endfu
 
 fu! MyStatusLine()
-  let mod = &mod ? '[+]' : (&ma ? '' : '[-]')
-  let ro = &ro ? '[RO]' : ''
+  let mod = '%{&mod ? "[+]" : (&ma ? "" : "[-]")}'
+  let ro = '%{&ro ? "[RO]" : ""}'
   let sig = '%{S_signify()}'
   let fug = '%{S_fugitive()}'
   let sep = ' %= '
