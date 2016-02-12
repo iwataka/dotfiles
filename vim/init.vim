@@ -310,21 +310,20 @@ augroup vimrcEx
   " (happens when dropping a file on gvim).
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-  autocmd FileType gitcommit setlocal textwidth=72
-  autocmd FileType gitcommit setlocal spell
+  " filetype-specific
+  autocmd FileType gitcommit
+        \ setlocal textwidth=72 |
+        \ setlocal spell
   autocmd FileType markdown
         \ setlocal spell |
         \ setlocal commentstring=<!--%s--> |
         \ setlocal foldlevel=1
   autocmd FileType calendar,git,gitv setlocal nolist
-
   autocmd FileType dosbatch setlocal commentstring=rem%s
   autocmd FileType dot setlocal commentstring=//\ %s
-
   " Quit help buffer by typing just q.
   autocmd FileType help
     \ if &readonly | nnoremap <buffer> q :q<cr> | endif
-
   autocmd FileType java,c,cpp
     \ if executable('astyle') |
     \   setlocal formatprg='astyle' |
@@ -1571,3 +1570,8 @@ let g:jedi#documentation_command = ''
 let g:jedi#usages_command = ''
 let g:jedi#completions_command = ''
 let g:jedi#rename_command = 'gr'
+
+" --------------------------------------------------------------
+" FastFold {{{2
+" --------------------------------------------------------------
+let g:fastfold_savehook = 0
