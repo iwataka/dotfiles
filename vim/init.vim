@@ -1288,24 +1288,27 @@ nnoremap <silent> <C-F5> :call <sid>toggle_contrast()<cr>
 com! -nargs=? -complete=customlist,s:ToggleContrastComplete
       \ ToggleContrast call s:toggle_contrast(<f-args>)
 fu! s:toggle_contrast(...)
-  if g:colors_name == 'gruvbox'
-    exe 'let cont = g:gruvbox_contrast_'.&bg
-    let next = cont == 'soft' ? 'medium' : (cont == 'medium' ? 'hard' : 'soft')
-    let next = a:0 ? a:1 : next
-    exe 'let g:gruvbox_contrast_'.&bg.' = "'.next.'"'
-    colorscheme gruvbox
-    redraw | exe 'echo "Current contrast: ".g:gruvbox_contrast_'.&bg
-  elseif g:colors_name == 'solarized'
-    let cont = g:solarized_contrast
-    let next = cont == 'low' ? 'normal' : (cont == 'normal' ? 'high' : 'low')
-    let next = a:0 ? a:1 : next
-    let g:solarized_contrast = next
-    colorscheme solarized
-    redraw | echo 'Current contrast: '.g:solarized_contrast
-  else
-    echohl WarningMsg
-    echo g:colors_name.' is not supported.'
-    echohl Normal
+  " In some cases, g:colors_name is unlet
+  if exists('g:colors_name')
+    if g:colors_name == 'gruvbox'
+      exe 'let cont = g:gruvbox_contrast_'.&bg
+      let next = cont == 'soft' ? 'medium' : (cont == 'medium' ? 'hard' : 'soft')
+      let next = a:0 ? a:1 : next
+      exe 'let g:gruvbox_contrast_'.&bg.' = "'.next.'"'
+      colorscheme gruvbox
+      redraw | exe 'echo "Current contrast: ".g:gruvbox_contrast_'.&bg
+    elseif g:colors_name == 'solarized'
+      let cont = g:solarized_contrast
+      let next = cont == 'low' ? 'normal' : (cont == 'normal' ? 'high' : 'low')
+      let next = a:0 ? a:1 : next
+      let g:solarized_contrast = next
+      colorscheme solarized
+      redraw | echo 'Current contrast: '.g:solarized_contrast
+    else
+      echohl WarningMsg
+      echo g:colors_name.' is not supported.'
+      echohl Normal
+    endif
   endif
 endfu
 fu! s:ToggleContrastComplete(A, L, P)
