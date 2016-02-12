@@ -190,7 +190,9 @@ set wildmode=list:longest,full
 " set wildignore+=*.class                          " JVM
 
 if has('win32') || has('win64')
-  set imdisable
+  set noimdisable
+  set iminsert=1
+  set imsearch=-1
 endif
 
 set clipboard=unnamed
