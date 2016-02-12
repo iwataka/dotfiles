@@ -29,7 +29,8 @@ silent! if plug#begin('~/.vim/plugged')
 
 " My Plugins
 " Windows can't access automatically via ssh
-if !has('win32')
+" Vim in Git for Windows is detected as win32unix
+if !(has('win32') || has('win32unix'))
   " Require my .ssh/config file.
   let g:plug_url_format = 'github:%s.git'
 endif
