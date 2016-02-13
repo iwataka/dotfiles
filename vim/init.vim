@@ -738,7 +738,7 @@ fu! s:quote_path_or_url(str)
   let path = expand(a:str)
   if filereadable(path) || isdirectory(path)
     return '"'.fnamemodify(resolve(path), ':p').'"'
-  elseif a:str =~ s:url_pattern
+  elseif a:str =~ '\vhttp[s]?://'
     return '"'.a:str.'"'
   else
     return a:str
