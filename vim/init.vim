@@ -166,8 +166,7 @@ set ttyfast                               " Enable fast connection
 set foldenable                            " Enable to fold
 set foldlevel=0                           " Start folding at the second depth
 set foldmethod=marker                     " Use specified markers to fold sentences
-set conceallevel=0
-" set foldopen+=jump,search               " Open foldings when jumping to them
+set conceallevel=0                        " Disable conceal feature
 set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
 set colorcolumn=81
@@ -296,7 +295,7 @@ fu! MyStatusLine()
   let fenc = '[%{&fenc}]'
   let pos = '%l,%c%V'
   let pct = '%P'
-  let left = ' [%n] %f'.mod.' %<'.ro.sig.fug
+  let left = ' %f'.mod.' %<'.ro.sig.fug
   let right = ft.ff.fenc.' '.pos.' '.pct
   return left.sep.right
 endfu
@@ -697,9 +696,9 @@ fu! s:markdown_preview() abort
 endfu
 aug markdown-preview
   au!
-  au FileType markdown
-        \ com! -buffer MarkdownPreview call s:markdown_preview() |
-        \ com! -buffer MarkdownCompile call s:markdown_compile()
+  au FileType markdown com! -buffer MarkdownPreview call s:markdown_preview()
+  au FileType markdown com! -buffer MarkdownCompile call s:markdown_compile()
+  au FileType markdown com! -buffer MarkdownDocument call s:open('https://daringfireball.net/projects/markdown/syntax')
 aug END
 
 cabbrev o Open
