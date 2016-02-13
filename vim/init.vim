@@ -76,7 +76,6 @@ Plug 'Konfekt/FastFold'
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
-Plug 'whatyouhide/vim-gotham'
 
 " Filetype
 if v:version >= 703
@@ -1276,16 +1275,8 @@ endfunction
 " gruvbox colorscheme has some issues on terminal Vim (not neovim).
 if !(has('gui_running') || has('nvim'))
   let s:colors_name = 'solarized'
-  let s:background = 'dark'
 else
-  let hour = strftime('%H')
-  if hour > 22 || hour < 5
-    let s:colors_name = 'gotham'
-    let s:background = 'dark'
-  else
-    let s:colors_name = 'gruvbox'
-    let s:background = 'light'
-  endif
+  let s:colors_name = 'gruvbox'
 endif
 " Italic style on Windows has low-visibility and disable it.
 let s:italic = 1
@@ -1339,7 +1330,11 @@ silent! call togglebg#map('<F5>')
 
 if !exists('g:colors_name')
   silent! exe 'colorscheme '.s:colors_name
-  silent! exe 'set background='.s:background
+  if has('gui_running')
+    set background=light
+  else
+    set background=dark
+  endif
 endif
 
 " --------------------------------------------------------------
