@@ -310,6 +310,10 @@ set statusline=%!MyStatusLine()
 augroup vimrcEx
   autocmd!
 
+  " Disable IME when leaving insert mode.
+  autocmd InsertEnter * set iminsert=1
+  autocmd InsertLeave * set iminsert=0
+
   " Use cursorline only in the focused window.
   " This doesn't work with NERDTree.
   " Currently disabled because of performance issue.
