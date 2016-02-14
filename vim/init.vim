@@ -559,6 +559,12 @@ fu! s:grep(keyword)
   endif
 endfu
 
+fu! s:warn(msg)
+  echohl WarningMsg
+  echo a:msg
+  echohl Normal
+endfu
+
 com! Tab2Spaces call s:tab_to_spaces()
 fu! s:tab_to_spaces()
   if search('\t', 'n')
@@ -1324,9 +1330,7 @@ fu! s:toggle_contrast(...)
       colorscheme solarized
       redraw | echo 'Current contrast: '.g:solarized_contrast
     else
-      echohl WarningMsg
-      echo g:colors_name.' is not supported.'
-      echohl Normal
+      call s:warn(g:colors_name.' is not supported.')
     endif
   endif
 endfu
