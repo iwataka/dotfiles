@@ -331,9 +331,8 @@ augroup vimrcEx
   autocmd FileType calendar,git,gitv setlocal nolist
   autocmd FileType dosbatch setlocal commentstring=rem%s
   autocmd FileType dot setlocal commentstring=//\ %s
-  " Quit help buffer by typing just q.
-  autocmd FileType help
-    \ if &readonly | nnoremap <buffer> q :q<cr> | endif
+  " Close buffers of specified types by just typing q.
+  autocmd FileType help,qf nnoremap <buffer> q :q<cr>
   autocmd FileType java,c,cpp
     \ if executable('astyle') |
     \   setlocal formatprg='astyle' |
