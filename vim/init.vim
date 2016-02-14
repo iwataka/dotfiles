@@ -1353,10 +1353,10 @@ endif
 " --------------------------------------------------------------
 " CtrlP {{{2
 " --------------------------------------------------------------
-if executable('ag')
-  let s:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
-elseif executable('pt')
+if executable('pt')
   let s:ctrlp_user_command = 'pt -l --follow --nocolor "" %s'
+elseif executable('ag')
+  let s:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
 elseif executable('ack')
   let s:ctrlp_user_command = 'ack --follow --nocolor -g "" %s'
 endif
