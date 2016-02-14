@@ -179,7 +179,7 @@ if has('nvim')
 else
   set viminfo='1000,<1000,s100,:100
 endif
-if has('likebreak')
+if has('linebreak')
   set breakindent
 endif
 
