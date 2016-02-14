@@ -466,8 +466,8 @@ nnoremap <c-a> gg^vG$
 inoremap <C-u> <C-g>u<C-u>
 
 " Search in visual mode
-xnoremap <silent> * :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal n<cr>
-xnoremap <silent> # :<C-u>let @/ = <sid>get_search_pattern()<cr>:normal N<cr>
+xnoremap <silent> * :<C-u>let @/ = <sid>get_visual_selection()[0]<cr>:normal n<cr>
+xnoremap <silent> # :<C-u>let @/ = <sid>get_visual_selection()[0]<cr>:normal N<cr>
 
 " Double <BS> to remove trailing spaces
 " This doesn't work as you wish.
@@ -487,8 +487,9 @@ if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>"
 nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
 nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
 
-" grep
-nnoremap K :<c-u>call <sid>grep(expand('<cword>'))<cr>
+" grep by K
+nnoremap K :<c-u>call <sid>grep(shellescape(expand('<cword>')))<cr>
+xnoremap K :<c-u>call <sid>grep(shellescape(<sid>get_visual_selection()[0]))<cr>
 
 " ===============================================================
 " FUNCTIONS & COMMANDS {{{1
@@ -553,13 +554,13 @@ endfu
 
 fu! s:grep(keyword)
   if exists(':Ggrep')
-    silent exe 'Ggrep "'.a:keyword.'"'
+    silent exe 'Ggrep '.a:keyword
   else
     let save_cwd = getcwd()
     let root = s:root(save_cwd)
     let root = empty(root) ? expand('%:h') : root
     silent exe 'cd '.root
-    silent exe 'grep "'.a:keyword.'"'
+    silent exe 'grep '.a:keyword
     silent exe 'cd '.save_cwd
   endif
 endfu
@@ -601,23 +602,6 @@ fu! s:get_visual_selection()
   let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
   let lines[0] = lines[0][col1 - 1 :]
   return lines
-endfu
-
-fu! s:get_search_pattern()
-  let lines = map(s:get_visual_selection(), "escape(v:val, ' \\/.*$^~[]')")
-  retu join(lines, '\n')
-endfu
-
-fu! s:get_grep_pattern()
-  let lines = s:get_visual_selection()
-  let lines = map(lines, "escape(v:val, '\\')")
-  let lines = map(lines, "escape(v:val, ' /.*+#$?^~\[\]()|')")
-  let lines = map(lines, "escape(v:val, '\\')")
-  " Escape single quotes.
-  let lines = map(lines, "escape(v:val, \"''\")")
-  " Escape double quotes.
-  let lines = map(lines, "escape(v:val, '\"')")
-  retu join(lines, '\n')
 endfu
 
 com! CheckboxToggle call s:toggle_check_box(line('.'))
