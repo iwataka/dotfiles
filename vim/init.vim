@@ -252,13 +252,14 @@ if has('persistent_undo')
   set undofile
 endif
 
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor\ --column
-elseif executable('pt')
+" pt is easy to use even on Windows and as fast as ag
+if executable('pt')
   set grepprg=pt\ --nogroup\ --nocolor\ --column
+elseif executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
 elseif executable('ack')
   set grepprg=ack\ -H\ --nocolor\ --nogroup
-else
+elseif has('unix')
   set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
 endif
 
@@ -478,7 +479,7 @@ nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
 nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
 
 " grep
-nnoremap K :<c-u>silent exe 'grep '.expand('<cword>')<cr>
+nnoremap K :<c-u>call <sid>grep(expand('<cword>'))<cr>
 
 " ===============================================================
 " FUNCTIONS & COMMANDS {{{1
@@ -539,6 +540,19 @@ fu! s:root(cwd)
     endif
   endfor
   retu ''
+endfu
+
+fu! s:grep(keyword)
+  if exists(':Ggrep')
+    silent exe 'Ggrep "'.a:keyword.'"'
+  else
+    let save_cwd = getcwd()
+    let root = s:root(save_cwd)
+    let root = empty(root) ? expand('%:h') : root
+    silent exe 'cd '.root
+    silent exe 'grep "'.a:keyword.'"'
+    silent exe 'cd '.save_cwd
+  endif
 endfu
 
 com! Tab2Spaces call s:tab_to_spaces()
