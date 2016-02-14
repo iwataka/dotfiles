@@ -382,6 +382,10 @@ nnoremap gk k
 " Prevent to override registers by one character
 nnoremap x "_x
 
+" Visual block is better than ordinary visual mode
+nnoremap v <c-v>
+nnoremap <c-v> v
+
 " Better jumping to marks
 nnoremap ' `
 nnoremap ` '
