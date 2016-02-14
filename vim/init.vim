@@ -311,8 +311,9 @@ augroup vimrcEx
   autocmd!
 
   " Disable IME when leaving insert mode.
-  autocmd InsertEnter * set iminsert=1
-  autocmd InsertLeave * set iminsert=0
+  " This feature is available only on my Windows, so I've decided not to use.
+  " autocmd InsertEnter * set iminsert=1
+  " autocmd InsertLeave * set iminsert=0
 
   " Use cursorline only in the focused window.
   " This doesn't work with NERDTree.
