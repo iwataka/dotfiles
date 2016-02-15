@@ -1295,15 +1295,7 @@ endif
 let g:gruvbox_improved_warnings = 1
 let g:gruvbox_italic = s:italic
 
-nnoremap <silent> <F5> :call <sid>toggle_background()<cr>
-fu! s:toggle_background()
-  exe 'set background='.(&bg == 'dark' ? 'light' : 'dark')
-  if exists('g:colors_name')
-    exe 'colorscheme '.g:colors_name
-  endif
-endfu
-
-nnoremap <silent> <C-F5> :call <sid>toggle_contrast()<cr>
+nnoremap <silent> <F5> :call <sid>toggle_contrast()<cr>
 com! -nargs=? -complete=customlist,s:ToggleContrastComplete
       \ ToggleContrast call s:toggle_contrast(<f-args>)
 fu! s:toggle_contrast(...)
@@ -1611,7 +1603,7 @@ let g:fastfold_fold_movement_commands = []
 " goyo {{{2
 " --------------------------------------------------------------
 let g:goyo_linenr = 0
-nnoremap <F11> :<c-u>Goyo<cr>
+nnoremap <leader>G :<c-u>Goyo<cr>
 fu! s:goyo_enter()
   if !get(g:, 'signify_locked', 1)
     let g:signify_locked = 1
