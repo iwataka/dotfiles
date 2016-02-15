@@ -75,7 +75,6 @@ Plug 'Konfekt/FastFold'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 
 " Colorscheme
-Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
 
 " Filetype
@@ -1287,12 +1286,7 @@ endfunction
 " --------------------------------------------------------------
 " ColorScheme {{{2
 " --------------------------------------------------------------
-" gruvbox colorscheme has some issues on terminal Vim (not neovim).
-if !(has('gui_running') || has('nvim'))
-  let s:colors_name = 'solarized'
-else
-  let s:colors_name = 'gruvbox'
-endif
+let s:colors_name = 'gruvbox'
 " Italic style on Windows has low-visibility and disable it.
 let s:italic = 1
 if has('win32') || !(has('gui_running') || has('nvim'))
@@ -1300,6 +1294,14 @@ if has('win32') || !(has('gui_running') || has('nvim'))
 endif
 let g:gruvbox_improved_warnings = 1
 let g:gruvbox_italic = s:italic
+
+nnoremap <silent> <F5> :call <sid>toggle_background()<cr>
+fu! s:toggle_background()
+  exe 'set background='.(&bg == 'dark' ? 'light' : 'dark')
+  if exists('g:colors_name')
+    exe 'colorscheme '.g:colors_name
+  endif
+endfu
 
 nnoremap <silent> <C-F5> :call <sid>toggle_contrast()<cr>
 com! -nargs=? -complete=customlist,s:ToggleContrastComplete
@@ -1334,12 +1336,11 @@ fu! s:ToggleContrastComplete(A, L, P)
   endif
 endfu
 
-let g:solarized_termcolors = 256
-let g:solarized_visibility = 'high'
-let g:solarized_hitrail = 0
-let g:solarized_termtrans = 1
-let g:solarized_italic = s:italic
-silent! call togglebg#map('<F5>')
+if !has('gui_running')
+  autocmd vimrcEx ColorScheme *
+        \ hi Normal ctermbg=NONE |
+        \ hi NonText ctermbg=NONE
+endif
 
 if !exists('g:colors_name')
   silent! exe 'colorscheme '.s:colors_name
