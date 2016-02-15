@@ -465,9 +465,11 @@ nnoremap <c-a> gg^vG$
 " Make <C-u> behave like being on command line
 inoremap <C-u> <C-g>u<C-u>
 
-" Search in visual mode
-xnoremap <silent> * :<C-u>let @/ = <sid>get_visual_selection()[0]<cr>:normal n<cr>
-xnoremap <silent> # :<C-u>let @/ = <sid>get_visual_selection()[0]<cr>:normal N<cr>
+" Search by */# in visual mode
+xnoremap <silent> g* :<c-u>let @/ = '\V'.<sid>get_visual_selection()[0]<cr>:normal n<cr>
+xnoremap <silent> g# :<C-u>let @/ = '\V'.<sid>get_visual_selection()[0]<cr>:normal N<cr>
+xnoremap <silent> * :<C-u>let @/ = '\<'.<sid>get_visual_selection()[0].'\>'<cr>:normal n<cr>
+xnoremap <silent> # :<C-u>let @/ = '\<'.<sid>get_visual_selection()[0].'\>'<cr>:normal N<cr>
 
 " Double <BS> to remove trailing spaces
 " This doesn't work as you wish.
