@@ -1295,6 +1295,12 @@ endif
 let g:gruvbox_improved_warnings = 1
 let g:gruvbox_italic = s:italic
 
+if has('macunix') && has('gui_running')
+  nnoremap <silent> <F11> :exe 'set '.(&fullscreen ? 'nofullscreen' ? 'fullscreen')<cr>
+elseif executable('wmctrl')
+  nnoremap <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<cr>
+endif
+
 nnoremap <F5> :set background=<c-r>=&bg == 'dark' ? 'light' : 'dark'<cr><cr>
 " This mappings may not work on terminal, but not used on it.
 nnoremap <C-F5> :call <sid>toggle_contrast(1)<cr>
