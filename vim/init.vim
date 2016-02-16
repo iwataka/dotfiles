@@ -1295,28 +1295,40 @@ endif
 let g:gruvbox_improved_warnings = 1
 let g:gruvbox_italic = s:italic
 
-nnoremap <silent> <F5> :call <sid>toggle_contrast()<cr>
-com! -nargs=? -complete=customlist,s:ToggleContrastComplete
-      \ ToggleContrast call s:toggle_contrast(<f-args>)
-fu! s:toggle_contrast(...)
+nnoremap <F5> :set background=<c-r>=&bg == 'dark' ? 'light' : 'dark'<cr><cr>
+" This mappings may not work on terminal, but not used on it.
+nnoremap <C-F5> :call <sid>toggle_contrast(1)<cr>
+nnoremap <C-S-F5> :call <sid>toggle_contrast(0)<cr>
+com! -nargs=1 -complete=customlist,s:ToggleContrastComplete
+      \ ToggleContrast call s:set_contrast(<q-args>)
+fu! s:toggle_contrast(incr)
   " In some cases, g:colors_name is unlet
   if exists('g:colors_name')
     if g:colors_name == 'gruvbox'
       exe 'let cont = g:gruvbox_contrast_'.&bg
-      let next = cont == 'soft' ? 'medium' : (cont == 'medium' ? 'hard' : 'soft')
-      let next = a:0 ? a:1 : next
-      exe 'let g:gruvbox_contrast_'.&bg.' = "'.next.'"'
+      let contlist = ['soft', 'medium', 'hard']
+      let nextindex = (index(contlist, cont) + (a:incr ? 1 : -1)) % len(contlist)
+      call s:set_contrast(contlist[nextindex])
+    elseif g:colors_name == 'solarized'
+      let cont = g:solarized_contrast
+      let contlist = ['low', 'normal', 'high']
+      let nextindex = (index(contlist, cont) + (a:incr ? 1 : -1)) % len(contlist)
+      call s:set_contrast(contlist[nextindex])
+    else
+      call s:warn(g:colors_name.' is not supported.')
+    endif
+  endif
+endfu
+fu! s:set_contrast(cont)
+  if exists('g:colors_name')
+    if g:colors_name == 'gruvbox'
+      exe 'let g:gruvbox_contrast_'.&bg.' = "'.a:cont.'"'
       colorscheme gruvbox
       redraw | exe 'echo "Current contrast: ".g:gruvbox_contrast_'.&bg
     elseif g:colors_name == 'solarized'
-      let cont = g:solarized_contrast
-      let next = cont == 'low' ? 'normal' : (cont == 'normal' ? 'high' : 'low')
-      let next = a:0 ? a:1 : next
-      let g:solarized_contrast = next
+      let g:solarized_contrast = a:cont
       colorscheme solarized
       redraw | echo 'Current contrast: '.g:solarized_contrast
-    else
-      call s:warn(g:colors_name.' is not supported.')
     endif
   endif
 endfu
