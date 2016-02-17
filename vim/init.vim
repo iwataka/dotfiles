@@ -171,15 +171,17 @@ set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
 set colorcolumn=81
 set completeopt-=preview
-if has('patch7.4.092')
+if v:version > 704 || v:version == 704 && has('patch092')
   set spelllang=en,cjk
+else
+  set spelllang=en
 endif
 if has('nvim')
   set shada='1000
 else
   set viminfo='1000,<1000,s100,:100
 endif
-if has('linebreak')
+if v:version > 704 || v:version == 704 && has('patch338')
   set breakindent
 endif
 
@@ -1037,7 +1039,7 @@ fu! s:substitute_map(line1, line2, map, flag)
   endfor
 endfu
 
-if has('patch7.4.1128')
+if v:version > 704 || v:version == 704 && has('patch1128')
   com! -nargs=+ -complete=dir Rmdir call s:rmdir(<f-args>)
   fu! s:rmdir(...)
     for path in a:000
