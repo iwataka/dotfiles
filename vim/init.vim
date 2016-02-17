@@ -268,6 +268,10 @@ elseif has('unix')
   set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='*~'\ --exclude=tags
 endif
 
+if has('win32') && executable('mingw32-make')
+  set makeprg=mingw32-make
+endif
+
 fu! S_fugitive()
   if exists('g:loaded_fugitive')
     let head = fugitive#head()
