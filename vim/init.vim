@@ -1515,6 +1515,10 @@ xnoremap <leader>gv :GV<cr>
 let g:signify_sign_add = '+'
 let g:signify_sign_delete = '-'
 let g:signify_sign_change = '~'
+omap ic <plug>(signify-motion-inner-pending)
+xmap ic <plug>(signify-motion-inner-visual)
+omap ac <plug>(signify-motion-outer-pending)
+xmap ac <plug>(signify-motion-outer-visual)
 
 " --------------------------------------------------------------
 " repeat {{{2
