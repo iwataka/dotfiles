@@ -98,6 +98,10 @@ Plug 'matze/vim-tex-fold', { 'for': 'tex' }
 
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
+if has('win32') && has('gui_running')
+  " TODO: This should be rewritten by myself.
+  Plug 'kkoenig/wimproved.vim', { 'on': ['WToggleFullscreen', 'WSetAlpha'] }
+endif
 
 call plug#end()
 endif
@@ -1297,11 +1301,17 @@ endif
 let g:gruvbox_improved_warnings = 1
 let g:gruvbox_italic = s:italic
 
-if has('macunix') && has('gui_running')
-  nnoremap <silent> <F11> :exe 'set '.(&fullscreen ? 'nofullscreen' ? 'fullscreen')<cr>
-elseif executable('wmctrl')
-  nnoremap <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<cr>
-endif
+nnoremap <silent> <F11> :call <sid>toggle_fullscreen()<cr>
+fu! s:toggle_fullscreen()
+  if has('macunix') && has('gui_running')
+    exe 'set '.(&fullscreen ? 'nofullscreen' ? 'fullscreen')
+  elseif executable('wmctrl')
+    call system('wmctrl -ir '.v:windowid.' -b toggle,fullscreen')
+  elseif exists(':WToggleFullscreen')
+    WToggleFullscreen
+  endif
+endfu
+autocmd vimrcEx VimEnter * call s:toggle_fullscreen()
 
 nnoremap <F5> :set background=<c-r>=&bg == 'dark' ? 'light' : 'dark'<cr><cr>
 " This mappings may not work on terminal, but not used on it.
