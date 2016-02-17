@@ -345,7 +345,8 @@ augroup vimrcEx
         \ setlocal foldlevel=1
   autocmd FileType calendar,git,gitv setlocal nolist
   autocmd FileType dosbatch setlocal commentstring=rem%s
-  autocmd FileType dot setlocal commentstring=//\ %s
+  autocmd FileType dot setlocal commentstring=//%s
+  autocmd FileType c setlocal commentstring=//%s
   " Close buffers of specified types by just typing q.
   autocmd FileType help,qf nnoremap <buffer> q :q<cr>
   autocmd FileType java,c,cpp
