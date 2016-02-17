@@ -97,10 +97,6 @@ Plug 'matze/vim-tex-fold', { 'for': 'tex' }
 
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
-if has('win32') && has('gui_running')
-  " TODO: This should be rewritten by myself.
-  Plug 'kkoenig/wimproved.vim', { 'on': ['WToggleFullscreen', 'WSetAlpha'] }
-endif
 
 call plug#end()
 endif
@@ -1306,13 +1302,19 @@ let g:gruvbox_improved_warnings = 1
 let g:gruvbox_italic = s:italic
 
 nnoremap <silent> <F11> :call <sid>toggle_fullscreen()<cr>
-fu! s:toggle_fullscreen()
+if has('win32')
+  let s:vimwin_lib = expand(expand('<sfile>:p:h').'/src/vimwin.dll')
+endif
+fu! s:toggle_fullscreen() abort
   if has('macunix') && has('gui_running')
     exe 'set '.(&fullscreen ? 'nofullscreen' ? 'fullscreen')
   elseif executable('wmctrl')
     call system('wmctrl -ir '.v:windowid.' -b toggle,fullscreen')
-  elseif exists(':WToggleFullscreen')
-    WToggleFullscreen
+  elseif exists('s:vimwin_lib') && filereadable(s:vimwin_lib)
+    let result = libcall(s:vimwin_lib, 'toggle_fullscreen', '')
+    if !empty(result)
+      throw result
+    endif
   endif
 endfu
 autocmd vimrcEx VimEnter * call s:toggle_fullscreen()

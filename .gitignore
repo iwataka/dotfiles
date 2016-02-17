@@ -7,6 +7,10 @@
 # temporary directory
 /tmp/
 
+# object and shared library
+*.o
+*.dll
+
 # Sbt
 sbt/*
 !sbt/0.13
