@@ -72,6 +72,7 @@ Plug 'chrisbra/unicode.vim',
 " This plug-in prevents it and enableds to fold without any effects to the
 " performance. Really nice!
 Plug 'Konfekt/FastFold'
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
@@ -371,8 +372,8 @@ augroup vimrcEx
   autocmd BufRead,BufNew * match FullWidthSpace /　/
 
   " Automatically open the quickfix window
-  autocmd QuickFixCmdPost grep,Ggrep cwindow
-  autocmd QuickFixCmdPost lgrep,Glgrep lwindow
+  " autocmd QuickFixCmdPost grep,Ggrep cwindow
+  " autocmd QuickFixCmdPost lgrep,Glgrep lwindow
 
   " Automatically remove trailing spaces when saving
   " NOTE: This feature has bad effects for undo function.
@@ -1170,7 +1171,6 @@ fu! s:toggle_fullscreen() abort
     endif
   endif
 endfu
-autocmd vimrcEx VimEnter * call s:toggle_fullscreen()
 
 nnoremap <F5> :set background=<c-r>=&bg == 'dark' ? 'light' : 'dark'<cr><cr>
 " This mappings may not work on terminal, but not used on it.
@@ -1491,3 +1491,32 @@ let g:jedi#rename_command = 'gr'
 let g:fastfold_savehook = 0
 let g:fastfold_fold_command_suffixes = []
 let g:fastfold_fold_movement_commands = []
+
+" --------------------------------------------------------------
+" goyo {{{2
+" --------------------------------------------------------------
+let g:goyo_linenr = 0
+nnoremap <leader>G :<c-u>Goyo<cr>
+fu! s:goyo_enter()
+  if !get(g:, 'signify_locked', 1)
+    let g:signify_locked = 1
+    let g:goyo_signify_locked = 1
+    autocmd goyo BufEnter * call sy#stop(bufnr('%'))
+  endif
+  if get(g:, 'colors_name', '') == 'gruvbox'
+    hi Cursor ctermbg=DarkGray guibg=DarkGray
+    autocmd goyo ColorScheme gruvbox hi Cursor ctermbg=DarkGray guibg=DarkGray
+  endif
+  autocmd goyo TextChanged,InsertLeave * silent! update
+endfu
+fu! s:goyo_leave()
+  if get(g:, 'goyo_signify_locked', 0)
+    let g:signify_locked = 0
+    unlet g:goyo_signify_locked
+  endif
+  if get(g:, 'colors_name', '') == 'gruvbox'
+    colorscheme gruvbox
+  endif
+endfu
+autocmd! User GoyoEnter nested call <sid>goyo_enter()
+autocmd! User GoyoLeave nested call <sid>goyo_leave()
