@@ -499,6 +499,9 @@ nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
 nnoremap K :<c-u>call <sid>grep(shellescape(expand('<cword>')))<cr>
 xnoremap K :<c-u>call <sid>grep(shellescape(<sid>get_visual_selection()[0]))<cr>
 
+" unimpared extension
+nnoremap cof :<c-u>setlocal <c-r>=&fen ? 'nofoldenable' : 'foldenable'<cr><cr>
+
 " ===============================================================
 " FUNCTIONS & COMMANDS {{{1
 " ===============================================================
