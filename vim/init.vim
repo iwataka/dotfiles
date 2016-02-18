@@ -100,7 +100,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-fold'
 Plug 'kana/vim-textobj-line'
-Plug 'kana/vim-textobj-entire'
+Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
 
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
@@ -1491,6 +1491,7 @@ let g:jedi#rename_command = 'gr'
 let g:fastfold_savehook = 0
 let g:fastfold_fold_command_suffixes = []
 let g:fastfold_fold_movement_commands = []
+let g:tex_fold_enabled = 1
 
 " --------------------------------------------------------------
 " goyo {{{2
