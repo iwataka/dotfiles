@@ -169,9 +169,6 @@ set wrapscan                              " Enable wrap scan
 set hlsearch                              " Highlight search results
 nohlsearch                                " Prevent highlight when reloading .vimrc
 set ttyfast                               " Enable fast connection
-set foldenable                            " Enable to fold
-set foldlevel=0                           " Start folding at the second depth
-set foldmethod=marker                     " Use specified markers to fold sentences
 set conceallevel=0                        " Disable conceal feature
 set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
@@ -189,6 +186,11 @@ else
 endif
 if v:version > 704 || v:version == 704 && has('patch338')
   set breakindent
+endif
+if has('folding')
+  set foldenable                          " Enable to fold
+  set foldlevel=0                         " Start folding at the second depth
+  set foldmethod=marker                   " Use specified markers to fold sentences
 endif
 
 set wildmenu
@@ -319,66 +321,68 @@ set statusline=%!MyStatusLine()
 " AUTOCMD {{{1
 " ===============================================================
 
-augroup vimrcEx
-  autocmd!
+if has('autocmd')
+  augroup vimrcEx
+    autocmd!
 
-  " Disable IME when leaving insert mode.
-  " This feature is available only on my Windows, so I've decided not to use.
-  " autocmd InsertEnter * set iminsert=1
-  " autocmd InsertLeave * set iminsert=0
+    " Disable IME when leaving insert mode.
+    " This feature is available only on my Windows, so I've decided not to use.
+    " autocmd InsertEnter * set iminsert=1
+    " autocmd InsertLeave * set iminsert=0
 
-  " Use cursorline only in the focused window.
-  " This doesn't work with NERDTree.
-  " Currently disabled because of performance issue.
-  " autocmd WinEnter * set cursorline
-  " autocmd WinLeave * set nocursorline
+    " Use cursorline only in the focused window.
+    " This doesn't work with NERDTree.
+    " Currently disabled because of performance issue.
+    " autocmd WinEnter * set cursorline
+    " autocmd WinLeave * set nocursorline
 
-  " When editing a file, always jump to the last known cursor position.
-  " do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+    " When editing a file, always jump to the last known cursor position.
+    " do it when the position is invalid or when inside an event handler
+    " (happens when dropping a file on gvim).
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-  " filetype-specific
-  autocmd FileType gitcommit
-        \ setlocal textwidth=72 |
-        \ setlocal spell
-  autocmd FileType markdown
-        \ setlocal spell |
-        \ setlocal commentstring=<!--%s--> |
-        \ setlocal foldlevel=1
-  autocmd FileType calendar,git,gitv setlocal nolist
-  autocmd FileType dosbatch setlocal commentstring=rem%s
-  autocmd FileType dot setlocal commentstring=//%s
-  autocmd FileType c setlocal commentstring=//%s
-  " Close buffers of specified types by just typing q.
-  autocmd FileType help,qf nnoremap <buffer> q :q<cr>
-  autocmd FileType java,c,cpp
-    \ if executable('astyle') |
-    \   setlocal formatprg='astyle' |
-    \ endif
+    " filetype-specific
+    autocmd FileType gitcommit
+          \ setlocal textwidth=72 |
+          \ setlocal spell
+    autocmd FileType markdown
+          \ setlocal spell |
+          \ setlocal commentstring=<!--%s--> |
+          \ setlocal foldlevel=1
+    autocmd FileType calendar,git,gitv setlocal nolist
+    autocmd FileType dosbatch setlocal commentstring=rem%s
+    autocmd FileType dot setlocal commentstring=//%s
+    autocmd FileType c setlocal commentstring=//%s
+    " Close buffers of specified types by just typing q.
+    autocmd FileType help,qf nnoremap <buffer> q :q<cr>
+    autocmd FileType java,c,cpp
+      \ if executable('astyle') |
+      \   setlocal formatprg='astyle' |
+      \ endif
 
-  " Set filetype
-  autocmd BufRead,BufNewFile *spacemacs set filetype=lisp
-  autocmd BufRead,BufNewFile *.gradle set filetype=groovy
-  autocmd BufRead,BufNewFile *editorconfig set filetype=jproperties
-  autocmd BufRead,BufNewFile *.gpg set filetype=gnupg
-  autocmd BufRead,BufNewFile *.json set filetype=javascript
+    " Set filetype
+    autocmd BufRead,BufNewFile *spacemacs set filetype=lisp
+    autocmd BufRead,BufNewFile *.gradle set filetype=groovy
+    autocmd BufRead,BufNewFile *editorconfig set filetype=jproperties
+    autocmd BufRead,BufNewFile *.gpg set filetype=gnupg
+    autocmd BufRead,BufNewFile *.json set filetype=javascript
 
-  " prevent from conflicting multiple edit
-  autocmd SwapExists * let v:swapchoice = 'o'
+    " prevent from conflicting multiple edit
+    autocmd SwapExists * let v:swapchoice = 'o'
 
-  " Full-width spaces
-  autocmd BufRead,BufNew * hi FullWidthSpace cterm=underline ctermbg=red guibg=#666666
-  autocmd BufRead,BufNew * match FullWidthSpace /　/
+    " Full-width spaces
+    autocmd BufRead,BufNew * hi FullWidthSpace cterm=underline ctermbg=red guibg=#666666
+    autocmd BufRead,BufNew * match FullWidthSpace /　/
 
-  " Automatically open the quickfix window
-  " autocmd QuickFixCmdPost grep,Ggrep cwindow
-  " autocmd QuickFixCmdPost lgrep,Glgrep lwindow
+    " Automatically open the quickfix window
+    " autocmd QuickFixCmdPost grep,Ggrep cwindow
+    " autocmd QuickFixCmdPost lgrep,Glgrep lwindow
 
-  " Automatically remove trailing spaces when saving
-  " NOTE: This feature has bad effects for undo function.
-  " autocmd BufWritePre * call s:preserve('%s/\s*$//')
-augroup END
+    " Automatically remove trailing spaces when saving
+    " NOTE: This feature has bad effects for undo function.
+    " autocmd BufWritePre * call s:preserve('%s/\s*$//')
+  augroup END
+endif
 
 " ===============================================================
 " MAPPINGS {{{1
@@ -724,12 +728,11 @@ fu! s:markdown_preview() abort
   call s:markdown_compile()
   call s:open(b:markdown_preview_dest_name)
 endfu
-aug markdown-preview
-  au!
-  au FileType markdown com! -buffer MarkdownPreview call s:markdown_preview()
-  au FileType markdown com! -buffer MarkdownCompile call s:markdown_compile()
-  au FileType markdown com! -buffer MarkdownDocument call s:open('https://daringfireball.net/projects/markdown/syntax')
-aug END
+if has('autocmd')
+  autocmd vimrcEx FileType markdown com! -buffer MarkdownPreview call s:markdown_preview()
+  autocmd vimrcEx FileType markdown com! -buffer MarkdownCompile call s:markdown_compile()
+  autocmd vimrcEx FileType markdown com! -buffer MarkdownDocument call s:open('https://daringfireball.net/projects/markdown/syntax')
+endif
 
 cabbrev o Open
 com! -nargs=* -complete=file Open call s:open(<f-args>)
@@ -1089,11 +1092,10 @@ abbrev SpaitalNetwork SpatialNetwork
 abbrev nwe new
 
 " Shortcut
-aug vimrc-abbrev
-  au!
-  au FileType java call s:abbrev_java()
-  au FileType scala call s:abbrev_scala()
-aug END
+if has('autocmd')
+  au vimrcEx FileType java call s:abbrev_java()
+  au vimrcEx FileType scala call s:abbrev_scala()
+endif
 
 fu! s:abbrev_java()
   iab <buffer> ijm jp.ac.keio.ae.iijima
@@ -1123,10 +1125,9 @@ endfu
 " Plug {{{2
 " --------------------------------------------------------------
 
-augroup PlugGx
-  autocmd!
-  autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
-augroup END
+if has('autocmd')
+  autocmd vimrcEx FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
+endif
 
 function! s:plug_gx()
   let line = getline('.')
@@ -1339,10 +1340,12 @@ fu! s:ctrlp_bookmark_add(dir)
   endif
 endfu
 
-augroup vimrc-ctrlp
-  au!
-  au VimEnter * if exists(':CtrlPBookmarkDirAdd') | call s:ctrlp_bookmark_init(0, 0) | endif
-augroup END
+if has('autocmd')
+  autocmd vimrcEx VimEnter *
+        \ if exists(':CtrlPBookmarkDirAdd') |
+        \ call s:ctrlp_bookmark_init(0, 0) |
+        \ endif
+endif
 
 if has('python')
   if has('unix') || has('mac') || has('macunix')
@@ -1387,10 +1390,6 @@ silent! call repeat#set("\<Plug>(EasyAlign)", v:count)
 " --------------------------------------------------------------
 " scala {{{2
 " --------------------------------------------------------------
-aug vimrc-scala
-  au!
-  au FileType java,scala nnoremap <silent><buffer> <Leader>si :<c-u>SortScalaImports<CR>
-aug END
 let g:scala_sort_across_groups = 1
 
 " --------------------------------------------------------------
@@ -1446,19 +1445,18 @@ nmap gaa ga_
 " --------------------------------------------------------------
 " If you set 1 to this, / and ? mappings don't work correctly.
 let g:dirvish_relative_paths = 0
-aug vimrc-dirvish
-  au!
+if has('autocmd')
   " Map t to "open in new tab".
-  au FileType dirvish nnoremap <buffer> t
+  autocmd vimrcEx FileType dirvish nnoremap <buffer> t
       \ :tabnew <C-R>=fnameescape(getline('.'))<CR><CR>
 
   " Map CTRL-R to reload the Dirvish buffer.
-  au FileType dirvish nnoremap <buffer> <C-R> :<C-U>Dirvish %<CR>
+  autocmd vimrcEx FileType dirvish nnoremap <buffer> <C-R> :<C-U>Dirvish %<CR>
 
   " Map gh to hide "hidden" files.
-  au FileType dirvish nnoremap <buffer> gh
+  autocmd vimrcEx FileType dirvish nnoremap <buffer> gh
       \ :set ma<bar>g@\v/\.[^\/]+/?$@d<cr>:set noma<cr>
-aug END
+endif
 
 " --------------------------------------------------------------
 " airnote {{{2
