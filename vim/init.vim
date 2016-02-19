@@ -1505,8 +1505,8 @@ fu! s:goyo_enter()
     autocmd goyo BufEnter * call sy#stop(bufnr('%'))
   endif
   if get(g:, 'colors_name', '') == 'gruvbox'
-    hi Cursor ctermbg=DarkGray guibg=DarkGray
-    autocmd goyo ColorScheme gruvbox hi Cursor ctermbg=DarkGray guibg=DarkGray
+    hi Cursor ctermfg=DarkGray guifg=DarkGray
+    autocmd goyo ColorScheme gruvbox hi Cursor ctermfg=DarkGray guifg=DarkGray
   endif
   autocmd goyo TextChanged,InsertLeave * silent! update
 endfu
