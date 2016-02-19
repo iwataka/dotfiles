@@ -130,7 +130,9 @@ endif
 if has('vim_starting')
   set encoding=utf-8
 endif
+set fileencoding=utf-8
 set fileencodings=utf-8,sjis              " UTF8 is first, SJIS is second
+set termencoding=utf-8
 set fileformats=unix,dos,mac              " Unix format has highest priority
 set timeout                               " Enable timeout settings
 set timeoutlen=1000                       " Time out on mapping after 1 second
