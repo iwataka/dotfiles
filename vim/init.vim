@@ -277,47 +277,7 @@ if has('win32') && executable('mingw32-make')
   set makeprg=mingw32-make
 endif
 
-fu! S_fugitive()
-  if exists('g:loaded_fugitive')
-    let head = fugitive#head()
-    if !empty(head)
-      return '[Git('.fugitive#head().')]'
-    endif
-  endif
-  return ''
-endfu
-
-fu! S_signify()
-  if exists('b:sy') && get(b:sy, 'active', 0) && exists('b:sy.stats')
-    let [add, ch, del] = b:sy.stats
-    let sign_add = get(g:, 'signify_sign_add', '+')
-    let sign_ch = get(g:, 'signify_sign_change', '~')
-    let sign_del = get(g:, 'signify_sign_delete', '-')
-    return '['.sign_add.add.' '.sign_ch.ch.' '.sign_del.del.']'
-  else
-    return ''
-  endif
-endfu
-
-fu! MyStatusLine()
-  let mod = '%{&mod ? "[+]" : (&ma ? "" : "[-]")}'
-  let ro = '%{&ro ? "[RO]" : ""}'
-  let sig = '%{S_signify()}'
-  let fug = '%{S_fugitive()}'
-  let sep = ' %= '
-  let ft = '%{&ft}'
-  let ff = '[%{&ff}]'
-  let fenc = '[%{&fenc}]'
-  let pos = '%l,%c%V'
-  let pct = '%P'
-  let left = ' %f'.mod.' %<'.ro.sig.fug
-  let right = ft.ff.fenc.' '.pos.' '.pct
-  return left.sep.right
-endfu
-
-set statusline=%!MyStatusLine()
-
-" ===============================================================
+" ==============================================================
 " AUTOCMD {{{1
 " ===============================================================
 
@@ -383,6 +343,53 @@ if has('autocmd')
     " autocmd BufWritePre * call s:preserve('%s/\s*$//')
   augroup END
 endif
+
+" ===============================================================
+" STATUS LINE {{{1
+" ==============================================================
+fu! S_fugitive()
+  if exists('g:loaded_fugitive')
+    let head = fugitive#head()
+    if !empty(head)
+      return '[Git('.fugitive#head().')]'
+    endif
+  endif
+  return ''
+endfu
+
+fu! S_signify()
+  if exists('b:sy') && get(b:sy, 'active', 0) && exists('b:sy.stats')
+    let [add, ch, del] = b:sy.stats
+    let sign_add = get(g:, 'signify_sign_add', '+')
+    let sign_ch = get(g:, 'signify_sign_change', '~')
+    let sign_del = get(g:, 'signify_sign_delete', '-')
+    return '['.sign_add.add.' '.sign_ch.ch.' '.sign_del.del.']'
+  else
+    return ''
+  endif
+endfu
+
+fu! MyStatusLine()
+  let mod = '%{&mod ? "[+]" : (&ma ? "" : "[-]")}'
+  let ro = '%{&ro ? "[RO]" : ""}'
+  let sig = '%{S_signify()}'
+  let fug = '%{S_fugitive()}'
+  let sep = ' %= '
+  let ft = '%{&ft}'
+  let ff = '[%{&ff}]'
+  let fenc = '[%{&fenc}]'
+  let pos = '%l,%c%V'
+  let pct = '%P'
+  let left = ' %f'.mod.' %<'.ro.sig.fug
+  let right = ft.ff.fenc.' '.pos.' '.pct
+  return left.sep.right
+endfu
+
+com! StatusLineRefresh call s:statusline_refresh()
+fu! s:statusline_refresh()
+  set statusline=%!MyStatusLine()
+endfu
+autocmd vimrcEx VimEnter * call s:statusline_refresh()
 
 " ===============================================================
 " MAPPINGS {{{1
@@ -1515,6 +1522,9 @@ fu! s:goyo_leave()
   endif
   if get(g:, 'colors_name', '') == 'gruvbox'
     colorscheme gruvbox
+  endif
+  if exists(':StatusLineRefresh')
+    StatusLineRefresh
   endif
 endfu
 autocmd! User GoyoEnter nested call <sid>goyo_enter()
