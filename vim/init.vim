@@ -36,6 +36,8 @@ if !(has('win32') || has('win32unix'))
 endif
 Plug 'iwataka/vim-replace'
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
+Plug 'iwataka/cowsay.vim'
+Plug 'iwataka/fortune.vim'
 unlet! g:plug_url_format
 
 " Git
@@ -56,6 +58,7 @@ if has('python')
     Plug 'FelikZ/ctrlp-py-matcher'
   endif
 endif
+Plug 'mhinz/vim-startify'
 
 " Editing
 Plug 'tpope/vim-repeat'
@@ -1537,3 +1540,29 @@ fu! s:goyo_leave()
 endfu
 autocmd! User GoyoEnter nested call <sid>goyo_enter()
 autocmd! User GoyoLeave nested call <sid>goyo_leave()
+
+" --------------------------------------------------------------
+" startify {{{2
+" --------------------------------------------------------------
+let g:startify_session_persistence    = 1
+let g:startify_session_dir = '~/.vim/session'
+let g:startify_enable_special = 0
+let g:startify_relative_path = 1
+let g:startify_list_order = [
+      \ ['   LRU:'],
+      \ 'files',
+      \ ['   Sessions:'],
+      \ 'sessions',
+      \ ['   Bookmarks:'],
+      \ 'bookmarks'
+      \ ]
+let g:startify_change_to_dir = 1
+let g:startify_files_number = 12
+let g:startify_custom_footer =
+      \ ['', "   Vim is charityware. Please read ':help uganda'.", '']
+fu! s:set_startify_custom_header()
+  let g:startify_custom_header = 
+        \ map(cowsay#cowsay(fortune#fortune(), ''), '"   ". v:val') + ['']
+endfu
+autocmd vimrcEx VimEnter * call s:set_startify_custom_header()
+autocmd User Startified call s:set_startify_custom_header()
