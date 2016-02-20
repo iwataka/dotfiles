@@ -104,6 +104,9 @@ Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
 
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
+if has('win32')
+  Plug 'kkoenig/wimproved.vim', { 'on': ['WToggleFullscreen'] }
+endif
 
 call plug#end()
 endif
@@ -1166,21 +1169,16 @@ let g:gruvbox_improved_warnings = 1
 let g:gruvbox_italic = s:italic
 
 nnoremap <silent> <F11> :call <sid>toggle_fullscreen()<cr>
-if has('win32')
-  let s:vimwin_lib = expand(expand('<sfile>:p:h').'/src/vimwin.dll')
-endif
-fu! s:toggle_fullscreen() abort
-  if has('macunix') && has('gui_running')
+fu! s:toggle_fullscreen()
+  if has('gui_macvim')
     exe 'set '.(&fullscreen ? 'nofullscreen' ? 'fullscreen')
   elseif executable('wmctrl')
     call system('wmctrl -ir '.v:windowid.' -b toggle,fullscreen')
-  elseif exists('s:vimwin_lib') && filereadable(s:vimwin_lib)
-    let result = libcall(s:vimwin_lib, 'toggle_fullscreen', '')
-    if !empty(result)
-      throw result
-    endif
+  elseif exists(':WToggleFullscreen')
+    WToggleFullscreen
   endif
 endfu
+autocmd vimrcEx VimEnter * call s:toggle_fullscreen()
 
 nnoremap <F5> :set background=<c-r>=&bg == 'dark' ? 'light' : 'dark'<cr><cr>
 " This mappings may not work on terminal, but not used on it.
@@ -1504,7 +1502,7 @@ let g:tex_fold_enabled = 1
 " goyo {{{2
 " --------------------------------------------------------------
 let g:goyo_linenr = 0
-nnoremap <leader>G :<c-u>Goyo<cr>
+nnoremap <leader><leader> :<c-u>Goyo 80<cr>
 fu! s:goyo_enter()
   if !get(g:, 'signify_locked', 1)
     let g:signify_locked = 1
@@ -1515,7 +1513,11 @@ fu! s:goyo_enter()
     hi Cursor ctermfg=DarkGray guifg=DarkGray
     autocmd goyo ColorScheme gruvbox hi Cursor ctermfg=DarkGray guifg=DarkGray
   endif
-  autocmd goyo TextChanged,InsertLeave * silent! update
+  let g:goyo_showcmd = &showcmd
+  set noshowcmd
+  let g:goyo_showmode = &showmode
+  set noshowmode
+  autocmd goyo TextChanged,InsertLeave * nested silent! update
 endfu
 fu! s:goyo_leave()
   if get(g:, 'goyo_signify_locked', 0)
@@ -1528,6 +1530,10 @@ fu! s:goyo_leave()
   if exists(':StatusLineRefresh')
     StatusLineRefresh
   endif
+  let &showcmd = g:goyo_showcmd
+  unlet g:goyo_showcmd
+  let &showmode = g:goyo_showmode
+  unlet g:goyo_showmode
 endfu
 autocmd! User GoyoEnter nested call <sid>goyo_enter()
 autocmd! User GoyoLeave nested call <sid>goyo_leave()
