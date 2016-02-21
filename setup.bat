@@ -21,6 +21,7 @@ call:mklinkDir vim
 call:mklinkDir atom
 call:mklinkDir sh
 call:mklinkDir gnupg
+call:mklinkDir pandoc
 call:mklinkSublime
 call:mklinkNvim
 call:mklinkSpacemacs
