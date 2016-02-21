@@ -335,9 +335,11 @@ if has('autocmd')
     " prevent from conflicting multiple edit
     autocmd SwapExists * let v:swapchoice = 'o'
 
-    " Full-width spaces
-    autocmd BufRead,BufNew * hi FullWidthSpace cterm=underline ctermbg=red guibg=#666666
-    autocmd BufRead,BufNew * match FullWidthSpace /　/
+    " Fullwidth spaces, merge conflicts and ...
+    autocmd BufRead * call matchadd('Visual', '　')
+    autocmd BufRead * call matchadd('Visual', '\v^\s*\zs\<{7}[^\<]+$\ze')
+    autocmd BufRead * call matchadd('Visual', '\v^\s*\zs\={7}$\ze')
+    autocmd BufRead * call matchadd('Visual', '\v^\s*\zs\>{7}[^\>]+$\ze')
 
     " Automatically open the quickfix window
     " autocmd QuickFixCmdPost grep,Ggrep cwindow
@@ -411,9 +413,9 @@ nnoremap gk k
 " Prevent to override registers by one character
 nnoremap x "_x
 
-" Visual block is better than ordinary visual mode
-nnoremap v <c-v>
-nnoremap <c-v> v
+" " Visual block is better than ordinary visual mode
+" nnoremap v <c-v>
+" nnoremap <c-v> v
 
 " Better jumping to marks
 nnoremap ' `
@@ -733,11 +735,13 @@ fu! s:markdown_compile() abort
       let b:markdown_preview_dest_name =  tempname().'.html'
     endwh
   endif
-  let cmd = 'pandoc -s -f markdown_github'
-  call system(cmd.' '.current_name.' -o '.b:markdown_preview_dest_name)
+  let css = expand(expand('~/.pandoc').'/github.css')
+  let cmd = 'pandoc -s -f markdown_github -t html5 -c '.css.' -o '.b:markdown_preview_dest_name
+  call system(cmd.' '.current_name)
 endfu
 fu! s:markdown_preview() abort
   call s:markdown_compile()
+  autocmd vimrcEx BufWritePost <buffer> call s:markdown_compile()
   call s:open(b:markdown_preview_dest_name)
 endfu
 if has('autocmd')
