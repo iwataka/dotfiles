@@ -1090,7 +1090,9 @@ if v:version > 704 || v:version == 704 && has('patch1128')
 endif
 
 let s:default_session = expand('~/.vim/session/default.vim')
-call mkdir(fnamemodify(s:default_session, ':h'))
+if !isdirectory(fnamemodify(s:default_session, ':h'))
+  call mkdir(fnamemodify(s:default_session, ':h'))
+endif
 set sessionoptions=curdir,resize,winpos,winsize
 autocmd vimrcEx VimLeave * exe 'mksession! '.s:default_session
 autocmd vimrcEx VimEnter * nested if !argc() | exe 'source '.s:default_session | endif
