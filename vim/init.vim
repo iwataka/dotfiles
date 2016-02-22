@@ -34,7 +34,7 @@ if !(has('win32') || has('win32unix'))
   " Require my .ssh/config file.
   let g:plug_url_format = 'github:%s.git'
 endif
-Plug 'iwataka/vim-replace'
+Plug 'iwataka/minidown.vim', { 'for': 'markdown' }
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 unlet! g:plug_url_format
 
@@ -724,32 +724,6 @@ endfu
 "   silent call s:switch_input_source_to_default()
 " endfu
 
-fu! s:markdown_compile() abort
-  if !executable('pandoc')
-    throw 'Require pandoc'
-  endif
-  let current_name = fnamemodify(expand('%'), ':p')
-  if !exists('b:markdown_preview_dest_name')
-    while !exists('b:markdown_preview_dest_name') ||
-          \ filereadable(b:markdown_preview_dest_name)
-      let b:markdown_preview_dest_name =  tempname().'.html'
-    endwh
-  endif
-  let css = expand(expand('~/.pandoc').'/github.css')
-  let cmd = 'pandoc -s -f markdown_github -t html5 -c '.css.' -o '.b:markdown_preview_dest_name
-  call system(cmd.' '.current_name)
-endfu
-fu! s:markdown_preview() abort
-  call s:markdown_compile()
-  autocmd vimrcEx BufWritePost <buffer> call s:markdown_compile()
-  call s:open(b:markdown_preview_dest_name)
-endfu
-if has('autocmd')
-  autocmd vimrcEx FileType markdown com! -buffer MarkdownPreview call s:markdown_preview()
-  autocmd vimrcEx FileType markdown com! -buffer MarkdownCompile call s:markdown_compile()
-  autocmd vimrcEx FileType markdown com! -buffer MarkdownDocument call s:open('https://daringfireball.net/projects/markdown/syntax')
-endif
-
 cabbrev o Open
 com! -nargs=* -complete=file Open call s:open(<f-args>)
 fu! s:open(...)
@@ -1092,14 +1066,6 @@ if v:version > 704 || v:version == 704 && has('patch1128')
     endfor
   endfu
 endif
-
-let s:default_session = expand('~/.vim/session/default.vim')
-if !isdirectory(fnamemodify(s:default_session, ':h'))
-  call mkdir(fnamemodify(s:default_session, ':h'))
-endif
-set sessionoptions=curdir,resize,winpos,winsize
-autocmd vimrcEx VimLeave * exe 'mksession! '.s:default_session
-autocmd vimrcEx VimEnter * nested if !argc() | exe 'source '.s:default_session | endif
 
 " ===============================================================
 " ABBREVIATIONS {{{1
