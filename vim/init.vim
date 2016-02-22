@@ -791,11 +791,17 @@ fu! s:chrome_bookmark_list()
     echoe 'Chrome bookmark file not found'
   endif
   try
-    let bookmark = webapi#json#decode(join(readfile(bookmark_fname), ''))
+    if exists('*jsondecode')
+      let bookmark = jsondecode(join(readfile(bookmark_fname), ''))
+    elseif exists('*json_decode')
+      let bookmark = json_decode(join(readfile(bookmark_fname), ''))
+    else
+      let bookmark = webapi#json#decode(join(readfile(bookmark_fname), ''))
+    endif
     let children = bookmark.roots.bookmark_bar.children
     return map(children, 'v:val.url')
-  catch /^Unknown function/
-    echoe 'Require webapi-vim'
+  catch /^/
+    return []
   endtry
 endfu
 
