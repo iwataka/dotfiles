@@ -36,6 +36,7 @@ if !(has('win32') || has('win32unix'))
 endif
 Plug 'iwataka/minidown.vim', { 'for': 'markdown' }
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
+Plug 'iwataka/goyo.vim', { 'on': 'Goyo' }
 unlet! g:plug_url_format
 
 " Git
@@ -72,7 +73,6 @@ Plug 'chrisbra/unicode.vim',
 " This plug-in prevents it and enableds to fold without any effects to the
 " performance. Really nice!
 Plug 'Konfekt/FastFold'
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
@@ -1362,6 +1362,9 @@ nnoremap <leader>gA :<c-u>Git add --all<cr>
 nnoremap <leader>gv :<c-u>GV<cr>
 xnoremap <leader>gv :GV<cr>
 
+if has('autocmd')
+  autocmd vimrcEx BufEnter * SignifyRefresh
+endif
 let g:signify_sign_add = '+'
 let g:signify_sign_delete = '-'
 let g:signify_sign_change = '~'
@@ -1504,9 +1507,6 @@ fu! s:goyo_leave()
   if get(g:, 'goyo_signify_locked', 0)
     let g:signify_locked = 0
     unlet g:goyo_signify_locked
-  endif
-  if get(g:, 'colors_name', '') == 'gruvbox'
-    colorscheme gruvbox
   endif
   let &showcmd = g:goyo_showcmd
   unlet g:goyo_showcmd
