@@ -392,11 +392,7 @@ fu! MyStatusLine()
   return left.sep.right
 endfu
 
-com! StatusLineRefresh call s:statusline_refresh()
-fu! s:statusline_refresh()
-  set statusline=%!MyStatusLine()
-endfu
-autocmd vimrcEx VimEnter * call s:statusline_refresh()
+set statusline=%!MyStatusLine()
 
 " ===============================================================
 " MAPPINGS {{{1
@@ -1505,9 +1501,6 @@ fu! s:goyo_leave()
   endif
   if get(g:, 'colors_name', '') == 'gruvbox'
     colorscheme gruvbox
-  endif
-  if exists(':StatusLineRefresh')
-    StatusLineRefresh
   endif
   let &showcmd = g:goyo_showcmd
   unlet g:goyo_showcmd
