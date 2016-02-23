@@ -392,11 +392,7 @@ fu! MyStatusLine()
   return left.sep.right
 endfu
 
-com! StatusLineRefresh call s:statusline_refresh()
-fu! s:statusline_refresh()
-  set statusline=%!MyStatusLine()
-endfu
-autocmd vimrcEx VimEnter * call s:statusline_refresh()
+set statusline=%!MyStatusLine()
 
 " ===============================================================
 " MAPPINGS {{{1
@@ -409,6 +405,8 @@ nnoremap <Down> gj
 nnoremap <Up> gk
 nnoremap gj j
 nnoremap gk k
+inoremap <silent> <Down> <c-o>:normal! gj<cr>
+inoremap <silent> <Up> <c-o>:normal! gk<cr>
 
 " Prevent to override registers by one character
 nnoremap x "_x
@@ -1162,7 +1160,6 @@ fu! s:toggle_fullscreen()
     WToggleFullscreen
   endif
 endfu
-autocmd vimrcEx VimEnter * call s:toggle_fullscreen()
 
 nnoremap <F5> :set background=<c-r>=&bg == 'dark' ? 'light' : 'dark'<cr><cr>
 " This mappings may not work on terminal, but not used on it.
@@ -1510,9 +1507,6 @@ fu! s:goyo_leave()
   endif
   if get(g:, 'colors_name', '') == 'gruvbox'
     colorscheme gruvbox
-  endif
-  if exists(':StatusLineRefresh')
-    StatusLineRefresh
   endif
   let &showcmd = g:goyo_showcmd
   unlet g:goyo_showcmd
