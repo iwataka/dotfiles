@@ -515,8 +515,10 @@ if !maparg('<tab>', 'i') | inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", 
 if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>", "\<tab>") | endif
 
 " Make gt and gT support both tabline and bufline
-nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
-nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
+if exists('g:loaded_airline') && g:loaded_airline
+  nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
+  nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
+endif
 
 " grep by K
 nnoremap K :<c-u>call <sid>grep(shellescape(expand('<cword>')))<cr>
