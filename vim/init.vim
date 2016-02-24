@@ -242,8 +242,7 @@ endif
 if has('gui_running')
   set guioptions=
   if has('win32')
-    " Hack font can't show Japanese characters properly on Windows.
-    " silent! set guifont=Hack:h11:cANSI
+    silent! set guifont=Hack:h9:cANSI
   else
     silent! set guifont=Hack\ 11
   endif
@@ -513,12 +512,6 @@ nnoremap <silent> <leader>cb :<c-u>CheckboxToggle<cr>
 nnoremap <silent> <leader>rt :<c-u>Root<cr>
 if !maparg('<tab>', 'i') | inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", "\<tab>") | endif
 if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>", "\<tab>") | endif
-
-" Make gt and gT support both tabline and bufline
-if exists('g:loaded_airline') && g:loaded_airline
-  nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
-  nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
-endif
 
 " grep by K
 nnoremap K :<c-u>call <sid>grep(shellescape(expand('<cword>')))<cr>
@@ -960,16 +953,6 @@ com! XmlFormat call s:xml_format()
 fu! s:xml_format()
   %s/></>\r</g
   normal! gg=G
-endfu
-
-fu! s:move_tab_or_buffer(suffix, count)
-  let tab_exists = tabpagenr('$') != 1
-  let c = a:count == 0 ? '' : a:count
-  if tab_exists
-    silent exe 'tab'.a:suffix.' '.c
-  elseif buflisted(bufnr('%'))
-    silent exe 'b'.a:suffix.' '.c
-  endif
 endfu
 
 com! -range Average call s:register_avg(getline(<line1>, <line2>))
