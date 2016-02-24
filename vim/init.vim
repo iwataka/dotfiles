@@ -36,7 +36,6 @@ if !(has('win32') || has('win32unix'))
 endif
 Plug 'iwataka/minidown.vim', { 'for': 'markdown' }
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
-Plug 'iwataka/goyo.vim', { 'on': 'Goyo' }
 unlet! g:plug_url_format
 
 " Git
@@ -73,6 +72,7 @@ Plug 'chrisbra/unicode.vim',
 " This plug-in prevents it and enableds to fold without any effects to the
 " performance. Really nice!
 Plug 'Konfekt/FastFold'
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
@@ -1488,8 +1488,11 @@ let g:tex_fold_enabled = 1
 " goyo {{{2
 " --------------------------------------------------------------
 let g:goyo_linenr = 0
-nnoremap <leader><leader> :<c-u>Goyo 80<cr>
+nnoremap <leader>G :<c-u>Goyo 80<cr>
 fu! s:goyo_enter()
+  " Disable some goyo auto-commands.
+  " They causes to vanish status-lines.
+  autocmd! goyo BufWinEnter,WinEnter,WinLeave
   if !get(g:, 'signify_locked', 1)
     let g:signify_locked = 1
     let g:goyo_signify_locked = 1
@@ -1499,21 +1502,15 @@ fu! s:goyo_enter()
     hi Cursor ctermfg=DarkGray guifg=DarkGray
     autocmd goyo ColorScheme gruvbox hi Cursor ctermfg=DarkGray guifg=DarkGray
   endif
-  let g:goyo_showcmd = &showcmd
-  set noshowcmd
-  let g:goyo_showmode = &showmode
-  set noshowmode
+  " Enter into auto-save mode.
   autocmd goyo TextChanged,InsertLeave * nested silent! update
 endfu
 fu! s:goyo_leave()
   if get(g:, 'goyo_signify_locked', 0)
     let g:signify_locked = 0
     unlet g:goyo_signify_locked
+    SignifyRefresh
   endif
-  let &showcmd = g:goyo_showcmd
-  unlet g:goyo_showcmd
-  let &showmode = g:goyo_showmode
-  unlet g:goyo_showmode
 endfu
 autocmd! User GoyoEnter nested call <sid>goyo_enter()
 autocmd! User GoyoLeave nested call <sid>goyo_leave()
