@@ -1,5 +1,7 @@
 "*":
-  Zen: {}
+  Zen:
+    typewriter: true
+    width: 74
   "autocomplete-plus": {}
   core:
     themes: [
@@ -9,6 +11,7 @@
   editor:
     fontFamily: "Hack"
     invisibles: {}
+    scrollPastEnd: true
     showIndentGuide: true
     showInvisibles: true
     softWrap: true
