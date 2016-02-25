@@ -1334,6 +1334,7 @@ xnoremap <leader>gv :GV<cr>
 if has('autocmd')
   autocmd vimrcEx BufEnter * SignifyRefresh
 endif
+let g:signify_skip_filetype = { 'help': 1, 'gitcommit': 1 }
 let g:signify_sign_add = '+'
 let g:signify_sign_delete = '-'
 let g:signify_sign_change = '~'
