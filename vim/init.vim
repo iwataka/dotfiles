@@ -196,7 +196,7 @@ set wildmode=list:longest,full
 " set wildignore+=*.rbc                            " Ruby
 " set wildignore+=*.class                          " JVM
 
-if has('win32') || has('win64')
+if has('win32')
   set noimdisable
   set iminsert=1
   set imsearch=-1
@@ -869,10 +869,7 @@ fu! s:alternate(fname, cmd)
   endif
 
   " File separator depends on OS
-  let separator = '/'
-  if has('win32') || has('win64')
-    let separator = '\'
-  endif
+  let separator = expand('/')
 
   " General source and test files
   let is_test = (root_name =~ '.*\(Test\|Spec\|_test\|_spec\)')
@@ -1260,7 +1257,7 @@ if has('unix')
     \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
     \ '/usr/lib/jvm/java-[1-9]\+-oracle'
     \ ]
-elseif has('win32') || has('win64')
+elseif has('win32')
   let s:ctrlp_bookmark_paths = [
     \ 'C:\lib\*'
     \ ]
