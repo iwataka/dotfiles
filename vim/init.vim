@@ -1182,12 +1182,18 @@ if !has('gui_running')
 endif
 
 if !exists('g:colors_name')
-  silent! exe 'colorscheme '.s:colors_name
-  if has('gui_running')
-    set background=light
-  else
+  try
+    exe 'colorscheme '.s:colors_name
+    if has('gui_running')
+      set background=light
+    else
+      set background=dark
+    endif
+  catch /^/
+    " Default colorscheme
+    colorscheme desert
     set background=dark
-  endif
+  endtry
 endif
 
 " --------------------------------------------------------------
