@@ -565,6 +565,8 @@ fu! s:root(cwd)
   retu ''
 endfu
 
+cabbrev grep Grep
+com! -nargs=+ Grep call s:grep(shellescape(<q-args>))
 fu! s:grep(keyword)
   if exists(':Ggrep')
     silent exe 'Ggrep '.a:keyword
