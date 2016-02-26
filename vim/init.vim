@@ -227,8 +227,13 @@ endif
 if has('gui_running')
   set guioptions=
   if has('win32')
-    silent! set guifont=Hack:h9:cANSI
+    " See https://github.com/powerline/fonts
+    " Hack font can't show powerline glyphs on my Windows.
+    silent! set guifont=Droid_Sans_Mono_Dotted_for_Powe:h9:cANSI
   else
+    " Hack is maintained separately, which results less space occupied.
+    " I use dual boot of Ubuntu and Windows and this causes a little space for
+    " Ubuntu.
     silent! set guifont=Hack\ 11
   endif
 endif
@@ -1387,11 +1392,9 @@ if has('autocmd')
   autocmd vimrcEx BufEnter * SignifyRefresh
 endif
 let g:signify_skip_filetype = { 'help': 1, 'gitcommit': 1 }
-let g:signify_sign_add = '➕'
-let g:signify_sign_delete = '➖'
-let g:signify_sign_change = '❗'
-let g:signify_sign_delete_first_line = '⊖'
-let g:signify_sign_changedelete = '‼'
+let g:signify_sign_add = '+'
+let g:signify_sign_delete = '-'
+let g:signify_sign_change = '~'
 omap ic <plug>(signify-motion-inner-pending)
 xmap ic <plug>(signify-motion-inner-visual)
 omap ac <plug>(signify-motion-outer-pending)
