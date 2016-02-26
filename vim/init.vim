@@ -337,15 +337,14 @@ endif
 " ===============================================================
 " STATUS LINE {{{1
 " ==============================================================
-fu! S_fugitive()
-  if exists('g:loaded_fugitive')
-    let head = fugitive#head()
-    if !empty(head)
-      return '[Git('.fugitive#head().')]'
-    endif
+function! S_fugitive()
+  if exists('*fugitive#head')
+    let h = fugitive#head()
+    return empty(h) ? '' :
+          \ has('gui_running') && empty(&guifont) ? '[Git('.h.')]' : '['.h.']'
   endif
   return ''
-endfu
+endfunction
 
 fu! S_signify()
   if exists('b:sy') && get(b:sy, 'active', 0) && exists('b:sy.stats')
@@ -359,9 +358,13 @@ fu! S_signify()
   endif
 endfu
 
+function! S_readonly()
+  return &readonly ? has('gui_running') && empty(&guifont) ? '[RO]' : '[]' : ''
+endfunction
+
 fu! MyStatusLine()
   let mod = '%{&mod ? "[+]" : (&ma ? "" : "[-]")}'
-  let ro = '%{&ro ? "[RO]" : ""}'
+  let ro = '%{S_readonly()}'
   let sig = '%{S_signify()}'
   let fug = '%{S_fugitive()}'
   let sep = ' %= '
@@ -369,8 +372,8 @@ fu! MyStatusLine()
   let ff = '[%{&ff}]'
   let fenc = '[%{&fenc}]'
   let pos = '%l,%c%V'
-  let pct = '%P'
-  let left = ' %f'.mod.' %<'.ro.sig.fug
+  let pct = '%p%%'
+  let left = ' %f'.mod.ro.' %<'.sig.fug
   let right = ft.ff.fenc.' '.pos.' '.pct
   return left.sep.right
 endfu
