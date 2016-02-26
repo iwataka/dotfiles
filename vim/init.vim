@@ -358,24 +358,24 @@ fu! S_signify()
   endif
 endfu
 
-function! S_readonly()
+fu! S_readonly()
   return &readonly ? has('gui_running') && empty(&guifont) ? '[RO]' : '[]' : ''
-endfunction
+endfu
 
 fu! MyStatusLine()
-  let mod = '%{&mod ? "[+]" : (&ma ? "" : "[-]")}'
+  let fname = ' %n:%f'
+  let mod = '%m'
   let ro = '%{S_readonly()}'
   let sig = '%{S_signify()}'
   let fug = '%{S_fugitive()}'
-  let sep = ' %= '
   let ft = '%{&ft}'
   let ff = '[%{&ff}]'
   let fenc = '[%{&fenc}]'
-  let pos = '%l,%c%V'
-  let pct = '%p%%'
-  let left = ' %f'.mod.ro.' %<'.sig.fug
-  let right = ft.ff.fenc.' '.pos.' '.pct
-  return left.sep.right
+  let pos = '[%l,%c%V]'
+  let pct = '[%p%%]'
+  let left = fname.mod.ro.'%<'.' '.sig.fug
+  let right = ft.ff.fenc.' '.pos.pct
+  return left.'%='.right
 endfu
 
 set statusline=%!MyStatusLine()
@@ -1345,9 +1345,11 @@ if has('autocmd')
   autocmd vimrcEx BufEnter * SignifyRefresh
 endif
 let g:signify_skip_filetype = { 'help': 1, 'gitcommit': 1 }
-let g:signify_sign_add = '+'
-let g:signify_sign_delete = '-'
-let g:signify_sign_change = '~'
+let g:signify_sign_add = '➕'
+let g:signify_sign_delete = '➖'
+let g:signify_sign_change = '❗'
+let g:signify_sign_delete_first_line = '⊖'
+let g:signify_sign_changedelete = '‼'
 omap ic <plug>(signify-motion-inner-pending)
 xmap ic <plug>(signify-motion-inner-visual)
 omap ac <plug>(signify-motion-outer-pending)
