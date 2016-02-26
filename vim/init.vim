@@ -654,13 +654,23 @@ fu! s:get_visual_selection()
   return lines
 endfu
 
-com! CheckboxToggle call s:toggle_check_box(line('.'))
-fu! s:toggle_check_box(linenr)
+com! CheckboxToggle call s:toggle_checkbox(line('.'))
+com! CheckboxRemove call s:remove_checkbox(line('.'))
+fu! s:toggle_checkbox(linenr)
   let line = getline(a:linenr)
-  if line =~ '[-+*]\s*\[x\]'
-    let line = substitute(line, '\([-+*]\s*\[\)x\(\]\)', '\1'.' '.'\2', '')
-  elseif line =~ '[-+*]\s*\[\s*\]'
-    let line = substitute(line, '\([-+*]\s*\[\)\s*\(\]\)', '\1'.'x'.'\2', '')
+  if line =~ '\v^\s*[-+*]\s*\[x\]'
+    let line = substitute(line, '\v^([-+*]\s*\[)x(\])', '\1'.' '.'\2', '')
+  elseif line =~ '\v^\s*[-+*]\s*\[\s*\]'
+    let line = substitute(line, '\v^([-+*]\s*\[)\s*(\])', '\1'.'x'.'\2', '')
+  elseif line =~ '\v^\s*[-+*]\s*'
+    let line = substitute(line, '\v^(\s*[-+*]\s*)(.*)', '\1'.'[ ] '.'\2', '')
+  endif
+  call setline(a:linenr, line)
+endfu
+fu! s:remove_checkbox(linenr)
+  let line = getline(a:linenr)
+  if line =~ '\v^\s*[-+*]\s*\[.*\]'
+    let line = substitute(line, '\v^\s*[-+*]\s\zs\s*\[.*\]\s*\ze', '', '')
   endif
   call setline(a:linenr, line)
 endfu
