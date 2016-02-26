@@ -338,14 +338,14 @@ endif
 " ===============================================================
 " STATUSLINE & TABLINE {{{1
 " ==============================================================
-function! S_fugitive()
+fu! S_fugitive()
   if exists('*fugitive#head')
     let h = fugitive#head()
     return empty(h) ? '' :
           \ has('gui_running') && empty(&guifont) ? '[Git('.h.')]' : '['.h.']'
   endif
   return ''
-endfunction
+endfu
 
 fu! S_signify()
   if exists('b:sy') && get(b:sy, 'active', 0) && exists('b:sy.stats')
@@ -1136,7 +1136,7 @@ if has('autocmd')
   autocmd vimrcEx FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
 endif
 
-function! s:plug_gx()
+fu! s:plug_gx()
   let line = getline('.')
   let sha  = matchstr(line, '^  \zs[0-9a-f]\{7}\ze ')
   let name = empty(sha) ? matchstr(line, '^[-x+] \zs[^:]\+\ze:')
@@ -1149,7 +1149,7 @@ function! s:plug_gx()
   let url  = empty(sha) ? 'https://github.com/'.repo
                       \ : printf('https://github.com/%s/commit/%s', repo, sha)
   call netrw#NetrwBrowseX(url, 0)
-endfunction
+endfu
 
 " --------------------------------------------------------------
 " ColorScheme {{{2
