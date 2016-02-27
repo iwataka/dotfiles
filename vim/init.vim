@@ -161,7 +161,7 @@ set ttyfast                               " Enable fast connection
 set conceallevel=0                        " Disable conceal feature
 set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
-set showtabline=2                         " Always show tabline
+set nojoinspaces                          " No spaces when joining two lines
 set colorcolumn=81
 set completeopt-=preview
 if v:version > 704 || v:version == 704 && has('patch092')
@@ -229,7 +229,7 @@ if has('gui_running')
   if has('win32')
     " See https://github.com/powerline/fonts
     " Hack font can't show powerline glyphs on my Windows.
-    silent! set guifont=Droid_Sans_Mono_Dotted_for_Powe:h9:cANSI
+    silent! set guifont=Hack:h9:cANSI
   else
     " Hack is maintained separately, which results less space occupied.
     " I use dual boot of Ubuntu and Windows and this causes a little space for
@@ -303,6 +303,8 @@ if has('autocmd')
           \ setlocal spell |
           \ setlocal commentstring=<!--%s--> |
           \ setlocal foldlevel=1
+    autocmd vimrcEx FileType markdown nnoremap <buffer> <cr> :<c-u>CheckboxToggle<cr>
+    autocmd vimrcEx FileType markdown nnoremap <buffer> <s-cr> :<c-u>CheckboxRemove<cr>
     autocmd FileType calendar,git,gitv setlocal nolist
     autocmd FileType dosbatch setlocal commentstring=rem%s
     autocmd FileType dot setlocal commentstring=//%s
@@ -346,8 +348,7 @@ endif
 fu! S_fugitive()
   if exists('*fugitive#head')
     let h = fugitive#head()
-    return empty(h) ? '' :
-          \ has('gui_running') && empty(&guifont) ? '[Git('.h.')]' : '['.h.']'
+    return empty(h) ? '' : '[Git('.h.')]'
   endif
   return ''
 endfu
@@ -365,7 +366,7 @@ fu! S_signify()
 endfu
 
 fu! S_readonly()
-  return &readonly ? has('gui_running') && empty(&guifont) ? '[RO]' : '[]' : ''
+  return &readonly ? '[RO]' : ''
 endfu
 
 fu! MyStatusLine()
@@ -377,7 +378,7 @@ fu! MyStatusLine()
   let ft = '%{&ft}'
   let ff = '[%{&ff}]'
   let fenc = '[%{&fenc}]'
-  let pos = '[%l,%c%V]'
+  let pos = '[%l,%c%V]'
   let pct = '[%p%%]'
   let left = fname.mod.ro.'%<'.' '.sig.fug
   let right = ft.ff.fenc.' '.pos.pct
@@ -532,14 +533,13 @@ nnoremap <silent> <BS><BS> :<c-u>call <sid>preserve('%s/\s*$//')<cr>
 nnoremap <leader>ct :<c-u>checktime<cr>
 
 " Some mappings for user-defined commands
-nnoremap <silent> <leader>cb :<c-u>CheckboxToggle<cr>
 nnoremap <silent> <leader>rt :<c-u>Root<cr>
 if !maparg('<tab>', 'i') | inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", "\<tab>") | endif
 if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>", "\<tab>") | endif
 
 " grep by K
-nnoremap K :<c-u>call <sid>grep(shellescape(expand('<cword>')))<cr>
-xnoremap K :<c-u>call <sid>grep(shellescape(<sid>get_visual_selection()[0]))<cr>
+nnoremap K :<c-u>call :<c-u>grep <c-r>=shellescape(expand('<cword>'))<cr><cr>
+xnoremap K :<c-u>call :<c-u>grep <c-r>=shellescape(<sid>get_visual_selection()[0])<cr><cr>
 
 " unimpared extension
 nnoremap cof :<c-u>setlocal <c-r>=&fen ? 'nofoldenable' : 'foldenable'<cr><cr>
@@ -605,21 +605,6 @@ fu! s:root(cwd)
   retu ''
 endfu
 
-cabbrev grep Grep
-com! -nargs=+ Grep call s:grep(shellescape(<q-args>))
-fu! s:grep(keyword)
-  if exists(':Ggrep')
-    silent exe 'Ggrep '.a:keyword
-  else
-    let save_cwd = getcwd()
-    let root = s:root(save_cwd)
-    let root = empty(root) ? expand('%:h') : root
-    silent exe 'cd '.root
-    silent exe 'grep '.a:keyword
-    silent exe 'cd '.save_cwd
-  endif
-endfu
-
 fu! s:warn(msg)
   echohl WarningMsg
   echo a:msg
@@ -664,9 +649,9 @@ com! CheckboxRemove call s:remove_checkbox(line('.'))
 fu! s:toggle_checkbox(linenr)
   let line = getline(a:linenr)
   if line =~ '\v^\s*[-+*]\s*\[x\]'
-    let line = substitute(line, '\v^([-+*]\s*\[)x(\])', '\1'.' '.'\2', '')
+    let line = substitute(line, '\v^(\s*[-+*]\s*\[)x(\])', '\1'.' '.'\2', '')
   elseif line =~ '\v^\s*[-+*]\s*\[\s*\]'
-    let line = substitute(line, '\v^([-+*]\s*\[)\s*(\])', '\1'.'x'.'\2', '')
+    let line = substitute(line, '\v^(\s*[-+*]\s*\[)\s*(\])', '\1'.'x'.'\2', '')
   elseif line =~ '\v^\s*[-+*]\s*'
     let line = substitute(line, '\v^(\s*[-+*]\s*)(.*)', '\1'.'[ ] '.'\2', '')
   endif
@@ -675,7 +660,7 @@ endfu
 fu! s:remove_checkbox(linenr)
   let line = getline(a:linenr)
   if line =~ '\v^\s*[-+*]\s*\[.*\]'
-    let line = substitute(line, '\v^\s*[-+*]\s\zs\s*\[.*\]\s*\ze', '', '')
+    let line = substitute(line, '\v^\s*[-+*]\s\zs\s*\[[^\]]*\]\s*\ze', '', '')
   endif
   call setline(a:linenr, line)
 endfu
