@@ -18,8 +18,9 @@ if !(has('win32') || has('win32unix'))
   " Require my .ssh/config file.
   let g:plug_url_format = 'github:%s.git'
 endif
-Plug 'iwataka/minidown.vim', { 'for': 'markdown' }
+Plug 'iwataka/minidown.vim', { 'for': ['markdown', 'rst'] }
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
+Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown' }
 unlet! g:plug_url_format
 
 " Git
@@ -303,8 +304,6 @@ if has('autocmd')
           \ setlocal spell |
           \ setlocal commentstring=<!--%s--> |
           \ setlocal foldlevel=1
-    autocmd vimrcEx FileType markdown nnoremap <buffer> <cr> :<c-u>CheckboxToggle<cr>
-    autocmd vimrcEx FileType markdown nnoremap <buffer> <s-cr> :<c-u>CheckboxRemove<cr>
     autocmd FileType calendar,git,gitv setlocal nolist
     autocmd FileType dosbatch setlocal commentstring=rem%s
     autocmd FileType dot setlocal commentstring=//%s
@@ -642,27 +641,6 @@ fu! s:get_visual_selection()
   let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
   let lines[0] = lines[0][col1 - 1 :]
   return lines
-endfu
-
-com! CheckboxToggle call s:toggle_checkbox(line('.'))
-com! CheckboxRemove call s:remove_checkbox(line('.'))
-fu! s:toggle_checkbox(linenr)
-  let line = getline(a:linenr)
-  if line =~ '\v^\s*[-+*]\s*\[x\]'
-    let line = substitute(line, '\v^(\s*[-+*]\s*\[)x(\])', '\1'.' '.'\2', '')
-  elseif line =~ '\v^\s*[-+*]\s*\[\s*\]'
-    let line = substitute(line, '\v^(\s*[-+*]\s*\[)\s*(\])', '\1'.'x'.'\2', '')
-  elseif line =~ '\v^\s*[-+*]\s*'
-    let line = substitute(line, '\v^(\s*[-+*]\s*)(.*)', '\1'.'[ ] '.'\2', '')
-  endif
-  call setline(a:linenr, line)
-endfu
-fu! s:remove_checkbox(linenr)
-  let line = getline(a:linenr)
-  if line =~ '\v^\s*[-+*]\s*\[.*\]'
-    let line = substitute(line, '\v^\s*[-+*]\s\zs\s*\[[^\]]*\]\s*\ze', '', '')
-  endif
-  call setline(a:linenr, line)
 endfu
 
 " derived from junegunn's vimrc
@@ -1399,6 +1377,11 @@ let g:scala_sort_across_groups = 1
 " markdown {{{2
 " --------------------------------------------------------------
 let g:markdown_folding = 1
+autocmd vimrcEx FileType markdown nnoremap <buffer>
+      \ <cr> :<c-u>call markdown#ex#toggle_checkbox(line('.'))<cr>
+autocmd vimrcEx FileType markdown nnoremap <buffer>
+      \ <s-cr> :<c-u>call markdown#ex#remove_checkbox(line('.'))<cr>
+autocmd vimrcEx FileType markdown setlocal foldtext=markdown#ex#foldtext()
 
 " --------------------------------------------------------------
 " calendar {{{2
