@@ -783,7 +783,9 @@ fu! s:chrome_bookmark_list()
     echoe 'Chrome bookmark file not found'
   endif
   try
-    if exists('*jsondecode')
+    if exists('*json_decode')
+      let bookmark = json_decode(join(readfile(bookmark_fname), ''))
+    elseif exists('*jsondecode')
       let bookmark = jsondecode(join(readfile(bookmark_fname), ''))
     elseif exists('*json_decode')
       let bookmark = json_decode(join(readfile(bookmark_fname), ''))
@@ -791,7 +793,7 @@ fu! s:chrome_bookmark_list()
       let bookmark = webapi#json#decode(join(readfile(bookmark_fname), ''))
     endif
     let children = bookmark.roots.bookmark_bar.children
-    return map(children, 'v:val.url')
+    return map(copy(children), 'v:val.url')
   catch /^/
     return []
   endtry
