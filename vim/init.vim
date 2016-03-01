@@ -811,6 +811,17 @@ fu! s:google_search(...)
   call s:open(url)
 endfu
 
+com! -nargs=* YouTube call s:youtube_search(<q-args>)
+fu! s:youtube_search(keywords)
+  let url = ""
+  if a:keywords == ""
+    let url = "https://www.youtube.com"
+  else
+    let url = "https://www.youtube.com/results?search_query=".a:keywords
+  endif
+  call s:open(url)
+endfu
+
 com! -nargs=? JavaDoc call s:javadoc(8, <q-args>)
 fu! s:javadoc(version, class)
   let class = ''
