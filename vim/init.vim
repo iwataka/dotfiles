@@ -19,7 +19,7 @@ if !(has('win32') || has('win32unix'))
   let g:plug_url_format = 'github:%s.git'
 endif
 Plug 'iwataka/minidown.vim', { 'for': ['markdown', 'rst'] }
-Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
+Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete', 'NoteTag'], 'branch': 'dev' }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown' }
 unlet! g:plug_url_format
 
@@ -1461,9 +1461,10 @@ endif
 " airnote {{{2
 " --------------------------------------------------------------
 let g:airnote_path = expand('~/projects/mynote')
-let g:airnote_suffix = 'md'
+let g:airnote_enable_cache = 1
 nnoremap <leader>nn :Note<cr>
 nnoremap <leader>nd :NoteDelete<cr>
+nnoremap <leader>nt :NoteTag<cr>
 
 " --------------------------------------------------------------
 " auto-pairs {{{2
