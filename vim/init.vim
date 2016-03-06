@@ -19,7 +19,7 @@ if !(has('win32') || has('win32unix'))
   let g:plug_url_format = 'github:%s.git'
 endif
 Plug 'iwataka/minidown.vim', { 'for': ['markdown', 'rst'] }
-Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete', 'NoteTag'], 'branch': 'dev' }
+Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown' }
 unlet! g:plug_url_format
 
@@ -1462,9 +1462,24 @@ endif
 " --------------------------------------------------------------
 let g:airnote_path = expand('~/projects/mynote')
 let g:airnote_enable_cache = 1
+let g:airnote_suffix = 'note.md'
 nnoremap <leader>nn :Note<cr>
 nnoremap <leader>nd :NoteDelete<cr>
-nnoremap <leader>nt :NoteTag<cr>
+fu! s:airnote_bufread()
+  if !exists('#vimrc-airnote#BufWrite#<buffer>')
+    autocmd vimrc-airnote BufWrite <buffer> call s:airnote_bufwrite()
+  endif
+endfu
+fu! s:airnote_bufwrite()
+  if &modified
+    let time = strftime('Last modified: '.g:airnote_date_format)
+    call setline(2, printf(&cms, time))
+  endif
+endfu
+augroup vimrc-airnote
+  autocmd!
+  autocmd BufRead *.note.md call s:airnote_bufread()
+augroup END
 
 " --------------------------------------------------------------
 " auto-pairs {{{2
