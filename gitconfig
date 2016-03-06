@@ -5,7 +5,7 @@
 	autocrlf = input
 	filemode = false
 	bare = false
-	editor = vi
+	editor = "vi -u NONE"
 [paper]
 	log = diff-highlight | less
 	show = diff-highlight | less
