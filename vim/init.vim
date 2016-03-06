@@ -1463,22 +1463,26 @@ endif
 let g:airnote_path = expand('~/projects/mynote')
 let g:airnote_enable_cache = 1
 let g:airnote_suffix = 'note.md'
+let g:airnote_date_format = ''
+let s:airnote_date_format = '%c'
 nnoremap <leader>nn :Note<cr>
 nnoremap <leader>nd :NoteDelete<cr>
-fu! s:airnote_bufread()
-  if !exists('#vimrc-airnote#BufWrite#<buffer>')
-    autocmd vimrc-airnote BufWrite <buffer> call s:airnote_bufwrite()
-  endif
+fu! s:airnote_bufnewfile()
+  let time1 = strftime('Created: '.s:airnote_date_format)
+  let time2 = strftime('Last modified: '.s:airnote_date_format)
+  call setline(1, printf(&cms, time1))
+  call setline(2, printf(&cms, time2))
 endfu
 fu! s:airnote_bufwrite()
   if &modified
-    let time = strftime('Last modified: '.g:airnote_date_format)
+    let time = strftime('Last modified: '.s:airnote_date_format)
     call setline(2, printf(&cms, time))
   endif
 endfu
 augroup vimrc-airnote
   autocmd!
-  autocmd BufRead *.note.md call s:airnote_bufread()
+  autocmd BufNewFile *.note.md call s:airnote_bufnewfile()
+  autocmd BufWrite *.note.md call s:airnote_bufwrite()
 augroup END
 
 " --------------------------------------------------------------
