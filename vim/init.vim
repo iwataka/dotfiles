@@ -1483,6 +1483,7 @@ augroup vimrc-airnote
   autocmd!
   autocmd BufNewFile *.note.md call s:airnote_bufnewfile()
   autocmd BufWrite *.note.md call s:airnote_bufwrite()
+  autocmd QuickFixCmdPost airnote cwindow
 augroup END
 
 " --------------------------------------------------------------
