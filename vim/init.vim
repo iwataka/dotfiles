@@ -442,6 +442,10 @@ nnoremap x "_x
 nnoremap ' `
 nnoremap ` '
 
+" Better jumping to tags
+nnoremap <c-]> g<c-]>
+nnoremap g<c-]> <c-]>
+
 " jk | Escaping!
 inoremap jk <Esc>
 cnoremap jk <C-c>
