@@ -39,7 +39,7 @@ setup-bins() {
 setup-symlinks() {
     local files=(vim vimperatorrc vimrc ideavimrc \
         zsh zshenv zshrc sh shrc bashrc emacs.d spacemacs sbtrc sbt \
-        agignore ctags curlrc gitconfig tmux.conf \
+        agignore ctags curlrc gitconfig git_template tmux.conf \
         wgetrc atom editorconfig tigrc gnupg ssh xinputrc)
     for file in ${files[@]}; do
         remove_or_backup $HOME/.$file

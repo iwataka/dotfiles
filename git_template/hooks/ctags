@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+dir="`git rev-parse --git-dir`"
+git ls-files |ctags --tag-relative -L - -f "$dir/tags"
+
+# Resolve Windows-specific issues
+sed -i 's/\(^[^!][^\t]*\t\)\([^\.]\{2\}\)/\1..\/\2/' "$dir/tags"

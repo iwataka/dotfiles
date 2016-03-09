@@ -83,3 +83,5 @@
 	user = iwataka
 [hub]
 	protocol = https
+[init]
+        templatedir = ~/.git_template
