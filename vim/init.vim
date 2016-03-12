@@ -1052,6 +1052,7 @@ if v:version > 704 || v:version == 704 && has('patch1128')
   com! -nargs=+ -complete=dir Rmdir call s:rmdir(<f-args>)
   fu! s:rmdir(...)
     for path in a:000
+      let path = expand(path)
       if isdirectory(path)
         if delete(path, 'd')
           echo 'Really delete '.path.'? (y/n)'
