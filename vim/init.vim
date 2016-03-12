@@ -1263,6 +1263,7 @@ let g:ctrlp_by_filename = 0
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 let g:ctrlp_mruf_max = 1000
+let g:ctrlp_mruf_exclude='^fugitive:'.repeat(expand('/'), 2).'.*'
 " Disable switching to existing buffers, which has bad effects on Goyo.
 let g:ctrlp_switch_buffer = 0
 
