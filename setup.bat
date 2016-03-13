@@ -23,6 +23,7 @@ call:mklinkDir sh
 call:mklinkDir gnupg
 call:mklinkDir emacs.d
 call:mklinkDir git_template
+call:mklinkDir peco
 call:mklinkSublime
 call:mklinkNvim
 call:mklinkSpacemacs
