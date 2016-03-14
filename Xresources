@@ -1,0 +1,6 @@
+xterm*termName: xterm-256color
+xTerm*locale: true
+Xterm*saveLines: 4096
+XTerm*foreground: rgb:b2/b2/b2
+XTerm*background: rgb:08/08/08
+xterm*faceName: Hack:size=10:antialias=false
