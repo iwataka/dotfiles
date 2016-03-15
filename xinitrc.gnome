@@ -1,5 +1,11 @@
+#!/bin/sh
+
+userresources=$HOME/.Xresources
+usermodmap=$HOME/.Xmodmap
+
+[[ -f "$userresources" ]] && xrdb -merge "$userresources"
+[[ -f "$usermodmap" ]] && xmodmap "$usermodmap"
+
 export XDG_CURRENT_DESKTOP=GNOME-Classic:GNOME
 export GNOME_SHELL_SESSION_MODE=classic
 exec gnome-session --session=gnome-classic
-
-[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
