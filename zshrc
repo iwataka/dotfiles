@@ -27,17 +27,20 @@ if [ -d $HOME/.rbenv ]; then
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
 fi
-
 if [ -d $HOME/.pyenv ]; then
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
 fi
-
 [[ -s ~/.gvm/scripts/gvm ]] && source ~/.gvm/scripts/gvm
-
-export NVM_DIR="/home/iwataka/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+    export NVM_DIR="/home/iwataka/.nvm"
+    . "$NVM_DIR/nvm.sh"
+fi
+if [ -d $HOME/.jenv ]; then
+    export PATH="$HOME/.jenv/bin:$PATH"
+    eval "$(jenv init -)"
+fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
