@@ -3,7 +3,27 @@
 # Abort when errors are thrown
 set -e
 
-if [ $OSTYPE == "linux-gnu" ]; then
+uname_ostype=$(uname -a)
+
+if [[ $uname_ostype == "Linux Arch-Linux"* ]]; then
+    sudo pacman -Syu --noconfirm --needed
+    sudo pacman -S --noconfirm --needed coreutils
+    sudo pacman -S --noconfirm --needed moreutils
+    sudo pacman -S --noconfirm --needed git
+    sudo pacman -S --noconfirm --needed zsh
+    sudo pacman -S --noconfirm --needed curl
+    sudo pacman -S --noconfirm --needed wget
+    sudo pacman -S --noconfirm --needed tmux
+    sudo pacman -S --noconfirm --needed ctags
+    sudo pacman -S --noconfirm --needed tree
+    sudo pacman -S --noconfirm --needed imagemagick
+    sudo pacman -S --noconfirm --needed astyle
+    sudo pacman -S --noconfirm --needed cmake
+    sudo pacman -S --noconfirm --needed docker
+    sudo pacman -S --noconfirm --needed glances
+    sudo yaourt -S --noconfirm --needed pandoc
+    sudo yaourt -S --noconfirm --needed shellcheck
+elif [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get update  # Update apt-get itself
     sudo apt-get upgrade  # Upgrade packages
     sudo apt-get install -y xdg-utils
@@ -11,14 +31,12 @@ if [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install -y zsh
     sudo apt-get install -y curl
     sudo apt-get install -y wget
-    sudo apt-get install -y vim
     sudo apt-get install -y tmux
     sudo apt-get install -y exuberant-ctags
-    sudo apt-get install -y silversearcher-ag
     sudo apt-get install -y tree
     sudo apt-get install -y imagemagick
     sudo apt-get install -y astyle
-    sudo apt-get install -y build-essential cmake python-dev  # YouCompleteMe
+    sudo apt-get install -y cmake
     sudo apt-get install -y pandoc
     sudo apt-get install -y shellcheck
     sudo apt-get install -y docker
@@ -42,11 +60,9 @@ elif [[ $OSTYPE == "darwin"* ]]; then
     brew install zsh
     brew install curl
     brew install wget --with-iri
-    brew install vim --override-system-vi --enable -interop=python,python3
     brew install macvim
     brew install tmux
     brew install ctags-exuberant
-    brew install the_silver_searcher
     brew install tree
     brew install imagemagick --with-webp
     brew install astyle
@@ -66,5 +82,3 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
     apt-cyg install tree
     apt-cyg install ImageMagick
 fi
-
-git clone https://github.com/zsh-users/antigen ~/.antigen
