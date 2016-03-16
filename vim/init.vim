@@ -102,6 +102,8 @@ filetype indent on
 if findfile('plugin/matchit.vim', &rtp) ==# ''
   runtime! macros/matchit.vim  " Move between if and else
 endif
+" Enable Man command by default
+runtime ftplugin/man.vim
 
 " ===============================================================
 " BASIC SETTINGS {{{1

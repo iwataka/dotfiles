@@ -21,7 +21,7 @@ do
     source $_main_plugin
 done
 source $HOME/.sh/function.sh
-export USE_NEOVIM_INSTEAD_OF_VIM=true
+# export USE_NEOVIM_INSTEAD_OF_VIM=true
 
 if [ -d $HOME/.rbenv ]; then
     export PATH="$HOME/.rbenv/bin:$PATH"
