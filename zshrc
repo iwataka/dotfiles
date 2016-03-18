@@ -33,14 +33,14 @@ if [ -d $HOME/.pyenv ]; then
     eval "$(pyenv init -)"
 fi
 [[ -s ~/.gvm/scripts/gvm ]] && source ~/.gvm/scripts/gvm
-if [ -s "$NVM_DIR/nvm.sh" ]; then
-    export NVM_DIR="/home/iwataka/.nvm"
-    . "$NVM_DIR/nvm.sh"
-fi
+export NVM_DIR="/home/iwataka/.nvm"
+[[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
 if [ -d $HOME/.jenv ]; then
     export PATH="$HOME/.jenv/bin:$PATH"
     eval "$(jenv init -)"
 fi
+[ -s "/home/iwataka/.dnx/dnvm/dnvm.sh" ] && . "/home/iwataka/.dnx/dnvm/dnvm.sh" # Load dnvm
+[[ -s /home/iwataka/.rsvm/rsvm.sh ]] && . /home/iwataka/.rsvm/rsvm.sh # This loads RSVM
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -150,5 +150,3 @@ if [[ "$OSTYPE" == "cygwin" ]]; then
 fi
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-
-[ -s "/home/iwataka/.dnx/dnvm/dnvm.sh" ] && . "/home/iwataka/.dnx/dnvm/dnvm.sh" # Load dnvm
