@@ -79,6 +79,8 @@ Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'cespare/vim-toml', { 'for': 'toml' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
