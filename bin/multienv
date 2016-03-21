@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+USAGE="Install the below version manager:"
+
+if [ "$#" == "0" -o "$1" == "help" ]; then
+  echo "$USAGE"
+  exit 1
+fi
+
+ACTION="install"
+
+if [ "$1" == "install" ]; then
+  ACTION="install"
+  shift
+fi
+
+while (( "$#" )); do
+
+  case "$1" in
+    "gvm")
+      bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+      ;;
+    "nvm")
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+      # wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+      ;;
+    "jenv")
+      git clone https://github.com/gcuisinier/jenv.git ~/.jenv
+      ;;
+    "rsvm")
+      curl -L https://raw.github.com/sdepold/rsvm/master/install.sh | sh
+      # wget -qO- https://raw.github.com/sdepold/rsvm/master/install.sh | sh
+      ;;
+    "multirust")
+      curl -sf https://raw.githubusercontent.com/brson/multirust/master/blastoff.sh | sh
+      ;;
+    "pyenv")
+      git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+      ;;
+    "rbenv")
+      git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+      cd ~/.rbenv && src/configure && make -C src
+      ;;
+    *)
+      ;;
+  esac
+
+  shift
+
+done
