@@ -21,6 +21,7 @@ if [[ $uname_ostype == "Linux Arch-Linux"* ]]; then
     sudo pacman -S --noconfirm --needed cmake
     sudo pacman -S --noconfirm --needed docker
     sudo pacman -S --noconfirm --needed glances
+    sudo pacman -S --noconfirm --needed vim
     sudo yaourt -S --noconfirm --needed pandoc
     sudo yaourt -S --noconfirm --needed shellcheck
 elif [ $OSTYPE == "linux-gnu" ]; then
@@ -41,6 +42,11 @@ elif [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install -y shellcheck
     sudo apt-get install -y docker
     sudo apt-get install -y glances
+    sudo apt-get install -y xsel
+    sudo apt-get install -y ibus-mozc
+    # Vim
+    sudo apt-get install -y vim
+    sudo apt-get install -y python-dev
 elif [[ $OSTYPE == "darwin"* ]]; then
     # Some of them from https://github.com/mathiasbynens/dotfiles
     brew update
@@ -60,6 +66,7 @@ elif [[ $OSTYPE == "darwin"* ]]; then
     brew install zsh
     brew install curl
     brew install wget --with-iri
+    brew install vim --override-system-vi --enable -interop=python,python3
     brew install macvim
     brew install tmux
     brew install ctags-exuberant
