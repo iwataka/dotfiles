@@ -27,6 +27,10 @@ if [ -d $HOME/.anyenv ]; then
     export PATH="$HOME/.anyenv/bin:$PATH"
     eval "$(anyenv init -)"
 fi
+if [ -d $HOME/.anyvm ]; then
+    export PATH="$HOME/.anyvm/bin:$PATH"
+    eval "$(anyvm init -)"
+fi
 if [ -d $HOME/.rbenv ]; then
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
