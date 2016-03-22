@@ -23,6 +23,10 @@ done
 source $HOME/.sh/function.sh
 # export USE_NEOVIM_INSTEAD_OF_VIM=true
 
+if [ -d $HOME/.anyenv ]; then
+    export PATH="$HOME/.anyenv/bin:$PATH"
+    eval "$(anyenv init -)"
+fi
 if [ -d $HOME/.rbenv ]; then
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
