@@ -597,14 +597,15 @@ endfu
 
 " Changes the current directory to the project root
 cabbrev r Root
-com! Root call s:cd_root(expand('%:p:h'))
-fu! s:cd_root(path)
+com! Root call s:move_to_root('cd', expand('%:p:h'))
+com! LRoot call s:move_to_root('lcd', expand('%:p:h'))
+fu! s:move_to_root(cmd, path)
   let root = s:root(a:path)
   if empty(root)
-    silent exe 'cd '.a:path
+    silent exe a:cmd.' '.a:path
     echom 'Not in a project'
   else
-    silent exe 'cd '.root
+    silent exe a:cmd.' '.root
     echom 'Changes the current directory to: '.root
   endif
 endfu
