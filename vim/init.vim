@@ -313,7 +313,7 @@ if has('autocmd')
     autocmd FileType dot setlocal commentstring=//%s
     autocmd FileType c setlocal commentstring=//%s
     " Close buffers of specified types by just typing q.
-    autocmd FileType help,qf nnoremap <buffer> q :q<cr>
+    autocmd FileType help,qf,godoc nnoremap <buffer> q :q<cr>
     autocmd FileType java,c,cpp
           \ if executable('astyle') |
           \   setlocal formatprg='astyle' |
