@@ -21,6 +21,7 @@ endif
 Plug 'iwataka/minidown.vim', { 'for': ['markdown', 'rst'] }
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown' }
+Plug 'iwataka/gitignore.vim'
 unlet! g:plug_url_format
 
 " Git
