@@ -14,7 +14,7 @@ silent! if plug#begin('~/.vim/plugged')
 " My Plugins
 " Windows can't access automatically via ssh
 " Vim in Git for Windows is detected as win32unix
-if !(has('win32') || has('win32unix'))
+if !(has('win32') || has('win32unix')) && filereadable(expand('~/.ssh/config'))
   " Require my .ssh/config file.
   let g:plug_url_format = 'github:%s.git'
 endif
@@ -22,6 +22,7 @@ Plug 'iwataka/minidown.vim', { 'for': ['markdown', 'rst'] }
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown' }
 Plug 'iwataka/gitignore.vim'
+Plug 'iwataka/github.vim', { 'on': ['Greadme', 'Gsearch', 'Greleases'] }
 unlet! g:plug_url_format
 
 " Git
@@ -92,6 +93,7 @@ Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
 
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
+Plug 'mattn/webapi-vim'
 if has('win32')
   Plug 'kkoenig/wimproved.vim', { 'on': ['WToggleFullscreen'] }
 endif
