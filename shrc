@@ -29,12 +29,7 @@ fi
 alias p="cd ~/projects"
 alias h="history"
 alias j="jobs"
-# Vim
-if [[ "$OSTYPE" == "msys" ]]; then
-    alias v="gvim"
-else
-    alias v="vim"
-fi
+alias v="vim"
 
 # unzip command for files which has japanese names
 alias uzja="unzip -O cp932"
