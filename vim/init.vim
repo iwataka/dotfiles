@@ -740,24 +740,27 @@ com! -nargs=* -complete=file Open call s:open(<f-args>)
 fu! s:open(...)
   let args = join(map(copy(a:000), 's:quote_path_or_url(v:val)'), ' ')
   let args = empty(args) ? '"'.expand('%:p').'"' : args
-  if has('unix')
+  " Vim in Git for Windows has win32unix and doesn't have cygstart
+  if has('win32unix') && executable('cygstart')
+    call system('cygstart '.args)
+  elseif has('win32') || has('win32unix')
+    echom 'Windows'
+    if filereadable(args[1:-2]) || isdirectory(args[1:-2])
+      let cwd = getcwd()
+      call s:cd_or_lcd(fnamemodify(args[1:-2], ':h'))
+      echom getcwd()
+      let args = fnamemodify(args[1:-2], ':t')
+      call s:open_win(args)
+      call s:cd_or_lcd(cwd)
+    else
+      call s:open_win(args)
+    endif
+  elseif has('unix')
     " This line does not work at all and I don't know the reason.
     " silent exec '!xdg-open '.args
     call system('xdg-open '.args)
   elseif has('mac')
     silent exec '!open '.args
-  elseif has('win32unix')
-    silent exec '!cygstart '.args
-  else
-    if filereadable(args[1:-2]) || isdirectory(args[1:-2])
-      let cwd = getcwd()
-      silent exe 'cd '.fnamemodify(args[1:-2], ':h')
-      let args = fnamemodify(args[1:-2], ':t')
-      call s:open_win(args)
-      silent exe 'cd '.cwd
-    else
-      call s:open_win(args)
-    endif
   endif
   redraw!
 endfu
@@ -775,6 +778,14 @@ fu! s:quote_path_or_url(str)
     return '"'.a:str.'"'
   else
     return a:str
+  endif
+endfu
+
+fu! s:cd_or_lcd(path)
+  if haslocaldir()
+    exe 'lcd '.a:path
+  else
+    exe 'cd '.a:path
   endif
 endfu
 
