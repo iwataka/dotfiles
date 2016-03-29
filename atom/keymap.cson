@@ -24,15 +24,14 @@
 # If you are unfamiliar with CSON, you can read more about it here:
 # https://github.com/bevry/cson#what-is-cson
 
+# vim-mode
 'atom-text-editor.vim-mode:not(.normal-mode)':
-  'j k': 'vim-mode:activate-normal-mode'
-
+ 'j k': 'vim-mode:activate-normal-mode'
 'atom-text-editor.vim-mode.normal-mode':
   'g c c': 'editor:toggle-line-comments'
   'space w': 'core:save'
   'space q': 'core:close'
   'space p': 'fuzzy-finder:toggle-file-finder'
-
 'atom-text-editor.vim-mode.visual-mode':
   'g c': 'editor:toggle-line-comments'
 
@@ -43,3 +42,6 @@
 '.tree-view':
   'L': 'tree-view:recursive-expand-directory'
   'H': 'tree-view:recursive-collapse-directory'
+
+'.platform-linux, .platform-linux .command-palette atom-text-editor':
+  'f1': 'command-palette:toggle'
