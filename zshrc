@@ -16,11 +16,13 @@ fi
 source ~/.shrc
 
 # Source main plugins
-for _main_plugin in $HOME/.zsh/*.main.zsh
+for _zsh_plugin in $HOME/.zsh/*.zsh
 do
-    source $_main_plugin
+    source $_zsh_plugin
 done
-source $HOME/.sh/function.sh
+for _sh_plugin in $HOME/.sh/*.sh; do
+    source $_sh_plugin
+done
 # export USE_NEOVIM_INSTEAD_OF_VIM=true
 
 if [ -d $HOME/.anyenv ]; then

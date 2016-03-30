@@ -59,39 +59,42 @@ prompt_git() {
 #     fi
 # }
 
-setopt promptsubst
-# newline
-PS1=$'\n'
-# user name
-# PS1+='%K{blue}%F{black} [%n@%m] %f%k%K{cyan}%F{blue}%f%k'
-# current directory
-PS1+='%K{cyan}%F{black} %~ %f%k%K{magenta}%F{cyan}%f%k'
-# branch name
-PS1+='%K{magenta}%F{black} $(prompt_git) %f%k%F{magenta}%f'
-# newline again
-PS1+=$'\n'
-# start mark
-PS1+='%# '
-export PS1
+which antigen &> /dev/null
+if [ $? != 0 ]; then
+	setopt promptsubst
+	# newline
+	PS1=$'\n'
+	# user name
+	# PS1+='%K{blue}%F{black} [%n@%m] %f%k%K{cyan}%F{blue}%f%k'
+	# current directory
+	PS1+='%K{cyan}%F{black} %~ %f%k%K{magenta}%F{cyan}%f%k'
+	# branch name
+	PS1+='%K{magenta}%F{black} $(prompt_git) %f%k%F{magenta}%f'
+	# newline again
+	PS1+=$'\n'
+	# start mark
+	PS1+='%# '
+	export PS1
 
-# sample prompt of thoughtbot
-# export PS1='${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%c%{$reset_color%}$(git_prompt_info) %# '
+	# sample prompt of thoughtbot
+	# export PS1='${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%c%{$reset_color%}$(git_prompt_info) %# '
 
-# simple prompt
-# export PS1="%K{blue} [%n] %k%K{cyan} %~ %k%% "
+	# simple prompt
+	# export PS1="%K{blue} [%n] %k%K{cyan} %~ %k%% "
 
-# simple prompt
-# export PS1="%F{red}%n%f in %F{green}%~%f %% "
+	# simple prompt
+	# export PS1="%F{red}%n%f in %F{green}%~%f %% "
 
-# for zsh-git-prompt
-# if [ -e $HOME/.zsh.theme/zsh-git-prompt ]; then
-#     source $HOME/.zsh.theme/zsh-git-prompt/zshrc.sh
-#     PROMPT='%B%m%~%b$(git_super_status) %# '
-# else
-#     autoload -U promptinit
-#     promptinit
-#     prompt fade
-# fi
+	# for zsh-git-prompt
+	# if [ -e $HOME/.zsh.theme/zsh-git-prompt ]; then
+	#     source $HOME/.zsh.theme/zsh-git-prompt/zshrc.sh
+	#     PROMPT='%B%m%~%b$(git_super_status) %# '
+	# else
+	#     autoload -U promptinit
+	#     promptinit
+	#     prompt fade
+	# fi
+fi
 
 # built-in prompts
 # autoload -U promptinit

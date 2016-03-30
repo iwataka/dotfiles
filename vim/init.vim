@@ -23,6 +23,7 @@ Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown' }
 Plug 'iwataka/gitignore.vim'
 Plug 'iwataka/github.vim', { 'on': ['Greadme', 'Gsearch', 'Greleases'] }
+Plug 'iwataka/ctrlp-bookmark.vim'
 unlet! g:plug_url_format
 
 " Git
@@ -1301,73 +1302,26 @@ nnoremap <silent> <Leader>b :<c-u>CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :<c-u>CtrlPMRU<CR>
 nnoremap <silent> <Leader>d :<c-u>CtrlPBookmarkDir<CR>
 
-let s:ctrlp_bookmark_common_paths = [
-  \ '~/projects/*',
-  \ '~/lib/*',
-  \ '~/dotfiles',
-  \ '~/gdrive',
-  \ '$JAVA_HOME/src',
-  \ '$GOROOT/src'
-  \ ]
-
+let g:ctrlp_bookmark_paths = [
+      \ '~/projects/*',
+      \ '~/lib/*',
+      \ '~/dotfiles',
+      \ '~/gdrive',
+      \ '$JAVA_HOME/src',
+      \ ]
 if has('unix')
-  let s:ctrlp_bookmark_paths = [
-    \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
-    \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
-    \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
-    \ '/usr/lib/jvm/java-[1-9]\+-oracle'
-    \ ]
+  call extend(g:ctrlp_bookmark_paths, [
+        \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
+        \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
+        \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
+        \ '/usr/lib/jvm/java-[1-9]\+-oracle'
+        \ ])
 elseif has('win32')
-  let s:ctrlp_bookmark_paths = [
-    \ 'C:\lib\*'
-    \ ]
+  call extend(g:ctrlp_bookmark_paths, [
+        \ 'C:\lib\*'
+        \ ])
 endif
-
-if exists('s:ctrlp_bookmark_paths')
-  call extend(s:ctrlp_bookmark_paths, s:ctrlp_bookmark_common_paths)
-else
-  let s:ctrlp_bookmark_paths = s:ctrlp_bookmark_common_paths
-endif
-
-com! -bang CtrlPBookmarkReload call s:ctrlp_bookmark_init(<bang>0, 1)
-fu! s:ctrlp_bookmark_init(bang, force)
-  if a:force || !filereadable(expand('~/.cache/ctrlp/bkd/cache.txt'))
-    if a:bang != 0
-      call delete(expand('~/.cache/ctrlp/bkd/cache.txt'))
-    endif
-    if exists('s:ctrlp_bookmark_paths')
-      for path in s:ctrlp_bookmark_paths
-        let dirs = split(expand(path), '\n')
-        let dirs = map(dirs, 'resolve(v:val)')
-        call s:ctrlp_bookmark_add(dirs)
-      endfor
-    endif
-    call s:ctrlp_bookmark_add($VIMRUNTIME)
-    if exists('g:plug_home')
-      let dirs = split(globpath(g:plug_home, '*'))
-      call s:ctrlp_bookmark_add(dirs)
-    endif
-  endif
-endf
-
-fu! s:ctrlp_bookmark_add(dir)
-  if type(a:dir) == type([])
-    for d in a:dir
-      if isdirectory(d)
-        call s:ctrlp_bookmark_add(d)
-      endif
-    endfor
-  elseif type(a:dir) == type('')
-    silent exe 'CtrlPBookmarkDirAdd! '.a:dir
-  endif
-endfu
-
-if has('autocmd')
-  autocmd vimrcEx VimEnter *
-        \ if exists(':CtrlPBookmarkDirAdd') |
-        \ call s:ctrlp_bookmark_init(0, 0) |
-        \ endif
-endif
+let g:ctrlp_bookmark_force = 1
 
 if has('python')
   if has('unix') || has('mac') || has('macunix')
