@@ -1482,7 +1482,21 @@ endif
 " --------------------------------------------------------------
 " airnote {{{2
 " --------------------------------------------------------------
-let g:airnote_path = expand('~/projects/mynote')
+fu! s:airnote_set_path()
+  if executable('ghq')
+    let ghq_list = split(system('ghq list -p |grep mynote'), '\n')
+    for path in ghq_list
+      if path =~ '\vmynote/?$'
+        let g:airnote_path = path
+        break
+      endif
+    endfor
+  endif
+  if !exists('g:airnote_path')
+    let g:airnote_path = expand('~/projects/mynote')
+  endif
+endfu
+call s:airnote_set_path()
 let g:airnote_enable_cache = 1
 let g:airnote_suffix = 'note.md'
 let g:airnote_date_format = ''
