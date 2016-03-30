@@ -655,6 +655,7 @@ fu! s:preserve(cmd)
 endfu
 
 " Returns the text in the current visual selection.
+" http://stackoverflow.com/questions/1533565/how-to-get-visually-selected-text-in-vimscript
 fu! s:get_visual_selection()
   let [lnum1, col1] = getpos("'<")[1:2]
   let [lnum2, col2] = getpos("'>")[1:2]
@@ -664,7 +665,8 @@ fu! s:get_visual_selection()
   return lines
 endfu
 
-" derived from junegunn's vimrc
+" from Junegunn's vimrc
+" https://github.com/junegunn/dotfiles/blob/master/vimrc#L453-L493
 fu! s:super_duper_tab(k, o)
   if pumvisible()
     return a:k
@@ -686,7 +688,6 @@ fu! s:super_duper_tab(k, o)
   endif
   return a:k
 endfu
-
 fu! s:can_complete(func, prefix)
   if empty(a:func) || call(a:func, [1, '']) < 0
     return 0
