@@ -590,6 +590,40 @@ fu! s:bufclear(bang, path)
   endwh
 endfu
 
+com! -nargs=* SwapList call s:swap_list(<q-args>)
+fu! s:swap_list(pat)
+  let msg = ''
+  let dirs = split(&directory, ',')
+  for dir in dirs
+    let files = split(globpath(dir, '*'), '\n')
+    for file in files
+      if file =~ a:pat
+        let msg .= fnamemodify(file, ':t').' '
+      endif
+    endfor
+  endfor
+  echo substitute(msg, '\v\s+$', '', '')
+endfu
+com! -bang SwapDelete call s:swap_delete(<bang>0)
+fu! s:swap_delete(bang)
+  redir => fname
+  silent swapname
+  redir END
+  if executable('ps') && executable('grep') && !a:bang
+    let procs = system('ps -ef |grep -P "\d+?:\d+?:\d+?\s+?vim"')
+    let proc_list = split(substitute(procs, '\v\s+$|^\s+|\n', '', 'g'), '\n')
+    if len(proc_list) > 1
+      if input('Other Vim process may exist. Continue (y/n)? ') !~ '\v\cy|yes'
+        return
+      endif
+    endif
+  endif
+  let fname = substitute(fname, '\v\s+$|^\s+|\n', '', 'g')
+  if delete(fname)
+    echo 'Failed to delete '.fname
+  endif
+endfu
+
 " Check if a:fpath is under a:dpath
 " a:dpath and a:fpath must be expanded path.
 fu! s:is_under(dpath, fpath)
