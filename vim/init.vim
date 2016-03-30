@@ -590,22 +590,23 @@ fu! s:bufclear(bang, path)
   endwh
 endfu
 
-com! -nargs=* SwapList call s:swap_list(<q-args>)
+com! -nargs=* SwapList echo join(s:swap_list(<q-args>), ' ')
 fu! s:swap_list(pat)
-  let msg = ''
+  let result = []
   let dirs = split(&directory, ',')
   for dir in dirs
     let files = split(globpath(dir, '*'), '\n')
     for file in files
-      if file =~ a:pat
-        let msg .= fnamemodify(file, ':t').' '
+      let tail = fnamemodify(file, ':t')
+      if tail =~ a:pat
+        call add(result, tail)
       endif
     endfor
   endfor
-  echo substitute(msg, '\v\s+$', '', '')
+  return result
 endfu
-com! -bang SwapDelete call s:swap_delete(<bang>0)
-fu! s:swap_delete(bang)
+com! -nargs=* -bang -complete=customlist,SwapDeleteComplete SwapDelete call s:swap_delete(<bang>0, <f-args>)
+fu! s:swap_delete(bang, ...)
   redir => fname
   silent swapname
   redir END
@@ -618,10 +619,26 @@ fu! s:swap_delete(bang)
       endif
     endif
   endif
-  let fname = substitute(fname, '\v\s+$|^\s+|\n', '', 'g')
-  if delete(fname)
-    echo 'Failed to delete '.fname
+  if a:0
+    let dirs = split(&directory, ',')
+    for fname in a:000
+      for dir in dirs
+        if filereadable(dir.'/'.fname)
+          if delete(dir.'/'.fname)
+            echo 'Failed to delete'.fname
+          endif
+        endif
+      endfor
+    endfor
+  else
+    let fname = substitute(fname, '\v\s+$|^\s+|\n', '', 'g')
+    if delete(fname)
+      echo 'Failed to delete '.fname
+    endif
   endif
+endfu
+fu! SwapDeleteComplete(A, L, P)
+  return s:swap_list('\V\^'.a:A)
 endfu
 
 " Check if a:fpath is under a:dpath
