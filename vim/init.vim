@@ -85,6 +85,8 @@ Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'asciidoc/vim-asciidoc', { 'for': 'asciidoc' }
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
@@ -96,6 +98,9 @@ Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/webapi-vim'
+if has('unix')
+  Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+endif
 if has('win32')
   Plug 'kkoenig/wimproved.vim', { 'on': ['WToggleFullscreen'] }
 endif
@@ -731,21 +736,23 @@ fu! s:super_duper_tab(k, o)
   if prefix =~ '^[~/.]'
     return "\<c-x>\<c-f>"
   endif
-  if s:can_complete(&omnifunc, prefix)
+  if !empty(&omnifunc)
     return "\<c-x>\<c-o>"
   endif
-  if s:can_complete(&completefunc, prefix)
+  if !empty(&completefunc)
     return "\<c-x>\<c-u>"
   endif
   return a:k
 endfu
-fu! s:can_complete(func, prefix)
-  if empty(a:func) || call(a:func, [1, '']) < 0
-    return 0
-  endif
-  let result = call(a:func, [0, matchstr(a:prefix, '\k\+$')])
-  return !empty(type(result) == type([]) ? result : result.words)
-endfu
+" This function can't precisely judge the given function can complete or not
+" (issue with tsuquyomi)
+" fu! s:can_complete(func, prefix)
+"   if empty(a:func) || call(a:func, [1, '']) < 0
+"     return 0
+"   endif
+"   let result = call(a:func, [0, matchstr(a:prefix, '\k\+$')])
+"   return !empty(type(result) == type([]) ? result : result.words)
+" endfu
 
 " " Settings about japanese and english input sources
 " if has('unix')
@@ -1596,3 +1603,12 @@ fu! s:goyo_leave()
 endfu
 autocmd! User GoyoEnter nested call <sid>goyo_enter()
 autocmd! User GoyoLeave nested call <sid>goyo_leave()
+
+" --------------------------------------------------------------
+" tsuquyomi {{{2
+" --------------------------------------------------------------
+let g:tsuquyomi_disable_default_mappings = 1
+augroup vimrc-tsuquyomi
+  autocmd!
+  autocmd Filetype typescript nnoremap gd <Plug>(TsuquyomiDefinition)
+augroup END
