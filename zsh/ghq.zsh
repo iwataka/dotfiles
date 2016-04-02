@@ -4,7 +4,10 @@ ghq() {
         if [ $1 == "cd" ]; then
             which peco >& /dev/null
             if [ $? == 0 ]; then
-                cd $(ghq list -p | peco)
+                local repo_path="$(ghq list -p | peco)"
+                if [ -n "${repo_path}" ]; then
+                    cd ${repo_path}
+                fi
             fi
         else
             command ghq "$@"
