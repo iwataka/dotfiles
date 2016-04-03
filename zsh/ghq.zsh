@@ -1,9 +1,9 @@
 ghq() {
-    which ghq >& /dev/null
-    if [ $? == 0 ]; then
-        if [ $1 == "cd" ]; then
-            which peco >& /dev/null
-            if [ $? == 0 ]; then
+    command -v ghq >& /dev/null
+    if [ $? -eq 0 ]; then
+        if [ "$1" = "cd" -o "$1" = "" ]; then
+            command -v peco >& /dev/null
+            if [ $? -eq 0 ]; then
                 local repo_path="$(ghq list -p | peco)"
                 if [ -n "${repo_path}" ]; then
                     cd ${repo_path}
@@ -28,7 +28,7 @@ _ghq() {
     if [ "${#words}" -eq 2 ]; then
         completions=$(echo "get\nlist\nlook\nimport\nroot\ncd\nhelp\nh\n--version\n-v\n-h")
     else
-        if [ ${words[2,-2]} == "look" ]; then
+        if [ ${words[2,-2]} = "look" ]; then
             completions=$(ghq list --unique)
         fi
     fi
