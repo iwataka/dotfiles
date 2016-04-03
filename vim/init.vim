@@ -1610,5 +1610,5 @@ autocmd! User GoyoLeave nested call <sid>goyo_leave()
 let g:tsuquyomi_disable_default_mappings = 1
 augroup vimrc-tsuquyomi
   autocmd!
-  autocmd Filetype typescript nnoremap gd <Plug>(TsuquyomiDefinition)
+  autocmd Filetype typescript nmap <buffer> gd <Plug>(TsuquyomiDefinition)
 augroup END
