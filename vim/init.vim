@@ -733,14 +733,14 @@ fu! s:super_duper_tab(k, o)
     return a:o
   endif
   let prefix = expand(matchstr(line[0:col], '\S*$'))
-  if prefix =~ '^[~/.]'
-    return "\<c-x>\<c-f>"
-  endif
   if !empty(&omnifunc)
     return "\<c-x>\<c-o>"
   endif
   if !empty(&completefunc)
     return "\<c-x>\<c-u>"
+  endif
+  if prefix =~ '^[~/.]'
+    return "\<c-x>\<c-f>"
   endif
   return a:k
 endfu
