@@ -1437,12 +1437,18 @@ let g:scala_sort_across_groups = 1
 " --------------------------------------------------------------
 " markdown {{{2
 " --------------------------------------------------------------
-let g:markdown_folding = 1
-autocmd vimrcEx FileType markdown nnoremap <buffer>
-      \ <cr> :<c-u>call markdown#ex#toggle_checkbox(line('.'))<cr>
-autocmd vimrcEx FileType markdown nnoremap <buffer>
-      \ <s-cr> :<c-u>call markdown#ex#remove_checkbox(line('.'))<cr>
-autocmd vimrcEx FileType markdown setlocal foldtext=markdown#ex#foldtext()
+if has('autocmd')
+  augroup vimrc-markdown
+    autocmd vimrc-markdown FileType markdown nnoremap <buffer>
+          \ <cr> :<c-u>call markdown#ex#toggle_checkbox(line('.'))<cr>
+    autocmd vimrc-markdown FileType markdown nnoremap <buffer>
+          \ <s-cr> :<c-u>call markdown#ex#remove_checkbox(line('.'))<cr>
+    if exists('g:markdown_folding')
+      autocmd vimrc-markdown FileType markdown
+            \ setlocal foldtext=markdown#ex#foldtext()
+    endif
+  augroup END
+endif
 
 " --------------------------------------------------------------
 " calendar {{{2
@@ -1612,3 +1618,8 @@ augroup vimrc-tsuquyomi
   autocmd!
   autocmd Filetype typescript nmap <buffer> gd <Plug>(TsuquyomiDefinition)
 augroup END
+
+" --------------------------------------------------------------
+" minidown {{{2
+" --------------------------------------------------------------
+let g:minidown_enable_toc = 0
