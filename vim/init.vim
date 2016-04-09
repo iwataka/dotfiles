@@ -87,6 +87,11 @@ Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'asciidoc/vim-asciidoc', { 'for': 'asciidoc' }
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
+Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
+if has('python')
+  Plug 'justmao945/vim-clang', { 'for': ['c', 'cpp'] }
+endif
+Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
@@ -1623,3 +1628,12 @@ augroup END
 " minidown {{{2
 " --------------------------------------------------------------
 let g:minidown_enable_toc = 0
+
+" --------------------------------------------------------------
+" javacomplete2 {{{2
+" --------------------------------------------------------------
+if has('autocmd')
+  augroup vimrc-javacomplete
+    autocmd Filetype java setlocal omnifunc=javacomplete#Complete
+  augroup END
+endif
