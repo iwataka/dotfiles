@@ -2,7 +2,7 @@
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
 
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+(setq backup-directory-alist `(("." . "~/.emacs.d/backup")))
 
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
@@ -27,7 +27,7 @@
           (lambda (frame)
             (set-frame-parameter frame
                                  'background-mode
-                                 (if (display-graphic-p frame) 'dark 'dark))
+                                 (if (display-graphic-p frame) 'light 'dark))
             (enable-theme 'solarized)))
 
 (defun prev-window ()
@@ -74,11 +74,11 @@
   :features rust-mode
   (autoload 'rust-mode "rust-mode" nil t))
 
-(el-get-bundle emacs-racer
-  :url "https://github.com/racer-rust/emacs-racer"
-  :features emacs-racer
-  (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode))
+;; (el-get-bundle emacs-racer
+;;   :url "https://github.com/racer-rust/emacs-racer"
+;;   :features emacs-racer
+;;   (add-hook 'rust-mode-hook #'racer-mode)
+;;   (add-hook 'racer-mode-hook #'eldoc-mode))
 
 ;; Use spaces instead of tabs
 (setq-default indent-tabs-mode nil)
