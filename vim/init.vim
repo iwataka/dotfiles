@@ -83,6 +83,7 @@ Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'asciidoc/vim-asciidoc', { 'for': 'asciidoc' }
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
