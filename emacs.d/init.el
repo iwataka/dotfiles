@@ -1,4 +1,6 @@
 (menu-bar-mode -1)
+(tool-bar-mode -1)
+(toggle-scroll-bar -1)
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
@@ -25,7 +27,7 @@
           (lambda (frame)
             (set-frame-parameter frame
                                  'background-mode
-                                 (if (display-graphic-p frame) 'light 'dark))
+                                 (if (display-graphic-p frame) 'dark 'dark))
             (enable-theme 'solarized)))
 
 (defun prev-window ()
@@ -54,10 +56,10 @@
         helm-move-to-line-cycle-in-source t
         helm-scroll-amount 8))
 
-(el-get-bundle magit
-  :url "https://github.com/magit/magit"
-  :features magit
-  (setq magit-last-seen-setup-instructions "1.4.0"))
+;; (el-get-bundle magit
+;;   :url "https://github.com/magit/magit"
+;;   :features magit
+;;   (setq magit-last-seen-setup-instructions "1.4.0"))
 
 (el-get-bundle git-gutter
   :url "https://github.com/syohex/emacs-git-gutter"
@@ -66,6 +68,17 @@
   (setq-default git-gutter:deleted-sign "-")
   (setq-default git-gutter:modified-sign "~")
   (setq-default git-gutter:force t))
+
+(el-get-bundle rust-mode
+  :url "https://github.com/rust-lang/rust-mode"
+  :features rust-mode
+  (autoload 'rust-mode "rust-mode" nil t))
+
+(el-get-bundle emacs-racer
+  :url "https://github.com/racer-rust/emacs-racer"
+  :features emacs-racer
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode))
 
 ;; Use spaces instead of tabs
 (setq-default indent-tabs-mode nil)
@@ -100,14 +113,18 @@
   (interactive)
   (find-file "~/.emacs.d/init.el"))
 
-(defun stage-this-file ()
-  (interactive)
-  (or (buffer-file-name) (error "No file is currently being edited"))
-  (magit-stage-item (buffer-file-name))
-  (git-gutter:update-all-windows))
+;; (defun stage-this-file ()
+;;   (interactive)
+;;   (or (buffer-file-name) (error "No file is currently being edited"))
+;;   (magit-stage-item (buffer-file-name))
+;;   (git-gutter:update-all-windows))
 
-(defun revert-this-file ()
-  (interactive)
-  (or (buffer-file-name) (error "No file is currently being edited"))
-  (magit-revert-item (buffer-file-name))
-  (git-gutter:update-all-windows))
+;; (defun revert-this-file ()
+;;   (interactive)
+;;   (or (buffer-file-name) (error "No file is currently being edited"))
+;;   (magit-revert-item (buffer-file-name))
+;;   (git-gutter:update-all-windows))
+
+;;(set-frame-parameter (selected-frame) 'alpha '(<active> [<inactive>]))
+(set-frame-parameter (selected-frame) 'alpha '(85 50))
+(add-to-list 'default-frame-alist '(alpha 85 50))
