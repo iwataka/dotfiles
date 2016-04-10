@@ -62,6 +62,10 @@ fi
 
 export HAXE_STD_PATH=$HOME/lib/haxe/std
 
+if [ -d $HOME/.cargo/bin ]; then
+    export PATH=$HOME/.cargo/bin:$PATH
+fi
+
 if [ -d $HOME/bin ]; then
     # Adds at the head of PATH.
     export PATH=$HOME/bin:$PATH
