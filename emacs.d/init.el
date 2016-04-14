@@ -4,6 +4,8 @@
 
 (setq backup-directory-alist `(("." . "~/.emacs.d/backup")))
 
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
@@ -47,7 +49,8 @@
 (el-get-bundle projectile
   :url "https://github.com/bbatsov/projectile"
   :features projectile
-  (projectile-global-mode))
+  (projectile-global-mode)
+  (setq projectile-enable-caching t))
 
 (el-get-bundle helm
   :url "https://github.com/emacs-helm/helm"
@@ -56,10 +59,11 @@
         helm-move-to-line-cycle-in-source t
         helm-scroll-amount 8))
 
-;; (el-get-bundle magit
-;;   :url "https://github.com/magit/magit"
-;;   :features magit
-;;   (setq magit-last-seen-setup-instructions "1.4.0"))
+;; Install makeinfo command (in texinfo package on Ubuntu)
+(el-get-bundle magit
+  :url "https://github.com/magit/magit"
+  :features magit
+  (setq magit-last-seen-setup-instructions "1.4.0"))
 
 (el-get-bundle git-gutter
   :url "https://github.com/syohex/emacs-git-gutter"
@@ -113,17 +117,17 @@
   (interactive)
   (find-file "~/.emacs.d/init.el"))
 
-;; (defun stage-this-file ()
-;;   (interactive)
-;;   (or (buffer-file-name) (error "No file is currently being edited"))
-;;   (magit-stage-item (buffer-file-name))
-;;   (git-gutter:update-all-windows))
+(defun stage-this-file ()
+  (interactive)
+  (or (buffer-file-name) (error "No file is currently being edited"))
+  (magit-stage-item (buffer-file-name))
+  (git-gutter:update-all-windows))
 
-;; (defun revert-this-file ()
-;;   (interactive)
-;;   (or (buffer-file-name) (error "No file is currently being edited"))
-;;   (magit-revert-item (buffer-file-name))
-;;   (git-gutter:update-all-windows))
+(defun revert-this-file ()
+  (interactive)
+  (or (buffer-file-name) (error "No file is currently being edited"))
+  (magit-revert-item (buffer-file-name))
+  (git-gutter:update-all-windows))
 
 ;;(set-frame-parameter (selected-frame) 'alpha '(<active> [<inactive>]))
 (set-frame-parameter (selected-frame) 'alpha '(85 50))
