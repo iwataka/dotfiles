@@ -60,6 +60,10 @@ if [ -d /usr/local/go ]; then
     export PATH=$PATH:$GOPATH/bin
 fi
 
+if [ -d ~/.gradle ]; then
+    export PATH=$PATH:~/.gradle/bin
+fi
+
 export HAXE_STD_PATH=$HOME/lib/haxe/std
 
 if [ -d $HOME/.cargo/bin ]; then
