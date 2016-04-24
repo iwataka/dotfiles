@@ -1,10 +1,10 @@
 ghq() {
     command -v ghq >& /dev/null
     if [ $? -eq 0 ]; then
-        if [ "$1" = "cd" -o "$1" = "" ]; then
+        if [ "$1" = "cd" -o "$#" -eq 0 ]; then
             command -v peco >& /dev/null
             if [ $? -eq 0 ]; then
-                if [ "$#" -eq 1 ]; then
+                if [ "$#" -eq 0 -o "$#" -eq 1 ]; then
                     local repo_path="$(ghq list -p | peco)"
                     if [ -n "${repo_path}" ]; then
                         cd ${repo_path}
