@@ -23,7 +23,7 @@ Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown' }
 Plug 'iwataka/gitignore.vim'
 Plug 'iwataka/awesome.vim'
-Plug 'iwataka/ctrlp-bookmark.vim'
+Plug 'iwataka/ctrlp-bookmarkdir-ex.vim'
 unlet! g:plug_url_format
 
 " Git
@@ -93,6 +93,7 @@ if has('python')
   Plug 'justmao945/vim-clang', { 'for': ['c', 'cpp'] }
 endif
 Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
+Plug 'jceb/vim-orgmode', { 'for': 'org' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
@@ -1369,6 +1370,7 @@ nnoremap <silent> <Leader>p :<c-u>CtrlP<CR>
 nnoremap <silent> <Leader>b :<c-u>CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :<c-u>CtrlPMRU<CR>
 nnoremap <silent> <Leader>d :<c-u>CtrlPBookmarkDir<CR>
+nnoremap <silent> <F3> :<c-u>CtrlPBookmarkDirReload!<CR>
 
 let g:ctrlp_bookmark_paths = [
       \ '~/projects/*',
@@ -1537,6 +1539,7 @@ endfu
 call s:airnote_set_path()
 let g:airnote_enable_cache = 1
 let g:airnote_suffix = 'note.md'
+let g:airnote_mappings_enabled = 1
 let g:airnote_date_format = ''
 let s:airnote_date_format = '%c'
 nnoremap <leader>nn :Note<cr>
