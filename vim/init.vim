@@ -1447,16 +1447,23 @@ let g:scala_sort_across_groups = 1
 " --------------------------------------------------------------
 if has('autocmd')
   augroup vimrc-markdown
-    autocmd vimrc-markdown FileType markdown nnoremap <buffer>
+    autocmd FileType markdown nnoremap <buffer>
           \ <cr> :<c-u>call markdown#ex#toggle_checkbox(line('.'))<cr>
-    autocmd vimrc-markdown FileType markdown nnoremap <buffer>
+    autocmd FileType markdown nnoremap <buffer>
           \ <s-cr> :<c-u>call markdown#ex#remove_checkbox(line('.'))<cr>
     if exists('g:markdown_folding')
-      autocmd vimrc-markdown FileType markdown
+      autocmd FileType markdown
             \ setlocal foldtext=markdown#ex#foldtext()
     endif
+    autocmd FileType markdown com! -nargs=? MarkdownShowLinks
+          \ call s:markdown_show_links(<q-args>)
   augroup END
 endif
+
+fu! s:markdown_show_links(filter)
+  call setqflist(markdown#ex#links(0, line('$'), a:filter))
+  cwindow
+endfu
 
 " --------------------------------------------------------------
 " calendar {{{2
