@@ -33,6 +33,9 @@ endif
 Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'junegunn/gv.vim', { 'on': ['GV'] }
+if has('ruby')
+  Plug 'junegunn/vim-github-dashboard', { 'on': ['GHActivity', 'GHDashboard'] }
+endif
 
 " Navigation
 Plug 'justinmk/vim-dirvish'
