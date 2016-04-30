@@ -1375,7 +1375,7 @@ nnoremap <silent> <Leader>m :<c-u>CtrlPMRU<CR>
 nnoremap <silent> <Leader>d :<c-u>CtrlPBookmarkDir<CR>
 nnoremap <silent> <F3> :<c-u>CtrlPBookmarkDirReload!<CR>
 
-let g:ctrlp_bookmark_paths = [
+let g:ctrlp_bookmarkdir_ex_paths = [
       \ '~/projects/*',
       \ '~/lib/*',
       \ '~/dotfiles',
@@ -1383,18 +1383,18 @@ let g:ctrlp_bookmark_paths = [
       \ '$JAVA_HOME/src',
       \ ]
 if has('unix')
-  call extend(g:ctrlp_bookmark_paths, [
+  call extend(g:ctrlp_bookmarkdir_ex_paths, [
         \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
         \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
         \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
         \ '/usr/lib/jvm/java-[1-9]\+-oracle'
         \ ])
 elseif has('win32')
-  call extend(g:ctrlp_bookmark_paths, [
+  call extend(g:ctrlp_bookmarkdir_ex_paths, [
         \ 'C:\lib\*'
         \ ])
 endif
-let g:ctrlp_bookmark_force = 1
+let g:ctrlp_bookmarkdir_ex_force = 1
 
 if has('python')
   if has('unix') || has('mac') || has('macunix')
