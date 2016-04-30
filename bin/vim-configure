@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+./configure \
+        --with-features=huge \
+        --enable-pythoninterp \
+        --enable-python3interp \
+        --enable-rubyinterp \
+        --enable-multibyte \
+        --enable-cscope \
+        --prefix=$HOME
