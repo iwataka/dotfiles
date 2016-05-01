@@ -23,7 +23,6 @@ Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown' }
 Plug 'iwataka/gitignore.vim'
 Plug 'iwataka/ctrlp-bookmarkdir-ex.vim'
-Plug 'iwataka/vim-github-repos'
 unlet! g:plug_url_format
 
 " Git
@@ -33,9 +32,7 @@ endif
 Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'junegunn/gv.vim', { 'on': ['GV'] }
-if has('ruby')
-  Plug 'junegunn/vim-github-dashboard', { 'on': ['GHActivity', 'GHDashboard'] }
-endif
+Plug 'junegunn/vim-github-dashboard', { 'on': ['GHActivity', 'GHDashboard'] }
 
 " Navigation
 Plug 'justinmk/vim-dirvish'
@@ -685,10 +682,10 @@ fu! s:root(cwd)
   for mark in rmarkers
     let rdir = finddir(mark, a:cwd.';')
     if !empty(rdir)
-      retu fnamemodify(rdir, ':h')
+      return fnamemodify(rdir, ':h')
     endif
   endfor
-  retu ''
+  return ''
 endfu
 
 fu! s:warn(msg)
@@ -815,11 +812,9 @@ fu! s:open(...)
   if has('win32unix') && executable('cygstart')
     call system('cygstart '.args)
   elseif has('win32') || has('win32unix')
-    echom 'Windows'
     if filereadable(args[1:-2]) || isdirectory(args[1:-2])
       let cwd = getcwd()
       call s:cd_or_lcd(fnamemodify(args[1:-2], ':h'))
-      echom getcwd()
       let args = fnamemodify(args[1:-2], ':t')
       call s:open_win(args)
       call s:cd_or_lcd(cwd)
@@ -1458,15 +1453,9 @@ if has('autocmd')
       autocmd FileType markdown
             \ setlocal foldtext=markdown#ex#foldtext()
     endif
-    autocmd FileType markdown com! -nargs=? MarkdownShowLinks
-          \ call s:markdown_show_links(<q-args>)
+    autocmd FileType markdown nnoremap <silent> <buffer> gx :MarkdownOpenLink<cr>
   augroup END
 endif
-
-fu! s:markdown_show_links(filter)
-  call setqflist(markdown#ex#links(0, line('$'), a:filter))
-  cwindow
-endfu
 
 " --------------------------------------------------------------
 " calendar {{{2
