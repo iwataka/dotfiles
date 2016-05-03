@@ -1445,14 +1445,6 @@ let g:scala_sort_across_groups = 1
 " --------------------------------------------------------------
 if has('autocmd')
   augroup vimrc-markdown
-    autocmd FileType markdown nnoremap <buffer>
-          \ <cr> :<c-u>call markdown#ex#toggle_checkbox(line('.'))<cr>
-    autocmd FileType markdown nnoremap <buffer>
-          \ <s-cr> :<c-u>call markdown#ex#remove_checkbox(line('.'))<cr>
-    if exists('g:markdown_folding')
-      autocmd FileType markdown
-            \ setlocal foldtext=markdown#ex#foldtext()
-    endif
     autocmd FileType markdown nnoremap <silent> <buffer> gx :MarkdownOpenLink<cr>
   augroup END
 endif
