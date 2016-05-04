@@ -20,7 +20,7 @@ if !(has('win32') || has('win32unix')) && filereadable(expand('~/.ssh/config'))
 endif
 Plug 'iwataka/minidown.vim', { 'for': ['markdown', 'rst'] }
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
-Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown' }
+Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown', 'on': ['MarkdownOpenLink'] }
 Plug 'iwataka/gitignore.vim'
 Plug 'iwataka/ctrlp-bookmarkdir-ex.vim'
 unlet! g:plug_url_format
