@@ -1229,6 +1229,17 @@ fu! s:plug_gx()
   call netrw#NetrwBrowseX(url, 0)
 endfu
 
+com! -nargs=+ -complete=customlist,s:plug_load_complete
+      \ PlugLoad call s:plug_load(<f-args>)
+fu! s:plug_load(...)
+  for plug in a:000
+    call plug#load(plug)
+  endfor
+endfu
+fu! s:plug_load_complete(A, L, P)
+  return filter(copy(keys(g:plugs)), 'v:val =~ "\\v^'.a:A.'"')
+endfu
+
 " --------------------------------------------------------------
 " ColorScheme {{{2
 " --------------------------------------------------------------
