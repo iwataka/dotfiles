@@ -61,6 +61,7 @@ Plug 'chrisbra/unicode.vim',
 " performance. Really nice!
 Plug 'Konfekt/FastFold'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+Plug 'jeetsukumaran/vim-indentwise'
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
@@ -1430,7 +1431,7 @@ nnoremap <leader>gv :<c-u>GV<cr>
 xnoremap <leader>gv :GV<cr>
 
 if has('autocmd')
-  autocmd vimrcEx BufEnter * SignifyRefresh
+  autocmd vimrcEx BufEnter * if exists(':SignifyRefresh') | SignifyRefresh | endif
 endif
 let g:signify_skip_filetype = { 'help': 1, 'gitcommit': 1 }
 let g:signify_sign_add = '+'
