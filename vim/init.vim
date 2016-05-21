@@ -22,6 +22,7 @@ Plug 'iwataka/minidown.vim', { 'for': ['markdown', 'rst'] }
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown' }
 Plug 'iwataka/gitignore.vim'
+Plug 'iwataka/hello-world.vim'
 Plug 'iwataka/ctrlp-bookmarkdir-ex.vim'
 unlet! g:plug_url_format
 
