@@ -20,7 +20,7 @@ if !(has('win32') || has('win32unix')) && filereadable(expand('~/.ssh/config'))
 endif
 Plug 'iwataka/minidown.vim', { 'for': ['markdown', 'rst'] }
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
-Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown' }
+Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown', 'on': ['OpenLinkHistory'] }
 Plug 'iwataka/gitignore.vim'
 Plug 'iwataka/hello-world.vim'
 Plug 'iwataka/ctrlp-bookmarkdir-ex.vim'
@@ -1636,3 +1636,8 @@ if has('autocmd')
     autocmd Filetype java setlocal omnifunc=javacomplete#Complete
   augroup END
 endif
+
+" --------------------------------------------------------------
+" markdown {{{2
+" --------------------------------------------------------------
+nnoremap <silent> gX :OpenLinkHistory<cr>
