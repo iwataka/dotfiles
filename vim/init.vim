@@ -607,15 +607,12 @@ endfu
 com! -nargs=* SwapList echo join(s:swap_list(<q-args>), ' ')
 fu! s:swap_list(pat)
   let result = []
-  let dirs = split(&directory, ',')
-  for dir in dirs
-    let files = split(globpath(dir, '*'), '\n')
-    for file in files
-      let tail = fnamemodify(file, ':t')
-      if tail =~ a:pat
-        call add(result, tail)
-      endif
-    endfor
+  let files = split(globpath(&directory, '*'), '\n')
+  for file in files
+    let tail = fnamemodify(file, ':t')
+    if tail =~ a:pat
+      call add(result, tail)
+    endif
   endfor
   return result
 endfu
@@ -646,9 +643,8 @@ fu! s:swap_delete(bang, ...)
     endfor
   else
     let fname = substitute(fname, '\v\s+$|^\s+|\n', '', 'g')
-    if delete(fname)
-      echo 'Failed to delete '.fname
-    endif
+    bdelete
+    call delete(fname)
   endif
 endfu
 fu! SwapDeleteComplete(A, L, P)
