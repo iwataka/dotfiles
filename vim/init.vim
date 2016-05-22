@@ -107,9 +107,9 @@ Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
 " Utility
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/webapi-vim'
-if has('unix')
-  Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-endif
+Plug 'Shougo/vimproc.vim', {
+      \ 'do': has('win32') ? 'tools\\update-dll-mingw' : 'make'
+      \ }
 if has('win32')
   Plug 'kkoenig/wimproved.vim', { 'on': ['WToggleFullscreen'] }
 endif
