@@ -335,7 +335,7 @@ if has('autocmd')
     autocmd FileType help,qf,godoc nnoremap <buffer> q :q<cr>
     autocmd FileType java,c,cpp
           \ if executable('astyle') |
-          \   setlocal formatprg='astyle' |
+          \   setlocal formatprg=astyle |
           \ endif
     autocmd FileType python
           \ if executable('yapf') |
@@ -1235,7 +1235,8 @@ fu! s:plug_load(...)
   endfor
 endfu
 fu! s:plug_load_complete(A, L, P)
-  return filter(copy(keys(g:plugs)), 'v:val =~ "\\v^'.a:A.'"')
+  let cands = filter(copy(keys(g:plugs)), 'v:val =~ "\\v^'.a:A.'"')
+  return filter(cands, '&rtp !~ v:val')
 endfu
 
 " --------------------------------------------------------------
