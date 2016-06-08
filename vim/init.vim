@@ -1160,6 +1160,35 @@ if v:version > 704 || v:version == 704 && has('patch1128')
   endfu
 endif
 
+com! -nargs=+ -complete=dir DiffDir call s:diffdir(<f-args>)
+fu! s:diffdir(dir1, dir2)
+  let files1 = filter(split(globpath(a:dir1, '*'), '\n'), 'filereadable(v:val)')
+  let files1 = map(files1, 'fnamemodify(v:val, ":t")')
+  let files2 = filter(split(globpath(a:dir2, '*'), '\n'), 'filereadable(v:val)')
+  let files2 = map(files2, 'fnamemodify(v:val, ":t")')
+  for file in files1
+    tabnew
+    exe 'edit '.a:dir1.'/'.file
+    let i = index(files2, file)
+    if i >= 0
+      exe 'vsplit '.a:dir2.'/'.file
+      windo diffthis
+      call remove(files2, i)
+    else
+      vnew
+    endif
+    nnoremap <buffer> q :<c-u>tabclose<cr>
+    wincmd h
+    nnoremap <buffer> q :<c-u>tabclose<cr>
+  endfor
+  for file in files2
+    tabnew
+    nnoremap <buffer> q :<c-u>tabclose<cr>
+    exe 'vsplit '.a:dir2.'/'.file
+    nnoremap <buffer> q :<c-u>tabclose<cr>
+  endfor
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
