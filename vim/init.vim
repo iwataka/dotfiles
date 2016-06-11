@@ -874,23 +874,26 @@ fu! s:chrome_bookmark_list()
   elseif has('unix')
     let bookmark_fname = expand('~/.config/google-chrome/Default/Bookmarks')
   else
-    echoe 'Chrome bookmark file not found'
+    return []
   endif
   try
-    if exists('*json_decode')
-      let bookmark = json_decode(join(readfile(bookmark_fname), ''))
-    elseif exists('*jsondecode')
-      let bookmark = jsondecode(join(readfile(bookmark_fname), ''))
-    elseif exists('*json_decode')
-      let bookmark = json_decode(join(readfile(bookmark_fname), ''))
-    else
-      let bookmark = webapi#json#decode(join(readfile(bookmark_fname), ''))
-    endif
-    let children = bookmark.roots.bookmark_bar.children
-    return map(copy(children), 'v:val.url')
+    let bookmark = s:json_decode(join(readfile(bookmark_fname), ''))
   catch /^/
     return []
   endtry
+  let children = bookmark.roots.bookmark_bar.children
+  return map(copy(children), 'v:val.url')
+endfu
+
+fu! s:json_decode(str)
+  if exists('*json_decode')
+    return json_decode(a:str)
+  elseif exists('*jsondecode')
+    return jsondecode(a:str)
+  else
+    return webapi#json#decode(a:str)
+  endif
+  return {}
 endfu
 
 com! -nargs=* Google call s:google_search(<f-args>)
@@ -1186,6 +1189,29 @@ fu! s:diffdir(dir1, dir2)
     nnoremap <buffer> q :<c-u>tabclose<cr>
     exe 'vsplit '.a:dir2.'/'.file
     nnoremap <buffer> q :<c-u>tabclose<cr>
+  endfor
+endfu
+
+com! -nargs=+ -complete=file SubstitueByJson call s:substitute_by_json(<f-args>)
+fu! s:substitute_by_json(...)
+  let fname = a:1
+  let flag = a:0 > 1 ? a:2 : 'g'
+  try
+    let dict = s:json_decode(join(readfile(fname), ''))
+  catch /^/
+    return
+  endtry
+  call s:substitute_by_dict(dict, flag)
+endfu
+fu! s:substitute_by_dict(...)
+  let dict = a:1
+  let flag = a:0 > 1 ? a:2 : 'g'
+  for [key, val] in items(dict)
+    if type(val) == type('')
+      exe '%s/'.key.'/'.val.'/'.flag
+    elseif type(val) == type({})
+      call s:substitute_by_dict(val, flag)
+    endif
   endfor
 endfu
 
