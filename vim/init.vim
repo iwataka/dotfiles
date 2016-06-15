@@ -27,13 +27,15 @@ Plug 'iwataka/ctrlp-bookmarkdir-ex.vim'
 unlet! g:plug_url_format
 
 " Git
-if v:version >= 703
-  Plug 'mhinz/vim-signify'
+if executable('git')
+  if v:version >= 703
+    Plug 'mhinz/vim-signify'
+  endif
+  Plug 'tpope/vim-fugitive'
+  Plug 'shumphrey/fugitive-gitlab.vim'
+  Plug 'junegunn/gv.vim', { 'on': ['GV'] }
+  Plug 'junegunn/vim-github-dashboard', { 'on': ['GHActivity', 'GHDashboard'] }
 endif
-Plug 'tpope/vim-fugitive'
-Plug 'shumphrey/fugitive-gitlab.vim'
-Plug 'junegunn/gv.vim', { 'on': ['GV'] }
-Plug 'junegunn/vim-github-dashboard', { 'on': ['GHActivity', 'GHDashboard'] }
 
 " Navigation
 Plug 'justinmk/vim-dirvish'
