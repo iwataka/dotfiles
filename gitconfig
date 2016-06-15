@@ -85,3 +85,9 @@
 	protocol = https
 [init]
         templatedir = ~/.git_template
+[include]
+	# If you want to access the Internet via proxy server, you should write
+	# the following sentence to .gitconfig.local
+	# [http]
+	# 	proxy = http://user:pwd@proxy_server_adress:port
+        path = ~/.gitconfig.local
