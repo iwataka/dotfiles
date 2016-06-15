@@ -346,11 +346,12 @@ if has('autocmd')
     autocmd FileType rust compiler rustc
 
     " Set filetype
-    autocmd BufRead,BufNewFile *spacemacs set filetype=lisp
+    autocmd BufRead,BufNewFile *spacemacs* set filetype=lisp
     autocmd BufRead,BufNewFile *.gradle set filetype=groovy
-    autocmd BufRead,BufNewFile *editorconfig set filetype=jproperties
+    autocmd BufRead,BufNewFile *editorconfig* set filetype=jproperties
     autocmd BufRead,BufNewFile *.gpg set filetype=gnupg
     autocmd BufRead,BufNewFile *.json set filetype=javascript
+    autocmd BufRead,BufNewFile *gitconfig* set filetype=sh
 
     " prevent from conflicting multiple edit
     autocmd SwapExists * let v:swapchoice = 'o'
