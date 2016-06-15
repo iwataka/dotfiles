@@ -63,7 +63,6 @@ Plug 'chrisbra/unicode.vim',
 " This plug-in prevents it and enableds to fold without any effects to the
 " performance. Really nice!
 Plug 'Konfekt/FastFold'
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'jeetsukumaran/vim-indentwise'
 
 " Colorscheme
@@ -112,9 +111,6 @@ Plug 'mattn/webapi-vim'
 Plug 'Shougo/vimproc.vim', {
       \ 'do': has('win32') ? 'tools\\update-dll-mingw' : 'make'
       \ }
-if has('win32')
-  Plug 'kkoenig/wimproved.vim', { 'on': ['WToggleFullscreen'] }
-endif
 
 call plug#end()
 endif
@@ -1666,37 +1662,6 @@ let g:fastfold_savehook = 0
 let g:fastfold_fold_command_suffixes = []
 let g:fastfold_fold_movement_commands = []
 let g:tex_fold_enabled = 1
-
-" --------------------------------------------------------------
-" goyo {{{2
-" --------------------------------------------------------------
-let g:goyo_linenr = 0
-nnoremap <leader>G :<c-u>Goyo 80<cr>
-fu! s:goyo_enter()
-  " Disable some goyo auto-commands.
-  " They causes to vanish status-lines.
-  autocmd! goyo BufWinEnter,WinEnter,WinLeave
-  if !get(g:, 'signify_locked', 1)
-    let g:signify_locked = 1
-    let g:goyo_signify_locked = 1
-    autocmd goyo BufEnter * call sy#stop(bufnr('%'))
-  endif
-  if get(g:, 'colors_name', '') == 'gruvbox'
-    hi Cursor ctermfg=DarkGray guifg=DarkGray
-    autocmd goyo ColorScheme gruvbox hi Cursor ctermfg=DarkGray guifg=DarkGray
-  endif
-  " Enter into auto-save mode.
-  autocmd goyo TextChanged,InsertLeave * nested silent! update
-endfu
-fu! s:goyo_leave()
-  if get(g:, 'goyo_signify_locked', 0)
-    let g:signify_locked = 0
-    unlet g:goyo_signify_locked
-    SignifyRefresh
-  endif
-endfu
-autocmd! User GoyoEnter nested call <sid>goyo_enter()
-autocmd! User GoyoLeave nested call <sid>goyo_leave()
 
 " --------------------------------------------------------------
 " tsuquyomi {{{2
