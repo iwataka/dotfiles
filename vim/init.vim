@@ -326,7 +326,7 @@ if has('autocmd')
           \ setlocal commentstring=<!--%s--> |
           \ setlocal foldlevel=1
     autocmd FileType calendar,git,gitv setlocal nolist
-    autocmd FileType dosbatch setlocal commentstring=rem%s
+    autocmd FileType dosbatch setlocal commentstring=::%s
     autocmd FileType dot setlocal commentstring=//%s
     autocmd FileType c setlocal commentstring=//%s
     " Close buffers of specified types by just typing q.
