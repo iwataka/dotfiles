@@ -45,8 +45,9 @@ elif [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install -y xsel
     sudo apt-get install -y ibus-mozc
     # Vim
-    sudo apt-get install -y vim
     sudo apt-get install -y python-dev
+    sudo apt-get install -y libncurses5-dev
+    sudo apt-get install -y libgmp-dev
 elif [[ $OSTYPE == "darwin"* ]]; then
     # Some of them from https://github.com/mathiasbynens/dotfiles
     brew update
