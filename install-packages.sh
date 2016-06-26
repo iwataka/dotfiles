@@ -44,6 +44,7 @@ elif [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install -y glances
     sudo apt-get install -y xsel
     sudo apt-get install -y ibus-mozc
+    sudo apt-get install -y uswsusp
     # Vim
     sudo apt-get install -y python-dev
     sudo apt-get install -y libncurses5-dev
