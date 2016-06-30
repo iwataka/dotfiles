@@ -54,10 +54,9 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-if [ -d /usr/local/go ]; then
-    export PATH=$PATH:/usr/local/go/bin
+if [ -d $HOME/go ]; then
+    export PATH=$PATH:$HOME/go/bin
     export GOPATH=$HOME/go
-    export PATH=$PATH:$GOPATH/bin
 fi
 
 if [ -d ~/.gradle ]; then
