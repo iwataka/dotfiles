@@ -49,6 +49,10 @@ elif [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install -y python-dev
     sudo apt-get install -y libncurses5-dev
     sudo apt-get install -y libgmp-dev
+elif [ $OSTYPE == "linux-musl" ]; then
+    apk add --no-cache git
+    apk add --no-cache vim
+    apk add --no-cache zsh
 elif [[ $OSTYPE == "darwin"* ]]; then
     # Some of them from https://github.com/mathiasbynens/dotfiles
     brew update
