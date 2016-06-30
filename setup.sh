@@ -6,9 +6,12 @@ dfsdir=$PWD
 
 # Some necessary operations before setup
 pre-setup() {
-    # Make sure that ~/bin directory exists
+    # Make sure that ~/bin and ~/.config directory exists
     if [ ! -d ~/bin ]; then
         mkdir ~/bin
+    fi
+    if [ ! -d ~/.config ]; then
+        mkdir ~/.config
     fi
 }
 
