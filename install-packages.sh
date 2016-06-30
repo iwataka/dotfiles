@@ -53,6 +53,7 @@ elif [ $OSTYPE == "linux-musl" ]; then
     apk add --no-cache git
     apk add --no-cache vim
     apk add --no-cache zsh
+    apk add --no-cache perl
 elif [[ $OSTYPE == "darwin"* ]]; then
     # Some of them from https://github.com/mathiasbynens/dotfiles
     brew update
