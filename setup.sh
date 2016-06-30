@@ -2,7 +2,8 @@
 
 set -e
 
-dfsdir=$PWD
+dfsdir=$(dirname $0)
+dfsdir=$(cd $dfsdir && pwd)
 
 # Some necessary operations before setup
 pre-setup() {
