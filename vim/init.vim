@@ -12,12 +12,16 @@ endif
 silent! if plug#begin('~/.vim/plugged')
 
 " My Plugins
+
+" ------------------------------------------------------------------------------
+" ssh is abolished because git-credential is very useful.
+" ------------------------------------------------------------------------------
 " Windows can't access automatically via ssh
 " Vim in Git for Windows is detected as win32unix
-if !(has('win32') || has('win32unix')) && filereadable(expand('~/.ssh/config'))
+" if !(has('win32') || has('win32unix')) && filereadable(expand('~/.ssh/config'))
   " Require my .ssh/config file.
-  let g:plug_url_format = 'github:%s.git'
-endif
+  " let g:plug_url_format = 'github:%s.git'
+" endif
 Plug 'iwataka/minidown.vim', { 'for': ['markdown', 'rst'] }
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown', 'on': ['OpenLinkHistory'] }
