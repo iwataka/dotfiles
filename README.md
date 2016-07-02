@@ -8,8 +8,13 @@ This is my personal dotfiles with Vim and Zsh.
 
 + Cross-platform
 
-    Do the same thing on all platforms
-    Give good performance even on Windows
+    Do the same thing on all platforms (tested on the below environments):
+
+    + Ubuntu
+    + Windows
+    + Alpine Linux (on [Docker](https://github.com/docker/docker))
+
+    and Give good performance even on Windows
 
 ## Getting Started
 
