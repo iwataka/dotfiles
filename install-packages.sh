@@ -47,10 +47,6 @@ install-for-ubuntu() {
     sudo apt-get install -y xsel
     sudo apt-get install -y ibus-mozc
     sudo apt-get install -y uswsusp
-    # Vim
-    sudo apt-get install -y python-dev
-    sudo apt-get install -y libncurses5-dev
-    sudo apt-get install -y libgmp-dev
 }
 
 install-for-alpine-linux() {
