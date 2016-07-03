@@ -117,7 +117,7 @@ install-default() {
 
 install-gvm() {
     if [ "$OSTYPE" == "linux-musl" ]; then
-        apk add --no-cache curl git mercurial make binutils bison gcc g++
+        apk add --no-cache curl git mercurial make binutils bison gcc g++ tar
     elif [ "$OSTYPE" == "linux-gnu" ]; then
         sudo apt-get curl git mercurial make binutils bison gcc build-essential
     fi
