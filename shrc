@@ -26,7 +26,7 @@ then
 else
     alias dt='cd ~/デスクトップ'
 fi
-alias p="cd ~/projects"
+alias d="docker"
 alias h="history"
 alias j="jobs"
 alias v="vim"
