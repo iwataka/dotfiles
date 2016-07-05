@@ -2,7 +2,7 @@
 export SHELL=/bin/zsh
 export VISUAL=vim
 export EDITOR=$VISUAL
-if [ "$OSTYPE" == "linux-musl" ]; then
+if [[ "$OSTYPE" == "linux-musl" ]]; then
     export PAGER='less'
 else
     export PAGER='less -r'
