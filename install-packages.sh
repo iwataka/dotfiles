@@ -50,10 +50,10 @@ install-for-ubuntu() {
 }
 
 install-for-alpine-linux() {
-    apk add --no-cache git
-    apk add --no-cache vim
-    apk add --no-cache zsh
-    apk add --no-cache perl
+    sudo apk add -y --no-cache git
+    sudo apk add -y --no-cache vim
+    sudo apk add -y --no-cache zsh
+    sudo apk add -y --no-cache perl
 }
 
 install-for-osx() {
@@ -117,7 +117,7 @@ install-default() {
 
 install-gvm() {
     if [ "$OSTYPE" == "linux-musl" ]; then
-        apk add --no-cache curl git mercurial make binutils bison gcc g++ tar
+        sudo apk add -y --no-cache curl git mercurial make binutils bison gcc g++ tar
     elif [ "$OSTYPE" == "linux-gnu" ]; then
         sudo apt-get curl git mercurial make binutils bison gcc build-essential
     fi
