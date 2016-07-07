@@ -26,7 +26,7 @@ then
 else
     alias dt='cd ~/デスクトップ'
 fi
-alias p="cd ~/projects"
+alias d="docker"
 alias h="history"
 alias j="jobs"
 alias v="vim"
@@ -39,12 +39,15 @@ alias mkdir="mkdir -p"
 # Enables to display result in human-readable format.
 alias df='df -h'
 alias du='du -h'
-# Shows diferences in color at doing 'grep'.
-alias grep='grep --color'
-# Shows differences in color at doing 'egrep'.
-alias egrep='egrep --color=auto'
-# Shows differences in color at doing 'fgrep'.
-alias fgrep='fgrep --color=auto'
+# Alpine Linux has an old version of grep
+if [[ "$OSTYPE" -ne "linux-musl" ]]; then
+    # Shows diferences in color at doing 'grep'.
+    alias grep='grep --color'
+    # Shows differences in color at doing 'egrep'.
+    alias egrep='egrep --color=auto'
+    # Shows differences in color at doing 'fgrep'.
+    alias fgrep='fgrep --color=auto'
+fi
 # Some shortcuts for different directory listings
 # Clasifies files in color
 alias ls='ls -hF --color=tty'

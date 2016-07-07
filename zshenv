@@ -2,11 +2,15 @@
 export SHELL=/bin/zsh
 export VISUAL=vim
 export EDITOR=$VISUAL
-export PAGER='less -r'
+if [[ "$OSTYPE" == "linux-musl" ]]; then
+    export PAGER='less'
+else
+    export PAGER='less -r'
+    export LESS='-r -N -s'
+fi
 export TERM=screen-256color-bce
 # LANG depends on each environment
 # export LANG=ja_JP.UTF-8
-export LESS='-r -N -s'
 export BROWSER='google-chrome-stable'
 
 # Local config

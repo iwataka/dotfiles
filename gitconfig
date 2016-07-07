@@ -91,3 +91,6 @@
 	# [http]
 	# 	proxy = http://user:pwd@proxy_server_adress:port
         path = ~/.gitconfig.local
+[credential]
+	# Set the cache to timeout after 3 hour
+	helper = cache --timeout=10800

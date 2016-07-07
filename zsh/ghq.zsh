@@ -54,7 +54,7 @@ _ghq() {
     if [ "${#words}" -eq 2 ]; then
         completions=$(echo "get\nlist\nlook\nimport\nroot\ncd\ncreate\nhelp\nh\n--version\n-v\n-h")
     else
-        if [ ${words[2,-2]} = "look" ]; then
+        if [ ${words[2,-2]} = "look" -o ${words[2,-2]} = "cd" ]; then
             completions=$(ghq list --unique)
         fi
     fi
