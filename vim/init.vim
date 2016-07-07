@@ -97,6 +97,7 @@ if has('python')
 endif
 Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
+Plug 'PProvost/vim-ps1', { 'for': 'ps1' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
@@ -969,6 +970,8 @@ fu! s:run_this_script(args)
   " elseif &filetype == 'vim'
     " Put 'silent!' at the head because sourcing .vimrc must cause an error.
     " silent! exe 'source '.fname
+  elseif &filetype == 'ps1'
+    exe '!powershell -f '.fname.' '.a:args
   else
     exe '!'.fname.' '.a:args
   endif
