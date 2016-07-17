@@ -54,6 +54,12 @@ setup-symlinks() {
     ln -s $dfsdir/vim ~/.config/nvim
 }
 
+restore-ssh-config() {
+    if [[ -f ~/.ssh.bak/authorized_keys ]] && [[ ! -f ~/.ssh/authorized_keys ]]; then
+        mv ~/.ssh.bak/authorized_keys ~/.ssh
+    fi
+}
+
 if [[ ! -d $dfsdir ]]; then
     git clone https://github.com/iwataka/dotfiles $dfsdir
     cd $dfsdir
@@ -61,3 +67,4 @@ fi
 pre-setup
 setup-bins
 setup-symlinks
+restore-ssh-config
