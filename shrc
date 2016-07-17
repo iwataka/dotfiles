@@ -84,3 +84,5 @@ if [[ "$OSTYPE" -ne "cygwin" ]] || [[ "$OSTYPE" -ne "msys" ]]; then
     # Google Chrome
     alias chrome="google-chrome-stable"
 fi
+
+[[ -f ~/.shrc.local ]] && source ~/.shrc.local
