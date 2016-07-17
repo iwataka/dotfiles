@@ -42,11 +42,20 @@ install-for-ubuntu() {
     sudo apt-get install -y cmake
     sudo apt-get install -y pandoc
     sudo apt-get install -y shellcheck
-    sudo apt-get install -y docker
+    sudo apt-get install -y docker.io
     sudo apt-get install -y glances
     sudo apt-get install -y xsel
     sudo apt-get install -y ibus-mozc
     sudo apt-get install -y uswsusp
+}
+
+install-for-debian() {
+    sudo yum install -y git
+    sudo yum install -y zsh
+    sudo yum install -y curl
+    sudo yum install -y wget
+    sudo yum install -y git
+    sudo yum install -y docker
 }
 
 install-for-alpine-linux() {
@@ -105,7 +114,12 @@ install-default() {
     if [[ $uname_ostype == "Linux Arch-Linux"* ]]; then
         install-for-arch-linux
     elif [ $OSTYPE == "linux-gnu" ]; then
-        install-for-ubuntu
+        apt-get --help
+        if [[ $? == 0 ]]; then
+            install-for-ubuntu
+        else
+            install-for-debian
+        fi
     elif [ $OSTYPE == "linux-musl" ]; then
         install-for-alpine-linux
     elif [[ $OSTYPE == "darwin"* ]]; then
