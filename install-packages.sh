@@ -111,7 +111,7 @@ install-default() {
     if [[ $uname_ostype == "Linux Arch-Linux"* ]]; then
         install-for-arch-linux
     elif [ $OSTYPE == "linux-gnu" ]; then
-        apt-get --help
+        apt-get --help &> /dev/null
         if [[ $? == 0 ]]; then
             install-for-ubuntu
         else
