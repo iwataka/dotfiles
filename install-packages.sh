@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Abort when errors are thrown
-set -e
-
 uname_ostype=$(uname -a)
 
 install-for-arch-linux() {
