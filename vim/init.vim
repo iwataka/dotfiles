@@ -102,6 +102,7 @@ endif
 Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'PProvost/vim-ps1', { 'for': 'ps1' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
@@ -114,7 +115,8 @@ Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/webapi-vim'
 Plug 'Shougo/vimproc.vim', {
-      \ 'do': has('win32') ? 'tools\\update-dll-mingw' : 'make'
+      \ 'do': has('win32') ? 'tools\\update-dll-mingw' : 'make',
+      \ 'for': 'typescript'
       \ }
 
 call plug#end()
@@ -347,6 +349,7 @@ if has('autocmd')
     autocmd FileType java compiler javac
     autocmd FileType ruby compiler ruby
     autocmd FileType rust compiler rustc
+    autocmd FileType go compiler go
 
     " Set filetype
     autocmd BufRead,BufNewFile *spacemacs* set filetype=lisp
@@ -1219,6 +1222,24 @@ fu! s:substitute_by_dict(...)
       call s:substitute_by_dict(val, flag)
     endif
   endfor
+endfu
+
+com! -nargs=* -complete=dir Tree call s:show_tree(<f-args>)
+fu! s:show_tree(...)
+  if executable('tree')
+    let out = system('tree '.join(a:000, ' '))
+    let lines = split(out, "\n")
+    leftabove 50vnew
+    setlocal modifiable
+    setlocal noreadonly
+    call setline(1, lines)
+    setlocal nomodifiable
+    setlocal readonly
+    setlocal buftype=nofile
+    setlocal bufhidden=wipe
+    setlocal nobuflisted
+    nnoremap <buffer> q :quit<cr>
+  endif
 endfu
 
 " ===============================================================
