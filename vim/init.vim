@@ -102,6 +102,7 @@ endif
 Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'PProvost/vim-ps1', { 'for': 'ps1' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
@@ -114,7 +115,8 @@ Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/webapi-vim'
 Plug 'Shougo/vimproc.vim', {
-      \ 'do': has('win32') ? 'tools\\update-dll-mingw' : 'make'
+      \ 'do': has('win32') ? 'tools\\update-dll-mingw' : 'make',
+      \ 'for': 'typescript'
       \ }
 
 call plug#end()
@@ -347,6 +349,7 @@ if has('autocmd')
     autocmd FileType java compiler javac
     autocmd FileType ruby compiler ruby
     autocmd FileType rust compiler rustc
+    autocmd FileType go compiler go
 
     " Set filetype
     autocmd BufRead,BufNewFile *spacemacs* set filetype=lisp
