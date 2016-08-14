@@ -1221,6 +1221,24 @@ fu! s:substitute_by_dict(...)
   endfor
 endfu
 
+com! -nargs=* -complete=dir Tree call s:show_tree(<f-args>)
+fu! s:show_tree(...)
+  if executable('tree')
+    let out = system('tree '.join(a:000, ' '))
+    let lines = split(out, "\n")
+    leftabove 50vnew
+    setlocal modifiable
+    setlocal noreadonly
+    call setline(1, lines)
+    setlocal nomodifiable
+    setlocal readonly
+    setlocal buftype=nofile
+    setlocal bufhidden=wipe
+    setlocal nobuflisted
+    nnoremap <buffer> q :quit<cr>
+  endif
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
