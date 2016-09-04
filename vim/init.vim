@@ -468,6 +468,9 @@ nnoremap gk k
 inoremap <silent> <Down> <c-o>:normal! gj<cr>
 inoremap <silent> <Up> <c-o>:normal! gk<cr>
 
+nnoremap ; :
+nnoremap : ;
+
 " Prevent to override registers by one character
 nnoremap x "_x
 
