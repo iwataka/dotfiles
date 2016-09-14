@@ -1222,7 +1222,7 @@ endfu
 iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
 
 " ///+ to search non-1byte characters (not <space>-~)
-cab // \v[^\x20-\x7e]
+cab // \v[^\x01-\x7e]
 
 " Spelling
 abbrev factroy factory
