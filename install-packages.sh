@@ -1,11 +1,8 @@
 #!/bin/bash
 
-# Abort when errors are thrown
-set -e
-
 uname_ostype=$(uname -a)
 
-if [[ $uname_ostype == "Linux Arch-Linux"* ]]; then
+install-for-arch-linux() {
     sudo pacman -Syu --noconfirm --needed
     sudo pacman -S --noconfirm --needed coreutils
     sudo pacman -S --noconfirm --needed moreutils
@@ -24,7 +21,9 @@ if [[ $uname_ostype == "Linux Arch-Linux"* ]]; then
     sudo pacman -S --noconfirm --needed vim
     sudo yaourt -S --noconfirm --needed pandoc
     sudo yaourt -S --noconfirm --needed shellcheck
-elif [ $OSTYPE == "linux-gnu" ]; then
+}
+
+install-for-ubuntu() {
     sudo apt-get update  # Update apt-get itself
     sudo apt-get upgrade  # Upgrade packages
     sudo apt-get install -y xdg-utils
@@ -40,16 +39,30 @@ elif [ $OSTYPE == "linux-gnu" ]; then
     sudo apt-get install -y cmake
     sudo apt-get install -y pandoc
     sudo apt-get install -y shellcheck
-    sudo apt-get install -y docker
+    sudo apt-get install -y docker.io
     sudo apt-get install -y glances
     sudo apt-get install -y xsel
     sudo apt-get install -y ibus-mozc
     sudo apt-get install -y uswsusp
-    # Vim
-    sudo apt-get install -y python-dev
-    sudo apt-get install -y libncurses5-dev
-    sudo apt-get install -y libgmp-dev
-elif [[ $OSTYPE == "darwin"* ]]; then
+}
+
+install-for-debian() {
+    sudo yum install -y git
+    sudo yum install -y zsh
+    sudo yum install -y curl
+    sudo yum install -y wget
+    sudo yum install -y git
+    sudo yum install -y docker
+}
+
+install-for-alpine-linux() {
+    sudo apk add -y --no-cache git
+    sudo apk add -y --no-cache vim
+    sudo apk add -y --no-cache zsh
+    sudo apk add -y --no-cache perl
+}
+
+install-for-osx() {
     # Some of them from https://github.com/mathiasbynens/dotfiles
     brew update
     brew upgrade --all
@@ -80,7 +93,9 @@ elif [[ $OSTYPE == "darwin"* ]]; then
     brew install shellcheck
     brew install docker
     brew cleanup  # Remove outdated versions from the cellar.
-elif [[ "$OSTYPE" == "cygwin" ]]; then
+}
+
+install-for-cygwin() {
     apt-cyg update
     apt-cyg install git
     apt-cyg install zsh
@@ -90,4 +105,41 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
     apt-cyg install tmux
     apt-cyg install tree
     apt-cyg install ImageMagick
-fi
+}
+
+install-default() {
+    if [[ $uname_ostype == "Linux Arch-Linux"* ]]; then
+        install-for-arch-linux
+    elif [ $OSTYPE == "linux-gnu" ]; then
+        apt-get --help &> /dev/null
+        if [[ $? == 0 ]]; then
+            install-for-ubuntu
+        else
+            install-for-debian
+        fi
+    elif [ $OSTYPE == "linux-musl" ]; then
+        install-for-alpine-linux
+    elif [[ $OSTYPE == "darwin"* ]]; then
+        install-for-osx
+    elif [[ "$OSTYPE" == "cygwin" ]]; then
+        install-for-cygwin
+    fi
+}
+
+install-gvm() {
+    if [ "$OSTYPE" == "linux-musl" ]; then
+        sudo apk add -y --no-cache curl git mercurial make binutils bison gcc g++ tar
+    elif [ "$OSTYPE" == "linux-gnu" ]; then
+        sudo apt-get curl git mercurial make binutils bison gcc build-essential
+    fi
+    bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+}
+
+install-default
+
+for arg in "$@"; do
+    if [ "$arg" == "go" ]; then
+        install-gvm
+    fi
+    shift
+done
