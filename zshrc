@@ -43,7 +43,7 @@ if [ -d $HOME/.pyenv ]; then
     eval "$(pyenv init -)"
 fi
 [[ -s ~/.gvm/scripts/gvm ]] && source ~/.gvm/scripts/gvm
-[[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
+[[ -s ~/.nvm/nvm.sh ]] && . ~/.nvm/nvm.sh
 if [ -d $HOME/.jenv ]; then
     export PATH="$HOME/.jenv/bin:$PATH"
     eval "$(jenv init -)"
