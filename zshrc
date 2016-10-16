@@ -43,7 +43,6 @@ if [ -d $HOME/.pyenv ]; then
     eval "$(pyenv init -)"
 fi
 [[ -s ~/.gvm/scripts/gvm ]] && source ~/.gvm/scripts/gvm
-export NVM_DIR="/home/iwataka/.nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
 if [ -d $HOME/.jenv ]; then
     export PATH="$HOME/.jenv/bin:$PATH"
@@ -167,3 +166,6 @@ if [[ "$OSTYPE" == "cygwin" ]]; then
 fi
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
