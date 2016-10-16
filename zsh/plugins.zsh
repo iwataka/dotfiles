@@ -8,6 +8,7 @@ antigen bundle extract
 antigen bundle git
 antigen bundle github
 antigen bundle gitignore
+antigen bundle golang
 antigen bundle rupa/z
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle mafredri/zsh-async
