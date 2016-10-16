@@ -53,6 +53,7 @@ if has('python')
 endif
 
 " Editing
+Plug 'iwataka/vim-replace'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -118,6 +119,9 @@ Plug 'Shougo/vimproc.vim', {
       \ 'do': has('win32') ? 'tools\\update-dll-mingw' : 'make',
       \ 'for': 'typescript'
       \ }
+if has('job') && has('channel')
+  Plug 'metakirby5/codi.vim'
+endif
 
 call plug#end()
 endif
@@ -1722,3 +1726,13 @@ endif
 " --------------------------------------------------------------
 let g:markdown_folding = 1
 nnoremap <silent> gX :OpenLinkHistory<cr>
+
+" --------------------------------------------------------------
+" codi {{{2
+" --------------------------------------------------------------
+let g:codi#interpreters = {
+     \ 'go': {
+         \ 'bin': 'gore',
+         \ 'prompt': 'gore> ',
+         \ },
+     \ }
