@@ -104,6 +104,8 @@ Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'PProvost/vim-ps1', { 'for': 'ps1' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'keith/swift.vim', { 'for': 'swift' }
+Plug 'lambdalisue/vim-pyenv', { 'for': 'python' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
@@ -471,6 +473,9 @@ nnoremap gj j
 nnoremap gk k
 inoremap <silent> <Down> <c-o>:normal! gj<cr>
 inoremap <silent> <Up> <c-o>:normal! gk<cr>
+
+nnoremap ; :
+nnoremap : ;
 
 " Prevent to override registers by one character
 nnoremap x "_x
@@ -1254,7 +1259,7 @@ endfu
 iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
 
 " ///+ to search non-1byte characters (not <space>-~)
-cab // \v[^\x20-\x7e]
+cab // \v[^\x01-\x7e]
 
 " Spelling
 abbrev factroy factory
