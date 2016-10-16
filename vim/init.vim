@@ -103,6 +103,8 @@ Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'PProvost/vim-ps1', { 'for': 'ps1' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'keith/swift.vim', { 'for': 'swift' }
+Plug 'lambdalisue/vim-pyenv', { 'for': 'python' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
