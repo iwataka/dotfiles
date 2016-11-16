@@ -39,6 +39,7 @@ if executable('git')
   Plug 'shumphrey/fugitive-gitlab.vim'
   Plug 'junegunn/gv.vim', { 'on': ['GV'] }
   Plug 'junegunn/vim-github-dashboard', { 'on': ['GHActivity', 'GHDashboard'] }
+  Plug 'mattn/gist-vim'
 endif
 
 " Navigation
