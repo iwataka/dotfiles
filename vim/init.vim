@@ -73,6 +73,7 @@ Plug 'jeetsukumaran/vim-indentwise'
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
+Plug 'NLKNguyen/papercolor-theme'
 
 " Filetype
 if v:version >= 703
