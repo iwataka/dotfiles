@@ -1253,21 +1253,40 @@ fu! s:show_tree(...)
   endif
 endfu
 
-com! -nargs=* JekyllNew call s:jekyll_new(<f-args>)
-fu! s:jekyll_new(...)
+com! -nargs=* -complete=customlist,s:jekyll_post_complete JekyllPost call s:jekyll_post(<f-args>)
+fu! s:jekyll_post(...)
   if isdirectory('_posts')
     let title = a:0 ? a:1 : input("Title: ")
     if len(title) == 0
       echoe 'Title must be non-empty'
       return
     endif
+    let posts = split(globpath('_posts', '**/*'), "\n")
+    for post in posts
+      let fname = fnamemodify(post, ':t:r')
+      if fname =~ '\d\+-\d\+-\d\+-'.title
+        silent exe 'edit '.post
+        return
+      endif
+    endfor
     let year = strftime('%Y')
     let month = strftime('%m')
     let date = strftime('%d')
-    silent execute 'edit '.year.'-'.month.'-'.date.'-'.title.'.md'
+    let fname = year.'-'.month.'-'.date.'-'.title
+    let fname = fname =~ '.md$' ? fname : fname.'.md'
+    silent exe 'edit '.fname
+    silent call setline(1, ['---', 'Title: ', 'category: ', '---'])
+    endif
   else
     echoe "_posts directory doesn't exist"
   endif
+endfu
+fu! s:jekyll_post_complete(A, L, P)
+  let posts = split(globpath('_posts', '**/*'), "\n")
+  let posts = map(posts, 'substitute(v:val, "_posts/\\d\\+-\\d\\+-\\d\\+-", "", "g")')
+  let posts = map(posts, 'fnamemodify(v:val, ":r")')
+  let posts = filter(posts, 'v:val =~ "\\v^'.a:A.'"')
+  return posts
 endfu
 
 " ===============================================================
