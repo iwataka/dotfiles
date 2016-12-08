@@ -1253,6 +1253,23 @@ fu! s:show_tree(...)
   endif
 endfu
 
+com! -nargs=* JekyllNew call s:jekyll_new(<f-args>)
+fu! s:jekyll_new(...)
+  if isdirectory('_posts')
+    let title = a:0 ? a:1 : input("Title: ")
+    if len(title) == 0
+      echoe 'Title must be non-empty'
+      return
+    endif
+    let year = strftime('%Y')
+    let month = strftime('%m')
+    let date = strftime('%d')
+    silent execute 'edit '.year.'-'.month.'-'.date.'-'.title.'.md'
+  else
+    echoe "_posts directory doesn't exist"
+  endif
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
