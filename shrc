@@ -39,6 +39,7 @@ alias mkdir="mkdir -p"
 # Enables to display result in human-readable format.
 alias df='df -h'
 alias du='du -h'
+alias free='free -h'
 # Alpine Linux has an old version of grep
 if [[ "$OSTYPE" -ne "linux-musl" ]]; then
     # Shows diferences in color at doing 'grep'.
