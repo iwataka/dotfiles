@@ -1276,7 +1276,6 @@ fu! s:jekyll_post(...)
     let fname = fname =~ '.md$' ? fname : fname.'.md'
     silent exe 'edit '.fname
     silent call setline(1, ['---', 'Title: ', 'category: ', '---'])
-    endif
   else
     echoe "_posts directory doesn't exist"
   endif
