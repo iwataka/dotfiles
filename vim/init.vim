@@ -1289,6 +1289,17 @@ fu! s:jekyll_post_complete(A, L, P)
   return posts
 endfu
 
+com! ToggleColorcolumn call s:toggle_colorcolumn()
+fu! s:toggle_colorcolumn()
+  if exists('s:colorcolumn') && &colorcolumn == ''
+    let &colorcolumn = s:colorcolumn
+    unlet s:colorcolumn
+  else
+    let s:colorcolumn = &colorcolumn
+    set colorcolumn=
+  endif
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
