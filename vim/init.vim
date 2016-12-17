@@ -40,6 +40,7 @@ if executable('git')
   Plug 'junegunn/gv.vim', { 'on': ['GV'] }
   Plug 'junegunn/vim-github-dashboard', { 'on': ['GHActivity', 'GHDashboard'] }
   Plug 'mattn/gist-vim'
+  Plug 'iwataka/github.vim', { 'on': ['Greadme', 'Greleases', 'Gsearch'] }
 endif
 
 " Navigation
