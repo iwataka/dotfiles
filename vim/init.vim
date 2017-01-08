@@ -88,7 +88,7 @@ Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'othree/html5.vim', { 'for': 'html' }
-Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
+Plug 'ekalinin/Dockerfile.vim', { 'for': ['Dockerfile', 'docker-compose'] }
 Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
@@ -367,6 +367,7 @@ if has('autocmd')
     autocmd BufRead,BufNewFile *.gpg set filetype=gnupg
     autocmd BufRead,BufNewFile *.json set filetype=javascript
     autocmd BufRead,BufNewFile *gitconfig* set filetype=sh
+    autocmd BufRead,BufNewFile *.tmpl set filetype=html
 
     " prevent from conflicting multiple edit
     autocmd SwapExists * let v:swapchoice = 'o'
@@ -1557,6 +1558,7 @@ let g:ctrlp_bookmarkdir_ex_paths = [
       \ '~/lib/*',
       \ '~/dotfiles',
       \ '~/gdrive',
+      \ '~/Dropbox/*',
       \ '$JAVA_HOME/src',
       \ ]
 if has('unix')
