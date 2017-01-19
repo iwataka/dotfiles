@@ -4,6 +4,7 @@ fi
 
 source $HOME/.antigen/antigen.zsh
 antigen bundle docker
+antigen bundle docker-compose
 antigen bundle extract
 antigen bundle git
 antigen bundle github

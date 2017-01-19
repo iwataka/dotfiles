@@ -1560,6 +1560,7 @@ let g:ctrlp_bookmarkdir_ex_paths = [
       \ '~/gdrive',
       \ '~/Dropbox/*',
       \ '$JAVA_HOME/src',
+      \ '$GOPATH/src/*/*/*',
       \ ]
 if has('unix')
   call extend(g:ctrlp_bookmarkdir_ex_paths, [

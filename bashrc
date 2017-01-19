@@ -7,3 +7,6 @@ done
 alias ..='cd ..'
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# added by travis gem
+[ -f /home/ubuntu/.travis/travis.sh ] && source /home/ubuntu/.travis/travis.sh
