@@ -150,7 +150,7 @@ let maplocalleader = "\\"  " The local mapleader is hardly used.
 
 let $LANG='en'                            " Vim should be in English
 if !has('win32')
-  language time en_US.UTF8
+  silent! language time en_US.UTF8
 endif
 if has('vim_starting')
   set encoding=utf-8
@@ -696,11 +696,18 @@ fu! s:move_to_root(cmd, path)
   endif
 endfu
 fu! s:root(cwd)
-  let rmarkers = ['.git', '.hg', '.svn', '.bzr', '_darcs']
-  for mark in rmarkers
+  let marker_dirs = ['.git', '.hg', '.svn', '.bzr', '_darcs']
+  let marker_files = ['.editorconfig', 'package.json']
+  for mark in marker_dirs
     let rdir = finddir(mark, a:cwd.';')
     if !empty(rdir)
       return fnamemodify(rdir, ':h')
+    endif
+  endfor
+  for mark in marker_files
+    let rfile = findfile(mark, a:cwd.';')
+    if !empty(rfile)
+      return fnamemodify(rfile, ':h')
     endif
   endfor
   return ''
@@ -1255,12 +1262,11 @@ fu! s:show_tree(...)
   endif
 endfu
 
-com! -nargs=* -complete=customlist,s:jekyll_post_complete JekyllPost call s:jekyll_post(<f-args>)
+com! -nargs=* -complete=customlist,s:jekyll_title_complete JekyllPost call s:jekyll_post(<f-args>)
 fu! s:jekyll_post(...)
   if isdirectory('_posts')
-    let title = a:0 ? a:1 : input("Title: ")
-    if len(title) == 0
-      echoe 'Title must be non-empty'
+    let title = a:0 ? a:1 : input('Title: ')
+    if empty(title)
       return
     endif
     let posts = split(globpath('_posts', '**/*'), "\n")
@@ -1271,23 +1277,39 @@ fu! s:jekyll_post(...)
         return
       endif
     endfor
+    let category = a:0 > 1 ? a:2 : input('Category: ', '', 'customlist,JekyllCategoryComplete')
+    let categoryName = s:to_title(category, '-')
+    if !empty(category)
+      let category .= '/'
+    endif
     let year = strftime('%Y')
     let month = strftime('%m')
     let date = strftime('%d')
-    let fname = year.'-'.month.'-'.date.'-'.title
+    let fname = '_posts/'.category.year.'-'.month.'-'.date.'-'.title
     let fname = fname =~ '.md$' ? fname : fname.'.md'
     silent exe 'edit '.fname
-    silent call setline(1, ['---', 'Title: ', 'category: ', '---'])
+    silent call setline(1, ['---', 'category: '.categoryName, '---'])
   else
     echoe "_posts directory doesn't exist"
   endif
 endfu
-fu! s:jekyll_post_complete(A, L, P)
+fu! s:jekyll_title_complete(A, L, P)
   let posts = split(globpath('_posts', '**/*'), "\n")
   let posts = map(posts, 'substitute(v:val, "_posts/\\d\\+-\\d\\+-\\d\\+-", "", "g")')
   let posts = map(posts, 'fnamemodify(v:val, ":r")')
   let posts = filter(posts, 'v:val =~ "\\v^'.a:A.'"')
   return posts
+endfu
+fu! JekyllCategoryComplete(A, L, P)
+  let categories = split(globpath('_posts', '*'), "\n")
+  let categories = filter(categories, 'isdirectory(v:val)')
+  let categories = map(categories, 'fnamemodify(v:val, ":t")')
+  return categories
+endfu
+fu! s:to_title(str, sep)
+  let list = split(a:str, a:sep)
+  let list = map(list, 'toupper(v:val[0]).strpart(v:val, 1)')
+  return join(list, ' ')
 endfu
 
 com! ToggleColorcolumn call s:toggle_colorcolumn()
@@ -1543,6 +1565,7 @@ let g:ctrlp_mruf_exclude=
       \ .expand('/').'\.git'.expand('/')
 " Disable switching to existing buffers, which has bad effects on Goyo.
 let g:ctrlp_switch_buffer = 0
+let g:ctrlp_root_markers = ['.editorconfig', 'package.config']
 
 nnoremap <silent> <Leader>p :<c-u>CtrlP<CR>
 " This immitates atom, sublimeText and so on.

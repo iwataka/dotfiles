@@ -41,7 +41,7 @@ alias df='df -h'
 alias du='du -h'
 alias free='free -h'
 # Alpine Linux has an old version of grep
-if [[ "$OSTYPE" -ne "linux-musl" ]]; then
+if [[ "$OSTYPE" != "linux-musl" ]]; then
     # Shows diferences in color at doing 'grep'.
     alias grep='grep --color'
     # Shows differences in color at doing 'egrep'.
@@ -81,7 +81,7 @@ if [[ "$OSTYPE" == "cygwin" ]]; then
     alias cpoff='apt-cyg update -m http://ftp.yz.yamagata-u.ac.jp/pub/cygwin'
 fi
 
-if [[ "$OSTYPE" -ne "cygwin" ]] || [[ "$OSTYPE" -ne "msys" ]]; then
+if [[ "$OSTYPE" != "cygwin" ]] || [[ "$OSTYPE" != "msys" ]]; then
     # Google Chrome
     alias chrome="google-chrome-stable"
 fi

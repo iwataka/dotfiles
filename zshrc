@@ -68,6 +68,10 @@ if [ -d $HOME/.cargo/bin ]; then
     export PATH=$HOME/.cargo/bin:$PATH
 fi
 
+if [[ "$OSTYPE" =~ "darwin*" && $(which brew) != "" ]]; then
+    export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
+fi
+
 if [ -d $HOME/bin ]; then
     # Adds at the head of PATH.
     export PATH=$HOME/bin:$PATH
