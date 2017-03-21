@@ -379,8 +379,8 @@ if has('autocmd')
     autocmd BufRead * call matchadd('Visual', '\v^\s*\zs\>{7}[^\>]+$\ze')
 
     " Automatically open the quickfix window
-    " autocmd QuickFixCmdPost grep,Ggrep cwindow
-    " autocmd QuickFixCmdPost lgrep,Glgrep lwindow
+    autocmd QuickFixCmdPost grep,Ggrep cwindow
+    autocmd QuickFixCmdPost lgrep,Glgrep lwindow
 
     " Automatically remove trailing spaces when saving
     " NOTE: This feature has bad effects for undo function.
@@ -1613,7 +1613,7 @@ endif
 nnoremap gs :<c-u>Gstatus<CR>
 nnoremap <leader>gd :<c-u>Gdiff<CR>
 nnoremap <leader>gD :<c-u>Gsplit! diff<cr>
-nnoremap <leader>gg :<c-u>Ggrep<space>
+nnoremap <silent> <leader>gg :call <sid>grep()<cr>
 nnoremap <Leader>gc :<c-u>Gcommit<CR>
 nnoremap <Leader>gr :<c-u>Gread<CR>
 nnoremap <leader>gR :<c-u>Gremove<cr>
@@ -1622,6 +1622,19 @@ nnoremap <Leader>gl :<c-u>Glog<CR>
 nnoremap <leader>gL :<c-u>Gpedit! log -n 10 --stat<cr><c-w>p
 nnoremap <leader>ga :<c-u>Gcommit --amend<cr>
 nnoremap <leader>gA :<c-u>Git add --all<cr>
+
+fu! s:grep()
+  let keyword = input('Type Search Keyword> ')
+  if empty(keyword)
+    return
+  endif
+  let keyword = shellescape(keyword)
+  if exists(':Ggrep')
+    silent exe 'Ggrep '.keyword
+  else
+    silent exe 'grep '.keyword
+  endif
+endfu
 
 nnoremap <leader>gv :<c-u>GV<cr>
 xnoremap <leader>gv :GV<cr>
