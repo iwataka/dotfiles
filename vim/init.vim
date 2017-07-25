@@ -44,7 +44,7 @@ if executable('git')
 endif
 
 " Navigation
-Plug 'justinmk/vim-dirvish'
+Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
 if has('python')
   if has('unix') || has('mac') || has('macunix')
@@ -64,8 +64,9 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'jiangmiao/auto-pairs'
-Plug 'chrisbra/unicode.vim',
-      \ { 'on': ['SearchUnicode', 'UnicodeName', 'UnicodeTable', 'Digraphs'] }
+Plug 'chrisbra/unicode.vim'
+" Plug 'chrisbra/unicode.vim',
+"       \ { 'on': ['SearchUnicode', 'UnicodeName', 'UnicodeTable', 'Digraphs'] }
 " Vim's folding feature slows down inserting characters, especially cjk.
 " This plug-in prevents it and enableds to fold without any effects to the
 " performance. Really nice!
@@ -74,7 +75,9 @@ Plug 'jeetsukumaran/vim-indentwise'
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'whatyouhide/vim-gotham'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 
 " Filetype
 if v:version >= 703
@@ -118,6 +121,7 @@ Plug 'kana/vim-textobj-line'
 Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
 
 " Utility
+Plug 'junegunn/vim-emoji'
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/webapi-vim'
 Plug 'Shougo/vimproc.vim', {
@@ -1437,7 +1441,7 @@ endfu
 " --------------------------------------------------------------
 " ColorScheme {{{2
 " --------------------------------------------------------------
-let s:colors_name = 'gruvbox'
+let s:colors_name = 'gotham'
 " Italic style on Windows has low-visibility and disable it.
 let s:italic = 1
 if has('win32') || !(has('gui_running') || has('nvim'))
@@ -1511,7 +1515,7 @@ endif
 if !exists('g:colors_name')
   try
     exe 'colorscheme '.s:colors_name
-    if has('gui_running')
+    if has('gui_running') && s:colors_name != 'gotham'
       set background=light
     else
       set background=dark
@@ -1521,6 +1525,10 @@ if !exists('g:colors_name')
     colorscheme desert
     set background=dark
   endtry
+endif
+
+if has('gui_macvim')
+  set transparency=20
 endif
 
 " --------------------------------------------------------------
@@ -1829,3 +1837,54 @@ let g:codi#interpreters = {
          \ 'prompt': 'gore> ',
          \ },
      \ }
+
+" --------------------------------------------------------------
+" emoji {{{2
+" --------------------------------------------------------------
+com! -bang EmojiList call s:show_emoji_list()
+fu! s:show_emoji_list()
+  40vnew
+  nnoremap <buffer> q :quit<cr>
+  setlocal modifiable
+  setlocal noreadonly
+  for e in emoji#list()
+    call append(line('$'), printf('%s (%s)', emoji#for(e), e))
+  endfor
+  setlocal nomodifiable
+  setlocal readonly
+  setlocal buftype=nofile
+  setlocal bufhidden=wipe
+  setlocal nobuflisted
+endfu
+
+" --------------------------------------------------------------
+" airline {{{2
+" --------------------------------------------------------------
+" let g:airline_theme = 'aurora'
+" if !exists('g:airline_theme')
+"   let g:airline_theme = s:colors_name
+" endif
+" if empty(&guifont)
+"   let g:airline_powerline_fonts = 0
+" else
+"   let g:airline_powerline_fonts = 1
+" endif
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#fnamemod = ':t'
+" let g:airline#extensions#wordcount#enabled = 0
+
+" " Make gt and gT support both tabline and bufline
+" if exists('g:loaded_airline') && g:loaded_airline && g:airline#extensions#tabline#enabled
+"   nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
+"   nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
+" endif
+
+" fu! s:move_tab_or_buffer(suffix, count)
+"   let tab_exists = tabpagenr('$') != 1
+"   let c = a:count == 0 ? '' : a:count
+"   if tab_exists
+"     silent exe 'tab'.a:suffix.' '.c
+"   elseif buflisted(bufnr('%'))
+"     silent exe 'b'.a:suffix.' '.c
+"   endif
+" endfu

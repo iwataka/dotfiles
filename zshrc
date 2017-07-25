@@ -53,7 +53,7 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-if [ -d $HOME/go ]; then
+if [[ -d $HOME/go && $(which gvm) == "" ]]; then
     export PATH=$PATH:$HOME/go/bin
     export GOPATH=$HOME/go
 fi
@@ -176,3 +176,9 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 # added by travis gem
 [ -f /home/ubuntu/.travis/travis.sh ] && source /home/ubuntu/.travis/travis.sh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/iwasatakatoshi/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/iwasatakatoshi/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/iwasatakatoshi/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/iwasatakatoshi/google-cloud-sdk/completion.zsh.inc'; fi
