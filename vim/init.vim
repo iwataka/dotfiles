@@ -1860,31 +1860,91 @@ endfu
 " --------------------------------------------------------------
 " airline {{{2
 " --------------------------------------------------------------
-" let g:airline_theme = 'aurora'
-" if !exists('g:airline_theme')
-"   let g:airline_theme = s:colors_name
-" endif
-" if empty(&guifont)
-"   let g:airline_powerline_fonts = 0
-" else
-"   let g:airline_powerline_fonts = 1
-" endif
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#fnamemod = ':t'
-" let g:airline#extensions#wordcount#enabled = 0
+let g:airline_theme = 'aurora'
+if !exists('g:airline_theme')
+  let g:airline_theme = s:colors_name
+endif
+if empty(&guifont)
+  let g:airline_powerline_fonts = 0
+else
+  let g:airline_powerline_fonts = 1
+endif
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#wordcount#enabled = 0
 
-" " Make gt and gT support both tabline and bufline
-" if exists('g:loaded_airline') && g:loaded_airline && g:airline#extensions#tabline#enabled
-"   nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
-"   nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
-" endif
+" Make gt and gT support both tabline and bufline
+if exists('g:loaded_airline') && g:loaded_airline && g:airline#extensions#tabline#enabled
+  nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
+  nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
+endif
 
-" fu! s:move_tab_or_buffer(suffix, count)
-"   let tab_exists = tabpagenr('$') != 1
-"   let c = a:count == 0 ? '' : a:count
-"   if tab_exists
-"     silent exe 'tab'.a:suffix.' '.c
-"   elseif buflisted(bufnr('%'))
-"     silent exe 'b'.a:suffix.' '.c
-"   endif
-" endfu
+fu! s:move_tab_or_buffer(suffix, count)
+  let tab_exists = tabpagenr('$') != 1
+  let c = a:count == 0 ? '' : a:count
+  if tab_exists
+    silent exe 'tab'.a:suffix.' '.c
+  elseif buflisted(bufnr('%'))
+    silent exe 'b'.a:suffix.' '.c
+  endif
+endfu
+
+" --------------------------------------------------------------
+" nerdtree {{{2
+" --------------------------------------------------------------
+nnoremap <leader>nt :<c-u>NERDTreeToggle<cr>
+nnoremap <leader>nf :<c-u>NERDTreeFind<cr>
+nnoremap <leader>nm :<c-u>NERDTreeMirror<cr>
+nnoremap <leader>nc :<c-u>NERDTreeCWD<cr>
+nnoremap <leader>nx :<c-u>NERDTreeClose<cr>
+nnoremap <leader>nb :<c-u>NERDTreeFromBookmark
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeWinSize = 40
+
+augroup vimrc-nerdtree
+  autocmd!
+  autocmd FileType nerdtree com! -buffer NERDTreePromote call s:nerdtree_promote()
+  autocmd FileType nerdtree com! -buffer NERDTreeDemote call s:nerdtree_demote()
+  autocmd FileType nerdtree nnoremap <silent> <buffer> << :<c-u>NERDTreePromote<cr>
+  autocmd Filetype nerdtree nnoremap <silent> <buffer> >> :<c-u>NERDTreeDemote<cr>
+augroup END
+
+fu! s:nerdtree_promote()
+  let curNode = g:NERDTreeFileNode.GetSelected()
+  let newNodeDir = fnamemodify(curNode.path.str(), ':h:h')
+  let newNodeName = fnamemodify(curNode.path.str(), ':t')
+  let newNodePath = ''
+  if has('win32') || ('win64')
+    let newNodePath = join([newNodeDir, newNodeName], '\')
+  else
+    let newNodePath = join([newNodeDir, newNodeName], '/')
+  endif
+  try
+    call curNode.rename(newNodePath)
+    call NERDTreeRender()
+    call curNode.putCursorHere(1, 0)
+    redraw
+  catch /^NERDTree/
+    echoe 'Node Not Promoted'
+  endtry
+endfu
+
+fu! s:nerdtree_demote()
+  let curNode = g:NERDTreeFileNode.GetSelected()
+  let newNodeDir = fnamemodify(curNode.path.str(), ':h')
+  let newNodeDest = input('New Directory? ')
+  let newNodeName = fnamemodify(curNode.path.str(), ':t')
+  if has('win32') || ('win64')
+    let newNodePath = join([newNodeDir, newNodeDest, newNodeName], '\')
+  else
+    let newNodePath = join([newNodeDir, newNodeDest, newNodeName], '/')
+  endif
+  try
+    call curNode.rename(newNodePath)
+    call NERDTreeRender()
+    call curNode.putCursorHere(1, 0)
+    redraw
+  catch /^NERDTree/
+    echoe 'Node Not Promoted'
+  endtry
+endfu
