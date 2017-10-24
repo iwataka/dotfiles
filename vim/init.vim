@@ -594,10 +594,6 @@ nnoremap <silent> <leader>rt :<c-u>Root<cr>
 if !maparg('<tab>', 'i') | inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", "\<tab>") | endif
 if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>", "\<tab>") | endif
 
-" grep by K
-nnoremap K :<c-u>call :<c-u>grep <c-r>=shellescape(expand('<cword>'))<cr><cr>
-xnoremap K :<c-u>call :<c-u>grep <c-r>=shellescape(<sid>get_visual_selection()[0])<cr><cr>
-
 " unimpared extension
 nnoremap cof :<c-u>setlocal <c-r>=&fen ? 'nofoldenable' : 'foldenable'<cr><cr>
 
@@ -1441,7 +1437,7 @@ endfu
 " --------------------------------------------------------------
 " ColorScheme {{{2
 " --------------------------------------------------------------
-let s:colors_name = 'gotham'
+let s:colors_name = 'gruvbox'
 " Italic style on Windows has low-visibility and disable it.
 let s:italic = 1
 if has('win32') || !(has('gui_running') || has('nvim'))
