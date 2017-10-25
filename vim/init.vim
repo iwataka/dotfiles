@@ -11,8 +11,6 @@ endif
 
 silent! if plug#begin('~/.vim/plugged')
 
-" My Plugins
-
 " ------------------------------------------------------------------------------
 " ssh is abolished because git-credential is very useful.
 " ------------------------------------------------------------------------------
@@ -22,6 +20,8 @@ silent! if plug#begin('~/.vim/plugged')
   " Require my .ssh/config file.
   " let g:plug_url_format = 'github:%s.git'
 " endif
+
+" My Plugins
 Plug 'iwataka/minidown.vim', { 'for': ['markdown', 'rst'] }
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown', 'on': ['OpenLinkHistory'] }
@@ -344,7 +344,10 @@ if has('autocmd')
     autocmd FileType markdown
           \ setlocal spell |
           \ setlocal commentstring=<!--%s--> |
-          \ setlocal foldlevel=1
+          \ setlocal foldlevel=1 |
+          \ setlocal comments=b:-,b:+,b:* |
+          \ setlocal formatoptions+=ro |
+          \ inoremap <buffer> <expr> <cr> <sid>super_duper_enter()
     autocmd FileType calendar,git,gitv setlocal nolist
     autocmd FileType dosbatch setlocal commentstring=::%s
     autocmd FileType dot setlocal commentstring=//%s
@@ -484,6 +487,13 @@ inoremap <silent> <Up> <c-o>:normal! gk<cr>
 
 nnoremap ; :
 nnoremap : ;
+vnoremap ; :
+vnoremap : ;
+
+vnoremap > >gv
+vnoremap < <gv
+vnoremap <tab> >gv
+vnoremap <s-tab> <gv
 
 " Prevent to override registers by one character
 nnoremap x "_x
@@ -591,8 +601,8 @@ nnoremap <leader>ct :<c-u>checktime<cr>
 
 " Some mappings for user-defined commands
 nnoremap <silent> <leader>rt :<c-u>Root<cr>
-if !maparg('<tab>', 'i') | inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", "\<tab>") | endif
-if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>", "\<tab>") | endif
+if !maparg('<tab>', 'i') | inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", 1) | endif
+if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>",  0) | endif
 
 " unimpared extension
 nnoremap cof :<c-u>setlocal <c-r>=&fen ? 'nofoldenable' : 'foldenable'<cr><cr>
@@ -755,14 +765,23 @@ endfu
 
 " from Junegunn's vimrc
 " https://github.com/junegunn/dotfiles/blob/master/vimrc#L453-L493
-fu! s:super_duper_tab(k, o)
+fu! s:super_duper_tab(k, forward)
+  " If you are editing markdown and the cursor is on a bullet, this
+  " indents/unindents the line
+  if &filetype == 'markdown'
+    let indent_bullet = s:indent_bullet(a:forward)
+    if indent_bullet != ""
+      return indent_bullet
+    endif
+  endif
+
   if pumvisible()
     return a:k
   endif
   let line = getline('.')
   let col = col('.') - 2
   if empty(line) || line[col] !~ '\k\|[/~.]' || line[col + 1] =~ '\k'
-    return a:o
+    return a:forward ? "\<tab>" : "\<S-tab>"
   endif
   let prefix = expand(matchstr(line[0:col], '\S*$'))
   if !empty(&omnifunc)
@@ -776,6 +795,45 @@ fu! s:super_duper_tab(k, o)
   endif
   return a:k
 endfu
+
+fu! s:indent_range(start, end)
+  let cursor = getcurpos()
+  for i in range(a:start, a:end)
+    setline
+  endfor
+  call setpos('.', cursor)
+endfu
+
+" Returns:
+" A key sequence to indent/unindent a bullet on the current line
+" Empty string if the cursor is NOT on a bullet
+fu! s:indent_bullet(forward)
+  let on_bullet = s:on_bullet()
+  if on_bullet
+    if on_bullet == 1 && !a:forward
+      return " \<bs>"
+    endif
+    let key = a:forward ? "\<tab>" : "\<bs>"
+    return "a\<c-o>^".key."\<c-o>w\<c-o>x"
+  endif
+  return ""
+endfu
+
+" Returns:
+" 2 if the cursor is on a bullet with leading spaces
+" 1 if the cursor is on a bullet without any leading spaces
+" 0 if the cursor is NOT on a bullet
+fu! s:on_bullet()
+  let line = getline('.')[0:getpos('.')[2]-2]
+  if line =~ '^\s\+[-+*]\s*$'
+    return 2
+  elseif line =~ '^[-+*]\s*$'
+    return 1
+  else
+    return 0
+  endif
+endfu
+
 " This function can't precisely judge the given function can complete or not
 " (issue with tsuquyomi)
 " fu! s:can_complete(func, prefix)
@@ -785,6 +843,14 @@ endfu
 "   let result = call(a:func, [0, matchstr(a:prefix, '\k\+$')])
 "   return !empty(type(result) == type([]) ? result : result.words)
 " endfu
+
+fu! s:super_duper_enter()
+  if s:on_bullet()
+    return "\<esc>0C"
+  else
+    return "\<cr>"
+  endif
+endfu
 
 " " Settings about japanese and english input sources
 " if has('unix')
