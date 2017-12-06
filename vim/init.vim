@@ -347,7 +347,8 @@ if has('autocmd')
           \ setlocal foldlevel=1 |
           \ setlocal comments=b:-,b:+,b:* |
           \ setlocal formatoptions+=ro |
-          \ inoremap <buffer> <expr> <cr> <sid>super_duper_enter()
+          \ inoremap <buffer> <expr> <cr> <sid>super_duper_enter() |
+          \ let b:AutoPairs = {}
     autocmd FileType calendar,git,gitv setlocal nolist
     autocmd FileType dosbatch setlocal commentstring=::%s
     autocmd FileType dot setlocal commentstring=//%s
@@ -365,7 +366,9 @@ if has('autocmd')
     autocmd FileType java compiler javac
     autocmd FileType ruby compiler ruby
     autocmd FileType rust compiler rustc
-    autocmd FileType go compiler go
+    autocmd FileType go
+          \ compiler go |
+          \ com! -buffer -nargs=+ IFaceMaker call s:ifacemaker(<f-args>)
 
     " Set filetype
     autocmd BufRead,BufNewFile *spacemacs* set filetype=lisp
@@ -1387,6 +1390,25 @@ fu! s:toggle_colorcolumn()
     let s:colorcolumn = &colorcolumn
     set colorcolumn=
   endif
+endfu
+
+fu! s:ifacemaker(struct, iface)
+  let pkg = ''
+  for i in range(1, line('$'))
+    let line = getline(i)
+    if line =~ '^package'
+      let pkg = substitute(line, '^package\s\+', '', 'g')
+      break
+    endif
+  endfor
+  if pkg == ''
+    return
+  endif
+  let file = expand('%:p')
+  new
+  let cmd = printf('ifacemaker -s %s -f %s -i %s -p %s', a:struct, file, a:iface, pkg)
+  exe printf('read ! %s', cmd)
+  setlocal filetype=go
 endfu
 
 " ===============================================================

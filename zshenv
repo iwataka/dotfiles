@@ -11,7 +11,6 @@ fi
 export TERM=screen-256color-bce
 # LANG depends on each environment
 # export LANG=ja_JP.UTF-8
-export BROWSER='google-chrome-stable'
 
 # Local config
 [[ -f ~/.zshenv.local ]] && source ~/.zshenv.local

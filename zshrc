@@ -182,3 +182,6 @@ if [ -f '/Users/iwasatakatoshi/google-cloud-sdk/path.zsh.inc' ]; then source '/U
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/iwasatakatoshi/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/iwasatakatoshi/google-cloud-sdk/completion.zsh.inc'; fi
+
+which kompose > /dev/null
+if [ $? -eq 0 ]; then source <(kompose completion zsh); fi

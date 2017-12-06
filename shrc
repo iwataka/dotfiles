@@ -81,9 +81,4 @@ if [[ "$OSTYPE" == "cygwin" ]]; then
     alias cpoff='apt-cyg update -m http://ftp.yz.yamagata-u.ac.jp/pub/cygwin'
 fi
 
-if [[ "$OSTYPE" != "cygwin" ]] || [[ "$OSTYPE" != "msys" ]]; then
-    # Google Chrome
-    alias chrome="google-chrome-stable"
-fi
-
 [[ -f ~/.shrc.local ]] && source ~/.shrc.local

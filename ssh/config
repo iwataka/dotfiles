@@ -7,3 +7,8 @@ Host github
         HostName github.com
         Port 22
         User git
+
+Host *
+        AddKeysToAgent yes
+        UseKeychain yes
+        IdentityFile ~/.ssh/id_rsa
