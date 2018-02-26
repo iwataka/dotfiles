@@ -915,12 +915,12 @@ fu! s:open(...)
     else
       call s:open_win(args)
     endif
+  elseif has('mac')
+    silent exec '!open '.args
   elseif has('unix')
     " This line does not work at all and I don't know the reason.
     " silent exec '!xdg-open '.args
     call system('xdg-open '.args)
-  elseif has('mac')
-    silent exec '!open '.args
   endif
   redraw!
 endfu
@@ -1495,26 +1495,9 @@ endfu
 
 com! -nargs=+ -complete=customlist,s:plug_open_complete
       \ PlugOpen call s:plug_open(<f-args>)
-" The below substitution is for my own use
-let s:plug_open_dict = {
-      \ '\v^github:': 'https://github.com/'
-      \ }
 fu! s:plug_open(...)
   for plug in a:000
     let uri = g:plugs[plug]['uri']
-    if uri =~ '\v^git\@github.com:'
-      let uri = substitute(uri, '\v^git\@github.com:', 'https://github.com/', '')
-    endif
-    for [pat, val] in items(s:plug_open_dict)
-      if uri =~ pat
-        let uri = substitute(uri, pat, val, 'g')
-      endif
-    endfor
-    " GitHub redirects https://github.com/foo/bar.git to
-    " https://github.com/foo/bar, but it reduces the performance
-    if uri =~ '\v\.git$'
-      let uri = substitute(uri, '\v\.git$', '', '')
-    endif
     call s:open(uri)
   endfor
 endfu
