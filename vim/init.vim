@@ -493,10 +493,10 @@ nnoremap : ;
 vnoremap ; :
 vnoremap : ;
 
-vnoremap > >gv
-vnoremap < <gv
-vnoremap <tab> >gv
-vnoremap <s-tab> <gv
+" vnoremap > >gv
+" vnoremap < <gv
+" vnoremap <tab> >gv
+" vnoremap <s-tab> <gv
 
 " Prevent to override registers by one character
 nnoremap x "_x
