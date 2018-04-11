@@ -112,6 +112,8 @@ Plug 'PProvost/vim-ps1', { 'for': 'ps1' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'keith/swift.vim', { 'for': 'swift' }
 Plug 'lambdalisue/vim-pyenv', { 'for': 'python' }
+Plug 'nvie/vim-flake8', { 'for': 'python' }
+Plug 'janko-m/vim-test'
 
 " Text Object
 Plug 'kana/vim-textobj-user'
@@ -335,7 +337,7 @@ if has('autocmd')
     " When editing a file, always jump to the last known cursor position.
     " do it when the position is invalid or when inside an event handler
     " (happens when dropping a file on gvim).
-    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
     " filetype-specific
     autocmd FileType gitcommit
@@ -355,6 +357,7 @@ if has('autocmd')
     autocmd FileType c setlocal commentstring=//%s
     " Close buffers of specified types by just typing q.
     autocmd FileType help,qf,godoc nnoremap <buffer> q :q<cr>
+    autocmd BufWinEnter * if &buftype == 'terminal' | nnoremap <buffer> q :q<cr> | endif
     autocmd FileType java,c,cpp
           \ if executable('astyle') |
           \   setlocal formatprg=astyle |
@@ -519,9 +522,10 @@ cnoremap jk <C-c>
 " These lines cause motion delay in Visual mode.
 " vnoremap jk <Esc>
 " xnoremap jk <Esc>
-if has('nvim')
+if has('terminal')
   tnoremap jk <C-\><C-n>
   tnoremap <ESC> <C-\><C-n>
+  tnoremap q <C-\><C-n>:q<cr>
 endif
 
 " " Edit vimrc
@@ -861,7 +865,7 @@ endfu
 "   let s:ibus = !empty(system('ibus engine 2> /dev/null'))
 "   aug vimrc-jp
 "     au!
-"     au InsertLeave * call s:on_insert_leave()
+"     autocmd InsertLeave * call s:on_insert_leave()
 "   aug END
 " endif
 
@@ -1430,8 +1434,8 @@ abbrev nwe new
 
 " Shortcut
 if has('autocmd')
-  au vimrcEx FileType java call s:abbrev_java()
-  au vimrcEx FileType scala call s:abbrev_scala()
+  autocmd vimrcEx FileType java call s:abbrev_java()
+  autocmd vimrcEx FileType scala call s:abbrev_scala()
 endif
 
 fu! s:abbrev_java()
@@ -2015,3 +2019,36 @@ fu! s:nerdtree_demote()
     echoe 'Node Not Promoted'
   endtry
 endfu
+
+" --------------------------------------------------------------
+" pyenv {{{2
+" --------------------------------------------------------------
+function! s:jedi_auto_force_py_version() abort
+  let major_version = pyenv#python#get_internal_major_version()
+  call jedi#force_py_version(major_version)
+endfunction
+augroup vim-pyenv-custom-augroup
+  autocmd! *
+  autocmd User vim-pyenv-activate-post   silent! call s:jedi_auto_force_py_version()
+  autocmd User vim-pyenv-deactivate-post silent! call s:jedi_auto_force_py_version()
+augroup END
+
+" --------------------------------------------------------------
+" vim-flake8 {{{2
+" --------------------------------------------------------------
+let g:no_flake8_maps = 1
+com! PyFlake8 call flake8#Flake8()
+
+" --------------------------------------------------------------
+" vim-test {{{2
+" --------------------------------------------------------------
+nnoremap <silent> <leader>tn :TestNearest<cr>
+nnoremap <silent> <leader>tf :TestFile<cr>
+nnoremap <silent> <leader>ts :TestSuite<cr>
+nnoremap <silent> <leader>tl :TestLast<cr>
+nnoremap <silent> <leader>tv :TestVisit<cr>
+if has('nvim')
+  let test#strategy = 'neovim'
+elseif has('terminal')
+  let test#strategy = 'vimterminal'
+endif
