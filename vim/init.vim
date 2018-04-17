@@ -72,6 +72,7 @@ Plug 'chrisbra/unicode.vim'
 " performance. Really nice!
 Plug 'Konfekt/FastFold'
 Plug 'jeetsukumaran/vim-indentwise'
+Plug 'Chiel92/vim-autoformat'
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
