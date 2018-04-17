@@ -610,6 +610,9 @@ nnoremap <silent> <BS><BS> :<c-u>call <sid>preserve('%s/\s*$//')<cr>
 " :checktime is frequently used
 nnoremap <leader>ct :<c-u>checktime<cr>
 
+" Change the current directory to where the active file exists
+nnoremap <leader>cd :<c-u>cd %:h<cr>
+
 " Some mappings for user-defined commands
 nnoremap <silent> <leader>rt :<c-u>Root<cr>
 if !maparg('<tab>', 'i') | inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", 1) | endif
