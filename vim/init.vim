@@ -616,7 +616,7 @@ nnoremap <leader>cd :<c-u>cd %:h<cr>
 " Some mappings for user-defined commands
 nnoremap <silent> <leader>rt :<c-u>Root<cr>
 if !maparg('<tab>', 'i') | inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", 1) | endif
-if !maparg('<tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>",  0) | endif
+if !maparg('<S-tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>",  0) | endif
 
 " unimpared extension
 nnoremap cof :<c-u>setlocal <c-r>=&fen ? 'nofoldenable' : 'foldenable'<cr><cr>
