@@ -28,6 +28,7 @@ Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown', 'on': ['OpenLinkHistory'] }
 Plug 'iwataka/gitignore.vim'
 Plug 'iwataka/hello-world.vim'
 Plug 'iwataka/ctrlp-bookmarkdir-ex.vim'
+Plug 'iwataka/colorex.vim'
 unlet! g:plug_url_format
 
 " Git
@@ -1521,7 +1522,7 @@ endfu
 " --------------------------------------------------------------
 " ColorScheme {{{2
 " --------------------------------------------------------------
-let s:colors_name = 'gruvbox'
+" let s:colors_name = 'gruvbox'
 " Italic style on Windows has low-visibility and disable it.
 let s:italic = 1
 if has('win32') || !(has('gui_running') || has('nvim'))
@@ -1529,6 +1530,24 @@ if has('win32') || !(has('gui_running') || has('nvim'))
 endif
 let g:gruvbox_improved_warnings = 1
 let g:gruvbox_italic = s:italic
+
+nnoremap <F5> :ColorexToggleBackground<cr>
+nnoremap <C-F5> :ColorexSwitchContrast<cr>
+nnoremap <C-S-F5> :ColorexSwitchContrast!<cr>
+
+if has('gui_running')
+  let g:colorex_cache_file_path = expand('~/.vim/.colorscheme.gui.cache')
+endif
+
+if !has('gui_running')
+  autocmd vimrcEx ColorScheme *
+        \ hi Normal ctermbg=NONE |
+        \ hi NonText ctermbg=NONE
+endif
+
+if has('gui_macvim')
+  set transparency=20
+endif
 
 nnoremap <silent> <F11> :call <sid>toggle_fullscreen()<cr>
 fu! s:toggle_fullscreen()
@@ -1540,116 +1559,6 @@ fu! s:toggle_fullscreen()
     WToggleFullscreen
   endif
 endfu
-
-nnoremap <F5> :set background=<c-r>=&bg == 'dark' ? 'light' : 'dark'<cr><cr>
-" This mappings may not work on terminal, but not used on it.
-nnoremap <C-F5> :call <sid>toggle_contrast(1)<cr>
-nnoremap <C-S-F5> :call <sid>toggle_contrast(0)<cr>
-com! -nargs=1 -complete=customlist,s:ToggleContrastComplete
-      \ ToggleContrast call s:set_contrast(<q-args>)
-fu! s:toggle_contrast(incr)
-  " In some cases, g:colors_name is unlet
-  if exists('g:colors_name')
-    if g:colors_name == 'gruvbox'
-      exe 'let cont = g:gruvbox_contrast_'.&bg
-      let contlist = ['soft', 'medium', 'hard']
-      let nextindex = (index(contlist, cont) + (a:incr ? 1 : -1)) % len(contlist)
-      call s:set_contrast(contlist[nextindex])
-    elseif g:colors_name == 'solarized'
-      let cont = g:solarized_contrast
-      let contlist = ['low', 'normal', 'high']
-      let nextindex = (index(contlist, cont) + (a:incr ? 1 : -1)) % len(contlist)
-      call s:set_contrast(contlist[nextindex])
-    else
-      call s:warn(g:colors_name.' is not supported.')
-    endif
-  endif
-endfu
-fu! s:set_contrast(cont)
-  if exists('g:colors_name')
-    if g:colors_name == 'gruvbox'
-      exe 'let g:gruvbox_contrast_'.&bg.' = "'.a:cont.'"'
-      colorscheme gruvbox
-      redraw | exe 'echo "Current contrast: ".g:gruvbox_contrast_'.&bg
-    elseif g:colors_name == 'solarized'
-      let g:solarized_contrast = a:cont
-      colorscheme solarized
-      redraw | echo 'Current contrast: '.g:solarized_contrast
-    endif
-  endif
-endfu
-fu! s:ToggleContrastComplete(A, L, P)
-  if g:colors_name == 'gruvbox'
-    return filter(['soft', 'medium', 'hard'], 'v:val =~ "'.a:A.'"')
-  elseif g:colors_name == 'solarized'
-    return filter(['low', 'normal', 'high'], 'v:val =~ "'.a:A.'"')
-  endif
-endfu
-
-if !has('gui_running')
-  autocmd vimrcEx ColorScheme *
-        \ hi Normal ctermbg=NONE |
-        \ hi NonText ctermbg=NONE
-endif
-
-if !exists('g:colors_name')
-  try
-    exe 'colorscheme '.s:colors_name
-    if has('gui_running') && s:colors_name != 'gotham'
-      set background=light
-    else
-      set background=dark
-    endif
-  catch /^/
-    " Default colorscheme
-    colorscheme desert
-    set background=dark
-  endtry
-endif
-
-if has('gui_macvim')
-  set transparency=20
-endif
-
-let s:colorscheme_cache_fpath = expand('~/.vim/.colorscheme.cache')
-
-fu! s:colorscheme_save()
-  let lines = [g:colors_name, &background]
-  if g:colors_name == 'gruvbox'
-    if &bg == 'dark'
-      let lines += [g:gruvbox_contrast_dark]
-    elseif &bg == 'light'
-      let lines += [g:gruvbox_contrast_light]
-    endif
-  endif
-  call writefile(lines, s:colorscheme_cache_fpath)
-endfu
-
-fu! s:colorscheme_load()
-  if filereadable(s:colorscheme_cache_fpath)
-    let lines = readfile(s:colorscheme_cache_fpath)
-    silent! execute 'colorscheme '.lines[0]
-    silent! execute 'set background='.lines[1]
-    if len(lines) >= 3
-      if g:colors_name == 'gruvbox'
-        if &bg == 'dark'
-          silent! execute "let g:gruvbox_contrast_dark = '".lines[2]."'"
-        elseif &bg == 'light'
-          silent! execute "let g:gruvbox_contrast_light = '".lines[2]."'"
-        endif
-      endif
-      silent! execute 'colorscheme '.lines[0]
-    endif
-  endif
-endfu
-
-if has('autocmd')
-  augroup colorschemeEx
-    autocmd!
-    autocmd VimEnter * call s:colorscheme_load()
-    autocmd ColorScheme * call s:colorscheme_save()
-  augroup END
-endif
 
 " --------------------------------------------------------------
 " CtrlP {{{2
