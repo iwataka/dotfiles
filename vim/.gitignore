@@ -9,3 +9,4 @@ backups/*
 spell/
 shada/
 session/
+.colorscheme.cache

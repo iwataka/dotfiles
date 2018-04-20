@@ -1611,6 +1611,46 @@ if has('gui_macvim')
   set transparency=20
 endif
 
+let s:colorscheme_cache_fpath = expand('~/.vim/.colorscheme.cache')
+
+fu! s:colorscheme_save()
+  let lines = [g:colors_name, &background]
+  if g:colors_name == 'gruvbox'
+    if &bg == 'dark'
+      let lines += [g:gruvbox_contrast_dark]
+    elseif &bg == 'light'
+      let lines += [g:gruvbox_contrast_light]
+    endif
+  endif
+  call writefile(lines, s:colorscheme_cache_fpath)
+endfu
+
+fu! s:colorscheme_load()
+  if filereadable(s:colorscheme_cache_fpath)
+    let lines = readfile(s:colorscheme_cache_fpath)
+    silent! execute 'colorscheme '.lines[0]
+    silent! execute 'set background='.lines[1]
+    if len(lines) >= 3
+      if g:colors_name == 'gruvbox'
+        if &bg == 'dark'
+          silent! execute "let g:gruvbox_contrast_dark = '".lines[2]."'"
+        elseif &bg == 'light'
+          silent! execute "let g:gruvbox_contrast_light = '".lines[2]."'"
+        endif
+      endif
+      silent! execute 'colorscheme '.lines[0]
+    endif
+  endif
+endfu
+
+if has('autocmd')
+  augroup colorschemeEx
+    autocmd!
+    autocmd VimEnter * call s:colorscheme_load()
+    autocmd ColorScheme * call s:colorscheme_save()
+  augroup END
+endif
+
 " --------------------------------------------------------------
 " CtrlP {{{2
 " --------------------------------------------------------------
