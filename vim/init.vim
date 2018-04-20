@@ -78,6 +78,7 @@ Plug 'Chiel92/vim-autoformat'
 " Colorscheme
 Plug 'morhetz/gruvbox'
 Plug 'whatyouhide/vim-gotham'
+Plug 'altercation/vim-colors-solarized'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
 
@@ -1522,7 +1523,7 @@ endfu
 " --------------------------------------------------------------
 " ColorScheme {{{2
 " --------------------------------------------------------------
-" let s:colors_name = 'gruvbox'
+" Gruvbox
 " Italic style on Windows has low-visibility and disable it.
 let s:italic = 1
 if has('win32') || !(has('gui_running') || has('nvim'))
@@ -1530,6 +1531,11 @@ if has('win32') || !(has('gui_running') || has('nvim'))
 endif
 let g:gruvbox_improved_warnings = 1
 let g:gruvbox_italic = s:italic
+
+" Solarized
+let g:solarized_termcolors = 256
+let g:solarized_menu = 0
+let g:solarized_visibility = 'high'
 
 nnoremap <F5> :ColorexToggleBackground<cr>
 nnoremap <C-F5> :ColorexSwitchContrast<cr>
