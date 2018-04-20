@@ -397,7 +397,9 @@ if has('autocmd')
     autocmd QuickFixCmdPost lgrep,Glgrep lwindow
 
     autocmd VimEnter * silent! source .vimrc.local
-    autocmd DirChanged * silent! source .vimrc.local
+    if exists('#DirChanged')
+        autocmd DirChanged * silent! source .vimrc.local
+    endif
 
     " Automatically remove trailing spaces when saving
     " NOTE: This feature has bad effects for undo function.
