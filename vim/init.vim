@@ -1614,7 +1614,8 @@ let g:ctrlp_root_markers = ['.editorconfig', 'package.config']
 
 nnoremap <silent> <Leader>p :<c-u>CtrlP<CR>
 " This immitates atom, sublimeText and so on.
-nnoremap <silent> <C-p> :CtrlP<cr>
+" Conflicting with one of vim-markdown-ex key-mappings
+" nnoremap <silent> <C-p> :CtrlP<cr>
 nnoremap <silent> <Leader>b :<c-u>CtrlPBuffer<CR>
 nnoremap <silent> <Leader>m :<c-u>CtrlPMRU<CR>
 nnoremap <silent> <Leader>d :<c-u>CtrlPBookmarkDir<CR>
