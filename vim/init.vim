@@ -1544,7 +1544,7 @@ nnoremap <C-F5> :ColorexSwitchContrast<cr>
 nnoremap <C-S-F5> :ColorexSwitchContrast!<cr>
 
 if has('gui_running')
-  let g:colorex_cache_file_path = expand('~/.vim/.colorscheme.gui.cache')
+  let g:colorex_cache_file_path = expand('~/.vim/.colorscheme.gui.vim')
 endif
 
 if !has('gui_running')
