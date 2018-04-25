@@ -107,8 +107,8 @@ Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'asciidoc/vim-asciidoc', { 'for': 'asciidoc' }
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
-Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
-if has('python')
+if has('python') || has('python3')
+  Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
   Plug 'justmao945/vim-clang', { 'for': ['c', 'cpp'] }
 endif
 Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
