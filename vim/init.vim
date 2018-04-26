@@ -29,6 +29,8 @@ Plug 'iwataka/gitignore.vim'
 Plug 'iwataka/hello-world.vim'
 Plug 'iwataka/ctrlp-bookmarkdir-ex.vim'
 Plug 'iwataka/colorex.vim'
+Plug 'iwataka/awesome.vim'
+Plug 'iwataka/github.vim', { 'on': ['GHOpen', 'GHReleases', 'GHSearch'] }
 unlet! g:plug_url_format
 
 " Git
@@ -41,7 +43,6 @@ if executable('git')
   Plug 'junegunn/gv.vim', { 'on': ['GV'] }
   Plug 'junegunn/vim-github-dashboard', { 'on': ['GHActivity', 'GHDashboard'] }
   Plug 'mattn/gist-vim'
-  Plug 'iwataka/github.vim', { 'on': ['Greadme', 'Greleases', 'Gsearch'] }
 endif
 
 " Navigation
