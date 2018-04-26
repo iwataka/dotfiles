@@ -406,6 +406,11 @@ if has('autocmd')
         autocmd DirChanged * silent! source .vimrc.local
     endif
 
+    autocmd BufReadCmd *.pdf,*.mp3,*.mp4,*.xls,*.xlsx,*.xlsm,*.doc,*.docx,*.docm,*.ppt,*.pptx,*.pptm
+          \ silent call <sid>open(expand('<afile>')) |
+          \ doautocmd CtrlPMRUF BufWinEnter |
+          \ bdelete
+
     " Automatically remove trailing spaces when saving
     " NOTE: This feature has bad effects for undo function.
     " autocmd BufWritePre * call s:preserve('%s/\s*$//')
