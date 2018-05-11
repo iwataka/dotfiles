@@ -11,7 +11,7 @@ function o() {
         cmd="xdg-open"
     elif [[ "$OSTYPE" == "cygwin" ]]; then
         cmd="cygstart"
-    elif [[ "$OSTYPE" == "darwin" ]]; then
+    elif [[ "$OSTYPE" =~ "darwin*" ]]; then
         cmd="open"
     else
         cmd="start"
