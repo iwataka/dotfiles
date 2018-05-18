@@ -9,4 +9,9 @@ backups/*
 spell/
 shada/
 session/
-.colorscheme.cache
+
+# Colorex.vim
+.colorscheme*.vim
+
+# vim-plug
+autoload/plug.vim.old

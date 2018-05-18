@@ -48,6 +48,7 @@ endif
 " Navigation
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'mhinz/vim-startify'
 if has('python')
   if has('unix') || has('mac') || has('macunix')
     Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
@@ -75,6 +76,8 @@ Plug 'chrisbra/unicode.vim'
 Plug 'Konfekt/FastFold'
 Plug 'jeetsukumaran/vim-indentwise'
 Plug 'Chiel92/vim-autoformat'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'AndrewRadev/sideways.vim'
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
@@ -120,6 +123,7 @@ Plug 'keith/swift.vim', { 'for': 'swift' }
 Plug 'lambdalisue/vim-pyenv', { 'for': 'python' }
 Plug 'nvie/vim-flake8', { 'for': 'python' }
 Plug 'janko-m/vim-test'
+Plug 'dag/vim-fish', { 'for': 'fish' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
@@ -129,9 +133,10 @@ Plug 'kana/vim-textobj-line'
 Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
 
 " Utility
-Plug 'junegunn/vim-emoji'
+Plug 'junegunn/vim-emoji', { 'on': ['EmojiList'] }
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/webapi-vim'
+Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
 Plug 'Shougo/vimproc.vim', {
       \ 'do': has('win32') ? 'tools\\update-dll-mingw' : 'make',
       \ 'for': 'typescript'
@@ -363,6 +368,7 @@ if has('autocmd')
     autocmd FileType c setlocal commentstring=//%s
     " Close buffers of specified types by just typing q.
     autocmd FileType help,qf,godoc nnoremap <buffer> q :q<cr>
+    autocmd BufEnter fugitive://* nnoremap <buffer> q :q<cr>
     autocmd BufWinEnter * if &buftype == 'terminal' | nnoremap <buffer> q :q<cr> | endif
     autocmd FileType java,c,cpp
           \ if executable('astyle') |
@@ -1017,14 +1023,18 @@ endfu
 
 com! -nargs=* Google call s:google_search(<f-args>)
 fu! s:google_search(...)
-  let keywords = join(a:000, '+')
-  let url = ""
-  if keywords == ""
-    let url = "https://www.google.com"
+  if executable('googler')
+    silent execute '!googler '.join(a:000, ' ')
   else
-    let url = "https://www.google.com/search?q=".keywords
+    let keywords = join(a:000, '+')
+    let url = ""
+    if keywords == ""
+      let url = "https://www.google.com"
+    else
+      let url = "https://www.google.com/search?q=".keywords
+    endif
+    call s:open(url)
   endif
-  call s:open(url)
 endfu
 
 com! -nargs=* YouTube call s:youtube_search(<q-args>)
@@ -1664,7 +1674,6 @@ endif
 nnoremap gs :<c-u>Gstatus<CR>
 nnoremap <leader>gd :<c-u>Gdiff<CR>
 nnoremap <leader>gD :<c-u>Gsplit! diff<cr>
-nnoremap <silent> <leader>gg :call <sid>grep()<cr>
 nnoremap <Leader>gc :<c-u>Gcommit<CR>
 nnoremap <Leader>gr :<c-u>Gread<CR>
 nnoremap <leader>gR :<c-u>Gremove<cr>
@@ -1673,19 +1682,6 @@ nnoremap <Leader>gl :<c-u>Glog<CR>
 nnoremap <leader>gL :<c-u>Gpedit! log -n 10 --stat<cr><c-w>p
 nnoremap <leader>ga :<c-u>Gcommit --amend<cr>
 nnoremap <leader>gA :<c-u>Git add --all<cr>
-
-fu! s:grep()
-  let keyword = input('Type Search Keyword> ')
-  if empty(keyword)
-    return
-  endif
-  let keyword = shellescape(keyword)
-  if exists(':Ggrep')
-    silent exe 'Ggrep '.keyword
-  else
-    silent exe 'grep '.keyword
-  endif
-endfu
 
 nnoremap <leader>gv :<c-u>GV<cr>
 xnoremap <leader>gv :GV<cr>
@@ -2010,3 +2006,24 @@ if has('nvim')
 elseif has('terminal')
   let test#strategy = 'vimterminal'
 endif
+
+" --------------------------------------------------------------
+" vim-grepper {{{2
+" --------------------------------------------------------------
+nnoremap <silent> <leader>gg :Grepper<cr>
+
+" --------------------------------------------------------------
+" vim-startify {{{2
+" --------------------------------------------------------------
+let g:startify_bookmarks = [ {'c': '~/.vim/init.vim'} ]
+let g:startify_session_persistence = 1
+
+" --------------------------------------------------------------
+" sideways.vim {{{2
+" --------------------------------------------------------------
+nnoremap <silent> gH :SidewaysLeft<cr>
+nnoremap <silent> gL :SidewaysRight<cr>
+omap aa <Plug>SidewaysArgumentTextobjA
+xmap aa <Plug>SidewaysArgumentTextobjA
+omap ia <Plug>SidewaysArgumentTextobjI
+xmap ia <Plug>SidewaysArgumentTextobjI
