@@ -48,7 +48,6 @@ endif
 " Navigation
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'mhinz/vim-startify'
 if has('python')
   if has('unix') || has('mac') || has('macunix')
     Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
@@ -2011,12 +2010,6 @@ endif
 " vim-grepper {{{2
 " --------------------------------------------------------------
 nnoremap <silent> <leader>gg :Grepper<cr>
-
-" --------------------------------------------------------------
-" vim-startify {{{2
-" --------------------------------------------------------------
-let g:startify_bookmarks = [ {'c': '~/.vim/init.vim'} ]
-let g:startify_session_persistence = 1
 
 " --------------------------------------------------------------
 " sideways.vim {{{2
