@@ -128,7 +128,7 @@ install-default() {
     fi
 }
 
-install-gvm() {
+install-for-gvm() {
     if [ "$OSTYPE" == "linux-musl" ]; then
         sudo apk add -y --no-cache curl git mercurial make binutils bison gcc g++ tar
     elif [ "$OSTYPE" == "linux-gnu" ]; then
@@ -139,9 +139,11 @@ install-gvm() {
 
 install-default
 
-for arg in "$@"; do
-    if [ "$arg" == "go" ]; then
-        install-gvm
-    fi
-    shift
-done
+if [ "$#" -ne 0 ]; then
+    for arg in "$@"; do
+        install-for-$arg
+        shift
+    done
+else
+    install-default
+fi
