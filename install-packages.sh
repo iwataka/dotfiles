@@ -132,7 +132,7 @@ install-for-gvm() {
     if [ "$OSTYPE" == "linux-musl" ]; then
         sudo apk add -y --no-cache curl git mercurial make binutils bison gcc g++ tar
     elif [ "$OSTYPE" == "linux-gnu" ]; then
-        sudo apt-get curl git mercurial make binutils bison gcc build-essential
+        sudo apt-get install -y curl git mercurial make binutils bison gcc build-essential
     fi
     bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
 }
