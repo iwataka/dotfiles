@@ -9,6 +9,7 @@ Host github
         User git
 
 Host *
+        IgnoreUnknown UseKeychain
         AddKeysToAgent yes
         UseKeychain yes
         IdentityFile ~/.ssh/id_rsa
