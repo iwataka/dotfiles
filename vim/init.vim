@@ -1451,6 +1451,13 @@ fu! s:ifacemaker(struct, iface)
   setlocal filetype=go
 endfu
 
+com! PWD call s:pwd()
+fu! s:pwd()
+  let cwd = getcwd()
+  let @* = cwd
+  echo printf("%s (-> clipboard)", cwd)
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
