@@ -1057,17 +1057,25 @@ fu! s:javadoc(version, class)
   call s:open(url)
 endfu
 
-com! Todo call s:todo()
-fu! s:todo()
-  silent! grep TODO
-  silent! grepadd FIXME
-  silent! grepadd OPTIMIZE
-  silent! grepadd HACK
-  silent! grepadd REVIEW
-  silent! grepadd CHANGED
-  silent! grepadd XXX
-  silent! grepadd IDEA
-  silent! grepadd NOTE
+com! -nargs=* Todo call s:todo(<q-args>)
+fu! s:todo(args)
+  let keywords = [
+        \ 'TODO',
+        \ 'FIXME',
+        \ 'OPTIMIZE',
+        \ 'HACK',
+        \ 'REVIEW',
+        \ 'CHANGED',
+        \ 'XXX',
+        \ 'IDEA',
+        \ 'NOTE'
+        \ ]
+  let first = 1
+  for kw in keywords
+    let grep_cmd = first ? 'grep' : 'grepadd'
+    let first = 0
+    silent! exe printf('%s %s %s', grep_cmd, kw, a:args)
+  endfor
 endfu
 
 " This has the same name as Make command in vim-dispatch and it causes
