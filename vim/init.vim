@@ -48,6 +48,7 @@ endif
 " Navigation
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'majutsushi/tagbar'
 if has('python')
   if has('unix') || has('mac') || has('macunix')
     Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
