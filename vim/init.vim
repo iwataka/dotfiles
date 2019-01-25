@@ -1057,17 +1057,25 @@ fu! s:javadoc(version, class)
   call s:open(url)
 endfu
 
-com! Todo call s:todo()
-fu! s:todo()
-  silent! grep TODO
-  silent! grepadd FIXME
-  silent! grepadd OPTIMIZE
-  silent! grepadd HACK
-  silent! grepadd REVIEW
-  silent! grepadd CHANGED
-  silent! grepadd XXX
-  silent! grepadd IDEA
-  silent! grepadd NOTE
+com! -nargs=* Todo call s:todo(<q-args>)
+fu! s:todo(args)
+  let keywords = [
+        \ 'TODO',
+        \ 'FIXME',
+        \ 'OPTIMIZE',
+        \ 'HACK',
+        \ 'REVIEW',
+        \ 'CHANGED',
+        \ 'XXX',
+        \ 'IDEA',
+        \ 'NOTE'
+        \ ]
+  let first = 1
+  for kw in keywords
+    let grep_cmd = first ? 'grep' : 'grepadd'
+    let first = 0
+    silent! exe printf('%s %s %s', grep_cmd, kw, a:args)
+  endfor
 endfu
 
 " This has the same name as Make command in vim-dispatch and it causes
@@ -1441,6 +1449,13 @@ fu! s:ifacemaker(struct, iface)
   let cmd = printf('ifacemaker -s %s -f %s -i %s -p %s', a:struct, file, a:iface, pkg)
   exe printf('read ! %s', cmd)
   setlocal filetype=go
+endfu
+
+com! PWD call s:pwd()
+fu! s:pwd()
+  let cwd = getcwd()
+  let @* = cwd
+  echo printf("%s (-> clipboard)", cwd)
 endfu
 
 " ===============================================================
@@ -2020,3 +2035,9 @@ omap aa <Plug>SidewaysArgumentTextobjA
 xmap aa <Plug>SidewaysArgumentTextobjA
 omap ia <Plug>SidewaysArgumentTextobjI
 xmap ia <Plug>SidewaysArgumentTextobjI
+
+" --------------------------------------------------------------
+" vim-go {{{2
+" --------------------------------------------------------------
+let g:go_fmt_command = "goimports"
+let g:go_gocode_unimported_packages = 1
