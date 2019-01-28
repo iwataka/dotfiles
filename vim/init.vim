@@ -739,22 +739,24 @@ fu! s:move_to_root(cmd, path)
     echom 'Changes the current directory to: '.root
   endif
 endfu
+let s:root_marker_files = ['.editorconfig', 'package.json', 'pom.xml', 'build.gradle']
+let s:root_marker_dirs = ['.git', '.hg', '.svn', '.bzr', '_darcs']
 fu! s:root(cwd)
-  let marker_dirs = ['.git', '.hg', '.svn', '.bzr', '_darcs']
-  let marker_files = ['.editorconfig', 'package.json']
-  for mark in marker_dirs
-    let rdir = finddir(mark, a:cwd.';')
-    if !empty(rdir)
-      return fnamemodify(rdir, ':h')
+  let f_roots = s:root_marker_files[:]
+  let d_roots = s:root_marker_dirs[:]
+  let f_roots = map(f_roots, "findfile(v:val, a:cwd.';')")
+  let d_roots = map(d_roots, "finddir(v:val, a:cwd.';')")
+  let f_roots = filter(f_roots, '!empty(v:val)')
+  let d_roots = filter(d_roots, '!empty(v:val)')
+  let f_roots = map(f_roots, "fnamemodify(v:val, ':p:h')")
+  let d_roots = map(d_roots, "fnamemodify(v:val, ':p:h:h')")
+  let [root, max_len] = ['', 0]
+  for r in f_roots + d_roots
+    if len(r) > max_len
+      let [root, max_len] = [r, len(r)]
     endif
   endfor
-  for mark in marker_files
-    let rfile = findfile(mark, a:cwd.';')
-    if !empty(rfile)
-      return fnamemodify(rfile, ':h')
-    endif
-  endfor
-  return ''
+  return root
 endfu
 
 fu! s:warn(msg)
@@ -1643,7 +1645,7 @@ let g:ctrlp_mruf_exclude=
       \ .expand('/').'\.git'.expand('/')
 " Disable switching to existing buffers, which has bad effects on Goyo.
 let g:ctrlp_switch_buffer = 0
-let g:ctrlp_root_markers = ['.editorconfig', 'package.config']
+let g:ctrlp_root_markers = s:root_marker_files
 
 nnoremap <silent> <Leader>p :<c-u>CtrlP<CR>
 " This immitates atom, sublimeText and so on.
