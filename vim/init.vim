@@ -312,7 +312,9 @@ if has('persistent_undo')
 endif
 
 " pt is easy to use even on Windows and as fast as ag
-if executable('pt')
+if executable('rg')
+  set grepprg=rg\ --color\ never\ --no-heading\ --column
+elseif executable('pt')
   set grepprg=pt\ --nogroup\ --nocolor\ --column
 elseif executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --column
