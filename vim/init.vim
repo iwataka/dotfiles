@@ -124,6 +124,10 @@ Plug 'lambdalisue/vim-pyenv', { 'for': 'python' }
 Plug 'nvie/vim-flake8', { 'for': 'python' }
 Plug 'janko-m/vim-test'
 Plug 'dag/vim-fish', { 'for': 'fish' }
+Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
+Plug 'udalov/kotlin-vim', { 'for': 'kotlin' }
+Plug 'scrooloose/vim-slumlord', { 'for': 'plantuml' }
+Plug 'aklt/plantuml-syntax', { 'for': 'plantuml' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
