@@ -22,7 +22,7 @@ silent! if plug#begin('~/.vim/plugged')
 " endif
 
 " My Plugins
-Plug 'iwataka/minidown.vim', { 'for': ['markdown', 'rst'] }
+Plug 'iwataka/minidown.vim'
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown', 'on': ['OpenLinkHistory'] }
 Plug 'iwataka/gitignore.vim'
@@ -126,7 +126,6 @@ Plug 'janko-m/vim-test'
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
 Plug 'udalov/kotlin-vim', { 'for': 'kotlin' }
-Plug 'scrooloose/vim-slumlord', { 'for': 'plantuml' }
 Plug 'aklt/plantuml-syntax', { 'for': 'plantuml' }
 
 " Text Object
@@ -1859,7 +1858,7 @@ augroup END
 " --------------------------------------------------------------
 " minidown {{{2
 " --------------------------------------------------------------
-let g:minidown_enable_toc = 0
+let g:minidown_pandoc_enable_toc = 0
 
 " --------------------------------------------------------------
 " javacomplete2 {{{2
