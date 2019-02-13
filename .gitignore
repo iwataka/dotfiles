@@ -23,3 +23,8 @@ sbt/0.13/plugins/*
 # GnuPG
 gnupg/*
 !gnupg/gpg.conf
+
+# fish
+fish/*
+!fish/fishfile
+!fish/config.fish
