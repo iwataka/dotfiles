@@ -49,9 +49,14 @@ setup-symlinks() {
         remove_or_backup $HOME/.$file
         ln -s $dfsdir/$file ~/.$file
     done
-    # symlink for neovim
-    remove_or_backup ~/.config/nvim
-    ln -s $dfsdir/vim ~/.config/nvim
+    setup-symlinks-to-config nvim
+    setup-symlinks-to-config fish
+}
+
+setup-symlinks-to-config() {
+    local name=$1
+    remove_or_backup ~/.config/${name}
+    ln -s $dfsdir/${name} ~/.config/${name}
 }
 
 restore-ssh-config() {
