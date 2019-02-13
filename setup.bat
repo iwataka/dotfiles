@@ -16,6 +16,7 @@ call:mklinkFile curlrc
 call:mklinkFile tmux.conf
 call:mklinkFile wgetrc
 call:mklinkFile tigrc
+call:mklinkFile hyper.js
 call:mklinkDir sbt
 call:mklinkDir vim
 call:mklinkDir atom
