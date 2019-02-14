@@ -185,3 +185,5 @@ if [ -f '/Users/iwasatakatoshi/google-cloud-sdk/completion.zsh.inc' ]; then sour
 
 which kompose > /dev/null
 if [ $? -eq 0 ]; then source <(kompose completion zsh); fi
+
+[ -s "/Users/iwasatakatoshi/.jabba/jabba.sh" ] && source "/Users/iwasatakatoshi/.jabba/jabba.sh"
