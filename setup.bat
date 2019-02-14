@@ -27,6 +27,7 @@ call:mklinkDir git_template
 call:mklinkDir peco
 
 if exist "%APPDATA%\Sublime Text 3\" mklink /D "%APPDATA%\Sublime Text 3\Packages\User" %dir%\sublime
+if exist "%APPDATA%\alacritty\" mklink /D "%APPDATA%\alacritty\" %dir%\alacritty
 
 if exist "%LOCALAPPDATA%\nvim" rmdir "%LOCALAPPDATA%\nvim"
 mklink /D "%LOCALAPPDATA%\nvim" "%dir%\vim"

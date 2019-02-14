@@ -51,6 +51,7 @@ setup-symlinks() {
     done
     setup-symlinks-to-config nvim
     setup-symlinks-to-config fish
+    setup-symlinks-to-config alacritty
 }
 
 setup-symlinks-to-config() {

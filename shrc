@@ -36,6 +36,9 @@ alias uzja="unzip -O cp932"
 
 alias mkdir="mkdir -p"
 
+# force tmux to use unicode by default
+alias tmux="tmux -u"
+
 # Enables to display result in human-readable format.
 alias df='df -h'
 alias du='du -h'
