@@ -15,4 +15,3 @@ function mkup() {
         done
     fi
 }
-

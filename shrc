@@ -54,14 +54,12 @@ if [[ "$OSTYPE" != "linux-musl" ]]; then
 fi
 # Some shortcuts for different directory listings
 # Clasifies files in color
-alias ls='ls -hF --color=tty'
-alias dir='ls --color=auto --format=vertical'
-alias vdir='ls --color=auto --format=long'
+alias ls='ls -hF --color=auto'
+alias dir='ls --color=auto'
 # Shows long list.
 alias ll='ls -l'
-alias la='ls -A'
-alias lla='ls -l -A'
-alias l='ls -CF'
+alias la='ls -a'
+alias lla='ls -l -a'
 # raw control character
 alias less='less -r'
 # Interactive operation
