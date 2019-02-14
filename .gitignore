@@ -28,3 +28,7 @@ gnupg/*
 fish/*
 !fish/fishfile
 !fish/config.fish
+
+# elvish
+elvish/*
+!elvish/rc.elv

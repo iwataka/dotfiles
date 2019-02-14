@@ -127,6 +127,7 @@ Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
 Plug 'udalov/kotlin-vim', { 'for': 'kotlin' }
 Plug 'aklt/plantuml-syntax', { 'for': 'plantuml' }
+Plug 'dmix/elvish.vim', { 'for': 'elvish' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
