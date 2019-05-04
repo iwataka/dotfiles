@@ -50,15 +50,16 @@ setup-symlinks() {
         remove_or_backup $HOME/.$file
         ln -s $dfsdir/$file ~/.$file
     done
-    setup-symlinks-to-config nvim
-    setup-symlinks-to-config fish
-    setup-symlinks-to-config alacritty
+    setup-symlinks-to-config vim nvim
+    setup-symlinks-to-config fish fish
+    setup-symlinks-to-config alacritty alacritty
 }
 
 setup-symlinks-to-config() {
-    local name=$1
-    remove_or_backup ~/.config/${name}
-    ln -s $dfsdir/${name} ~/.config/${name}
+    local from=$1
+    local to=$2
+    remove_or_backup ~/.config/${from}
+    ln -s $dfsdir/${from} ~/.config/${to}
 }
 
 restore-ssh-config() {
