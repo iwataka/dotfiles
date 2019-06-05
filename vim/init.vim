@@ -94,6 +94,7 @@ if v:version >= 703
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
   Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 endif
+Plug 'w0rp/ale'
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
@@ -106,7 +107,6 @@ Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'asciidoc/vim-asciidoc', { 'for': 'asciidoc' }
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
@@ -1873,7 +1873,6 @@ endif
 " --------------------------------------------------------------
 " markdown {{{2
 " --------------------------------------------------------------
-let g:markdown_folding = 1
 nnoremap <silent> gX :OpenLinkHistory<cr>
 
 " --------------------------------------------------------------
@@ -2050,3 +2049,16 @@ xmap ia <Plug>SidewaysArgumentTextobjI
 " --------------------------------------------------------------
 let g:go_fmt_command = "goimports"
 let g:go_gocode_unimported_packages = 1
+
+" --------------------------------------------------------------
+" ale {{{2
+" --------------------------------------------------------------
+let g:ale_linters = {
+      \ 'rust': ['rls'],
+      \ }
+let g:ale_fixers = {
+      \ 'rust': ['rustfmt'],
+      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+      \ }
+let g:ale_completion_enabled = 1
+let g:ale_linters_explicit = 1
