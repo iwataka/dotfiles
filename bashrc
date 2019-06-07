@@ -10,3 +10,5 @@ alias ..='cd ..'
 
 # added by travis gem
 [ -f /home/ubuntu/.travis/travis.sh ] && source /home/ubuntu/.travis/travis.sh
+
+[ -s "/Users/iwasatakatoshi/.jabba/jabba.sh" ] && source "/Users/iwasatakatoshi/.jabba/jabba.sh"

@@ -39,3 +39,14 @@ function xmodmap() {
         command xmodmap "$@"
     fi
 }
+
+function ls() {
+    exa --version &> /dev/null
+    _has_working_exa=$(($? == 0))
+    if ((_has_working_exa))
+    then
+        exa "$@"
+    else
+        command ls "$@"
+    fi
+}
