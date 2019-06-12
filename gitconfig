@@ -2,10 +2,12 @@
 	name = iwataka
 	email = ap.gr.le@gmail.com
 [core]
-	autocrlf = input
+	autocrlf = false
 	filemode = false
 	bare = false
 	editor = "vim -u NONE"
+	quotepath = false
+	longpaths = true
 [paper]
 	log = diff-highlight | less
 	show = diff-highlight | less
@@ -84,13 +86,10 @@
 [hub]
 	protocol = https
 [init]
-        templatedir = ~/.git_template
+    templatedir = ~/.git_template
 [include]
 	# If you want to access the Internet via proxy server, you should write
 	# the following sentence to .gitconfig.local
 	# [http]
 	# 	proxy = http://user:pwd@proxy_server_adress:port
-        path = ~/.gitconfig.local
-[credential]
-	# Set the cache to timeout after 3 hour
-	helper = cache --timeout=10800
+    path = ~/.gitconfig.local
