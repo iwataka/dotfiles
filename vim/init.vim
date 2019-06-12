@@ -78,6 +78,13 @@ Plug 'jeetsukumaran/vim-indentwise'
 Plug 'Chiel92/vim-autoformat'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/sideways.vim'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
@@ -85,8 +92,9 @@ Plug 'whatyouhide/vim-gotham'
 Plug 'altercation/vim-colors-solarized'
 Plug 'cocopon/iceberg.vim'
 Plug 'NLKNguyen/papercolor-theme'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
+Plug 'nanotech/jellybeans.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Filetype
 if v:version >= 703
@@ -113,9 +121,9 @@ Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
 if has('python') || has('python3')
   Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
-  Plug 'justmao945/vim-clang', { 'for': ['c', 'cpp'] }
 endif
-Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
+Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
+Plug 'pboettch/vim-cmake-syntax', { 'for': 'cmake' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'PProvost/vim-ps1', { 'for': 'ps1' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
@@ -1907,10 +1915,6 @@ endfu
 " --------------------------------------------------------------
 " airline {{{2
 " --------------------------------------------------------------
-let g:airline_theme = 'aurora'
-if !exists('g:airline_theme')
-  let g:airline_theme = s:colors_name
-endif
 if empty(&guifont)
   let g:airline_powerline_fonts = 0
 else
@@ -1921,10 +1925,17 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#wordcount#enabled = 0
 
 " Make gt and gT support both tabline and bufline
-if exists('g:loaded_airline') && g:loaded_airline && g:airline#extensions#tabline#enabled
-  nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
-  nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
-endif
+augroup vimrc-airline
+  autocmd!
+  autocmd VimEnter * call s:set_airline_mappings()
+augroup END
+
+fu! s:set_airline_mappings()
+  if exists('g:loaded_airline') && g:loaded_airline && g:airline#extensions#tabline#enabled
+    nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
+    nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
+  endif
+endfu
 
 fu! s:move_tab_or_buffer(suffix, count)
   let tab_exists = tabpagenr('$') != 1
@@ -2055,10 +2066,32 @@ let g:go_gocode_unimported_packages = 1
 " --------------------------------------------------------------
 let g:ale_linters = {
       \ 'rust': ['rls'],
+      \ 'cpp': ['ccls', 'clang'],
       \ }
 let g:ale_fixers = {
       \ 'rust': ['rustfmt'],
+      \ 'cpp': ['clang-format'],
+      \ 'javascript': ['prettier'],
       \ '*': ['remove_trailing_lines', 'trim_whitespace'],
       \ }
 let g:ale_completion_enabled = 1
 let g:ale_linters_explicit = 1
+let g:ale_fix_on_save = 1
+let g:ale_c_parse_compile_commands = 1
+
+" --------------------------------------------------------------
+" deoplete
+" --------------------------------------------------------------
+let g:deoplete#enable_at_startup = 1
+
+" ===============================================================
+" POST PROCESS {{{1
+" ===============================================================
+
+" Write some machine-specific settings to ~/.vimrc.local.
+" Ex)
+" let g:deoplete#enable_at_startup = 0
+" let g:loaded_airline = 1
+if filereadable(expand('~/.vimrc.local'))
+  source ~/.vimrc.local
+endif
