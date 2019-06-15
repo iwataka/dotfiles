@@ -40,7 +40,6 @@ if executable('git')
   endif
   Plug 'tpope/vim-fugitive'
   Plug 'shumphrey/fugitive-gitlab.vim'
-  Plug 'junegunn/gv.vim', { 'on': ['GV'] }
   Plug 'junegunn/vim-github-dashboard', { 'on': ['GHActivity', 'GHDashboard'] }
   Plug 'mattn/gist-vim'
 endif
@@ -1910,11 +1909,7 @@ endfu
 " --------------------------------------------------------------
 " airline {{{2
 " --------------------------------------------------------------
-if empty(&guifont)
-  let g:airline_powerline_fonts = 0
-else
-  let g:airline_powerline_fonts = 1
-endif
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#wordcount#enabled = 0
