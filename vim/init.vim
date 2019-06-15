@@ -85,7 +85,7 @@ endif
 " Colorscheme
 Plug 'morhetz/gruvbox'
 Plug 'whatyouhide/vim-gotham'
-Plug 'altercation/vim-colors-solarized'
+Plug 'icymind/NeoSolarized'
 Plug 'cocopon/iceberg.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'nanotech/jellybeans.vim'
@@ -554,10 +554,9 @@ cnoremap jk <C-c>
 " These lines cause motion delay in Visual mode.
 " vnoremap jk <Esc>
 " xnoremap jk <Esc>
-if has('terminal')
+if has('terminal') || has('nvim')
   tnoremap jk <C-\><C-n>
   tnoremap <ESC> <C-\><C-n>
-  tnoremap q <C-\><C-n>:q<cr>
 endif
 
 " " Edit vimrc
@@ -2076,7 +2075,7 @@ let g:ale_fix_on_save = 1
 let g:ale_c_parse_compile_commands = 1
 
 " --------------------------------------------------------------
-" deoplete
+" deoplete {{{2
 " --------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
 
