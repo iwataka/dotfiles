@@ -88,8 +88,8 @@ Plug 'icymind/NeoSolarized'
 Plug 'cocopon/iceberg.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'nanotech/jellybeans.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 
 " Filetype
 if v:version >= 703
@@ -1909,33 +1909,33 @@ endfu
 " --------------------------------------------------------------
 " airline {{{2
 " --------------------------------------------------------------
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#wordcount#enabled = 0
+" let g:airline_powerline_fonts = 1
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#fnamemod = ':t'
+" let g:airline#extensions#wordcount#enabled = 0
 
-" Make gt and gT support both tabline and bufline
-augroup vimrc-airline
-  autocmd!
-  autocmd VimEnter * call s:set_airline_mappings()
-augroup END
+" " Make gt and gT support both tabline and bufline
+" augroup vimrc-airline
+"   autocmd!
+"   autocmd VimEnter * call s:set_airline_mappings()
+" augroup END
 
-fu! s:set_airline_mappings()
-  if exists('g:loaded_airline') && g:loaded_airline && g:airline#extensions#tabline#enabled
-    nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
-    nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
-  endif
-endfu
+" fu! s:set_airline_mappings()
+"   if exists('g:loaded_airline') && g:loaded_airline && g:airline#extensions#tabline#enabled
+"     nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
+"     nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
+"   endif
+" endfu
 
-fu! s:move_tab_or_buffer(suffix, count)
-  let tab_exists = tabpagenr('$') != 1
-  let c = a:count == 0 ? '' : a:count
-  if tab_exists
-    silent exe 'tab'.a:suffix.' '.c
-  elseif buflisted(bufnr('%'))
-    silent exe 'b'.a:suffix.' '.c
-  endif
-endfu
+" fu! s:move_tab_or_buffer(suffix, count)
+"   let tab_exists = tabpagenr('$') != 1
+"   let c = a:count == 0 ? '' : a:count
+"   if tab_exists
+"     silent exe 'tab'.a:suffix.' '.c
+"   elseif buflisted(bufnr('%'))
+"     silent exe 'b'.a:suffix.' '.c
+"   endif
+" endfu
 
 " --------------------------------------------------------------
 " nerdtree {{{2
