@@ -444,15 +444,15 @@ fu! S_fugitive()
 endfu
 
 fu! S_signify()
-  if exists('b:sy') && get(b:sy, 'active', 0) && exists('b:sy.stats')
-    let [add, ch, del] = b:sy.stats
+  let sy = get(b:, 'sy', {})
+  let [add, change, delete] = get(sy, 'stats', [-1, -1, -1])
+  if add >= 0 && change >= 0 && delete >= 0
     let sign_add = get(g:, 'signify_sign_add', '+')
-    let sign_ch = get(g:, 'signify_sign_change', '~')
-    let sign_del = get(g:, 'signify_sign_delete', '-')
-    return '['.sign_add.add.' '.sign_ch.ch.' '.sign_del.del.']'
-  else
-    return ''
+    let sign_change = get(g:, 'signify_sign_change', '~')
+    let sign_delete = get(g:, 'signify_sign_delete', '-')
+    return printf('[%s%d %s%d %s%d]', sign_add, add, sign_change, change, sign_delete, delete)
   endif
+  return ''
 endfu
 
 fu! S_readonly()
