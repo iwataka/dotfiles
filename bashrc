@@ -12,3 +12,5 @@ alias ..='cd ..'
 [ -f /home/ubuntu/.travis/travis.sh ] && source /home/ubuntu/.travis/travis.sh
 
 [ -s "/Users/iwasatakatoshi/.jabba/jabba.sh" ] && source "/Users/iwasatakatoshi/.jabba/jabba.sh"
+
+[[ -f ~/.bashrc.local ]] && source ~/.bashrc.local
