@@ -14,6 +14,7 @@ antigen bundle rupa/z
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle mafredri/zsh-async
 antigen bundle sindresorhus/pure
+antigen bundle x-motemen/ghq misc/zsh
 antigen apply
 
 # Activating Tmux by default causes some problems on Arch Linux

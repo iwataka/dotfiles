@@ -42,24 +42,24 @@ if [ -d $HOME/.pyenv ]; then
     export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
 fi
-[[ -s ~/.gvm/scripts/gvm ]] && source ~/.gvm/scripts/gvm
-[[ -s ~/.nvm/nvm.sh ]] && . ~/.nvm/nvm.sh
+[[ -s $HOME/.gvm/scripts/gvm ]] && source $HOME/.gvm/scripts/gvm
+[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh
 if [ -d $HOME/.jenv ]; then
     export PATH="$HOME/.jenv/bin:$PATH"
     eval "$(jenv init -)"
 fi
-[ -s "/home/iwataka/.dnx/dnvm/dnvm.sh" ] && . "/home/iwataka/.dnx/dnvm/dnvm.sh" # Load dnvm
-[[ -s /home/iwataka/.rsvm/rsvm.sh ]] && . /home/iwataka/.rsvm/rsvm.sh # This loads RSVM
+[[ -s $HOME/.dnx/dnvm/dnvm.sh ]] && . $HOME/.dnx/dnvm/dnvm.sh
+[[ -s $HOME/.rsvm/rsvm.sh ]] && . $HOME/.rsvm/rsvm.sh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 
 if [[ -d $HOME/go && $(which gvm) == "" ]]; then
     export PATH=$PATH:$HOME/go/bin
     export GOPATH=$HOME/go
 fi
 
-if [ -d ~/.gradle ]; then
-    export PATH=$PATH:~/.gradle/bin
+if [ -d $HOME/.gradle ]; then
+    export PATH=$PATH:$HOME/.gradle/bin
 fi
 
 export HAXE_STD_PATH=$HOME/lib/haxe/std
@@ -76,6 +76,32 @@ if [ -d $HOME/bin ]; then
     # Adds at the head of PATH.
     export PATH=$HOME/bin:$PATH
 fi
+
+if [ -d $HOME/.ghcup/bin ]; then
+    export PATH=$HOME/.ghcup/bin:$PATH
+fi
+
+if [ -d $HOME/.local/bin ]; then
+    export PATH=$HOME/.local/bin:$PATH
+fi
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+# added by travis gem
+[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f $HOME/google-cloud-sdk/path.zsh.inc ]; then source $HOME/google-cloud-sdk/path.zsh.inc; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f $HOME/google-cloud-sdk/completion.zsh.inc ]; then source $HOME/google-cloud-sdk/completion.zsh.inc; fi
+
+which kompose > /dev/null
+if [ $? -eq 0 ]; then source <(kompose completion zsh); fi
+
+[ -s "$HOME/.jabba/jabba.sh" ] && source "$HOME/.jabba/jabba.sh"
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi
 
 #---------------------------------------------------------------
 # Key-binding
@@ -102,6 +128,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 #---------------------------------------------------------------
 # History file settings.
 HISTFILE=$HOME/.zsh-history
+HISTSIZE=100
 SAVEHIST=10000
 # The command which starts with space is not added.
 setopt hist_ignore_space
@@ -169,21 +196,4 @@ if [[ "$OSTYPE" == "cygwin" ]]; then
     source $HOME/.profile
 fi
 
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-
-# added by travis gem
-[ -f /home/ubuntu/.travis/travis.sh ] && source /home/ubuntu/.travis/travis.sh
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/iwasatakatoshi/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/iwasatakatoshi/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/iwasatakatoshi/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/iwasatakatoshi/google-cloud-sdk/completion.zsh.inc'; fi
-
-which kompose > /dev/null
-if [ $? -eq 0 ]; then source <(kompose completion zsh); fi
-
-[ -s "/Users/iwasatakatoshi/.jabba/jabba.sh" ] && source "/Users/iwasatakatoshi/.jabba/jabba.sh"
+[[ -f $HOME/.zshrc.local ]] && source $HOME/.zshrc.local

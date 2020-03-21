@@ -15,3 +15,5 @@ session/
 
 # vim-plug
 autoload/plug.vim.old
+
+/view/

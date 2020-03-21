@@ -77,14 +77,14 @@ Plug 'jeetsukumaran/vim-indentwise'
 Plug 'Chiel92/vim-autoformat'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/sideways.vim'
-if has('nvim')
+if has('nvim') && has('python3')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 endif
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
 Plug 'whatyouhide/vim-gotham'
-Plug 'icymind/NeoSolarized'
+Plug 'altercation/vim-colors-solarized'
 Plug 'cocopon/iceberg.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'nanotech/jellybeans.vim'
@@ -1828,7 +1828,7 @@ augroup END
 " auto-pairs {{{2
 " --------------------------------------------------------------
 " CJK-language causes errors with mappings from <BS>
-let g:AutoPairsMapBS = 0
+" let g:AutoPairsMapBS = 0
 
 " --------------------------------------------------------------
 " jedi {{{2
@@ -2057,11 +2057,13 @@ let g:go_gocode_unimported_packages = 1
 let g:ale_linters = {
       \ 'rust': ['rls'],
       \ 'cpp': ['ccls', 'clang'],
+      \ 'haskell': ['hlint']
       \ }
 let g:ale_fixers = {
       \ 'rust': ['rustfmt'],
       \ 'cpp': ['clang-format'],
       \ 'javascript': ['prettier'],
+      \ 'haskell': ['stylish-haskell'],
       \ '*': ['remove_trailing_lines', 'trim_whitespace'],
       \ }
 let g:ale_completion_enabled = 1

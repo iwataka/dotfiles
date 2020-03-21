@@ -32,3 +32,6 @@ fish/*
 # elvish
 elvish/*
 !elvish/rc.elv
+
+# zsh
+*.zwc
