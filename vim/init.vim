@@ -145,8 +145,7 @@ Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/webapi-vim'
 Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
 Plug 'Shougo/vimproc.vim', {
-      \ 'do': has('win32') ? 'tools\\update-dll-mingw' : 'make',
-      \ 'for': 'typescript'
+      \ 'do': has('win32') ? 'tools\\update-dll-mingw' : 'make'
       \ }
 if has('job') && has('channel')
   Plug 'metakirby5/codi.vim'
@@ -179,7 +178,6 @@ endif
 if has('vim_starting')
   set encoding=utf-8
 endif
-set fileencoding=utf-8
 set fileencodings=utf-8,sjis              " UTF8 is first, SJIS is second
 set termencoding=utf-8
 set fileformats=unix,dos,mac              " Unix format has highest priority
