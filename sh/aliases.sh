@@ -16,14 +16,12 @@ alias ..............='cd ../../../../../../../../../../../..'
 alias ...............='cd ../../../../../../../../../../../../..'
 
 # Shortcuts (introduces by mathiasbynens's dotfiles)
-if [ -d ~/Downloads ]
-then
+if [ -d ~/Downloads ]; then
     alias dl="cd ~/Downloads"
 else
     alias dl='cd ~/ダウンロード'
 fi
-if [ -d ~/Desktop ]
-then
+if [ -d ~/Desktop ]; then
     alias dt="cd ~/Desktop"
 else
     alias dt='cd ~/デスクトップ'

@@ -24,16 +24,15 @@ o() {
         "$cmd" .
     else
         "$cmd" "$@"
-    fi;
+    fi
 }
 
 replace() {
-    ag -l "$1" |xargs sed -i "s/$1/$2/g"
+    ag -l "$1" | xargs sed -i "s/$1/$2/g"
 }
 
 xmodmap() {
-    if [ $# -eq 0 ] && [ -s "$HOME"/.Xmodmap ]
-    then
+    if [ $# -eq 0 ] && [ -s "$HOME"/.Xmodmap ]; then
         command xmodmap "$HOME"/.Xmodmap
     else
         command xmodmap "$@"
@@ -49,23 +48,18 @@ ls() {
 }
 
 mkup() {
-    if [ $# -eq 0 ]
-    then
-        for f in *.md
-        do
+    if [ $# -eq 0 ]; then
+        for f in *.md; do
             mkup "$f"
         done
-        for f in *.mkd
-        do
+        for f in *.mkd; do
             mkup "$f"
         done
-        for f in *.markdown
-        do
+        for f in *.markdown; do
             mkup "$f"
         done
     else
-        for f in "$@"
-        do
+        for f in "$@"; do
             root_name=${f%.*}
             pandoc -s -f markdown_github -o "$root_name".html "$f"
             o "$root_name".html
@@ -74,8 +68,7 @@ mkup() {
 }
 
 vim() {
-    if nvim --version > /dev/null 2>&1
-    then
+    if nvim --version >/dev/null 2>&1; then
         nvim "$@"
     else
         command vim "$@"

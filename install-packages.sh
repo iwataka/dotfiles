@@ -25,7 +25,7 @@ install-for-arch-linux() {
 
 install-for-ubuntu() {
     sudo apt-get update  # Update apt-get itself
-    sudo apt-get upgrade  # Upgrade packages
+    sudo apt-get upgrade # Upgrade packages
     sudo apt-get install -y xdg-utils
     sudo apt-get install -y git
     sudo apt-get install -y zsh
@@ -93,7 +93,7 @@ install-for-osx() {
     brew install shellcheck
     brew install docker
     brew cask install iterm2
-    brew cleanup  # Remove outdated versions from the cellar.
+    brew cleanup # Remove outdated versions from the cellar.
     brew linkapps
 }
 
@@ -113,7 +113,7 @@ install-default() {
     if [[ $uname_ostype == "Linux Arch-Linux"* ]]; then
         install-for-arch-linux
     elif [ "$OSTYPE" == "linux-gnu" ]; then
-        if ! apt-get --help &> /dev/null; then
+        if ! apt-get --help &>/dev/null; then
             install-for-ubuntu
         else
             install-for-debian
