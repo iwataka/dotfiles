@@ -2,8 +2,8 @@
 
 set -e
 
-dfsdir=$(dirname $0)
-dfsdir=$(cd $dfsdir && pwd)
+dfsdir=$(dirname "$0")
+dfsdir=$(cd "$dfsdir" && pwd)
 
 # Some necessary operations before setup
 pre-setup() {
@@ -20,11 +20,11 @@ pre-setup() {
 # makes a backup if it exists
 remove_or_backup() {
     local fpath=$1
-    if [ -L $fpath ]; then
-        rm $fpath
+    if [ -L "$fpath" ]; then
+        rm "$fpath"
     fi
-    if [ -e $fpath ]; then
-        mv $fpath ${fpath}.bak
+    if [ -e "$fpath" ]; then
+        mv "$fpath" "$fpath".bak
         echo "Make backup file: ${fpath}.bak"
     fi
 }
@@ -32,10 +32,10 @@ remove_or_backup() {
 # Make links of binaries
 setup-bins() {
     local bin_directory="$dfsdir/bin"
-    for file in $(ls $bin_directory); do
-        remove_or_backup ~/bin/$file
-        if [[ -f $bin_directory/$file ]]; then
-            ln -s $bin_directory/$file ~/bin/$file
+    for file in "$bin_directory"/*; do
+        remove_or_backup ~/bin/"$file"
+        if [[ -f "$bin_directory"/"$file" ]]; then
+            ln -s "$bin_directory"/"$file" ~/bin/"$file"
         fi
     done
 }
@@ -46,9 +46,9 @@ setup-symlinks() {
         agignore ctags curlrc gitconfig git_template tmux.conf \
         wgetrc atom editorconfig tigrc gnupg ssh peco Xresources hyper.js \
         elvish ghci)
-    for file in ${files[@]}; do
-        remove_or_backup $HOME/.$file
-        ln -s $dfsdir/$file ~/.$file
+    for file in "${files[@]}"; do
+        remove_or_backup "$HOME"/."$file"
+        ln -s "$dfsdir"/"$file" ~/."$file"
     done
     setup-symlinks-to-config vim nvim
     setup-symlinks-to-config fish fish
@@ -58,8 +58,8 @@ setup-symlinks() {
 setup-symlinks-to-config() {
     local from=$1
     local to=$2
-    remove_or_backup ~/.config/${from}
-    ln -s $dfsdir/${from} ~/.config/${to}
+    remove_or_backup ~/.config/"${from}"
+    ln -s "$dfsdir"/"${from}" ~/.config/"${to}"
 }
 
 restore-ssh-config() {
@@ -69,8 +69,8 @@ restore-ssh-config() {
 }
 
 if [[ ! -d $dfsdir ]]; then
-    git clone https://github.com/iwataka/dotfiles $dfsdir
-    cd $dfsdir
+    git clone https://github.com/iwataka/dotfiles "$dfsdir"
+    cd "$dfsdir"
 fi
 pre-setup
 setup-bins

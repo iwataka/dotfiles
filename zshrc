@@ -2,7 +2,7 @@
 # Source various files
 #---------------------------------------------------------------
 if [[ -s "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh" ]]; then
-    source "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh" > /dev/null
+    . "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh" > /dev/null
 fi
 # Fix tmux problem in Cygwin
 if [[ "$OSTYPE" == "cygwin" ]]; then
@@ -12,18 +12,11 @@ if [[ "$OSTYPE" == "cygwin" ]]; then
     rm -rf /tmp/tmux-*
 fi
 
-# Load the common configuration for both of bash and zsh
-source ~/.shrc
-
-# Source main plugins
-for _zsh_plugin in $HOME/.zsh/*.zsh
+. ~/.shrc
+for f in $HOME/.zsh/*.zsh
 do
-    source $_zsh_plugin
+    . "$f"
 done
-for _sh_plugin in $HOME/.sh/*.sh; do
-    source $_sh_plugin
-done
-# export USE_NEOVIM_INSTEAD_OF_VIM=true
 
 if [ -d $HOME/.anyenv ]; then
     export PATH="$HOME/.anyenv/bin:$PATH"
@@ -42,16 +35,10 @@ if [ -d $HOME/.pyenv ]; then
     export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
 fi
-[[ -s $HOME/.gvm/scripts/gvm ]] && source $HOME/.gvm/scripts/gvm
-[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh
 if [ -d $HOME/.jenv ]; then
     export PATH="$HOME/.jenv/bin:$PATH"
     eval "$(jenv init -)"
 fi
-[[ -s $HOME/.dnx/dnvm/dnvm.sh ]] && . $HOME/.dnx/dnvm/dnvm.sh
-[[ -s $HOME/.rsvm/rsvm.sh ]] && . $HOME/.rsvm/rsvm.sh
-
-[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 
 if [[ -d $HOME/go && $(which gvm) == "" ]]; then
     export PATH=$PATH:$HOME/go/bin
@@ -62,7 +49,9 @@ if [ -d $HOME/.gradle ]; then
     export PATH=$PATH:$HOME/.gradle/bin
 fi
 
-export HAXE_STD_PATH=$HOME/lib/haxe/std
+if [ -d $HOME/lib/haxe/std ]; then
+    export HAXE_STD_PATH=$HOME/lib/haxe/std
+fi
 
 if [ -d $HOME/.cargo/bin ]; then
     export PATH=$HOME/.cargo/bin:$PATH
@@ -70,11 +59,6 @@ fi
 
 if [[ "$OSTYPE" =~ "darwin*" && $(which brew) != "" ]]; then
     export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
-fi
-
-if [ -d $HOME/bin ]; then
-    # Adds at the head of PATH.
-    export PATH=$HOME/bin:$PATH
 fi
 
 if [ -d $HOME/.ghcup/bin ]; then
@@ -86,22 +70,28 @@ if [ -d $HOME/.local/bin ]; then
 fi
 
 ### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+if [ -d /usr/local/heroku/bin ]; then
+    export PATH="/usr/local/heroku/bin:$PATH"
+fi
 
-# added by travis gem
-[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
+if kompose > /dev/null 2>&1; then
+    . <(kompose completion zsh)
+fi
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f $HOME/google-cloud-sdk/path.zsh.inc ]; then source $HOME/google-cloud-sdk/path.zsh.inc; fi
+if [ -d $HOME/bin ]; then
+    export PATH=$HOME/bin:$PATH
+fi
 
-# The next line enables shell command completion for gcloud.
-if [ -f $HOME/google-cloud-sdk/completion.zsh.inc ]; then source $HOME/google-cloud-sdk/completion.zsh.inc; fi
-
-which kompose > /dev/null
-if [ $? -eq 0 ]; then source <(kompose completion zsh); fi
-
-[ -s "$HOME/.jabba/jabba.sh" ] && source "$HOME/.jabba/jabba.sh"
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi
+[ -s "$HOME"/.gvm/scripts/gvm ] && . "$HOME"/.gvm/scripts/gvm
+[ -s "$HOME"/.nvm/nvm.sh ] && . "$HOME"/.nvm/nvm.sh
+[ -s "$HOME"/.dnx/dnvm/dnvm.sh ] && . "$HOME"/.dnx/dnvm/dnvm.sh
+[ -s "$HOME"/.rsvm/rsvm.sh ] && . "$HOME"/.rsvm/rsvm.sh
+[ -f "$HOME"/.fzf.zsh ] && . "$HOME"/.fzf.zsh
+[ -f "$HOME"/.travis/travis.sh ] && . "$HOME"/.travis/travis.sh
+[ -f "$HOME"/google-cloud-sdk/path.zsh.inc ] && . "$HOME"/google-cloud-sdk/path.zsh.inc
+[ -f "$HOME"/google-cloud-sdk/completion.zsh.inc ] && . "$HOME"/google-cloud-sdk/completion.zsh.inc
+[ -s "$HOME"/.jabba/jabba.sh ] && . ""$HOME"/.jabba/jabba.sh"
+[ -e "$HOME"/.nix-profile/etc/profile.d/nix.sh ] && . "$HOME"/.nix-profile/etc/profile.d/nix.sh
 
 #---------------------------------------------------------------
 # Key-binding
@@ -193,7 +183,7 @@ cd ~
 # Changes code page to UTF-8.
 if [[ "$OSTYPE" == "cygwin" ]]; then
     chcp 65001
-    source $HOME/.profile
+    . $HOME/.profile
 fi
 
-[[ -f $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
+[[ -f $HOME/.zshrc.local ]] && . $HOME/.zshrc.local

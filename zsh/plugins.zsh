@@ -16,19 +16,3 @@ antigen bundle mafredri/zsh-async
 antigen bundle sindresorhus/pure
 antigen bundle x-motemen/ghq misc/zsh
 antigen apply
-
-# Activating Tmux by default causes some problems on Arch Linux
-# export ZSH_TMUX_AUTOSTART=true
-# antigen bundle tmux
-
-# else
-#   for _sub_plugin in $HOME/.zsh/*.sub.zsh
-#   do
-#     source $_sub_plugin
-#   done
-#   # Load the common shell configurations if unable to use antigen.
-#   for _sh_file in $HOME/.sh/*.sh
-#   do
-#     source $_sh_file
-#   done
-# fi

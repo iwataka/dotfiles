@@ -112,16 +112,15 @@ install-for-cygwin() {
 install-default() {
     if [[ $uname_ostype == "Linux Arch-Linux"* ]]; then
         install-for-arch-linux
-    elif [ $OSTYPE == "linux-gnu" ]; then
-        apt-get --help &> /dev/null
-        if [[ $? == 0 ]]; then
+    elif [ "$OSTYPE" == "linux-gnu" ]; then
+        if ! apt-get --help &> /dev/null; then
             install-for-ubuntu
         else
             install-for-debian
         fi
-    elif [ $OSTYPE == "linux-musl" ]; then
+    elif [ "$OSTYPE" == "linux-musl" ]; then
         install-for-alpine-linux
-    elif [[ $OSTYPE == "darwin"* ]]; then
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
         install-for-osx
     elif [[ "$OSTYPE" == "cygwin" ]]; then
         install-for-cygwin
@@ -141,7 +140,7 @@ install-default
 
 if [ "$#" -ne 0 ]; then
     for arg in "$@"; do
-        install-for-$arg
+        install-for-"$arg"
         shift
     done
 else

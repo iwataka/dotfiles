@@ -1,5 +1,6 @@
-which antigen &> /dev/null
-if [ $? != 0 ]; then
+# shellcheck shell=sh
+
+if ! which antigen >/dev/null 2>&1; then
     alias g='git'
     alias ga='git add'
     alias gaa='git add --all'

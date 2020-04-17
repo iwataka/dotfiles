@@ -1,16 +1,14 @@
-source ~/.shrc
-for _sh_file in $HOME/.sh/*.sh
-do
-    source $_sh_file
-done
+# shellcheck shell=bash
 
+# shellcheck disable=SC1090
+source "$HOME"/.shrc
 alias ..='cd ..'
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-# added by travis gem
-[ -f /home/ubuntu/.travis/travis.sh ] && source /home/ubuntu/.travis/travis.sh
-
-[ -s "/Users/iwasatakatoshi/.jabba/jabba.sh" ] && source "/Users/iwasatakatoshi/.jabba/jabba.sh"
-
-[[ -f ~/.bashrc.local ]] && source ~/.bashrc.local
+# shellcheck disable=SC1090
+[ -f "$HOME"/.fzf.bash ] && source "$HOME"/.fzf.bash
+# shellcheck disable=SC1090
+[ -f "$HOME"/.travis/travis.sh ] && source "$HOME"/.travis/travis.sh
+# shellcheck disable=SC1090
+[ -s "$HOME"/.jabba/jabba.sh ] && source "$HOME"/.jabba/jabba.sh
+# shellcheck disable=SC1090
+[ -f "$HOME"/.bashrc.local ] && source "$HOME"/.bashrc.local
