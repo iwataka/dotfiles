@@ -1,12 +1,12 @@
 #---------------------------------------------------------------
 # Source various files
 #---------------------------------------------------------------
-if [[ -s "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh" ]]; then
+if test -s "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh"; then
     . "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh" > /dev/null
 fi
 # Fix tmux problem in Cygwin
-if [[ "$OSTYPE" == "cygwin" ]]; then
-    if [[ ! -d /tmp/tmux-0000 ]]; then
+if test "$OSTYPE" = "cygwin"; then
+    if test ! -d /tmp/tmux-0000; then
         mkdir /tmp/tmux-0000
     fi
     rm -rf /tmp/tmux-*
@@ -18,59 +18,59 @@ do
     . "$f"
 done
 
-if [ -d $HOME/.anyenv ]; then
+if test -d $HOME/.anyenv; then
     export PATH="$HOME/.anyenv/bin:$PATH"
     eval "$(anyenv init -)"
 fi
-if [ -d $HOME/.anyvm ]; then
+if test -d $HOME/.anyvm; then
     export PATH="$HOME/.anyvm/bin:$PATH"
     eval "$(anyvm init -)"
 fi
-if [ -d $HOME/.rbenv ]; then
+if test -d $HOME/.rbenv; then
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
 fi
-if [ -d $HOME/.pyenv ]; then
+if test -d $HOME/.pyenv; then
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
 fi
-if [ -d $HOME/.jenv ]; then
+if test -d $HOME/.jenv; then
     export PATH="$HOME/.jenv/bin:$PATH"
     eval "$(jenv init -)"
 fi
 
-if [[ -d $HOME/go && $(which gvm) == "" ]]; then
+if test -d $HOME/go && test $(which gvm) = ""; then
     export PATH=$PATH:$HOME/go/bin
     export GOPATH=$HOME/go
 fi
 
-if [ -d $HOME/.gradle ]; then
+if test -d $HOME/.gradle; then
     export PATH=$PATH:$HOME/.gradle/bin
 fi
 
-if [ -d $HOME/lib/haxe/std ]; then
+if test -d $HOME/lib/haxe/std; then
     export HAXE_STD_PATH=$HOME/lib/haxe/std
 fi
 
-if [ -d $HOME/.cargo/bin ]; then
+if test -d $HOME/.cargo/bin; then
     export PATH=$HOME/.cargo/bin:$PATH
 fi
 
-if [[ "$OSTYPE" =~ "darwin*" && $(which brew) != "" ]]; then
+if [[ "$OSTYPE" =~ darwin* ]] && which brew >/dev/null 2>&1; then
     export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
 fi
 
-if [ -d $HOME/.ghcup/bin ]; then
+if test -d $HOME/.ghcup/bin; then
     export PATH=$HOME/.ghcup/bin:$PATH
 fi
 
-if [ -d $HOME/.local/bin ]; then
+if test -d $HOME/.local/bin; then
     export PATH=$HOME/.local/bin:$PATH
 fi
 
 ### Added by the Heroku Toolbelt
-if [ -d /usr/local/heroku/bin ]; then
+if test -d /usr/local/heroku/bin; then
     export PATH="/usr/local/heroku/bin:$PATH"
 fi
 
@@ -78,20 +78,20 @@ if kompose > /dev/null 2>&1; then
     . <(kompose completion zsh)
 fi
 
-if [ -d $HOME/bin ]; then
+if test -d $HOME/bin; then
     export PATH=$HOME/bin:$PATH
 fi
 
-[ -s "$HOME"/.gvm/scripts/gvm ] && . "$HOME"/.gvm/scripts/gvm
-[ -s "$HOME"/.nvm/nvm.sh ] && . "$HOME"/.nvm/nvm.sh
-[ -s "$HOME"/.dnx/dnvm/dnvm.sh ] && . "$HOME"/.dnx/dnvm/dnvm.sh
-[ -s "$HOME"/.rsvm/rsvm.sh ] && . "$HOME"/.rsvm/rsvm.sh
-[ -f "$HOME"/.fzf.zsh ] && . "$HOME"/.fzf.zsh
-[ -f "$HOME"/.travis/travis.sh ] && . "$HOME"/.travis/travis.sh
-[ -f "$HOME"/google-cloud-sdk/path.zsh.inc ] && . "$HOME"/google-cloud-sdk/path.zsh.inc
-[ -f "$HOME"/google-cloud-sdk/completion.zsh.inc ] && . "$HOME"/google-cloud-sdk/completion.zsh.inc
-[ -s "$HOME"/.jabba/jabba.sh ] && . ""$HOME"/.jabba/jabba.sh"
-[ -e "$HOME"/.nix-profile/etc/profile.d/nix.sh ] && . "$HOME"/.nix-profile/etc/profile.d/nix.sh
+test -s "$HOME"/.gvm/scripts/gvm && . "$HOME"/.gvm/scripts/gvm
+test -s "$HOME"/.nvm/nvm.sh && . "$HOME"/.nvm/nvm.sh
+test -s "$HOME"/.dnx/dnvm/dnvm.sh && . "$HOME"/.dnx/dnvm/dnvm.sh
+test -s "$HOME"/.rsvm/rsvm.sh && . "$HOME"/.rsvm/rsvm.sh
+test -f "$HOME"/.fzf.zsh && . "$HOME"/.fzf.zsh
+test -f "$HOME"/.travis/travis.sh && . "$HOME"/.travis/travis.sh
+test -f "$HOME"/google-cloud-sdk/path.zsh.inc && . "$HOME"/google-cloud-sdk/path.zsh.inc
+test -f "$HOME"/google-cloud-sdk/completion.zsh.inc && . "$HOME"/google-cloud-sdk/completion.zsh.inc
+test -s "$HOME"/.jabba/jabba.sh && . ""$HOME"/.jabba/jabba.sh"
+test -e "$HOME"/.nix-profile/etc/profile.d/nix.sh && . "$HOME"/.nix-profile/etc/profile.d/nix.sh
 
 #---------------------------------------------------------------
 # Key-binding
@@ -181,9 +181,9 @@ cd ~
 # Cygwin
 #---------------------------------------------------------------
 # Changes code page to UTF-8.
-if [[ "$OSTYPE" == "cygwin" ]]; then
+if test "$OSTYPE" = "cygwin"; then
     chcp 65001
     . $HOME/.profile
 fi
 
-[[ -f $HOME/.zshrc.local ]] && . $HOME/.zshrc.local
+test -f $HOME/.zshrc.local && . $HOME/.zshrc.local
