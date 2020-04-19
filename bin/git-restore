@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# Find the last commit to the deleted file and checkout it at the commit.
-git checkout $(git rev-list -n 1 HEAD -- $1)^ -- $1

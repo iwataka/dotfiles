@@ -20,5 +20,5 @@ fi
     --enable-terminal \
     --enable-gui \
     --with-x \
-    --prefix=$HOME \
+    --prefix="$HOME" \
     "$@"
