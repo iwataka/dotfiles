@@ -111,6 +111,7 @@ alias free='free -h'
 which exa >/dev/null 2>&1 &&
     alias ls='exa' ||
     alias ls='ls -hF --color=auto'
+which bat >/dev/null 2>&1 && alias cat='bat'
 alias dir='ls --color=auto'
 # Shows long list.
 alias ll='ls -l'
