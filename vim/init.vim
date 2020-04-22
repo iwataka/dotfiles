@@ -103,10 +103,11 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'MaxMEllon/vim-jsx-pretty', { 'for': 'javascriptreact' }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['Dockerfile', 'docker-compose'] }
 Plug 'ap/vim-css-color', { 'for': 'css' }
-Plug 'mattn/emmet-vim', { 'for': 'html' }
+Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact'] }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
