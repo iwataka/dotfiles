@@ -25,4 +25,5 @@ test "$OSTYPE" = "linux-musl" &&
     export PAGER='less' ||
     export PAGER='less -r' &&
     export LESS='-r -N -s'
-export TERM=screen-256color-bce
+
+test -z "$TERM" && export TERM=screen-256color-bce
