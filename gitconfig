@@ -85,8 +85,6 @@
 	user = iwataka
 [hub]
 	protocol = https
-[init]
-    templatedir = ~/.git_template
 [include]
 	# If you want to access the Internet via proxy server, you should write
 	# the following sentence to .gitconfig.local
