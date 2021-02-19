@@ -98,4 +98,4 @@ setopt mark_dirs
 # Enables to use zed.
 autoload zed
 
-test -f $HOME/.zshrc.local && . $HOME/.zshrc.local
+test -f $HOME/.zshrc.local && . $HOME/.zshrc.local || touch $HOME/.zshrc.local
