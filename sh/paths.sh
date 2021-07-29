@@ -52,7 +52,17 @@ for f in "${src_files[@]}"; do
     test -s "$f" && . "$f"
 done
 
-if [[ "$OSTYPE" =~ darwin* ]] && which brew >/dev/null 2>&1; then
-    p="$(brew --prefix coreutils)/libexec/gnubin"
-    export PATH="$p:$PATH"
-fi
+# shellcheck disable=SC2039
+gnubin_cmds=(
+    coreutils
+    findutils
+    gsed
+    grep
+)
+# shellcheck disable=SC2039
+for c in "${gnubin_cmds[@]}"; do
+    if [[ "$OSTYPE" =~ darwin* ]] && brew --prefix "$c" >/dev/null 2>&1; then
+        p="$(brew --prefix $c)/libexec/gnubin"
+        export PATH="$p:$PATH"
+    fi
+done
