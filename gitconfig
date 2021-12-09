@@ -91,3 +91,5 @@
 	# [http]
 	# 	proxy = http://user:pwd@proxy_server_adress:port
     path = ~/.gitconfig.local
+[init]
+	defaultBranch = main
