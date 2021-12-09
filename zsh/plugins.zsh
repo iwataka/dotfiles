@@ -13,7 +13,11 @@ zplug "plugins/golang", from:oh-my-zsh
 zplug "rupa/z", use:"z.sh"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "mafredri/zsh-async"
-zplug "sindresorhus/pure", at:main
+if starship --version; then
+  eval "$(starship init zsh)"
+else
+  zplug "sindresorhus/pure", at:main
+fi
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
