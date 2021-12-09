@@ -1697,7 +1697,7 @@ endif
 " --------------------------------------------------------------
 " Git {{{2
 " --------------------------------------------------------------
-nnoremap gs :<c-u>Gstatus<CR>
+nnoremap gs :<c-u>Git<CR>
 nnoremap <leader>gd :<c-u>Gdiff<CR>
 nnoremap <leader>gD :<c-u>Gsplit! diff<cr>
 nnoremap <Leader>gc :<c-u>Gcommit<CR>
