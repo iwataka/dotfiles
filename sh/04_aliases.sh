@@ -21,6 +21,7 @@ test "$OSTYPE" = "cygwin" &&
 alias o='open'
 which start >/dev/null 2>&1 && alias open='start'
 which xdg-open >/dev/null 2>&1 && alias open='xdg-open'
+which wsl-open >/dev/null 2>&1 && alias open='wsl-open'
 which cygstart >/dev/null 2>&1 && alias open='cygstart'
 
 ! which antigen >/dev/null 2>&1 &&
