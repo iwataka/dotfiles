@@ -107,7 +107,7 @@ Plug 'MaxMEllon/vim-jsx-pretty', { 'for': 'javascriptreact' }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['Dockerfile', 'docker-compose'] }
 Plug 'ap/vim-css-color', { 'for': 'css' }
-Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact'] }
+Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
@@ -132,6 +132,7 @@ Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
 Plug 'udalov/kotlin-vim', { 'for': 'kotlin' }
 Plug 'aklt/plantuml-syntax', { 'for': 'plantuml' }
 Plug 'dmix/elvish.vim', { 'for': 'elvish' }
+Plug 'dart-lang/dart-vim-plugin', { 'for': 'dart' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
@@ -401,6 +402,7 @@ if has('autocmd')
     autocmd BufRead,BufNewFile *.json set filetype=javascript
     autocmd BufRead,BufNewFile *gitconfig* set filetype=sh
     autocmd BufRead,BufNewFile *.tmpl set filetype=html
+    autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
 
     " prevent from conflicting multiple edit
     autocmd SwapExists * let v:swapchoice = 'o'
