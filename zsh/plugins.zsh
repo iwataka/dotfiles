@@ -13,7 +13,7 @@ zplug "plugins/golang", from:oh-my-zsh
 zplug "rupa/z", use:"z.sh"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "mafredri/zsh-async"
-if starship --version; then
+if starship --version &>/dev/null; then
   eval "$(starship init zsh)"
 else
   zplug "sindresorhus/pure", at:main
