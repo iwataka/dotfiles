@@ -26,6 +26,7 @@ call:mklinkDir gnupg
 call:mklinkDir emacs.d
 call:mklinkDir peco
 call:mklinkDir elvish
+call:mklinkDir aws
 
 if exist "%APPDATA%\Sublime Text 3\" mklink /D "%APPDATA%\Sublime Text 3\Packages\User" %dir%\sublime
 if exist "%APPDATA%\alacritty\" mklink /D "%APPDATA%\alacritty\" %dir%\alacritty
