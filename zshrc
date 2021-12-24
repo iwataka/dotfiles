@@ -44,7 +44,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 #---------------------------------------------------------------
 # History file settings.
 HISTFILE=$HOME/.zsh-history
-HISTSIZE=100
+HISTSIZE=1000
 SAVEHIST=10000
 # The command which starts with space is not added.
 setopt hist_ignore_space
