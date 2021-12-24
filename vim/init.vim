@@ -88,6 +88,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'cocopon/iceberg.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'nanotech/jellybeans.vim'
+Plug 'sainnhe/sonokai'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
 
