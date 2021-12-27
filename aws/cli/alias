@@ -1,8 +1,24 @@
 [toplevel]
 
-whoami = sts get-caller-identity
+clone =
+  !f() {
+    set -e
 
-ppchk =
+    repo_name="$1"
+
+    if [ -z $repo_name ]
+    then
+      repo_name=$(aws codecommit list-repositories |jq -r '.repositories[].repositoryName' |fzf --header="clone repository")
+    fi
+
+    info=$(aws codecommit get-repository --repository-name "$repo_name")
+    account_id=$(echo "$info" |jq -r .repositoryMetadata.accountId)
+    repo_arn=$(echo "$info" |jq -r .repositoryMetadata.Arn)
+    grc_url=$(echo ${repo_arn} |sed -r 's/.+:codecommit:(.+):'${account_id}':(.+)/codecommit::\1:\/\/\2/')
+    git clone "${grc_url}"
+  }; f
+
+plchk =
   !f() {
     set -e
 
@@ -13,13 +29,14 @@ ppchk =
       pipeline_name=$(aws codepipeline list-pipelines |jq -r '.pipelines[].name' |fzf --header="check pipeline status")
     fi
 
+    echo "${pipeline_name}"
     aws codepipeline get-pipeline-state --name "$pipeline_name" |
       jq -r '.stageStates[]' |
       jq -r '. |walk(if try todate catch false then todate else . end)' |
       jq -r '.stageName,.actionStates[]'
   }; f
 
-ppwait =
+plwait =
   !f() {
     set -e
 
@@ -30,6 +47,7 @@ ppwait =
       pipeline_name=$(aws codepipeline list-pipelines |jq -r '.pipelines[].name' |fzf --header="check pipeline status")
     fi
 
+    echo "waiting ${pipeline_name} end"
     for i in `seq 60`
     do
       inprogress=$(aws codepipeline get-pipeline-state --name "$pipeline_name" |
@@ -55,6 +73,7 @@ cfnchk =
       stack_name=$(aws cloudformation describe-stacks |jq -r '.Stacks[].StackName' |fzf --header="check CFn stack events")
     fi
 
+    echo "${stack_name}"
     aws cloudformation describe-stack-events --stack-name "$stack_name" |jq -r '.StackEvents[] |select(.ResourceStatus |endswith("FAILED"))'
   }; f
 
