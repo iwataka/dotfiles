@@ -44,7 +44,7 @@ setup-symlinks() {
     local files=(vim vimperatorrc vimrc ideavimrc
         zsh zshenv zshrc sh shrc bashrc emacs.d spacemacs sbtrc sbt
         agignore ctags curlrc gitconfig tmux.conf wgetrc atom tigrc
-        gnupg ssh peco Xresources hyper.js elvish ghci aws)
+        gnupg peco Xresources hyper.js elvish ghci aws)
     for file in "${files[@]}"; do
         remove_or_backup "$HOME"/."$file"
         ln -s "$dfsdir"/"$file" ~/."$file"
@@ -61,12 +61,6 @@ setup-symlinks-to-config() {
     ln -s "$dfsdir"/"${from}" ~/.config/"${to}"
 }
 
-restore-ssh-config() {
-    if [[ -f ~/.ssh.bak/authorized_keys ]] && [[ ! -f ~/.ssh/authorized_keys ]]; then
-        mv ~/.ssh.bak/authorized_keys ~/.ssh
-    fi
-}
-
 if [[ ! -d $dfsdir ]]; then
     git clone https://github.com/iwataka/dotfiles "$dfsdir"
     cd "$dfsdir"
@@ -74,4 +68,3 @@ fi
 pre-setup
 setup-bins
 setup-symlinks
-restore-ssh-config
