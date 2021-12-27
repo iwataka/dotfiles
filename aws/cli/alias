@@ -86,40 +86,16 @@ cfnwait =
     for i in `seq 60`
     do
       status=$(aws cloudformation describe-stacks --stack-name "$stack_name" |jq -r '.Stacks[0].StackStatus')
-      echo -n "."
-      if [ ! "$status" = "UPDATE_IN_PROGRESS" ]
+      if [ $(echo ${status} |grep _IN_PROGRESS$ |wc -l) -eq 1 ]
       then
+        echo -n "."
+      else
         break
       fi
       sleep 1
     done
 
     echo "$status"
-  }; f
-
-cfndp =
-  !f() {
-    set -e
-
-    template_file="$1"
-    stack_name="$2"
-    parameters="$@"
-
-    if [ -z $template_file ]
-    then
-      template_file=$(fzf --header="deploy stack template")
-    fi
-
-    if [ -z $stack_name ]
-    then
-      read -p "Stack Name: " stack_name
-    fi
-
-    aws cloudformation deploy \
-      --template-file $template_file \
-      --stack-name $stack_name \
-      --parameter-overrides $parameters \
-      --capabilities CAPABILITY_NAMED_IAM
   }; f
 
 cfnup =
