@@ -124,5 +124,3 @@ alias less='less -r'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-# Reload the shell if no background jobs
-alias reload='test $(jobs |wc -l) = 0 && exec "$SHELL" -l'

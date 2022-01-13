@@ -89,8 +89,9 @@ Plug 'cocopon/iceberg.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'nanotech/jellybeans.vim'
 Plug 'sainnhe/sonokai'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
 
 " Filetype
 if v:version >= 703
@@ -433,82 +434,6 @@ if has('autocmd')
     " autocmd BufWritePre * call s:preserve('%s/\s*$//')
   augroup END
 endif
-
-" ===============================================================
-" STATUSLINE & TABLINE {{{1
-" ==============================================================
-fu! S_fugitive()
-  if exists('*fugitive#head')
-    let h = fugitive#head()
-    return empty(h) ? '' : '[Git('.h.')]'
-  endif
-  return ''
-endfu
-
-fu! S_signify()
-  let sy = get(b:, 'sy', {})
-  let [add, change, delete] = get(sy, 'stats', [-1, -1, -1])
-  if add >= 0 && change >= 0 && delete >= 0
-    let sign_add = get(g:, 'signify_sign_add', '+')
-    let sign_change = get(g:, 'signify_sign_change', '~')
-    let sign_delete = get(g:, 'signify_sign_delete', '-')
-    return printf('[%s%d %s%d %s%d]', sign_add, add, sign_change, change, sign_delete, delete)
-  endif
-  return ''
-endfu
-
-fu! S_readonly()
-  return &readonly ? '[RO]' : ''
-endfu
-
-fu! MyStatusLine()
-  let fname = ' %n:%f'
-  let mod = '%m'
-  let ro = '%{S_readonly()}'
-  let sig = '%{S_signify()}'
-  let fug = '%{S_fugitive()}'
-  let ft = '%{&ft}'
-  let ff = '[%{&ff}]'
-  let fenc = '[%{&fenc}]'
-  let pos = '[%l,%c%V]'
-  let pct = '[%p%%]'
-  let left = fname.mod.ro.'%<'.' '.sig.fug
-  let right = ft.ff.fenc.' '.pos.pct
-  return left.'%='.right
-endfu
-
-set statusline=%!MyStatusLine()
-
-fu! MyTabLine()
-  let s = ''
-  for i in range(tabpagenr('$'))
-    " select the highlighting
-    if i + 1 == tabpagenr()
-      let s .= '%#TabLineSel#'
-    else
-      let s .= '%#TabLine#'
-    endif
-    " set the tab page number (for mouse clicks)
-    let s .= '%' . (i + 1) . 'T'
-    " the label is made by MyTabLabel()
-    let s .= ' %{MyTabLabel(' . (i + 1) . ')} '
-  endfor
-  " after the last tab fill with TabLineFill and reset tab page nr
-  let s .= '%#TabLineFill#%T'
-  " right-align the label to close the current tab page
-  if tabpagenr('$') > 1
-    let s .= '%=%#TabLine#%999Xclick here to close'
-  endif
-  return s
-endfu
-
-fu! MyTabLabel(n)
-  let buflist = tabpagebuflist(a:n)
-  let winnr = tabpagewinnr(a:n)
-  return fnamemodify(bufname(buflist[winnr - 1]), ':t')
-endfu
-
-set tabline=%!MyTabLine()
 
 " ===============================================================
 " MAPPINGS {{{1
@@ -1911,33 +1836,33 @@ endfu
 " --------------------------------------------------------------
 " airline {{{2
 " --------------------------------------------------------------
-" let g:airline_powerline_fonts = 1
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#fnamemod = ':t'
-" let g:airline#extensions#wordcount#enabled = 0
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#wordcount#enabled = 0
 
-" " Make gt and gT support both tabline and bufline
-" augroup vimrc-airline
-"   autocmd!
-"   autocmd VimEnter * call s:set_airline_mappings()
-" augroup END
+" Make gt and gT support both tabline and bufline
+augroup vimrc-airline
+  autocmd!
+  autocmd VimEnter * call s:set_airline_mappings()
+augroup END
 
-" fu! s:set_airline_mappings()
-"   if exists('g:loaded_airline') && g:loaded_airline && g:airline#extensions#tabline#enabled
-"     nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
-"     nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
-"   endif
-" endfu
+fu! s:set_airline_mappings()
+  if exists('g:loaded_airline') && g:loaded_airline && g:airline#extensions#tabline#enabled
+    nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
+    nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
+  endif
+endfu
 
-" fu! s:move_tab_or_buffer(suffix, count)
-"   let tab_exists = tabpagenr('$') != 1
-"   let c = a:count == 0 ? '' : a:count
-"   if tab_exists
-"     silent exe 'tab'.a:suffix.' '.c
-"   elseif buflisted(bufnr('%'))
-"     silent exe 'b'.a:suffix.' '.c
-"   endif
-" endfu
+fu! s:move_tab_or_buffer(suffix, count)
+  let tab_exists = tabpagenr('$') != 1
+  let c = a:count == 0 ? '' : a:count
+  if tab_exists
+    silent exe 'tab'.a:suffix.' '.c
+  elseif buflisted(bufnr('%'))
+    silent exe 'b'.a:suffix.' '.c
+  endif
+endfu
 
 " --------------------------------------------------------------
 " nerdtree {{{2
