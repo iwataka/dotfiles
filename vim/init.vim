@@ -14,23 +14,16 @@ silent! if plug#begin('~/.vim/plugged')
 " ------------------------------------------------------------------------------
 " ssh is abolished because git-credential is very useful.
 " ------------------------------------------------------------------------------
-" Windows can't access automatically via ssh
-" Vim in Git for Windows is detected as win32unix
-" if !(has('win32') || has('win32unix')) && filereadable(expand('~/.ssh/config'))
-  " Require my .ssh/config file.
-  " let g:plug_url_format = 'github:%s.git'
-" endif
-
 " My Plugins
 Plug 'iwataka/minidown.vim'
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown', 'on': ['OpenLinkHistory'] }
 Plug 'iwataka/gitignore.vim'
 Plug 'iwataka/hello-world.vim'
-Plug 'iwataka/ctrlp-bookmarkdir-ex.vim'
 Plug 'iwataka/colorex.vim'
 Plug 'iwataka/awesome.vim'
 Plug 'iwataka/github.vim', { 'on': ['GHOpen', 'GHReleases', 'GHSearch'] }
+Plug 'iwataka/vim-replace'
 unlet! g:plug_url_format
 
 " Git
@@ -40,24 +33,15 @@ if executable('git')
   endif
   Plug 'tpope/vim-fugitive'
   Plug 'shumphrey/fugitive-gitlab.vim'
-  Plug 'junegunn/vim-github-dashboard', { 'on': ['GHActivity', 'GHDashboard'] }
   Plug 'mattn/gist-vim'
 endif
 
 " Navigation
 Plug 'scrooloose/nerdtree'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'majutsushi/tagbar'
-if has('python')
-  if has('unix') || has('mac') || has('macunix')
-    Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
-  else
-    Plug 'FelikZ/ctrlp-py-matcher'
-  endif
-endif
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Editing
-Plug 'iwataka/vim-replace'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -67,19 +51,20 @@ Plug 'tpope/vim-sleuth'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'jiangmiao/auto-pairs'
 Plug 'chrisbra/unicode.vim'
-" Plug 'chrisbra/unicode.vim',
-"       \ { 'on': ['SearchUnicode', 'UnicodeName', 'UnicodeTable', 'Digraphs'] }
 " Vim's folding feature slows down inserting characters, especially cjk.
 " This plug-in prevents it and enableds to fold without any effects to the
 " performance. Really nice!
 Plug 'Konfekt/FastFold'
-Plug 'jeetsukumaran/vim-indentwise'
 Plug 'Chiel92/vim-autoformat'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/sideways.vim'
-if has('nvim') && has('python3')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-endif
+Plug 'janko-m/vim-test'
+
+" LSP
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
@@ -88,7 +73,6 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'cocopon/iceberg.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'nanotech/jellybeans.vim'
-Plug 'sainnhe/sonokai'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
@@ -97,13 +81,10 @@ Plug 'ryanoasis/vim-devicons'
 if v:version >= 703
   Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-  Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 endif
-Plug 'w0rp/ale'
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
-Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'MaxMEllon/vim-jsx-pretty', { 'for': 'javascriptreact' }
 Plug 'othree/html5.vim', { 'for': 'html' }
@@ -116,10 +97,6 @@ Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'asciidoc/vim-asciidoc', { 'for': 'asciidoc' }
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
-if has('python') || has('python3')
-  Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
-endif
 Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
 Plug 'pboettch/vim-cmake-syntax', { 'for': 'cmake' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
@@ -127,8 +104,6 @@ Plug 'PProvost/vim-ps1', { 'for': 'ps1' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'keith/swift.vim', { 'for': 'swift' }
 Plug 'lambdalisue/vim-pyenv', { 'for': 'python' }
-Plug 'nvie/vim-flake8', { 'for': 'python' }
-Plug 'janko-m/vim-test'
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
 Plug 'udalov/kotlin-vim', { 'for': 'kotlin' }
@@ -142,18 +117,15 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-fold'
 Plug 'kana/vim-textobj-line'
 Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
+Plug 'jeetsukumaran/vim-indentwise'
 
 " Utility
 Plug 'junegunn/vim-emoji', { 'on': ['EmojiList'] }
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/webapi-vim'
-Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
 Plug 'Shougo/vimproc.vim', {
       \ 'do': has('win32') ? 'tools\\update-dll-mingw' : 'make'
       \ }
-if has('job') && has('channel')
-  Plug 'metakirby5/codi.vim'
-endif
 
 call plug#end()
 endif
@@ -175,7 +147,7 @@ runtime ftplugin/man.vim
 let mapleader      = " "  " Space can be typed by both of hands.
 let maplocalleader = "\\"  " The local mapleader is hardly used.
 
-let $LANG='en'                            " Vim should be in English
+let $LANG='en_US'                         " Vim should be in English
 if !has('win32')
   silent! language time en_US.UTF8
 endif
@@ -288,19 +260,8 @@ if (&t_Co > 2 || has('gui_running')) && !exists('syntax_on')
   syntax on
 endif
 
-if has('gui_running')
-  set guioptions=
-  if has('win32')
-    " See https://github.com/powerline/fonts
-    " Hack font can't show powerline glyphs on my Windows.
-    silent! set guifont=Hack:h9:cANSI
-  else
-    " Hack is maintained separately, which results less space occupied.
-    " I use dual boot of Ubuntu and Windows and this causes a little space for
-    " Ubuntu.
-    silent! set guifont=Hack\ 11
-  endif
-endif
+set guioptions=
+silent! set guifont=Hack\ Nerd\ Font\ Mono:h11
 
 if has('mouse')
   set mouse=a
@@ -426,7 +387,6 @@ if has('autocmd')
 
     autocmd BufReadCmd *.pdf,*.mp3,*.mp4,*.xls,*.xlsx,*.xlsm,*.doc,*.docx,*.docm,*.ppt,*.pptx,*.pptm
           \ silent call <sid>open(expand('<afile>')) |
-          \ doautocmd CtrlPMRUF BufWinEnter |
           \ bdelete
 
     " Automatically remove trailing spaces when saving
@@ -568,8 +528,9 @@ nnoremap <leader>cd :<c-u>cd %:h<cr>
 
 " Some mappings for user-defined commands
 nnoremap <silent> <leader>rt :<c-u>Root<cr>
-if !maparg('<tab>', 'i') | inoremap <expr> <tab> <sid>super_duper_tab("\<c-n>", 1) | endif
-if !maparg('<S-tab>', 'i') | inoremap <expr> <S-tab> <sid>super_duper_tab("\<c-p>",  0) | endif
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 
 " unimpared extension
 nnoremap cof :<c-u>setlocal <c-r>=&fen ? 'nofoldenable' : 'foldenable'<cr><cr>
@@ -732,47 +693,6 @@ fu! s:get_visual_selection()
   return lines
 endfu
 
-" from Junegunn's vimrc
-" https://github.com/junegunn/dotfiles/blob/master/vimrc#L453-L493
-fu! s:super_duper_tab(k, forward)
-  " If you are editing markdown and the cursor is on a bullet, this
-  " indents/unindents the line
-  if &filetype == 'markdown'
-    let indent_bullet = s:indent_bullet(a:forward)
-    if indent_bullet != ""
-      return indent_bullet
-    endif
-  endif
-
-  if pumvisible()
-    return a:k
-  endif
-  let line = getline('.')
-  let col = col('.') - 2
-  if empty(line) || line[col] !~ '\k\|[/~.]' || line[col + 1] =~ '\k'
-    return a:forward ? "\<tab>" : "\<S-tab>"
-  endif
-  let prefix = expand(matchstr(line[0:col], '\S*$'))
-  if !empty(&omnifunc)
-    return "\<c-x>\<c-o>"
-  endif
-  if !empty(&completefunc)
-    return "\<c-x>\<c-u>"
-  endif
-  if prefix =~ '^[~/.]'
-    return "\<c-x>\<c-f>"
-  endif
-  return a:k
-endfu
-
-fu! s:indent_range(start, end)
-  let cursor = getcurpos()
-  for i in range(a:start, a:end)
-    setline
-  endfor
-  call setpos('.', cursor)
-endfu
-
 " Returns:
 " A key sequence to indent/unindent a bullet on the current line
 " Empty string if the cursor is NOT on a bullet
@@ -803,16 +723,6 @@ fu! s:on_bullet()
   endif
 endfu
 
-" This function can't precisely judge the given function can complete or not
-" (issue with tsuquyomi)
-" fu! s:can_complete(func, prefix)
-"   if empty(a:func) || call(a:func, [1, '']) < 0
-"     return 0
-"   endif
-"   let result = call(a:func, [0, matchstr(a:prefix, '\k\+$')])
-"   return !empty(type(result) == type([]) ? result : result.words)
-" endfu
-
 fu! s:super_duper_enter()
   if s:on_bullet()
     return "\<esc>0C"
@@ -820,48 +730,6 @@ fu! s:super_duper_enter()
     return "\<cr>"
   endif
 endfu
-
-" " Settings about japanese and english input sources
-" if has('unix')
-"   let s:default_input_source = "mozc-jp"
-"   let s:ibus = !empty(system('ibus engine 2> /dev/null'))
-"   aug vimrc-jp
-"     au!
-"     autocmd InsertLeave * call s:on_insert_leave()
-"   aug END
-" endif
-
-" " Execute this when leaving from insert mode.
-" fu! s:on_insert_leave()
-"   silent call s:switch_input_source_to_default()
-" endfu
-
-" " Switch current input source to the default
-" fu! s:switch_input_source_to_default()
-"   if s:current_input_source() != s:default_input_source
-"     if s:ibus
-"       silent call system('ibus engine '.s:default_input_source)
-"     endif
-"   endif
-" endfu
-
-" " Returns current input source
-" fu! s:current_input_source()
-"   if s:ibus
-"     return substitute(system('ibus engine'), '\(\n\|\r\)', '', '')
-"   else
-"     return ''
-"   endif
-" endfu
-
-" com! InputRestart call s:input_restart()
-" fu! s:input_restart()
-"   if s:ibus
-"     silent call system('ibus restart')
-"   endif
-"   sleep 300m
-"   silent call s:switch_input_source_to_default()
-" endfu
 
 cabbrev o Open
 com! -nargs=* -complete=file Open call s:open(<f-args>)
@@ -1015,23 +883,6 @@ fu! s:todo(args)
     silent! exe printf('%s %s %s', grep_cmd, kw, a:args)
   endfor
 endfu
-
-" This has the same name as Make command in vim-dispatch and it causes
-" some annoyances.
-" com! Make call <sid>make_current_project()
-" fu! s:make_current_project()
-"   let files = split(system('ls'), '\n')
-"   for file in files
-"     if file == "Makefile"
-"       !make
-"       return
-"     elseif file == "Rakefile"
-"       !rake
-"       return
-"     endif
-"   endfor
-"   make
-" endfu
 
 com! -nargs=* Run call <sid>run_this_script(<q-args>)
 fu! s:run_this_script(args)
@@ -1396,6 +1247,75 @@ fu! s:pwd()
   echo printf("%s (-> clipboard)", cwd)
 endfu
 
+" TODO: make these features as an external plugin
+com! -nargs=* -bang -complete=shellcmd Terminal call s:terminal(<bang>0, <q-args>)
+cabbrev t Terminal
+fu! s:terminal(force_new, cmd)
+  if empty(a:cmd)
+    call s:terminal_from_history(a:force_new)
+    return
+  endif
+  let bufs = getbufinfo({'bufloaded': 1})
+  let term_bufs = filter(bufs, printf("v:val.name =~ '\\vterm://(.{-}//(\\d+:)?)?\\V%s'", a:cmd))
+  if empty(term_bufs) || a:force_new
+    " TODO: add a:cmd to command history kept by Vim
+    if exists('*nvim_open_win')
+      let bufnr = bufadd(printf('term://%s', a:cmd))
+      call bufload(bufnr)
+      call s:terminal(0, a:cmd)
+    else
+      exe printf('edit term://%s', a:cmd)
+    endif
+  else
+    let term_buf = term_bufs[0]
+    if term_buf.bufnr == bufnr('.')
+      return
+    endif
+    if exists('*nvim_open_win')
+      call s:float(term_buf.bufnr)
+    else
+      exe printf('edit %s', term_buf.name)
+    endif
+  endif
+endfu
+fu! s:terminal_from_history(force_new)
+  let bufs = getbufinfo({'bufloaded': 1})
+  let bufs = filter(bufs, 'has_key(v:val.variables, "term_title")')
+  let cmds = map(bufs, "substitute(v:val.name, '\\vterm://%(.{-}//%(\\d+:)?)?(.*)', '\\1', '')")
+  let shell = expand('$SHELL')
+  if !empty(shell) && index(cmds, shell) < 0
+    call insert(cmds, shell)
+  endif
+  " TODO: merge command history kept by Vim
+  let histfile = expand('~/.zsh-history')
+  if filereadable(histfile)
+    let cmds = cmds + split(system(printf('export HISTSIZE=10000 && fc -R %s && fc -ln -10000', histfile)), '\n')
+  endif
+  if exists('*fzf#run')
+    call fzf#run(fzf#wrap({
+          \ 'source': cmds,
+          \ 'sink': funcref('<sid>terminal', [a:force_new])
+          \ }))
+  else
+    call s:terminal(shell)
+  endif
+endfu
+fu! s:float(bufnr)
+  let width = nvim_win_get_width(0)
+  let height = nvim_win_get_height(0)
+  let opts = {
+        \ 'relative': 'win',
+        \ 'width': float2nr(width*0.8),
+        \ 'height': float2nr(height*0.8),
+        \ 'col': float2nr(width*0.1),
+        \ 'row': float2nr(height*0.1),
+        \ 'anchor': 'NW',
+        \ 'style': 'minimal',
+        \ 'border': 'none',
+        \ }
+  let win = nvim_open_win(a:bufnr, 1, opts)
+endfu
+
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
@@ -1528,7 +1448,7 @@ endif
 nnoremap <silent> <F11> :call <sid>toggle_fullscreen()<cr>
 fu! s:toggle_fullscreen()
   if has('gui_macvim')
-    exe 'set '.(&fullscreen ? 'nofullscreen' ? 'fullscreen')
+    exe 'set '.(&fullscreen ? 'nofullscreen' : 'fullscreen')
   elseif executable('wmctrl')
     call system('wmctrl -ir '.v:windowid.' -b toggle,fullscreen')
   elseif exists(':WToggleFullscreen')
@@ -1537,88 +1457,13 @@ fu! s:toggle_fullscreen()
 endfu
 
 " --------------------------------------------------------------
-" CtrlP {{{2
+" fzf.vim {{{2
 " --------------------------------------------------------------
-if executable('pt')
-  let s:ctrlp_user_command = 'pt -l --follow --nocolor "" %s'
-elseif executable('ag')
-  let s:ctrlp_user_command = 'ag --follow --nocolor -g "" %s'
-elseif executable('ack')
-  let s:ctrlp_user_command = 'ack --follow --nocolor -g "" %s'
-endif
-let s:ctrlp_vcs_user_commands = {
-  \ 1: ['.git', 'cd %s && git ls-files'],
-  \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-  \ }
-if exists('s:ctrlp_user_command')
-  let g:ctrlp_user_command = {
-    \ 'types': s:ctrlp_vcs_user_commands,
-    \ 'fallback': s:ctrlp_user_command
-    \ }
-else
-  let g:ctrlp_user_command = {
-    \ 'types': s:ctrlp_vcs_user_commands
-    \ }
-endif
-
-" default ignored directories
-let g:ctrlp_custom_ignore = {
-    \ 'dir': '\v[\/]\.(git|hg|svn|gradle|idea)$|(build|project|target|out|libs|__pycache__)$',
-    \ 'file': '\v\.(exe|so|dll)$'
-\ }
-let g:ctrlp_map = ''
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_by_filename = 0
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
-let g:ctrlp_mruf_max = 1000
-let g:ctrlp_mruf_exclude=
-      \ '\v^fugitive:'.repeat(expand('/'), 2).'|'
-      \ .expand('/').'\.git'.expand('/')
-" Disable switching to existing buffers, which has bad effects on Goyo.
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_root_markers = s:root_marker_files
-
-nnoremap <silent> <Leader>p :<c-u>CtrlP<CR>
-" This immitates atom, sublimeText and so on.
-" Conflicting with one of vim-markdown-ex key-mappings
-" nnoremap <silent> <C-p> :CtrlP<cr>
-nnoremap <silent> <Leader>b :<c-u>CtrlPBuffer<CR>
-nnoremap <silent> <Leader>m :<c-u>CtrlPMRU<CR>
-nnoremap <silent> <Leader>d :<c-u>CtrlPBookmarkDir<CR>
-nnoremap <silent> <F3> :<c-u>CtrlPBookmarkDirReload!<CR>
-
-let g:ctrlp_bookmarkdir_ex_paths = [
-      \ '~/projects/*',
-      \ '~/lib/*',
-      \ '~/dotfiles',
-      \ '~/gdrive',
-      \ '~/Dropbox/*',
-      \ '$JAVA_HOME/src',
-      \ '$GOPATH/src/*/*/*',
-      \ ]
-if has('unix')
-  call extend(g:ctrlp_bookmarkdir_ex_paths, [
-        \ '/usr/lib/ruby/[1-9]\+\(\.[1-9]\+\)*',
-        \ '/usr/lib/python[1-9]\+\(\.[1-9]\+\)*',
-        \ '/usr/lib/perl/[1-9]\+\(\.[1-9]\+\)*',
-        \ '/usr/lib/jvm/java-[1-9]\+-oracle'
-        \ ])
-elseif has('win32')
-  call extend(g:ctrlp_bookmarkdir_ex_paths, [
-        \ 'C:\lib\*'
-        \ ])
-endif
-let g:ctrlp_bookmarkdir_ex_force = 1
-
-if has('python')
-  if has('unix') || has('mac') || has('macunix')
-    let g:ctrlp_match_func = { 'match': 'matcher#cmatch' }
-  else
-    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-  endif
-endif
+nnoremap <silent> <Leader>p :<c-u>Files<CR>
+nnoremap <silent> <Leader>b :<c-u>Buffers<CR>
+nnoremap <silent> <Leader>m :<c-u>History<CR>
+nnoremap <silent> <Leader>: :<c-u>History:<CR>
+nnoremap <silent> <Leader>/ :<c-u>History/<CR>
 
 " --------------------------------------------------------------
 " Git {{{2
@@ -1704,24 +1549,6 @@ nmap ga <Plug>(EasyAlign)
 nmap gaa ga_
 
 " --------------------------------------------------------------
-" dirvish {{{2
-" --------------------------------------------------------------
-" If you set 1 to this, / and ? mappings don't work correctly.
-let g:dirvish_relative_paths = 0
-if has('autocmd')
-  " Map t to "open in new tab".
-  autocmd vimrcEx FileType dirvish nnoremap <buffer> t
-      \ :tabnew <C-R>=fnameescape(getline('.'))<CR><CR>
-
-  " Map CTRL-R to reload the Dirvish buffer.
-  autocmd vimrcEx FileType dirvish nnoremap <buffer> <C-R> :<C-U>Dirvish %<CR>
-
-  " Map gh to hide "hidden" files.
-  autocmd vimrcEx FileType dirvish nnoremap <buffer> gh
-      \ :set ma<bar>g@\v/\.[^\/]+/?$@d<cr>:set noma<cr>
-endif
-
-" --------------------------------------------------------------
 " airnote {{{2
 " --------------------------------------------------------------
 let g:airnote_path = expand('~/Dropbox/memo')
@@ -1758,17 +1585,6 @@ augroup END
 " let g:AutoPairsMapBS = 0
 
 " --------------------------------------------------------------
-" jedi {{{2
-" --------------------------------------------------------------
-let g:jedi#goto_command = 'gd'
-let g:jedi#goto_assignments_command = ''
-let g:jedi#goto_definitions_command = ''
-let g:jedi#documentation_command = ''
-let g:jedi#usages_command = ''
-let g:jedi#completions_command = ''
-let g:jedi#rename_command = 'gr'
-
-" --------------------------------------------------------------
 " FastFold {{{2
 " --------------------------------------------------------------
 let g:fastfold_savehook = 0
@@ -1777,42 +1593,14 @@ let g:fastfold_fold_movement_commands = []
 let g:tex_fold_enabled = 1
 
 " --------------------------------------------------------------
-" tsuquyomi {{{2
-" --------------------------------------------------------------
-let g:tsuquyomi_disable_default_mappings = 1
-augroup vimrc-tsuquyomi
-  autocmd!
-  autocmd Filetype typescript nmap <buffer> gd <Plug>(TsuquyomiDefinition)
-augroup END
-
-" --------------------------------------------------------------
 " minidown {{{2
 " --------------------------------------------------------------
 let g:minidown_pandoc_enable_toc = 0
 
 " --------------------------------------------------------------
-" javacomplete2 {{{2
-" --------------------------------------------------------------
-if has('autocmd')
-  augroup vimrc-javacomplete
-    autocmd Filetype java setlocal omnifunc=javacomplete#Complete
-  augroup END
-endif
-
-" --------------------------------------------------------------
 " markdown {{{2
 " --------------------------------------------------------------
 nnoremap <silent> gX :OpenLinkHistory<cr>
-
-" --------------------------------------------------------------
-" codi {{{2
-" --------------------------------------------------------------
-let g:codi#interpreters = {
-     \ 'go': {
-         \ 'bin': 'gore',
-         \ 'prompt': 'gore> ',
-         \ },
-     \ }
 
 " --------------------------------------------------------------
 " emoji {{{2
@@ -1837,32 +1625,10 @@ endfu
 " airline {{{2
 " --------------------------------------------------------------
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#wordcount#enabled = 0
-
-" Make gt and gT support both tabline and bufline
-augroup vimrc-airline
-  autocmd!
-  autocmd VimEnter * call s:set_airline_mappings()
-augroup END
-
-fu! s:set_airline_mappings()
-  if exists('g:loaded_airline') && g:loaded_airline && g:airline#extensions#tabline#enabled
-    nnoremap <silent> gt :<c-u>call <sid>move_tab_or_buffer('next', v:count)<cr>
-    nnoremap <silent> gT :<c-u>call <sid>move_tab_or_buffer('previous', v:count)<cr>
-  endif
-endfu
-
-fu! s:move_tab_or_buffer(suffix, count)
-  let tab_exists = tabpagenr('$') != 1
-  let c = a:count == 0 ? '' : a:count
-  if tab_exists
-    silent exe 'tab'.a:suffix.' '.c
-  elseif buflisted(bufnr('%'))
-    silent exe 'b'.a:suffix.' '.c
-  endif
-endfu
+let g:airline_left_sep=''
+let g:airline_right_sep=''
 
 " --------------------------------------------------------------
 " nerdtree {{{2
@@ -1938,12 +1704,6 @@ augroup vim-pyenv-custom-augroup
 augroup END
 
 " --------------------------------------------------------------
-" vim-flake8 {{{2
-" --------------------------------------------------------------
-let g:no_flake8_maps = 1
-com! PyFlake8 call flake8#Flake8()
-
-" --------------------------------------------------------------
 " vim-test {{{2
 " --------------------------------------------------------------
 nnoremap <silent> <leader>tn :TestNearest<cr>
@@ -1958,11 +1718,6 @@ elseif has('terminal')
 endif
 
 " --------------------------------------------------------------
-" vim-grepper {{{2
-" --------------------------------------------------------------
-nnoremap <silent> <leader>gg :Grepper<cr>
-
-" --------------------------------------------------------------
 " sideways.vim {{{2
 " --------------------------------------------------------------
 nnoremap <silent> gH :SidewaysLeft<cr>
@@ -1971,37 +1726,6 @@ omap aa <Plug>SidewaysArgumentTextobjA
 xmap aa <Plug>SidewaysArgumentTextobjA
 omap ia <Plug>SidewaysArgumentTextobjI
 xmap ia <Plug>SidewaysArgumentTextobjI
-
-" --------------------------------------------------------------
-" vim-go {{{2
-" --------------------------------------------------------------
-let g:go_fmt_command = "goimports"
-let g:go_gocode_unimported_packages = 1
-
-" --------------------------------------------------------------
-" ale {{{2
-" --------------------------------------------------------------
-let g:ale_linters = {
-      \ 'rust': ['rls'],
-      \ 'cpp': ['ccls', 'clang'],
-      \ 'haskell': ['hlint']
-      \ }
-let g:ale_fixers = {
-      \ 'rust': ['rustfmt'],
-      \ 'cpp': ['clang-format'],
-      \ 'javascript': ['prettier'],
-      \ 'haskell': ['stylish-haskell'],
-      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-      \ }
-let g:ale_completion_enabled = 1
-let g:ale_linters_explicit = 1
-let g:ale_fix_on_save = 1
-let g:ale_c_parse_compile_commands = 1
-
-" --------------------------------------------------------------
-" deoplete {{{2
-" --------------------------------------------------------------
-let g:deoplete#enable_at_startup = 1
 
 " ===============================================================
 " POST PROCESS {{{1
