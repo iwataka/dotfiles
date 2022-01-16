@@ -89,6 +89,7 @@ alias ...............='cd ../../../../../../../../../../../../..'
 
 alias d="docker"
 alias h="history"
+alias history="fc -l -1000"
 alias j="jobs"
 alias v="vim"
 which nvim >/dev/null 2>&1 && alias vim='nvim'

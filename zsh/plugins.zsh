@@ -10,9 +10,9 @@ zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/github", from:oh-my-zsh
 zplug "plugins/gitignore", from:oh-my-zsh
 zplug "plugins/golang", from:oh-my-zsh
-zplug "rupa/z", use:"z.sh"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "mafredri/zsh-async"
+zplug "b4b4r07/enhancd", use:init.sh
 if starship --version &>/dev/null; then
   eval "$(starship init zsh)"
 else
