@@ -11,9 +11,6 @@ endif
 
 silent! if plug#begin('~/.vim/plugged')
 
-" ------------------------------------------------------------------------------
-" ssh is abolished because git-credential is very useful.
-" ------------------------------------------------------------------------------
 " My Plugins
 Plug 'iwataka/minidown.vim'
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
@@ -1484,6 +1481,14 @@ nnoremap <silent> <Leader>b :<c-u>Buffers<CR>
 nnoremap <silent> <Leader>m :<c-u>History<CR>
 nnoremap <silent> <Leader>: :<c-u>History:<CR>
 nnoremap <silent> <Leader>/ :<c-u>History/<CR>
+
+" --------------------------------------------------------------
+" LSP {{{2
+" --------------------------------------------------------------
+nnoremap <silent> gd :<c-u>LspDefinition<CR>
+nnoremap <silent> gi :<c-u>LspImplementation<CR>
+nnoremap <silent> [d :<c-u>LspPreviousDiagnostic<CR>
+nnoremap <silent> ]d :<c-u>LspNextDiagnostic<CR>
 
 " --------------------------------------------------------------
 " Git {{{2
