@@ -53,7 +53,6 @@ Plug 'chrisbra/unicode.vim'
 " This plug-in prevents it and enableds to fold without any effects to the
 " performance. Really nice!
 Plug 'Konfekt/FastFold'
-Plug 'Chiel92/vim-autoformat'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'janko-m/vim-test'
@@ -199,7 +198,6 @@ set allowrevins                           " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
 set nojoinspaces                          " No spaces when joining two lines
 set colorcolumn=81
-set completeopt-=preview
 if v:version > 704 || v:version == 704 && has('patch092')
   set spelllang=en,cjk
 else
@@ -1510,17 +1508,7 @@ nnoremap <leader>gA :<c-u>Git add --all<cr>
 nnoremap <leader>gv :<c-u>GV<cr>
 xnoremap <leader>gv :GV<cr>
 
-if has('autocmd')
-  autocmd vimrcEx BufEnter * if exists(':SignifyRefresh') | SignifyRefresh | endif
-endif
 let g:signify_skip_filetype = { 'help': 1, 'gitcommit': 1 }
-let g:signify_sign_add = '+'
-let g:signify_sign_delete = '-'
-let g:signify_sign_change = '~'
-omap ic <plug>(signify-motion-inner-pending)
-xmap ic <plug>(signify-motion-inner-visual)
-omap ac <plug>(signify-motion-outer-pending)
-xmap ac <plug>(signify-motion-outer-visual)
 
 " --------------------------------------------------------------
 " repeat {{{2
