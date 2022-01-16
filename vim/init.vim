@@ -15,10 +15,10 @@ silent! if plug#begin('~/.vim/plugged')
 Plug 'iwataka/minidown.vim'
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown', 'on': ['OpenLinkHistory'] }
-Plug 'iwataka/gitignore.vim'
-Plug 'iwataka/hello-world.vim'
+Plug 'iwataka/gitignore.vim', { 'on': ['Gitignore', 'GitignoreUpdatea'] }
+Plug 'iwataka/hello-world.vim', { 'on': ['HelloWorld', 'HelloWorldUpdate'] }
 Plug 'iwataka/colorex.vim'
-Plug 'iwataka/awesome.vim'
+Plug 'iwataka/awesome.vim', { 'on': ['Awesome', 'AwesomeUpdate'] }
 Plug 'iwataka/github.vim', { 'on': ['GHOpen', 'GHReleases', 'GHSearch'] }
 Plug 'iwataka/vim-replace'
 unlet! g:plug_url_format
@@ -30,13 +30,14 @@ if executable('git')
   endif
   Plug 'tpope/vim-fugitive'
   Plug 'shumphrey/fugitive-gitlab.vim'
-  Plug 'mattn/gist-vim'
+  Plug 'mattn/gist-vim', { 'on': ['Gist'] }
 endif
 
 " Navigation
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'easymotion/vim-easymotion'
 
 " Editing
 Plug 'tpope/vim-repeat'
@@ -77,39 +78,41 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 
-" Filetype
-if v:version >= 703
-  Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-  Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+" Filetype syntax
+if has('nvim')
+  Plug 'nvim-treesitter/nvim-treesitter'
+else
+  Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
+  Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+  Plug 'othree/html5.vim', { 'for': 'html' }
+  Plug 'ekalinin/Dockerfile.vim', { 'for': ['Dockerfile', 'docker-compose'] }
+  Plug 'ap/vim-css-color', { 'for': 'css' }
+  Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+  Plug 'cespare/vim-toml', { 'for': 'toml' }
+  Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+  Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
+  Plug 'pboettch/vim-cmake-syntax', { 'for': 'cmake' }
+  Plug 'dag/vim-fish', { 'for': 'fish' }
+  Plug 'udalov/kotlin-vim', { 'for': 'kotlin' }
+  Plug 'dart-lang/dart-vim-plugin', { 'for': 'dart' }
 endif
-Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-markdown', { 'for': 'markdown' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'MaxMEllon/vim-jsx-pretty', { 'for': 'javascriptreact' }
-Plug 'othree/html5.vim', { 'for': 'html' }
-Plug 'ekalinin/Dockerfile.vim', { 'for': ['Dockerfile', 'docker-compose'] }
-Plug 'ap/vim-css-color', { 'for': 'css' }
-Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] }
-Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
-Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'cespare/vim-toml', { 'for': 'toml' }
-Plug 'asciidoc/vim-asciidoc', { 'for': 'asciidoc' }
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
-Plug 'pboettch/vim-cmake-syntax', { 'for': 'cmake' }
-Plug 'jceb/vim-orgmode', { 'for': 'org' }
-Plug 'PProvost/vim-ps1', { 'for': 'ps1' }
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'keith/swift.vim', { 'for': 'swift' }
-Plug 'lambdalisue/vim-pyenv', { 'for': 'python' }
-Plug 'dag/vim-fish', { 'for': 'fish' }
+" Filetypes not supported by treesitter
 Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
-Plug 'udalov/kotlin-vim', { 'for': 'kotlin' }
-Plug 'aklt/plantuml-syntax', { 'for': 'plantuml' }
+Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'dmix/elvish.vim', { 'for': 'elvish' }
-Plug 'dart-lang/dart-vim-plugin', { 'for': 'dart' }
+Plug 'keith/swift.vim', { 'for': 'swift' }
+Plug 'MaxMEllon/vim-jsx-pretty', { 'for': 'javascriptreact' }
+Plug 'asciidoc/vim-asciidoc', { 'for': 'asciidoc' }
+Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
+Plug 'PProvost/vim-ps1', { 'for': 'ps1' }
+Plug 'aklt/plantuml-syntax', { 'for': 'plantuml' }
+
+" Filetype utility
+Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] }
+Plug 'lambdalisue/vim-pyenv', { 'for': 'python' }
+Plug 'tpope/vim-endwise'
+Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
@@ -123,9 +126,6 @@ Plug 'jeetsukumaran/vim-indentwise'
 Plug 'junegunn/vim-emoji', { 'on': ['EmojiList'] }
 Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/webapi-vim'
-Plug 'Shougo/vimproc.vim', {
-      \ 'do': has('win32') ? 'tools\\update-dll-mingw' : 'make'
-      \ }
 
 call plug#end()
 endif
@@ -332,7 +332,7 @@ if has('autocmd')
           \ setlocal foldlevel=1 |
           \ setlocal comments=b:-,b:+,b:* |
           \ setlocal formatoptions+=ro |
-          \ inoremap <buffer> <expr> <cr> <sid>super_duper_enter() |
+          \ inoremap <buffer> <expr> <cr> <sid>enter_on_markdown() |
           \ let b:AutoPairs = {}
     autocmd FileType calendar,git,gitv setlocal nolist
     autocmd FileType dosbatch setlocal commentstring=::%s
@@ -462,11 +462,7 @@ nnoremap Y y$
 " Save
 inoremap <C-s> <C-O>:<c-u>w<cr>
 nnoremap <C-s> :<c-u>w<cr>
-nnoremap <Leader>w :<c-u>w<CR>
 cnoremap w!! w !sudo tee % >/dev/null
-
-" Quit
-nnoremap <leader>q :<c-u>q<cr>
 
 " Hide other visibie buffers
 nnoremap <leader>o :<c-u>only<cr>
@@ -477,8 +473,6 @@ cnoremap <C-E> <End>
 cnoremap <C-K> <C-U>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
-" This annoys me a little
-" cnoremap <expr> %% expand("%")
 
 " Scroll horizontally
 nnoremap zl zL
@@ -530,7 +524,16 @@ nnoremap <leader>cd :<c-u>cd %:h<cr>
 nnoremap <silent> <leader>rt :<c-u>Root<cr>
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+" create insert_enter function due to vim-endwise plugin
+inoremap <expr> <cr>    <sid>insert_enter()
+
+fu! s:insert_enter()
+  if pumvisible()
+    return asyncomplete#close_popup()
+  else
+    return "\<cr>"
+  endif
+endfu
 
 " unimpared extension
 nnoremap cof :<c-u>setlocal <c-r>=&fen ? 'nofoldenable' : 'foldenable'<cr><cr>
@@ -723,7 +726,7 @@ fu! s:on_bullet()
   endif
 endfu
 
-fu! s:super_duper_enter()
+fu! s:enter_on_markdown()
   if s:on_bullet()
     return "\<esc>0C"
   else
@@ -1362,7 +1365,6 @@ endfu
 " ===============================================================
 " PLUGINS {{{1
 " ===============================================================
-
 " --------------------------------------------------------------
 " Plug {{{2
 " --------------------------------------------------------------
@@ -1751,6 +1753,29 @@ omap aa <Plug>SidewaysArgumentTextobjA
 xmap aa <Plug>SidewaysArgumentTextobjA
 omap ia <Plug>SidewaysArgumentTextobjI
 xmap ia <Plug>SidewaysArgumentTextobjI
+
+" --------------------------------------------------------------
+" vim-easymotion {{{2
+" --------------------------------------------------------------
+map <Leader> <Plug>(easymotion-prefix)
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+" Move to line
+map <Leader>l <Plug>(easymotion-bd-jk)
+nmap <Leader>l <Plug>(easymotion-overwin-line)
+
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
+
+" --------------------------------------------------------------
+" nvim-treesitter {{{2
+" --------------------------------------------------------------
+if has('nvim')
+  exe "lua require('plugins.treesitter')"
+endif
 
 " ===============================================================
 " POST PROCESS {{{1
