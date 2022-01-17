@@ -66,6 +66,7 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
+Plug 'sainnhe/gruvbox-material'
 Plug 'whatyouhide/vim-gotham'
 Plug 'cocopon/iceberg.vim'
 Plug 'nanotech/jellybeans.vim'
@@ -153,50 +154,50 @@ endif
 if has('vim_starting')
   set encoding=utf-8
 endif
-set fileencodings=utf-8,sjis              " UTF8 is first, SJIS is second
+set fileencodings=utf-8,sjis                     " UTF8 is first, SJIS is second
 set termencoding=utf-8
-set fileformats=unix,dos,mac              " Unix format has highest priority
-set timeout                               " Enable timeout settings
-set timeoutlen=1000                       " Time out on mapping after 1 second
-set ttimeoutlen=100                       " Time out on key codes after 0.1 second
-set lazyredraw                            " Not be redrawn while executing macros and so on
-set showmatch                             " Show pairs of brackets
-set matchtime=1                           " Tenths of a second to show the mathing paren
-set textwidth=0                           " No limit for text width
-set pumheight=10                          " Limit the height of popup menu
-set splitright                            " More natural way to split a window vertically
-set splitbelow                            " More natural way to split a window horizontally
-set expandtab                             " Use spaces for indenting
-set smarttab                              " Use spaces for inserting <Tab>
-set autoindent                            " Same as the above indent
-set smartindent                           " Smart autoindenting
-set noerrorbells                          " No beep or screen flash for error messages
-set visualbell t_vb=                      " No beeping, use visual bell
-set shortmess+=atI                        " Some visual settings
-set scrolloff=3                           " Keep some lines
-set showcmd                               " Show command in the last line
-set cmdheight=2                           " The height of command line
-set ruler                                 " Show the cursor position in status line
-set showmode                              " Show mode in the last line
-set laststatus=2                          " last window will have a status line
-set history=1000                          " A history in command line
-set autowrite                             " Write contents of modified files automatically
-set autoread                              " Detect changes from outside automatically
-set backspace=indent,eol,start            " Enable backspace to delete more than characters
-set hidden                                " A bufffer becomes hidden when it is abandoned
-set nostartofline                         " Jump to certain positions, not starts of line
-set ignorecase                            " Case insensitive by default
-set smartcase                             " Case sensitive when containing capitals
-set magic                                 " Make using regex more easier
-set incsearch                             " Enable incremental search
-set wrapscan                              " Enable wrap scan
-set hlsearch                              " Highlight search results
-nohlsearch                                " Prevent highlight when reloading .vimrc
-set ttyfast                               " Enable fast connection
-set conceallevel=0                        " Disable conceal feature
-set allowrevins                           " Allow to use CTRL-_
-set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ " Show invisible characters
-set nojoinspaces                          " No spaces when joining two lines
+set fileformats=unix,dos,mac                     " Unix format has highest priority
+set timeout                                      " Enable timeout settings
+set timeoutlen=1000                              " Time out on mapping after 1 second
+set ttimeoutlen=100                              " Time out on key codes after 0.1 second
+set lazyredraw                                   " Not be redrawn while executing macros and so on
+set showmatch                                    " Show pairs of brackets
+set matchtime=1                                  " Tenths of a second to show the mathing paren
+set textwidth=0                                  " No limit for text width
+set pumheight=10                                 " Limit the height of popup menu
+set splitright                                   " More natural way to split a window vertically
+set splitbelow                                   " More natural way to split a window horizontally
+set expandtab                                    " Use spaces for indenting
+set smarttab                                     " Use spaces for inserting <Tab>
+set autoindent                                   " Same as the above indent
+set smartindent                                  " Smart autoindenting
+set noerrorbells                                 " No beep or screen flash for error messages
+set visualbell t_vb=                             " No beeping, use visual bell
+set shortmess+=atI                               " Some visual settings
+set scrolloff=3                                  " Keep some lines
+set showcmd                                      " Show command in the last line
+set cmdheight=2                                  " The height of command line
+set ruler                                        " Show the cursor position in status line
+set showmode                                     " Show mode in the last line
+set laststatus=2                                 " last window will have a status line
+set history=1000                                 " A history in command line
+set autowrite                                    " Write contents of modified files automatically
+set autoread                                     " Detect changes from outside automatically
+set backspace=indent,eol,start                   " Enable backspace to delete more than characters
+set hidden                                       " A bufffer becomes hidden when it is abandoned
+set nostartofline                                " Jump to certain positions, not starts of line
+set ignorecase                                   " Case insensitive by default
+set smartcase                                    " Case sensitive when containing capitals
+set magic                                        " Make using regex more easier
+set incsearch                                    " Enable incremental search
+set wrapscan                                     " Enable wrap scan
+set hlsearch                                     " Highlight search results
+set nohlsearch                                   " Prevent highlight when reloading .vimrc
+set ttyfast                                      " Enable fast connection
+set conceallevel=0                               " Disable conceal feature
+set allowrevins                                  " Allow to use CTRL-_
+set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_,lead:· " Show invisible characters
+set nojoinspaces                                 " No spaces when joining two lines
 set colorcolumn=81
 if v:version > 704 || v:version == 704 && has('patch092')
   set spelllang=en,cjk
@@ -1250,22 +1251,23 @@ endfu
 
 " TODO: make these features as an external plugin
 com! -nargs=* -bang -complete=shellcmd Terminal call s:terminal(<bang>0, <q-args>)
+com! -bang TerminalFromHistory call s:terminal_from_history(<bang>0)
 cabbrev t Terminal
 fu! s:terminal(force_new, cmd)
-  if empty(a:cmd)
-    call s:terminal_from_history(a:force_new)
-    return
+  let cmd = a:cmd
+  if empty(cmd)
+    let cmd = expand('$SHELL')
   endif
   let bufs = getbufinfo({'bufloaded': 1})
-  let term_bufs = filter(bufs, printf("v:val.name =~ '\\vterm://(.{-}//(\\d+:)?)?\\V%s'", a:cmd))
+  let term_bufs = filter(bufs, printf("v:val.name =~ '\\vterm://(.{-}//(\\d+:)?)?\\V%s'", cmd))
   if empty(term_bufs) || a:force_new
-    " TODO: add a:cmd to command history kept by Vim
+    " TODO: add cmd to command history kept by Vim
     if exists('*nvim_open_win')
-      let bufnr = bufadd(printf('term://%s', a:cmd))
+      let bufnr = bufadd(printf('term://%s', cmd))
       call bufload(bufnr)
-      call s:terminal(0, a:cmd)
+      call s:terminal(0, cmd)
     else
-      exe printf('edit term://%s', a:cmd)
+      exe printf('edit term://%s', cmd)
     endif
   else
     let term_buf = term_bufs[0]
@@ -1298,6 +1300,7 @@ fu! s:terminal_from_history(force_new)
           \ 'sink': funcref('<sid>terminal', [a:force_new])
           \ }))
   else
+    " fall back to $SHELL
     call s:terminal(shell)
   endif
 endfu
