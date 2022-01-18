@@ -147,7 +147,6 @@ runtime ftplugin/man.vim
 let mapleader      = " "  " Space can be typed by both of hands.
 let maplocalleader = "\\"  " The local mapleader is hardly used.
 
-let $LANG='en_US'                         " Vim should be in English
 if !has('win32')
   silent! language time en_US.UTF8
 endif
