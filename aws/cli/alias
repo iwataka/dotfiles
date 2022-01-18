@@ -18,7 +18,7 @@ clone =
     git clone "${grc_url}"
   }; f
 
-plchk =
+pipeline-check =
   !f() {
     set -e
 
@@ -36,7 +36,7 @@ plchk =
       jq -r '.stageName,.actionStates[]'
   }; f
 
-plwait =
+pipeline-wait =
   !f() {
     set -e
 
@@ -62,7 +62,7 @@ plwait =
     echo "done"
   }; f
 
-cfnchk =
+cfn-check =
   !f() {
     set -e
 
@@ -77,7 +77,7 @@ cfnchk =
     aws cloudformation describe-stack-events --stack-name "$stack_name" |jq -r '.StackEvents[] |select(.ResourceStatus |endswith("FAILED"))'
   }; f
 
-cfndl =
+cfn-delete =
   !f() {
     set -e
 
@@ -91,7 +91,7 @@ cfndl =
     aws cloudformation delete-stack --stack-name "$stack_name"
   }; f
 
-cfnwait =
+cfn-wait =
   !f() {
     set -e
 
@@ -117,7 +117,7 @@ cfnwait =
     echo "$status"
   }; f
 
-cfnup =
+cfn-update =
   !f() {
     set -e
 
@@ -134,6 +134,14 @@ cfnup =
       template_file=$(fzf --header="select template file to upload")
     fi
 
+    transform=$(yq e '.Transform |select(. != null)' "$template_file")
+    if [ "$(echo "$transform" |cut -c 1-16)" = "AWS::Serverless-" ]
+    then
+      # TODO: Use previous value for parameters
+      aws cfn-deploy "$template_file" "$stack_name"
+      exit 0
+    fi
+
     template_body="file://${template_file}"
 
     parameters=""
@@ -142,9 +150,78 @@ cfnup =
       parameters="$parameters ParameterKey=$p,UsePreviousValue=true"
     done
 
-    aws cloudformation update-stack \
+    cmd="aws cloudformation update-stack \
       --stack-name $stack_name \
       --template-body $template_body \
       --parameters $parameters \
-      --capabilities CAPABILITY_NAMED_IAM
+      --capabilities CAPABILITY_NAMED_IAM"
+
+    echo $cmd
+    $cmd
+  }; f
+
+cfn-deploy =
+  !f() {
+    set -e
+
+    template_file="$1"
+    stack_name="$2"
+
+    if [ -z $stack_name ]
+    then
+      read -p "Stack Name: " stack_name
+    else
+      echo "Stack Name: ${stack_name}"
+    fi
+
+    if [ -z $template_file ]
+    then
+      template_file=$(fzf --header="select template file to upload")
+    fi
+    echo "Template File: ${template_file}"
+
+    transform=$(yq e '.Transform |select(. != null)' "$template_file")
+    if [ "$(echo "$transform" |cut -c 1-16)" = "AWS::Serverless-" ]
+    then
+      is_sam=true
+    else
+      is_sam=false
+    fi
+
+    parameters=""
+    for parameter_name in $(yq e '.Parameters |keys' "$template_file" |sed 's/^- //')
+    do
+      default=$(yq e '.Parameters.'"${parameter_name}"'.Default |select(. != null)' $template_file)
+      if [ -z $default ]
+      then
+        prompt="${parameter_name}: "
+      else
+        prompt="${parameter_name}($default): "
+      fi
+      read -p "${prompt}" val
+      if [ ! -z $val ]
+      then
+        parameters="$parameters $parameter_name=$val"
+      fi
+    done
+
+    if $is_sam
+    then
+      deploy_cmd="sam deploy"
+    else
+      deploy_cmd="aws cloudformation deploy"
+    fi
+
+    cmd="${deploy_cmd} \
+      --stack-name $stack_name \
+      --template-file $template_file \
+      --parameter-overrides $parameters \
+      --capabilities CAPABILITY_NAMED_IAM"
+    echo $cmd
+    $cmd
+  }; f
+
+vault-exec =
+  !f() {
+
   }; f
