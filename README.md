@@ -4,25 +4,10 @@
 
 This is my personal dotfiles with Vim and Zsh.
 
-## Philosophy
+## Install
 
-+ Cross-platform
+Make sure Git and Python installed and run the following.
 
-    Do the same thing on all platforms (tested on the below environments):
-
-    + Ubuntu
-    + Windows
-    + Alpine Linux (on [Docker](https://github.com/docker/docker))
-
-    and Give good performance even on Windows
-
-## Getting Started
-
-1. Install Git if you've not installed
-2. Clone this repository somewhere
-3. Execute package installation script:
-    + [install-packages.bat](install-packages.bat) on Windows (depends on [Chocolatey](https://chocolatey.org/))
-    + [install-packages.sh](install-packages.sh) on other platform
-4. Execute setup script:
-    + [setup.bat](setup.bat) on Windows
-    + [setup.sh](setup.sh) on other platform
+```
+curl https://raw.githubusercontent.com/iwataka/dotfiles/master/install.py |python
+```

@@ -1,0 +1,162 @@
+#!/usr/bin/env python
+
+import os
+import shutil
+import sys
+from enum import Enum
+
+
+class OS(Enum):
+    UNIX = 1
+    WINDOWS = 2
+
+    @staticmethod
+    def check():
+        if os.name == "posix":
+            return OS.UNIX
+        elif os.name == "nt":
+            return OS.WINDOWS
+        else:
+            raise Exception(f"Unsupported os name {os.name}")
+
+
+class SymLink:
+    name: str
+    dest: str
+    recurse: bool
+
+    def __init__(
+        self,
+        name: str,
+        dest: str = None,
+        recurse: bool = False,
+    ):
+        self.name = name
+        self.dest = dest or os.path.join(HOME_DIR, f".{name}")
+        self.recurse = recurse
+
+
+HOME_DIR = os.path.expanduser("~")
+
+
+def common_symlinks():
+    yield SymLink("agignore")
+    yield SymLink("atom")
+    yield SymLink("aws", recurse=True)
+    yield SymLink("bashrc")
+    yield SymLink("bin", os.path.join(HOME_DIR, "bin"), recurse=True)
+    yield SymLink("ctags")
+    yield SymLink("curlrc")
+    yield SymLink("elvish")
+    yield SymLink("emacs.d")
+    yield SymLink("ghci")
+    yield SymLink("gitconfig")
+    yield SymLink("gnupg", recurse=True)
+    yield SymLink("hyper.js")
+    yield SymLink("ideavimrc")
+    yield SymLink("peco")
+    yield SymLink("sbt")
+    yield SymLink("sbtrc")
+    yield SymLink("sh")
+    yield SymLink("shrc")
+    yield SymLink("spacemacs")
+    yield SymLink("tigrc")
+    yield SymLink("tmux.conf")
+    yield SymLink("vim")
+    yield SymLink("vimperatorrc")
+    yield SymLink("vimrc")
+    yield SymLink("wgetrc")
+
+
+def specific_symlinks(_os: OS):
+    if _os == OS.UNIX:
+        yield SymLink("Xresources")
+        yield SymLink("zsh")
+        yield SymLink("zshenv")
+        yield SymLink("zshrc")
+        yield SymLink(
+            "vim",
+            os.path.join(HOME_DIR, ".config", "nvim"),
+        )
+        yield SymLink(
+            "fish",
+            os.path.join(HOME_DIR, ".config", "fish"),
+        )
+        yield SymLink(
+            "alacritty",
+            os.path.join(HOME_DIR, ".config", "alacritty"),
+        )
+    elif _os == OS.WINDOWS:
+        appdata = os.environ["APPDATA"]
+        localappdata = os.environ["LOCALAPPDATA"]
+
+        yield SymLink(
+            "alacritty",
+            os.path.join(appdata, "alacritty"),
+        )
+        yield SymLink(
+            "sublime",
+            os.path.join(appdata, "Sublime Text 3", "Packages", "User"),
+        )
+        yield SymLink(
+            "vim",
+            os.path.join(localappdata, "nvim"),
+        )
+
+
+def remove_or_backup(path):
+    remove_symlink(path)
+    if os.path.isfile(path):
+        shutil.move(src=path, dst=f"{path}.bak")
+        print(f"backup {path}")
+
+
+def remove_symlink(path):
+    if os.path.islink(path):
+        os.remove(path)
+
+
+def symlink(root_dir, src_name, dst, recurse=False):
+    src = os.path.join(root_dir, src_name)
+    if recurse:
+        symlink_path_recursively(src, dst)
+    else:
+        symlink_path(src, dst)
+
+
+def symlink_path(src, dst):
+    remove_or_backup(dst)
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    os.symlink(src, dst)
+
+
+def symlink_path_recursively(src, dst):
+    remove_symlink(dst)
+    for dir, dnames, fnames in os.walk(src):
+        for fname in fnames:
+            src_file = os.path.abspath(os.path.join(dir, fname))
+            dst_file = os.path.abspath(
+                os.path.join(dst, os.path.relpath(src_file, src))
+            )
+            symlink_path(src_file, dst_file)
+
+
+def setup_symlinks(root_dir):
+    for sl in common_symlinks():
+        symlink(root_dir, sl.name, sl.dest, recurse=sl.recurse)
+
+    for sl in specific_symlinks(OS.check()):
+        symlink(root_dir, sl.name, sl.dest, recurse=sl.recurse)
+
+
+def main(root_dir):
+    if not os.path.exists(root_dir):
+        os.system(f"git clone https://github.com/iwataka/dotfiles {root_dir}")
+    setup_symlinks(root_dir)
+
+
+if __name__ == "__main__":
+    root_dir = os.path.join(HOME_DIR, ".dotfiles")
+    if len(sys.argv) > 1:
+        root_dir = os.path.abspath(sys.argv[1])
+    main(root_dir)
