@@ -2,40 +2,46 @@
 
 set dir=%~dp0
 
-call:mklinkFile vimrc
-call:mklinkFile ideavimrc
-call:mklinkFile gitconfig
-call:mklinkFile agignore
-call:mklinkFile sbtrc
-call:mklinkFile vimperatorrc
-call:mklinkFile ctags
-call:mklinkFile bashrc
-call:mklinkFile shrc
-call:mklinkFile curlrc
-call:mklinkFile tmux.conf
-call:mklinkFile wgetrc
-call:mklinkFile tigrc
-call:mklinkFile hyper.js
-call:mklinkFile ghci
-call:mklinkFile spacemacs
-call:mklinkDir sbt
-call:mklinkDir vim
 call:mklinkDir atom
-call:mklinkDir sh
-call:mklinkDir gnupg
-call:mklinkDir emacs.d
-call:mklinkDir peco
-call:mklinkDir elvish
 call:mklinkDir aws
+call:mklinkDir elvish
+call:mklinkDir emacs.d
+call:mklinkDir gnupg
+call:mklinkDir peco
+call:mklinkDir sbt
+call:mklinkDir sh
+call:mklinkDir vim
 
-if exist "%APPDATA%\Sublime Text 3\" mklink /D "%APPDATA%\Sublime Text 3\Packages\User" %dir%\sublime
-if exist "%APPDATA%\alacritty\" mklink /D "%APPDATA%\alacritty\" %dir%\alacritty
+call:mklinkFile agignore
+call:mklinkFile bashrc
+call:mklinkFile ctags
+call:mklinkFile curlrc
+call:mklinkFile ghci
+call:mklinkFile gitconfig
+call:mklinkFile hyper.js
+call:mklinkFile ideavimrc
+call:mklinkFile sbtrc
+call:mklinkFile shrc
+call:mklinkFile spacemacs
+call:mklinkFile tigrc
+call:mklinkFile tmux.conf
+call:mklinkFile vimperatorrc
+call:mklinkFile vimrc
+call:mklinkFile wgetrc
+
+if exist "%APPDATA%\alacritty\" rmdir "%APPDATA%\alacritty\"
+mklink /D "%APPDATA%\alacritty\" %dir%\alacritty
+
+if not exist "%APPDATA%\Sublime Text 3\Packages" mkdir "%APPDATA%\Sublime Text 3\Packages"
+if exist "%APPDATA%\Sublime Text 3\Packages\User" rmdir "%APPDATA%\Sublime Text 3\Packages\User"
+mklink /D "%APPDATA%\Sublime Text 3\Packages\User" %dir%\sublime
 
 if exist "%LOCALAPPDATA%\nvim" rmdir "%LOCALAPPDATA%\nvim"
 mklink /D "%LOCALAPPDATA%\nvim" "%dir%\vim"
 
-mkdir "%USERPROFILE%\bin"
+if not exist "%USERPROFILE%\bin" mkdir "%USERPROFILE%\bin"
 for %%f in ("%dir%\bin\*") do (
+        if exist "%USERPROFILE%\bin\%%~nxf" del "%USERPROFILE%\bin\%%~nxf"
         mklink "%USERPROFILE%\bin\%%~nxf" "%dir%\bin\%%~nxf"
 )
 
