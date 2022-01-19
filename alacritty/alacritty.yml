@@ -8,8 +8,8 @@
 #
 # All imports must either be absolute paths starting with `/`, or paths relative
 # to the user's home directory starting with `~/`.
-#import:
-#  - /path/to/alacritty.yml
+import:
+  - ~/.alacritty.yml
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
@@ -723,6 +723,8 @@ key_bindings:
   # https://blog.nijohando.jp/post/gpu-accelerated-terminal-emulator-alacritty/
   - { key: Yen, chars: "\x5C" }
   - { key: Yen, mods: Alt, chars: "\xA5" }
+  # https://github.com/alacritty/alacritty/issues/1703
+  - { key: Space, mods: Control, chars: "\x00" }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
