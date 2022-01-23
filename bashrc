@@ -1,11 +1,7 @@
 # shellcheck shell=bash
 
 # shellcheck disable=SC1090
-source "$HOME"/.shrc
-alias ..='cd ..'
+source ~/.shrc
 
 # shellcheck disable=SC1090
-test -f "$HOME"/.fzf.bash && source "$HOME"/.fzf.bash
-
-# shellcheck disable=SC1090
-test -f "$HOME"/.bashrc.local && source "$HOME"/.bashrc.local
+test -f ~/.bashrc.local && source ~/.bashrc.local

@@ -11,8 +11,8 @@ replace() {
 }
 
 xmodmap() {
-    if [ $# -eq 0 ] && [ -s "$HOME"/.Xmodmap ]; then
-        command xmodmap "$HOME"/.Xmodmap
+    if [ $# -eq 0 ] && [ -s ~/.Xmodmap ]; then
+        command xmodmap ~/.Xmodmap
     else
         command xmodmap "$@"
     fi

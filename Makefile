@@ -1,13 +1,15 @@
+.PHONY: all lint format lint-python lint-shell format
+
 all: format lint
 
-lint: lint-python lint-shell
+lint: pylint shlint
 
-lint-python:
-	black setup.py
-	isort setup.py
-	flake8 setup.py
+pylint:
+	black install.py
+	isort install.py
+	flake8 install.py
 
-lint-shell:
+shlint:
 	shellcheck sh/*.sh shrc bashrc bin/vim-configure bin/git-count
 
 format:

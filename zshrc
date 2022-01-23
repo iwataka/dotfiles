@@ -1,23 +1,10 @@
 #---------------------------------------------------------------
-# Source various files
+# Source files
 #---------------------------------------------------------------
 . ~/.shrc
-for f in $HOME/.zsh/*.zsh; do
+for f in ~/.zsh/*.zsh; do
     . "$f"
 done
-
-src_files=(
-    ~/.fzf.zsh
-    ~/google-cloud-sdk/path.zsh.inc
-    ~/google-cloud-sdk/completion.zsh.inc
-)
-for f in $src_files; do
-    test -s "$f" && . "$f"
-done
-
-if kompose > /dev/null 2>&1; then
-    . <(kompose completion zsh)
-fi
 
 #---------------------------------------------------------------
 # Key-binding
@@ -43,9 +30,9 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 # History
 #---------------------------------------------------------------
 # History file settings.
-HISTFILE=$HOME/.zsh-history
-HISTSIZE=1000
-SAVEHIST=10000
+export HISTFILE=~/.zsh-history
+export HISTSIZE=1000
+export SAVEHIST=10000
 # The command which starts with space is not added.
 setopt hist_ignore_space
 # The 'history' command is not added.
@@ -93,9 +80,6 @@ setopt interactive_comments
 setopt mark_dirs
 
 #---------------------------------------------------------------
-# Zed
+# post-process
 #---------------------------------------------------------------
-# Enables to use zed.
-autoload zed
-
-test -f $HOME/.zshrc.local && . $HOME/.zshrc.local || touch $HOME/.zshrc.local
+test -f ~/.zshrc.local && . ~/.zshrc.local

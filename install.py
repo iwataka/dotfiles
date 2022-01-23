@@ -1,20 +1,24 @@
 #!/usr/bin/env python
 
 import os
+import platform
 import shutil
 import sys
 from enum import Enum
 
 
 class OS(Enum):
-    UNIX = 1
-    WINDOWS = 2
+    LINUX = 1
+    DARWIN = 2
+    WINDOWS = 3
 
     @staticmethod
     def check():
-        if os.name == "posix":
-            return OS.UNIX
-        elif os.name == "nt":
+        if platform.system() == "Linux":
+            return OS.LINUX
+        elif platform.system() == "Darwin":
+            return OS.DARWIN
+        elif platform.system() == "Windows":
             return OS.WINDOWS
         else:
             raise Exception(f"Unsupported os name {os.name}")
@@ -69,7 +73,7 @@ def common_symlinks():
 
 
 def specific_symlinks(_os: OS):
-    if _os == OS.UNIX:
+    if _os in [OS.LINUX, OS.DARWIN]:
         yield SymLink("Xresources")
         yield SymLink("zsh")
         yield SymLink("zshenv")
@@ -86,7 +90,8 @@ def specific_symlinks(_os: OS):
             "alacritty",
             os.path.join(HOME_DIR, ".config", "alacritty"),
         )
-    elif _os == OS.WINDOWS:
+
+    if _os == OS.WINDOWS:
         appdata = os.environ["APPDATA"]
         localappdata = os.environ["LOCALAPPDATA"]
 

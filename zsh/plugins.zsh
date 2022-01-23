@@ -1,8 +1,8 @@
-if [[ ! -d $HOME/.zplug ]]; then
+if [[ ! -d ~/.zplug ]]; then
   git clone https://github.com/zplug/zplug.git ~/.zplug
 fi
 
-source $HOME/.zplug/init.zsh
+source ~/.zplug/init.zsh
 zplug "plugins/docker", from:oh-my-zsh
 zplug "plugins/docker-compose", from:oh-my-zsh
 zplug "plugins/extract", from:oh-my-zsh

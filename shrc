@@ -1,10 +1,9 @@
 # shellcheck shell=sh
-# vi: filetype=sh
 
-for f in "$HOME"/.sh/*.sh; do
+for f in ~/.sh/*.sh; do
     # shellcheck disable=SC1090
     . "$f"
 done
 
 # shellcheck disable=SC1090
-[ -f "$HOME"/.shrc.local ] && . "$HOME"/.shrc.local
+[ -f ~/.shrc.local ] && . ~/.shrc.local
