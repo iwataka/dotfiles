@@ -79,7 +79,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 
 " Filetype syntax
-if has('nvim')
+if 0  " temporarily disabled
   Plug 'nvim-treesitter/nvim-treesitter'
 else
   Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
@@ -96,6 +96,7 @@ else
   Plug 'udalov/kotlin-vim', { 'for': 'kotlin' }
   Plug 'dart-lang/dart-vim-plugin', { 'for': 'dart' }
 endif
+
 " Filetypes not supported by treesitter
 Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
@@ -1483,6 +1484,21 @@ nnoremap <silent> <Leader>b :<c-u>Buffers<CR>
 nnoremap <silent> <Leader>m :<c-u>History<CR>
 nnoremap <silent> <Leader>: :<c-u>History:<CR>
 nnoremap <silent> <Leader>/ :<c-u>History/<CR>
+nnoremap <silent> <Leader>d :<c-u>Dirs<CR>
+com! Dirs call <sid>fzf_list_dirs()
+let g:fzf_dirs = [
+      \ '~/projects/*'
+      \ ]
+fu! s:fzf_list_dirs()
+  let dirs = []
+  if executable('ghq')
+    call extend(dirs, split(system('ghq list -p'), '\n'))
+  endif
+  for d in g:fzf_dirs
+    call extend(dirs, split(expand(d), '\n'))
+  endfor
+  call fzf#run(fzf#wrap({'sink': 'Files', 'source': dirs}))
+endfu
 
 " --------------------------------------------------------------
 " LSP {{{2
@@ -1763,7 +1779,7 @@ nmap <Leader>w <Plug>(easymotion-overwin-w)
 " --------------------------------------------------------------
 " nvim-treesitter {{{2
 " --------------------------------------------------------------
-if has('nvim')
+if has_key(g:plugs, 'nvim-treesitter')
   exe "lua require('plugins.treesitter')"
 endif
 

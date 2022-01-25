@@ -15,7 +15,12 @@ clone =
     account_id=$(echo "$info" |jq -r .repositoryMetadata.accountId)
     repo_arn=$(echo "$info" |jq -r .repositoryMetadata.Arn)
     grc_url=$(echo ${repo_arn} |sed -r 's/.+:codecommit:(.+):'${account_id}':(.+)/codecommit::\1:\/\/\2/')
-    git clone "${grc_url}"
+    if ghq --version >/dev/null 2>&1
+    then
+      ghq get "${grc_url}"
+    else
+      git clone "${grc_url}"
+    fi
   }; f
 
 pipeline-check =
