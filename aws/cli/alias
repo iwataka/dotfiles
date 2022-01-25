@@ -61,7 +61,7 @@ pipeline-wait =
       then
         break
       fi
-      echo -n "."
+      printf "."
     done
 
     echo "done"
@@ -112,7 +112,7 @@ cfn-wait =
       status=$(aws cloudformation describe-stacks --stack-name "$stack_name" |jq -r '.Stacks[0].StackStatus')
       if [ $(echo ${status} |grep _IN_PROGRESS$ |wc -l) -eq 1 ]
       then
-        echo -n "."
+        printf "."
       else
         break
       fi

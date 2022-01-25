@@ -10,6 +10,8 @@ zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/github", from:oh-my-zsh
 zplug "plugins/gitignore", from:oh-my-zsh
 zplug "plugins/golang", from:oh-my-zsh
+zplug "plugins/aws", from:oh-my-zsh
+zplug "plugins/fzf", from:oh-my-zsh
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "mafredri/zsh-async"
 zplug "b4b4r07/enhancd", use:init.sh
@@ -18,6 +20,8 @@ if starship --version &>/dev/null; then
 else
   zplug "sindresorhus/pure", at:main
 fi
+
+SHOW_AWS_PROMPT=false
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
