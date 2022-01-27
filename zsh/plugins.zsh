@@ -12,6 +12,7 @@ zplug "plugins/gitignore", from:oh-my-zsh
 zplug "plugins/golang", from:oh-my-zsh
 zplug "plugins/aws", from:oh-my-zsh
 zplug "plugins/fzf", from:oh-my-zsh
+zplug "plugins/web-search", from:oh-my-zsh
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "mafredri/zsh-async"
 zplug "b4b4r07/enhancd", use:init.sh

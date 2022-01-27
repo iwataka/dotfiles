@@ -1,10 +1,27 @@
+# vim: set ft=sh:
 [toplevel]
 
 clone =
   !f() {
     set -e
 
-    repo_name="$1"
+    if [ $1 = "--ghq" ]
+    then
+      cmd="ghq get"
+      repo_name="$2"
+    elif [ $1 = "--git" ]
+    then
+      cmd="git clone"
+      repo_name="$2"
+    else
+      if ghq --version >/dev/null 2>&1
+      then
+        cmd="ghq get"
+      else
+        cmd="git clone"
+      fi
+      repo_name="$1"
+    fi
 
     if [ -z $repo_name ]
     then
@@ -15,12 +32,7 @@ clone =
     account_id=$(echo "$info" |jq -r .repositoryMetadata.accountId)
     repo_arn=$(echo "$info" |jq -r .repositoryMetadata.Arn)
     grc_url=$(echo ${repo_arn} |sed -r 's/.+:codecommit:(.+):'${account_id}':(.+)/codecommit::\1:\/\/\2/')
-    if ghq --version >/dev/null 2>&1
-    then
-      ghq get "${grc_url}"
-    else
-      git clone "${grc_url}"
-    fi
+    $cmd "${grc_url}"
   }; f
 
 pipeline-check =
