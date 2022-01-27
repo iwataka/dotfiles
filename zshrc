@@ -6,6 +6,27 @@ for f in ~/.zsh/*.zsh; do
     . "$f"
 done
 
+
+#---------------------------------------------------------------
+# Keybindings
+#---------------------------------------------------------------
+bindkey '^f' autosuggest-accept
+function dispatch_command() {
+    if [ -z $TMUX_PANE ]
+    then
+        return
+    fi
+    if [ -z $BUFFER ]
+    then
+        return
+    fi
+    target_pane_id=$(tmux split-window -d -P -F "#{pane_id}" -c $PWD "$BUFFER")
+    tmux resize-pane -y 10 -t "$target_pane_id"
+    tmux send-keys -t $TMUX_PANE C-U
+}
+zle -N dispatch_command
+bindkey '^k' dispatch_command
+
 #---------------------------------------------------------------
 # Completion
 #---------------------------------------------------------------
@@ -13,6 +34,8 @@ done
 autoload -U compinit && compinit
 # Resume a process when executing the command which has same name as the suspended process has.
 setopt auto_resume
+# Send CONT signal automatically when disown
+setopt auto_continue
 # Adds end slash automatically at directory name completion.
 setopt auto_param_slash
 # Displays a completion candidate sequentially by push TAB key.

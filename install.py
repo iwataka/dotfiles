@@ -51,6 +51,7 @@ def common_symlinks():
     yield SymLink("bin", os.path.join(HOME_DIR, "bin"), recurse=True)
     yield SymLink("ctags")
     yield SymLink("curlrc")
+    yield SymLink("editorconfig")
     yield SymLink("elvish")
     yield SymLink("emacs.d")
     yield SymLink("ghci")

@@ -5,11 +5,11 @@ clone =
   !f() {
     set -e
 
-    if [ $1 = "--ghq" ]
+    if [ "$1" = "--ghq" ]
     then
       cmd="ghq get"
       repo_name="$2"
-    elif [ $1 = "--git" ]
+    elif [ "$1" = "--git" ]
     then
       cmd="git clone"
       repo_name="$2"

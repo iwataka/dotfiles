@@ -16,6 +16,7 @@ zplug "plugins/web-search", from:oh-my-zsh
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "mafredri/zsh-async"
 zplug "b4b4r07/enhancd", use:init.sh
+zplug "zsh-users/zsh-autosuggestions"
 if starship --version &>/dev/null; then
   eval "$(starship init zsh)"
 else

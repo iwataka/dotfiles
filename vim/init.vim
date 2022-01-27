@@ -151,9 +151,6 @@ let maplocalleader = "\\"  " The local mapleader is hardly used.
 if !has('win32')
   silent! language time en_US.UTF8
 endif
-if has('vim_starting')
-  set encoding=utf-8
-endif
 set fileencodings=utf-8,sjis                     " UTF8 is first, SJIS is second
 set termencoding=utf-8
 set fileformats=unix,dos,mac                     " Unix format has highest priority
@@ -198,7 +195,6 @@ set conceallevel=0                               " Disable conceal feature
 set allowrevins                                  " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_,lead:· " Show invisible characters
 set nojoinspaces                                 " No spaces when joining two lines
-set colorcolumn=81
 if v:version > 704 || v:version == 704 && has('patch092')
   set spelllang=en,cjk
 else
@@ -1459,21 +1455,8 @@ fu! s:toggle_fullscreen()
   endif
 endfu
 
-"https://github.com/morhetz/gruvbox/wiki/Terminal-specific
-"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-if (empty($TMUX))
-  if (has("nvim"))
-    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  endif
-  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-  if (has("termguicolors"))
-    set termguicolors
-  endif
+if has("termguicolors")
+  set termguicolors
 endif
 
 " --------------------------------------------------------------
