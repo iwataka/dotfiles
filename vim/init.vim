@@ -21,6 +21,7 @@ Plug 'iwataka/colorex.vim'
 Plug 'iwataka/awesome.vim', { 'on': ['Awesome', 'AwesomeUpdate'] }
 Plug 'iwataka/github.vim', { 'on': ['GHOpen', 'GHReleases', 'GHSearch'] }
 Plug 'iwataka/vim-replace'
+Plug 'iwataka/termex.vim', { 'on': ['Terminal'] }
 unlet! g:plug_url_format
 
 " Git
@@ -38,6 +39,7 @@ Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
+Plug 'mhinz/vim-startify'
 
 " Editing
 Plug 'tpope/vim-repeat'
@@ -55,7 +57,7 @@ Plug 'chrisbra/unicode.vim'
 Plug 'Konfekt/FastFold'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/sideways.vim'
-Plug 'janko-m/vim-test'
+Plug 'vim-test/vim-test'
 Plug 'editorconfig/editorconfig-vim'
 
 " LSP
@@ -67,16 +69,13 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 " Colorscheme
 Plug 'morhetz/gruvbox'
 Plug 'sainnhe/gruvbox-material'
-Plug 'whatyouhide/vim-gotham'
 Plug 'cocopon/iceberg.vim'
-Plug 'nanotech/jellybeans.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'sainnhe/everforest'
 
 " Statusine & icon
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/vim-devicons'
 
 " Filetype syntax
 if 0  " temporarily disabled
@@ -121,11 +120,9 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-fold'
 Plug 'kana/vim-textobj-line'
 Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
-Plug 'jeetsukumaran/vim-indentwise'
 
 " Utility
 Plug 'junegunn/vim-emoji', { 'on': ['EmojiList'] }
-Plug 'itchyny/calendar.vim', { 'on': ['Calendar'] }
 Plug 'mattn/webapi-vim'
 
 call plug#end()
@@ -148,8 +145,8 @@ runtime ftplugin/man.vim
 let mapleader      = " "  " Space can be typed by both of hands.
 let maplocalleader = "\\"  " The local mapleader is hardly used.
 
-if !has('win32')
-  silent! language time en_US.UTF8
+if exists(':language')
+  language en_US.UTF-8
 endif
 set fileencodings=utf-8,sjis                     " UTF8 is first, SJIS is second
 set termencoding=utf-8
@@ -547,7 +544,7 @@ fu! s:bufclear(bang, path)
   let i = 1
   wh i <= lastnr
     let fpath = fnamemodify(bufname(i), ':p')
-    " Terminal buffers can't be deleted automatically.
+    " terminal buffers can't be deleted automatically.
     if getbufvar(i, "&buftype") != "terminal"
       if bufexists(i) &&
             \ (dpath == '' || (filereadable(fpath) && s:is_under(dpath, fpath)))
@@ -1245,77 +1242,6 @@ fu! s:pwd()
   echo printf("%s (-> clipboard)", cwd)
 endfu
 
-" TODO: make these features as an external plugin
-com! -nargs=* -bang -complete=shellcmd Terminal call s:terminal(<bang>0, <q-args>)
-com! -bang TerminalFromHistory call s:terminal_from_history(<bang>0)
-cabbrev t Terminal
-fu! s:terminal(force_new, cmd)
-  let cmd = a:cmd
-  if empty(cmd)
-    let cmd = expand('$SHELL')
-  endif
-  let bufs = getbufinfo({'bufloaded': 1})
-  let term_bufs = filter(bufs, printf("v:val.name =~ '\\vterm://(.{-}//(\\d+:)?)?\\V%s'", cmd))
-  if empty(term_bufs) || a:force_new
-    " TODO: add cmd to command history kept by Vim
-    if exists('*nvim_open_win')
-      let bufnr = bufadd(printf('term://%s', cmd))
-      call bufload(bufnr)
-      call s:terminal(0, cmd)
-    else
-      exe printf('edit term://%s', cmd)
-    endif
-  else
-    let term_buf = term_bufs[0]
-    if term_buf.bufnr == bufnr('.')
-      return
-    endif
-    if exists('*nvim_open_win')
-      call s:float(term_buf.bufnr)
-    else
-      exe printf('edit %s', term_buf.name)
-    endif
-  endif
-endfu
-fu! s:terminal_from_history(force_new)
-  let bufs = getbufinfo({'bufloaded': 1})
-  let bufs = filter(bufs, 'has_key(v:val.variables, "term_title")')
-  let cmds = map(bufs, "substitute(v:val.name, '\\vterm://%(.{-}//%(\\d+:)?)?(.*)', '\\1', '')")
-  let shell = expand('$SHELL')
-  if !empty(shell) && index(cmds, shell) < 0
-    call insert(cmds, shell)
-  endif
-  " TODO: merge command history kept by Vim
-  let histfile = expand('~/.zsh-history')
-  if filereadable(histfile)
-    let cmds = cmds + split(system(printf('export HISTSIZE=10000 && fc -R %s && fc -ln -10000', histfile)), '\n')
-  endif
-  if exists('*fzf#run')
-    call fzf#run(fzf#wrap({
-          \ 'source': cmds,
-          \ 'sink': funcref('<sid>terminal', [a:force_new])
-          \ }))
-  else
-    " fall back to $SHELL
-    call s:terminal(shell)
-  endif
-endfu
-fu! s:float(bufnr)
-  let width = nvim_win_get_width(0)
-  let height = nvim_win_get_height(0)
-  let opts = {
-        \ 'relative': 'win',
-        \ 'width': float2nr(width*0.8),
-        \ 'height': float2nr(height*0.8),
-        \ 'col': float2nr(width*0.1),
-        \ 'row': float2nr(height*0.1),
-        \ 'anchor': 'NW',
-        \ 'style': 'minimal',
-        \ 'border': 'none',
-        \ }
-  let win = nvim_open_win(a:bufnr, 1, opts)
-endfu
-
 " ===============================================================
 " ABBREVIATIONS {{{1
 " ===============================================================
@@ -1470,7 +1396,8 @@ nnoremap <silent> <Leader>/ :<c-u>History/<CR>
 nnoremap <silent> <Leader>d :<c-u>Dirs<CR>
 com! Dirs call <sid>fzf_list_dirs()
 let g:fzf_dirs = [
-      \ '~/projects/*'
+      \ '~/projects/*',
+      \ '~/.vim/plugged/*',
       \ ]
 fu! s:fzf_list_dirs()
   let dirs = []
@@ -1765,6 +1692,29 @@ nmap <Leader>w <Plug>(easymotion-overwin-w)
 if has_key(g:plugs, 'nvim-treesitter')
   exe "lua require('plugins.treesitter')"
 endif
+
+" --------------------------------------------------------------
+" startify {{{2
+" --------------------------------------------------------------
+let g:startify_bookmarks = [ {'v': expand('<sfile>')}]
+let g:startify_commands = [
+    \ {'d': 'Dirs'},
+    \ {'p': 'Files'},
+    \ {'m': 'History'},
+    \ {'t': 'Terminal'},
+    \ ]
+let g:startify_change_to_dir = 0
+let g:startify_lists = [
+      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+      \ { 'type': 'commands',  'header': ['   Commands']       },
+      \ { 'type': 'files',     'header': ['   MRU']            },
+      \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+      \ ]
+
+" --------------------------------------------------------------
+" termex.vim {{{2
+" --------------------------------------------------------------
+cabbrev t Terminal
 
 " ===============================================================
 " POST PROCESS {{{1

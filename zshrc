@@ -11,21 +11,6 @@ done
 # Keybindings
 #---------------------------------------------------------------
 bindkey '^f' autosuggest-accept
-function dispatch_command() {
-    if [ -z $TMUX_PANE ]
-    then
-        return
-    fi
-    if [ -z $BUFFER ]
-    then
-        return
-    fi
-    target_pane_id=$(tmux split-window -d -P -F "#{pane_id}" -c $PWD "$BUFFER")
-    tmux resize-pane -y 10 -t "$target_pane_id"
-    tmux send-keys -t $TMUX_PANE C-U
-}
-zle -N dispatch_command
-bindkey '^k' dispatch_command
 
 #---------------------------------------------------------------
 # Completion
