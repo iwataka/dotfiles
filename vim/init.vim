@@ -1,4 +1,5 @@
-" VIM-PLUG BLOCK {{{1
+" ===============================================================
+" VIM-PLUG BLOCK
 " ===============================================================
 " Use Vim settings, rather than Vi settings. This setting must be as early as
 " possible, as it has side effects.
@@ -35,7 +36,9 @@ if executable('git')
 endif
 
 " Navigation
-Plug 'preservim/nerdtree'
+Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/nerdfont.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
@@ -110,7 +113,6 @@ Plug 'aklt/plantuml-syntax', { 'for': 'plantuml' }
 
 " Filetype utility
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] }
-Plug 'lambdalisue/vim-pyenv', { 'for': 'python' }
 Plug 'tpope/vim-endwise'
 Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
 
@@ -138,7 +140,7 @@ endif
 runtime ftplugin/man.vim
 
 " ===============================================================
-" BASIC SETTINGS {{{1
+" BASIC SETTINGS
 " ===============================================================
 
 " The mapleader is used as a prefix for all user mappings.
@@ -150,6 +152,7 @@ if exists(':language')
 endif
 set fileencodings=utf-8,sjis                     " UTF8 is first, SJIS is second
 set termencoding=utf-8
+set colorcolumn=81
 set fileformats=unix,dos,mac                     " Unix format has highest priority
 set timeout                                      " Enable timeout settings
 set timeoutlen=1000                              " Time out on mapping after 1 second
@@ -291,7 +294,7 @@ if has('win32') && executable('mingw32-make')
 endif
 
 " ==============================================================
-" AUTOCMD {{{1
+" AUTOCMD
 " ===============================================================
 
 if has('autocmd')
@@ -332,22 +335,10 @@ if has('autocmd')
     autocmd FileType c setlocal commentstring=//%s
     " Close buffers of specified types by just typing q.
     autocmd FileType help,qf,godoc nnoremap <buffer> q :q<cr>
+    autocmd FileType fugitive nnoremap <buffer> q :q<cr>
     autocmd BufEnter fugitive://* nnoremap <buffer> q :q<cr>
     autocmd BufWinEnter * if &buftype == 'terminal' | nnoremap <buffer> q :q<cr> | endif
-    autocmd FileType java,c,cpp
-          \ if executable('astyle') |
-          \   setlocal formatprg=astyle |
-          \ endif
-    autocmd FileType python
-          \ if executable('yapf') |
-          \   setlocal formatprg='yapf' |
-          \ endif
-    autocmd FileType java compiler javac
-    autocmd FileType ruby compiler ruby
-    autocmd FileType rust compiler rustc
-    autocmd FileType go
-          \ compiler go |
-          \ com! -buffer -nargs=+ IFaceMaker call s:ifacemaker(<f-args>)
+    autocmd FileType fern nnoremap <buffer> q :q<cr>
 
     " Set filetype
     autocmd BufRead,BufNewFile *spacemacs* set filetype=lisp
@@ -388,7 +379,7 @@ if has('autocmd')
 endif
 
 " ===============================================================
-" MAPPINGS {{{1
+" MAPPINGS
 " ===============================================================
 
 " More reasonable cursor moving
@@ -398,6 +389,8 @@ nnoremap <Down> gj
 nnoremap <Up> gk
 nnoremap gj j
 nnoremap gk k
+nnoremap n nzz
+nnoremap N Nzz
 inoremap <silent> <Down> <c-o>:normal! gj<cr>
 inoremap <silent> <Up> <c-o>:normal! gk<cr>
 
@@ -433,7 +426,6 @@ cnoremap jk <C-c>
 " vnoremap jk <Esc>
 " xnoremap jk <Esc>
 if has('terminal') || has('nvim')
-  tnoremap jk <C-\><C-n>
   tnoremap <ESC> <C-\><C-n>
 endif
 
@@ -513,7 +505,6 @@ nnoremap <leader>ct :<c-u>checktime<cr>
 nnoremap <leader>cd :<c-u>cd %:h<cr>
 
 " Some mappings for user-defined commands
-nnoremap <silent> <leader>rt :<c-u>Root<cr>
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " create insert_enter function due to vim-endwise plugin
@@ -531,7 +522,7 @@ endfu
 nnoremap cof :<c-u>setlocal <c-r>=&fen ? 'nofoldenable' : 'foldenable'<cr><cr>
 
 " ===============================================================
-" FUNCTIONS & COMMANDS {{{1
+" FUNCTIONS & COMMANDS
 " ===============================================================
 
 " Clear all buffers by bdelete command.
@@ -654,7 +645,7 @@ fu! s:warn(msg)
   echohl Normal
 endfu
 
-com! Tab2Spaces call s:tab_to_spaces()
+com! TabToSpaces call s:tab_to_spaces()
 fu! s:tab_to_spaces()
   if search('\t', 'n')
     let num = &tabstop
@@ -781,7 +772,6 @@ endfu
 com! -nargs=* -complete=customlist,s:UrlComplete Browse call s:open(<q-args>)
 let s:browse_url_list = [
   \ 'http://youtube.com',
-  \ 'http://www.iijima.ae.keio.ac.jp/studio/',
   \ 'http://google.com'
   \ ]
 fu! s:UrlComplete(A, L, P)
@@ -1242,54 +1232,53 @@ fu! s:pwd()
   echo printf("%s (-> clipboard)", cwd)
 endfu
 
+com! FFinder call s:open_file_finder('.')
+fu! s:open_file_finder(dir)
+  if !isdirectory(a:dir)
+    return
+  endif
+
+  if &filetype == 'ffinder'
+    exe 'enew'
+  else
+    exe 'leftabove 50vnew'
+  endif
+  setlocal buftype=nowrite
+  setlocal bufhidden=wipe
+  setlocal nobuflisted
+  setlocal filetype=ffinder
+  setlocal noswapfile
+  setlocal noendofline
+  let bufnr = bufnr('%')
+  call appendbufline(bufnr, 0, fnamemodify(a:dir, ':p'))
+  let files = readdir(a:dir)
+  for file in files
+    if isdirectory(file)
+      let file = file.'/'
+    endif
+    call appendbufline(bufnr, line('$') - 1, file)
+  endfor
+  call setbufvar(bufnr, 'ffinder_working_dir', a:dir)
+  nnoremap <buffer> <cr> :<c-u>call <sid>open_file_finder(b:ffinder_working_dir.'/'.getline('.'))<cr>
+  nnoremap <buffer> <c-u> :<c-u>call <sid>open_file_finder(b:ffinder_working_dir.'/..')<cr>
+  nnoremap <buffer> q :<c-u>quit<cr>
+endfu
+
 " ===============================================================
-" ABBREVIATIONS {{{1
+" ABBREVIATIONS
 " ===============================================================
 
 " Insert the current date and time.
 iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
 
 " ///+ to search non-1byte characters (not <space>-~)
-cab // \v[^\x01-\x7e]
-
-" Spelling
-abbrev factroy factory
-abbrev reutrn return
-abbrev netowrk network
-abbrev SpaitalNetwork SpatialNetwork
-abbrev nwe new
-
-" Shortcut
-if has('autocmd')
-  autocmd vimrcEx FileType java call s:abbrev_java()
-  autocmd vimrcEx FileType scala call s:abbrev_scala()
-endif
-
-fu! s:abbrev_java()
-  iab <buffer> ijm jp.ac.keio.ae.iijima
-  iab <buffer> ijmb jp.ac.keio.ae.iijima.besim
-  iab <buffer> cvj com.vividsolutions.jts
-  iab <buffer> cvjg com.vividsolutions.jts.geom
-  iab <buffer> cvja com.vividsolutions.jts.algorithm
-  iab <buffer> cvjm com.vividsolutions.jts.math
-  iab <buffer> cvjgu com.vividsolutions.jts.geom.util
-  iab <buffer> sfn sim.field.network
-  iab <buffer> sfg sim.field.grid
-  iab <buffer> sfc sim.field.continuous
-  iab <buffer> oij openifctools.com.openifcjavatoolbox
-  iab <buffer> jvec javax.vecmath
-endfu
-
-fu! s:abbrev_scala()
-  call s:abbrev_java()
-  iab <buffer> jconv scala.collection.JavaConversions._
-endfu
+cab // \v[^\x01-\x7e]+
 
 " ===============================================================
-" PLUGINS {{{1
+" PLUGINS
 " ===============================================================
 " --------------------------------------------------------------
-" Plug {{{2
+" Plug
 " --------------------------------------------------------------
 
 if has('autocmd')
@@ -1336,7 +1325,7 @@ fu! s:plug_open_complete(A, L, P)
 endfu
 
 " --------------------------------------------------------------
-" ColorScheme {{{2
+" ColorScheme
 " --------------------------------------------------------------
 " Gruvbox
 " Italic style on Windows has low-visibility and disable it.
@@ -1360,12 +1349,6 @@ if has('gui_running')
   let g:colorex_cache_file_path = expand('~/.vim/.colorscheme.gui.vim')
 endif
 
-if !has('gui_running')
-  autocmd vimrcEx ColorScheme *
-        \ hi Normal ctermbg=NONE |
-        \ hi NonText ctermbg=NONE
-endif
-
 if has('gui_macvim')
   set transparency=20
 endif
@@ -1386,14 +1369,17 @@ if has("termguicolors")
 endif
 
 " --------------------------------------------------------------
-" fzf.vim {{{2
+" fzf.vim
 " --------------------------------------------------------------
-nnoremap <silent> <Leader>p :<c-u>Files<CR>
-nnoremap <silent> <Leader>b :<c-u>Buffers<CR>
-nnoremap <silent> <Leader>m :<c-u>History<CR>
-nnoremap <silent> <Leader>: :<c-u>History:<CR>
-nnoremap <silent> <Leader>/ :<c-u>History/<CR>
-nnoremap <silent> <Leader>d :<c-u>Dirs<CR>
+nnoremap <silent> <leader>p :<c-u>Files<cr>
+nnoremap <silent> <leader>b :<c-u>Buffers<cr>
+nnoremap <silent> <leader>m :<c-u>History<cr>
+nnoremap <silent> <leader>: :<c-u>History:<cr>
+nnoremap <silent> <leader>/ :<c-u>History/<cr>
+nnoremap <silent> <leader>d :<c-u>Dirs<cr>
+nnoremap <silent> gt :<c-u>BTags<cr>
+nnoremap <silent> gT :<c-u>Tags<cr>
+nnoremap <silent> <leader>j :<c-u>Lines<cr>
 com! Dirs call <sid>fzf_list_dirs()
 let g:fzf_dirs = [
       \ '~/projects/*',
@@ -1411,51 +1397,46 @@ fu! s:fzf_list_dirs()
 endfu
 
 " --------------------------------------------------------------
-" LSP {{{2
+" LSP
 " --------------------------------------------------------------
-nnoremap <silent> gd :<c-u>LspDefinition<CR>
-nnoremap <silent> gi :<c-u>LspImplementation<CR>
-nnoremap <silent> [d :<c-u>LspPreviousDiagnostic<CR>
-nnoremap <silent> ]d :<c-u>LspNextDiagnostic<CR>
+nnoremap <silent> gd :<c-u>LspDefinition<cr>
+nnoremap <silent> gi :<c-u>LspImplementation<cr>
+nnoremap <silent> <leader>r :<c-u>LspRename<cr>
+nnoremap <silent> <leader>a :<c-u>LspCodeAction<cr>
+nnoremap <silent> gh :<c-u>LspHover<cr>
+nnoremap <silent> [d :<c-u>LspPreviousDiagnostic<cr>
+nnoremap <silent> ]d :<c-u>LspNextDiagnostic<cr>
 
 " --------------------------------------------------------------
-" Git {{{2
+" Git
 " --------------------------------------------------------------
-nnoremap gs :<c-u>Git<CR>
-nnoremap <leader>gd :<c-u>Gdiff<CR>
+nnoremap gs :<c-u>Git<cr>
+nnoremap <leader>gd :<c-u>Gdiff<cr>
 nnoremap <leader>gD :<c-u>Gsplit! diff<cr>
-nnoremap <Leader>gc :<c-u>Gcommit<CR>
-nnoremap <Leader>gr :<c-u>Gread<CR>
+nnoremap <leader>gc :<c-u>Gcommit<cr>
+nnoremap <leader>gr :<c-u>Gread<cr>
 nnoremap <leader>gR :<c-u>Gremove<cr>
-nnoremap <Leader>gw :<c-u>Gwrite<CR>
-nnoremap <Leader>gl :<c-u>Glog<CR>
-nnoremap <leader>gL :<c-u>Gpedit! log -n 10 --stat<cr><c-w>p
+nnoremap <leader>gw :<c-u>Gwrite<cr>
+nnoremap <leader>gl :<c-u>Gclog<cr>
 nnoremap <leader>ga :<c-u>Gcommit --amend<cr>
 nnoremap <leader>gA :<c-u>Git add --all<cr>
 
-nnoremap <leader>gv :<c-u>GV<cr>
-xnoremap <leader>gv :GV<cr>
+cabbrev git Git
 
 let g:signify_skip_filetype = { 'help': 1, 'gitcommit': 1 }
 
 " --------------------------------------------------------------
-" repeat {{{2
+" repeat
 " --------------------------------------------------------------
 silent! call repeat#set("\<Plug>(EasyAlign)", v:count)
 
 " --------------------------------------------------------------
-" scala {{{2
+" scala
 " --------------------------------------------------------------
 let g:scala_sort_across_groups = 1
 
 " --------------------------------------------------------------
-" calendar {{{2
-" --------------------------------------------------------------
-let g:calendar_google_calendar = 1
-let g:calendar_google_task = 1
-
-" --------------------------------------------------------------
-" easy-align {{{2
+" easy-align
 " --------------------------------------------------------------
 let g:easy_align_delimiters = {
 \ '>': { 'pattern': '>>\|=>\|>' },
@@ -1492,7 +1473,7 @@ nmap ga <Plug>(EasyAlign)
 nmap gaa ga_
 
 " --------------------------------------------------------------
-" airnote {{{2
+" airnote
 " --------------------------------------------------------------
 let g:airnote_path = expand('~/Dropbox/memo')
 let g:airnote_enable_cache = 1
@@ -1522,13 +1503,7 @@ augroup vimrc-airnote
 augroup END
 
 " --------------------------------------------------------------
-" auto-pairs {{{2
-" --------------------------------------------------------------
-" CJK-language causes errors with mappings from <BS>
-" let g:AutoPairsMapBS = 0
-
-" --------------------------------------------------------------
-" FastFold {{{2
+" FastFold
 " --------------------------------------------------------------
 let g:fastfold_savehook = 0
 let g:fastfold_fold_command_suffixes = []
@@ -1536,17 +1511,17 @@ let g:fastfold_fold_movement_commands = []
 let g:tex_fold_enabled = 1
 
 " --------------------------------------------------------------
-" minidown {{{2
+" minidown
 " --------------------------------------------------------------
 let g:minidown_pandoc_enable_toc = 0
 
 " --------------------------------------------------------------
-" markdown {{{2
+" markdown
 " --------------------------------------------------------------
 nnoremap <silent> gX :OpenLinkHistory<cr>
 
 " --------------------------------------------------------------
-" emoji {{{2
+" emoji
 " --------------------------------------------------------------
 com! -bang EmojiList call s:show_emoji_list()
 fu! s:show_emoji_list()
@@ -1565,89 +1540,33 @@ fu! s:show_emoji_list()
 endfu
 
 " --------------------------------------------------------------
-" airline {{{2
+" airline
 " --------------------------------------------------------------
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#wordcount#enabled = 0
 let g:airline_left_sep=''
 let g:airline_right_sep=''
+set noshowmode
 
 " --------------------------------------------------------------
-" nerdtree {{{2
+" fern.vim
 " --------------------------------------------------------------
-nnoremap <leader>nt :<c-u>NERDTreeToggle<cr>
-nnoremap <leader>nf :<c-u>NERDTreeFind<cr>
-nnoremap <leader>nm :<c-u>NERDTreeMirror<cr>
-nnoremap <leader>nc :<c-u>NERDTreeCWD<cr>
-nnoremap <leader>nx :<c-u>NERDTreeClose<cr>
-nnoremap <leader>nb :<c-u>NERDTreeFromBookmark
-let g:NERDTreeShowHidden = 1
-let g:NERDTreeWinSize = 40
+nnoremap <leader>ee :<c-u>Fern . -drawer -toggle<cr>
+nnoremap <leader>ef :<c-u>Fern . -drawer -reveal=% -toggle<cr>
+let g:fern#renderer = "nerdfont"
 
-augroup vimrc-nerdtree
-  autocmd!
-  autocmd FileType nerdtree com! -buffer NERDTreePromote call s:nerdtree_promote()
-  autocmd FileType nerdtree com! -buffer NERDTreeDemote call s:nerdtree_demote()
-  autocmd FileType nerdtree nnoremap <silent> <buffer> << :<c-u>NERDTreePromote<cr>
-  autocmd Filetype nerdtree nnoremap <silent> <buffer> >> :<c-u>NERDTreeDemote<cr>
-augroup END
-
-fu! s:nerdtree_promote()
-  let curNode = g:NERDTreeFileNode.GetSelected()
-  let newNodeDir = fnamemodify(curNode.path.str(), ':h:h')
-  let newNodeName = fnamemodify(curNode.path.str(), ':t')
-  let newNodePath = ''
-  if has('win32') || ('win64')
-    let newNodePath = join([newNodeDir, newNodeName], '\')
-  else
-    let newNodePath = join([newNodeDir, newNodeName], '/')
-  endif
-  try
-    call curNode.rename(newNodePath)
-    call NERDTreeRender()
-    call curNode.putCursorHere(1, 0)
-    redraw
-  catch /^NERDTree/
-    echoe 'Node Not Promoted'
-  endtry
-endfu
-
-fu! s:nerdtree_demote()
-  let curNode = g:NERDTreeFileNode.GetSelected()
-  let newNodeDir = fnamemodify(curNode.path.str(), ':h')
-  let newNodeDest = input('New Directory? ')
-  let newNodeName = fnamemodify(curNode.path.str(), ':t')
-  if has('win32') || ('win64')
-    let newNodePath = join([newNodeDir, newNodeDest, newNodeName], '\')
-  else
-    let newNodePath = join([newNodeDir, newNodeDest, newNodeName], '/')
-  endif
-  try
-    call curNode.rename(newNodePath)
-    call NERDTreeRender()
-    call curNode.putCursorHere(1, 0)
-    redraw
-  catch /^NERDTree/
-    echoe 'Node Not Promoted'
-  endtry
-endfu
-
-" --------------------------------------------------------------
-" pyenv {{{2
-" --------------------------------------------------------------
-function! s:jedi_auto_force_py_version() abort
-  let major_version = pyenv#python#get_internal_major_version()
-  call jedi#force_py_version(major_version)
+function! s:init_fern() abort
+  nmap <buffer> l <Plug>(fern-action-expand)
 endfunction
-augroup vim-pyenv-custom-augroup
+
+augroup my-fern
   autocmd! *
-  autocmd User vim-pyenv-activate-post   silent! call s:jedi_auto_force_py_version()
-  autocmd User vim-pyenv-deactivate-post silent! call s:jedi_auto_force_py_version()
+  autocmd FileType fern call s:init_fern()
 augroup END
 
 " --------------------------------------------------------------
-" vim-test {{{2
+" vim-test
 " --------------------------------------------------------------
 nnoremap <silent> <leader>tn :TestNearest<cr>
 nnoremap <silent> <leader>tf :TestFile<cr>
@@ -1661,7 +1580,7 @@ elseif has('terminal')
 endif
 
 " --------------------------------------------------------------
-" sideways.vim {{{2
+" sideways.vim
 " --------------------------------------------------------------
 nnoremap <silent> gH :SidewaysLeft<cr>
 nnoremap <silent> gL :SidewaysRight<cr>
@@ -1671,30 +1590,30 @@ omap ia <Plug>SidewaysArgumentTextobjI
 xmap ia <Plug>SidewaysArgumentTextobjI
 
 " --------------------------------------------------------------
-" vim-easymotion {{{2
+" vim-easymotion
 " --------------------------------------------------------------
-map <Leader> <Plug>(easymotion-prefix)
-" <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+map <leader> <Plug>(easymotion-prefix)
+" <leader>f{char} to move to {char}
+map  <leader>f <Plug>(easymotion-bd-f)
+nmap <leader>f <Plug>(easymotion-overwin-f)
 
 " Move to line
-map <Leader>l <Plug>(easymotion-bd-jk)
-nmap <Leader>l <Plug>(easymotion-overwin-line)
+map <leader>l <Plug>(easymotion-bd-jk)
+nmap <leader>l <Plug>(easymotion-overwin-line)
 
 " Move to word
-map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
+map  <leader>w <Plug>(easymotion-bd-w)
+nmap <leader>w <Plug>(easymotion-overwin-w)
 
 " --------------------------------------------------------------
-" nvim-treesitter {{{2
+" nvim-treesitter
 " --------------------------------------------------------------
 if has_key(g:plugs, 'nvim-treesitter')
   exe "lua require('plugins.treesitter')"
 endif
 
 " --------------------------------------------------------------
-" startify {{{2
+" startify
 " --------------------------------------------------------------
 let g:startify_bookmarks = [ {'v': expand('<sfile>')}]
 let g:startify_commands = [
@@ -1712,12 +1631,12 @@ let g:startify_lists = [
       \ ]
 
 " --------------------------------------------------------------
-" termex.vim {{{2
+" termex.vim
 " --------------------------------------------------------------
 cabbrev t Terminal
 
 " ===============================================================
-" POST PROCESS {{{1
+" POST PROCESS
 " ===============================================================
 
 " Write some machine-specific settings to ~/.vimrc.local.
