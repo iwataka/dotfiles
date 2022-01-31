@@ -1341,6 +1341,9 @@ let g:solarized_termcolors = 256
 let g:solarized_menu = 0
 let g:solarized_visibility = 'high'
 
+" gruvbox-material
+let g:gruvbox_material_transparent_background = 1
+
 nnoremap <F5> :ColorexToggleBackground<cr>
 nnoremap <C-F5> :ColorexSwitchContrast<cr>
 nnoremap <C-S-F5> :ColorexSwitchContrast!<cr>
