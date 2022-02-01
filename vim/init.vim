@@ -22,8 +22,7 @@ Plug 'iwataka/colorex.vim'
 Plug 'iwataka/awesome.vim', { 'on': ['Awesome', 'AwesomeUpdate'] }
 Plug 'iwataka/github.vim', { 'on': ['GHOpen', 'GHReleases', 'GHSearch'] }
 Plug 'iwataka/vim-replace'
-Plug 'iwataka/termex.vim', { 'on': ['Terminal'] }
-unlet! g:plug_url_format
+Plug 'iwataka/termex.vim'
 
 " Git
 if executable('git')
@@ -31,7 +30,6 @@ if executable('git')
     Plug 'mhinz/vim-signify'
   endif
   Plug 'tpope/vim-fugitive'
-  Plug 'shumphrey/fugitive-gitlab.vim'
   Plug 'mattn/gist-vim', { 'on': ['Gist'] }
 endif
 
@@ -76,12 +74,15 @@ Plug 'cocopon/iceberg.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'sainnhe/everforest'
 
-" Statusine & icon
+" Visual
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+if has('nvim')
+  Plug 'lukas-reineke/indent-blankline.nvim'
+endif
 
 " Filetype syntax
-if 0  " temporarily disabled
+if has('nvim')
   Plug 'nvim-treesitter/nvim-treesitter'
 else
   Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
@@ -113,6 +114,7 @@ Plug 'aklt/plantuml-syntax', { 'for': 'plantuml' }
 
 " Filetype utility
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] }
+Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'tpope/vim-endwise'
 Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
 
@@ -189,7 +191,6 @@ set magic                                        " Make using regex more easier
 set incsearch                                    " Enable incremental search
 set wrapscan                                     " Enable wrap scan
 set hlsearch                                     " Highlight search results
-set nohlsearch                                   " Prevent highlight when reloading .vimrc
 set ttyfast                                      " Enable fast connection
 set conceallevel=0                               " Disable conceal feature
 set allowrevins                                  " Allow to use CTRL-_
@@ -350,6 +351,8 @@ if has('autocmd')
     autocmd BufRead,BufNewFile *.tmpl set filetype=html
     autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
 
+    autocmd BufEnter term://* startinsert
+
     " prevent from conflicting multiple edit
     autocmd SwapExists * let v:swapchoice = 'o'
 
@@ -362,11 +365,6 @@ if has('autocmd')
     " Automatically open the quickfix window
     autocmd QuickFixCmdPost grep,Ggrep cwindow
     autocmd QuickFixCmdPost lgrep,Glgrep lwindow
-
-    autocmd VimEnter * silent! source .vimrc.local
-    if exists('#DirChanged')
-        autocmd DirChanged * silent! source .vimrc.local
-    endif
 
     autocmd BufReadCmd *.pdf,*.mp3,*.mp4,*.xls,*.xlsx,*.xlsm,*.doc,*.docx,*.docm,*.ppt,*.pptx,*.pptm
           \ silent call <sid>open(expand('<afile>')) |
@@ -389,8 +387,6 @@ nnoremap <Down> gj
 nnoremap <Up> gk
 nnoremap gj j
 nnoremap gk k
-nnoremap n nzz
-nnoremap N Nzz
 inoremap <silent> <Down> <c-o>:normal! gj<cr>
 inoremap <silent> <Up> <c-o>:normal! gk<cr>
 
@@ -1341,9 +1337,6 @@ let g:solarized_termcolors = 256
 let g:solarized_menu = 0
 let g:solarized_visibility = 'high'
 
-" gruvbox-material
-let g:gruvbox_material_transparent_background = 1
-
 nnoremap <F5> :ColorexToggleBackground<cr>
 nnoremap <C-F5> :ColorexSwitchContrast<cr>
 nnoremap <C-S-F5> :ColorexSwitchContrast!<cr>
@@ -1620,10 +1613,10 @@ endif
 " --------------------------------------------------------------
 let g:startify_bookmarks = [ {'v': expand('<sfile>')}]
 let g:startify_commands = [
-    \ {'d': 'Dirs'},
-    \ {'p': 'Files'},
-    \ {'m': 'History'},
-    \ {'t': 'Terminal'},
+    \ {'d': 'Dirs'     },
+    \ {'p': 'Files'    },
+    \ {'m': 'History'  },
+    \ {'t': 'Terminal' },
     \ ]
 let g:startify_change_to_dir = 0
 let g:startify_lists = [
