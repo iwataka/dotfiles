@@ -75,8 +75,7 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'sainnhe/everforest'
 
 " Visual
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 if has('nvim')
   Plug 'lukas-reineke/indent-blankline.nvim'
 endif
@@ -114,7 +113,7 @@ Plug 'aklt/plantuml-syntax', { 'for': 'plantuml' }
 
 " Filetype utility
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] }
-Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'Vimjas/vim-python-pep8-indent', { 'for': ['python'] }
 Plug 'tpope/vim-endwise'
 Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
 
@@ -1417,8 +1416,6 @@ nnoremap <leader>gl :<c-u>Gclog<cr>
 nnoremap <leader>ga :<c-u>Gcommit --amend<cr>
 nnoremap <leader>gA :<c-u>Git add --all<cr>
 
-cabbrev git Git
-
 let g:signify_skip_filetype = { 'help': 1, 'gitcommit': 1 }
 
 " --------------------------------------------------------------
@@ -1536,13 +1533,24 @@ fu! s:show_emoji_list()
 endfu
 
 " --------------------------------------------------------------
-" airline
+" lightline
 " --------------------------------------------------------------
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 0
-let g:airline#extensions#wordcount#enabled = 0
-let g:airline_left_sep=''
-let g:airline_right_sep=''
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead',
+      \   'filename': 'LightlineFilename',
+      \ },
+      \ }
+
+fu! LightlineFilename()
+  return expand('%') != '' ? expand('%:.') : '[No Name]'
+endfu
+
 set noshowmode
 
 " --------------------------------------------------------------
