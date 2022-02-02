@@ -27,7 +27,3 @@ test "$OSTYPE" = "linux-musl" &&
     export LESS='-r -N -s'
 
 test -z "$TERM" && export TERM=screen-256color-bce
-
-which fzf >/dev/null 2>&1 &&
-    which ghq >/dev/null 2>&1 &&
-    export ENHANCD_FILTER="cat /dev/stdin <(ghq list -p) |sort -u |fzf"

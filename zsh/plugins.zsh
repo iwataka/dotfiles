@@ -11,19 +11,22 @@ zplug "plugins/github", from:oh-my-zsh
 zplug "plugins/gitignore", from:oh-my-zsh
 zplug "plugins/golang", from:oh-my-zsh
 zplug "plugins/aws", from:oh-my-zsh
+SHOW_AWS_PROMPT=false
 zplug "plugins/fzf", from:oh-my-zsh
 zplug "plugins/web-search", from:oh-my-zsh
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "mafredri/zsh-async"
-zplug "b4b4r07/enhancd", use:init.sh
 zplug "zsh-users/zsh-autosuggestions"
+
 if starship --version &>/dev/null; then
   eval "$(starship init zsh)"
 else
   zplug "sindresorhus/pure", at:main
 fi
 
-SHOW_AWS_PROMPT=false
+if zoxide --version &>/dev/null; then
+  eval "$(zoxide init zsh)"
+fi
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then

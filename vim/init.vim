@@ -350,8 +350,6 @@ if has('autocmd')
     autocmd BufRead,BufNewFile *.tmpl set filetype=html
     autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
 
-    autocmd BufEnter term://* startinsert
-
     " prevent from conflicting multiple edit
     autocmd SwapExists * let v:swapchoice = 'o'
 

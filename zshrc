@@ -7,15 +7,6 @@ bindkey '^F' forward-word
 bindkey '^B' backward-word
 
 #---------------------------------------------------------------
-# Source files
-#---------------------------------------------------------------
-. ~/.shrc
-for f in ~/.zsh/*.zsh; do
-    . "$f"
-done
-
-
-#---------------------------------------------------------------
 # Completion
 #---------------------------------------------------------------
 # Enables autocompletion.
@@ -83,6 +74,14 @@ setopt correct
 setopt interactive_comments
 # Adds a slash at the end of a directory name you type.
 setopt mark_dirs
+
+#---------------------------------------------------------------
+# Source files
+#---------------------------------------------------------------
+. ~/.shrc
+for f in ~/.zsh/*.zsh; do
+    . "$f"
+done
 
 #---------------------------------------------------------------
 # post-process
