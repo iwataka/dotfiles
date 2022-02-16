@@ -2,11 +2,13 @@ FROM python:3.10.2
 
 ARG USERNAME=dev
 ARG GROUPNAME=dev
+ARG PASSWORD=passwd
 
 RUN apt-get update -y
 RUN apt-get install -y sudo
 RUN groupadd -r $USERNAME && \
         useradd -m -r -g $GROUPNAME -G sudo $USERNAME && \
+        echo $USERNAME:$PASSWORD | chpasswd && \
         echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER $USERNAME
 WORKDIR /home/$USERNAME
