@@ -9,7 +9,7 @@ This is my personal dotfiles with Vim and Zsh.
 Make sure Docker is installed and just run the following command.
 
 ```bash
-docker run -it iwataka/dotfiles
+docker run -it --rm iwataka/dotfiles
 ```
 
 This image includes dotfiles already installed and recommended tools described below.
