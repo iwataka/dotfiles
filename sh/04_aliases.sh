@@ -1,7 +1,7 @@
 # shellcheck shell=sh
 
 # Alpine Linux has an old version of grep
-# shellcheck disable=SC3028
+# shellcheck disable=SC2039
 test "$OSTYPE" != "linux-musl" &&
     # Shows diferences in color at doing 'grep'.
     alias grep='grep --color' &&
@@ -11,7 +11,7 @@ test "$OSTYPE" != "linux-musl" &&
     alias fgrep='fgrep --color=auto'
 
 # only for cygwin
-# shellcheck disable=SC3028
+# shellcheck disable=SC2039
 test "$OSTYPE" = "cygwin" &&
     alias sudo='cygstart --action=runas' &&
     # For cygport
