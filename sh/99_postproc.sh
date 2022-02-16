@@ -1,3 +1,5 @@
+# shellcheck shell=sh
+
 command -v start >/dev/null && alias open='start'
 command -v xdg-open >/dev/null && alias open='xdg-open'
 command -v wsl-open >/dev/null && alias open='wsl-open'
