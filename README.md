@@ -4,6 +4,16 @@
 
 This is my personal dotfiles with Vim and Zsh.
 
+## Quickstart
+
+Make sure Docker is installed and just run the following command.
+
+```bash
+docker run -it iwataka/dotfiles
+```
+
+This image includes dotfiles already installed and recommended tools described below.
+
 ## Install
 
 Make sure Git and Python installed and run the following.
@@ -11,6 +21,8 @@ Make sure Git and Python installed and run the following.
 ```bash
 curl https://raw.githubusercontent.com/iwataka/dotfiles/master/install.py |python
 ```
+
+## Recommended tools
 
 I mainly use the following tools for development.
 
