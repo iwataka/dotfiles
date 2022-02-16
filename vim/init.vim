@@ -1361,6 +1361,8 @@ if has("termguicolors")
   set termguicolors
 endif
 
+let g:colorex_default_colorscheme = 'nord'
+
 " --------------------------------------------------------------
 " fzf.vim
 " --------------------------------------------------------------
