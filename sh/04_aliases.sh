@@ -19,12 +19,12 @@ test "$OSTYPE" = "cygwin" &&
     alias cpoff='apt-cyg update -m http://ftp.yz.yamagata-u.ac.jp/pub/cygwin'
 
 alias o='open'
-which start >/dev/null 2>&1 && alias open='start'
-which xdg-open >/dev/null 2>&1 && alias open='xdg-open'
-which wsl-open >/dev/null 2>&1 && alias open='wsl-open'
-which cygstart >/dev/null 2>&1 && alias open='cygstart'
+command -v start >/dev/null 2>&1 && alias open='start'
+command -v xdg-open >/dev/null 2>&1 && alias open='xdg-open'
+command -v wsl-open >/dev/null 2>&1 && alias open='wsl-open'
+command -v cygstart >/dev/null 2>&1 && alias open='cygstart'
 
-! which zplug >/dev/null 2>&1 &&
+! command -v zplug >/dev/null 2>&1 &&
     alias g='git' &&
     alias ga='git add' &&
     alias gaa='git add --all' &&
@@ -92,7 +92,7 @@ alias h="history"
 alias history="fc -l -1000"
 alias j="jobs"
 alias v="vim"
-which nvim >/dev/null 2>&1 && alias vim='nvim'
+command -v nvim >/dev/null 2>&1 && alias vim='nvim'
 
 # unzip command for files which has japanese names
 alias uzja="unzip -O cp932"
@@ -110,10 +110,10 @@ alias free='free -h'
 # Some shortcuts for different directory listings
 # Clasifies files in color
 # shellcheck disable=SC2015
-which exa >/dev/null 2>&1 &&
+command -v exa >/dev/null 2>&1 &&
     alias ls='exa' ||
     alias ls='ls -hF --color=auto'
-which bat >/dev/null 2>&1 && alias cat='bat'
+command -v bat >/dev/null 2>&1 && alias cat='bat'
 alias dir='ls --color=auto'
 # Shows long list.
 alias ll='ls -l'
