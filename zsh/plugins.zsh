@@ -1,3 +1,8 @@
+if [ -d ~/.asdf ]; then
+  . $HOME/.asdf/asdf.sh
+  fpath=(${ASDF_DIR}/completions $fpath)
+fi
+
 if [[ ! -d ~/.zplug ]]; then
   git clone https://github.com/zplug/zplug.git ~/.zplug
 fi
@@ -24,10 +29,6 @@ else
   zplug "sindresorhus/pure", at:main
 fi
 
-if zoxide --version &>/dev/null; then
-  eval "$(zoxide init zsh)"
-fi
-
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
   printf "Install? [y/N]: "
@@ -38,3 +39,7 @@ fi
 
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
+
+if zoxide --version &>/dev/null; then
+  eval "$(zoxide init zsh)"
+fi

@@ -1,9 +1,9 @@
 # shellcheck shell=sh
 
-# Create a new directory and enter it
+# Create a new directory and move there
 mkd() {
-    mkdir -p "$@"
-    cd "$@" || return 1
+    mkdir -p $@
+    cd $@ || return 1
 }
 
 replace() {
@@ -14,7 +14,7 @@ xmodmap() {
     if [ $# -eq 0 ] && [ -s ~/.Xmodmap ]; then
         command xmodmap ~/.Xmodmap
     else
-        command xmodmap "$@"
+        command xmodmap $@
     fi
 }
 

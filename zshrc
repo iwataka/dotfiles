@@ -82,6 +82,8 @@ setopt mark_dirs
 for f in ~/.zsh/*.zsh; do
     . "$f"
 done
+# execute postprocess script again
+. ~/.sh/99_postproc.sh
 
 #---------------------------------------------------------------
 # post-process
