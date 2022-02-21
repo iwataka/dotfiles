@@ -1624,7 +1624,7 @@ let g:startify_commands = [
     \ {'d': 'Dirs'     },
     \ {'p': 'Files'    },
     \ {'m': 'History'  },
-    \ {'t': 'Terminal' },
+    \ {'t': 'FTerm' },
     \ ]
 let g:startify_change_to_dir = 0
 let g:startify_lists = [
@@ -1637,7 +1637,7 @@ let g:startify_lists = [
 " --------------------------------------------------------------
 " termex.vim
 " --------------------------------------------------------------
-cabbrev t Terminal
+cabbrev t FTerm
 
 " ===============================================================
 " POST PROCESS
