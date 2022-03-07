@@ -1379,6 +1379,7 @@ com! Dirs call <sid>fzf_list_dirs()
 let g:fzf_dirs = [
       \ '~/projects/*',
       \ '~/.vim/plugged/*',
+      \ '~/.dotfiles',
       \ ]
 fu! s:fzf_list_dirs()
   let dirs = []

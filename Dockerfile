@@ -22,7 +22,7 @@ RUN sudo apt-get install -y \
         vim
 RUN sudo sh -c 'echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen' && \
         sudo locale-gen en_US.UTF-8
-RUN curl https://raw.githubusercontent.com/iwataka/dotfiles/master/install.py |python
+RUN curl https://raw.githubusercontent.com/iwataka/dotfiles/master/bin/dotfiles |python - install
 
 RUN sudo apt-get install -y \
         ninja-build \

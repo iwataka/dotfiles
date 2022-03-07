@@ -5,9 +5,9 @@ all: format lint
 lint: pylint shlint
 
 pylint:
-	black install.py
-	isort install.py
-	flake8 install.py
+	black bin/dotfiles
+	isort bin/dotfiles
+	flake8 bin/dotfiles
 
 shlint:
 	shellcheck sh/*.sh shrc bashrc bin/vim-configure bin/git-count

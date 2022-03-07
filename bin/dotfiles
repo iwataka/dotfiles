@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
+import argparse
 import os
 import platform
 import shutil
-import sys
 from enum import Enum
+from typing import Optional
 
 
 class OS(Enum):
@@ -32,7 +33,7 @@ class SymLink:
     def __init__(
         self,
         name: str,
-        dest: str = None,
+        dest: Optional[str] = None,
         recurse: bool = False,
     ):
         self.name = name
@@ -155,14 +156,43 @@ def setup_symlinks(root_dir):
         symlink(root_dir, sl.name, sl.dest, recurse=sl.recurse)
 
 
-def main(root_dir):
+def install(args):
+    root_dir = args.root_dir
     if not os.path.exists(root_dir):
         os.system(f"git clone https://github.com/iwataka/dotfiles {root_dir}")
     setup_symlinks(root_dir)
 
 
+def update(args):
+    root_dir = args.root_dir
+    git_dir = os.path.join(root_dir, ".git")
+    if os.path.exists(git_dir):
+        os.system(f"git --git-dir={git_dir} pull")
+    install(args)
+
+
 if __name__ == "__main__":
-    root_dir = os.path.join(HOME_DIR, ".dotfiles")
-    if len(sys.argv) > 1:
-        root_dir = os.path.abspath(sys.argv[1])
-    main(root_dir)
+    parser = argparse.ArgumentParser(description="dotfiles utility command")
+    parser.add_argument(
+        "-r",
+        "--root-dir",
+        type=str,
+        default=os.path.join(HOME_DIR, ".dotfiles"),
+    )
+
+    subparsers = parser.add_subparsers()
+
+    install_parser = subparsers.add_parser(
+        "install",
+        help="install and setup dotfiles",
+    )
+    install_parser.set_defaults(func=install)
+
+    update_parser = subparsers.add_parser(
+        "update",
+        help="update dotfiles",
+    )
+    update_parser.set_defaults(func=update)
+
+    args = parser.parse_args()
+    args.func(args)
