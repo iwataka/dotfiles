@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -e
+
+declare -a tools=(
+    "exa"
+    "ripgrep"
+    "bat"
+    "fzf"
+    "github-cli"
+    "zoxide"
+    "jq"
+    "yq"
+    "shellcheck"
+    "shfmt"
+)
+
+for tool in "${tools[@]}"; do
+    asdf plugin-add "$tool" || true
+    asdf install "$tool" latest
+    asdf global "$tool" latest
+done
+
+asdf reshim

@@ -2,13 +2,11 @@ FROM python:3.10.2
 
 ARG USERNAME=dev
 ARG GROUPNAME=dev
-ARG PASSWORD=passwd
 
 RUN apt-get update -y
 RUN apt-get install -y sudo
 RUN groupadd -r $USERNAME && \
         useradd -m -r -g $GROUPNAME -G sudo $USERNAME && \
-        echo $USERNAME:$PASSWORD | chpasswd && \
         echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER $USERNAME
 WORKDIR /home/$USERNAME
@@ -49,47 +47,7 @@ RUN sudo apt-get install -y \
 RUN git clone https://github.com/asdf-vm/asdf ~/.asdf
 
 SHELL ["zsh", "-c"]
-RUN . ~/.asdf/asdf.sh && \
-        asdf plugin-add exa && \
-        asdf install exa latest && \
-        asdf global exa latest
-RUN . ~/.asdf/asdf.sh && \
-        asdf plugin-add ripgrep && \
-        asdf install ripgrep latest && \
-        asdf global ripgrep latest
-RUN . ~/.asdf/asdf.sh && \
-        asdf plugin-add bat && \
-        asdf install bat latest && \
-        asdf global bat latest
-RUN . ~/.asdf/asdf.sh && \
-        asdf plugin-add fzf && \
-        asdf install fzf latest && \
-        asdf global fzf latest
-RUN . ~/.asdf/asdf.sh && \
-        asdf plugin-add github-cli && \
-        asdf install github-cli latest && \
-        asdf global github-cli latest
-RUN . ~/.asdf/asdf.sh && \
-        asdf plugin-add zoxide && \
-        asdf install zoxide latest && \
-        asdf global zoxide latest
-RUN . ~/.asdf/asdf.sh && \
-        asdf plugin-add jq && \
-        asdf install jq latest && \
-        asdf global jq latest
-RUN . ~/.asdf/asdf.sh && \
-        asdf plugin-add yq && \
-        asdf install yq latest && \
-        asdf global yq latest
-RUN . ~/.asdf/asdf.sh && \
-        asdf plugin-add shellcheck && \
-        asdf install shellcheck latest && \
-        asdf global shellcheck latest
-RUN . ~/.asdf/asdf.sh && \
-        asdf plugin-add shfmt && \
-        asdf install shfmt latest && \
-        asdf global shfmt latest
-RUN . ~/.asdf/asdf.sh && asdf reshim
+RUN . ~/.asdf/asdf.sh && ~/bin/asdf-update-tools
 
 # install Docker
 RUN sudo apt-get install -y \

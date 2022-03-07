@@ -10,7 +10,7 @@ pylint:
 	flake8 bin/dotfiles
 
 shlint:
-	shellcheck sh/*.sh shrc bashrc bin/vim-configure bin/git-count
+	shellcheck sh/*.sh shrc bashrc bin/vim-configure bin/git-count bin/asdf-update-tools
 
 format:
-	shfmt -i 4 -w sh/*.sh shrc bashrc bin/vim-configure bin/git-count
+	shfmt -i 4 -w sh/*.sh shrc bashrc bin/vim-configure bin/git-count bin/asdf-update-tools
