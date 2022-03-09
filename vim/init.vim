@@ -60,6 +60,9 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'vim-test/vim-test'
 Plug 'editorconfig/editorconfig-vim'
+if has('nvim')
+  Plug 'github/copilot.vim'
+endif
 
 " LSP
 Plug 'prabirshrestha/vim-lsp'
