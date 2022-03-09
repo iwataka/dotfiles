@@ -1640,6 +1640,7 @@ let g:startify_lists = [
 " --------------------------------------------------------------
 cabbrev t 20STerm
 com! -nargs=+ Howdoi FTerm howdoi <q-args>
+let g:termex_sync_cwd = 1
 
 " ===============================================================
 " POST PROCESS
