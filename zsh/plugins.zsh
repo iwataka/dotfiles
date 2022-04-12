@@ -19,6 +19,7 @@ zplug "plugins/aws", from:oh-my-zsh
 SHOW_AWS_PROMPT=false
 zplug "plugins/fzf", from:oh-my-zsh
 zplug "plugins/web-search", from:oh-my-zsh
+zplug "plugins/kubectl", from:oh-my-zsh
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "mafredri/zsh-async"
 zplug "zsh-users/zsh-autosuggestions"
