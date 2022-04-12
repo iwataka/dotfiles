@@ -617,7 +617,7 @@ fu! s:move_to_root(cmd, path)
     echom 'Changes the current directory to: '.root
   endif
 endfu
-let s:root_marker_files = ['.editorconfig', 'package.json', 'pom.xml', 'build.gradle']
+let s:root_marker_files = ['package.json', 'pom.xml', 'build.gradle']
 let s:root_marker_dirs = ['.git', '.hg', '.svn', '.bzr', '_darcs']
 fu! s:root(cwd)
   let f_roots = s:root_marker_files[:]
@@ -1371,7 +1371,8 @@ let g:colorex_default_colorscheme = 'nord'
 " --------------------------------------------------------------
 " fzf.vim
 " --------------------------------------------------------------
-nnoremap <silent> <leader>p :<c-u>Files<cr>
+com! -bang FilesWithRoot call s:fzf_files_with_root(<bang>0)
+nnoremap <silent> <leader>p :<c-u>FilesWithRoot<cr>
 nnoremap <silent> <leader>b :<c-u>Buffers<cr>
 nnoremap <silent> <leader>m :<c-u>History<cr>
 nnoremap <silent> <leader>: :<c-u>History:<cr>
@@ -1386,6 +1387,13 @@ let g:fzf_dirs = [
       \ '~/.vim/plugged/*',
       \ '~/.dotfiles',
       \ ]
+fu! s:fzf_files_with_root(bang)
+  if &buftype == ''
+    call fzf#vim#files(s:root(expand('%:p:h')), fzf#vim#with_preview(), a:bang)
+  else
+    call fzf#vim#files('', fzf#vim#with_preview(), a:bang)
+  endif
+endfu
 fu! s:fzf_list_dirs()
   let dirs = []
   if executable('ghq')
@@ -1628,7 +1636,7 @@ endif
 let g:startify_bookmarks = [ {'v': expand('<sfile>')}]
 let g:startify_commands = [
     \ {'d': 'Dirs'     },
-    \ {'p': 'Files'    },
+    \ {'p': 'FilesWithRoot'    },
     \ {'m': 'History'  },
     \ {'t': '20STerm' },
     \ ]
