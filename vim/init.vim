@@ -1371,7 +1371,7 @@ let g:colorex_default_colorscheme = 'nord'
 " --------------------------------------------------------------
 " fzf.vim
 " --------------------------------------------------------------
-com! -bang FilesWithRoot call s:fzf_files_with_root(<bang>0)
+com! -bang FilesWithRoot call <sid>fzf_files_with_root(<bang>0)
 nnoremap <silent> <leader>p :<c-u>FilesWithRoot<cr>
 nnoremap <silent> <leader>b :<c-u>Buffers<cr>
 nnoremap <silent> <leader>m :<c-u>History<cr>
@@ -1381,7 +1381,7 @@ nnoremap <silent> <leader>d :<c-u>Dirs<cr>
 nnoremap <silent> gt :<c-u>BTags<cr>
 nnoremap <silent> gT :<c-u>Tags<cr>
 nnoremap <silent> <leader>j :<c-u>Lines<cr>
-com! Dirs call <sid>fzf_list_dirs()
+com! -bang Dirs call <sid>fzf_list_dirs(<bang>0)
 let g:fzf_dirs = [
       \ '~/projects/*',
       \ '~/.vim/plugged/*',
@@ -1394,15 +1394,27 @@ fu! s:fzf_files_with_root(bang)
     call fzf#vim#files('', fzf#vim#with_preview(), a:bang)
   endif
 endfu
-fu! s:fzf_list_dirs()
+fu! s:fzf_list_dirs(fullscreen)
   let dirs = []
   if executable('ghq')
     call extend(dirs, split(system('ghq list -p'), '\n'))
   endif
+  if executable('zoxide')
+    call extend(dirs, split(system('zoxide query -l'), '\n'))
+  endif
   for d in g:fzf_dirs
     call extend(dirs, split(expand(d), '\n'))
   endfor
-  call fzf#run(fzf#wrap({'sink': 'Files', 'source': dirs}))
+  let preview_cmd = 'ls -al --color'
+  if executable('exa')
+    let preview_cmd = 'exa -al'
+  endif
+  call fzf#run(fzf#wrap({
+        \   'sink': 'Files',
+        \   'source': dirs,
+        \   'options': ['--prompt', 'Dirs> ', '--preview', printf('%s {}', preview_cmd)],
+        \ },
+        \ a:fullscreen))
 endfu
 
 " --------------------------------------------------------------
