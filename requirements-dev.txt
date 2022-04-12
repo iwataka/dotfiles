@@ -1,3 +1,5 @@
 isort~=5.10.1
 flake8~=4.0.1
 black~=21.12b0
+# https://github.com/psf/black/issues/2964
+click<8.1.0
