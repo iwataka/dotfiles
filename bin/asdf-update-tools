@@ -13,6 +13,7 @@ declare -a tools=(
     "yq"
     "shellcheck"
     "shfmt"
+    "delta"
 )
 
 for tool in "${tools[@]}"; do

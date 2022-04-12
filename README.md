@@ -36,6 +36,7 @@ I mainly use the following tools for development.
 - [asdf](https://asdf-vm.com/)
 - [pandoc](https://pandoc.org/)
 - [docker](https://www.docker.com/)
+- [delta](https://github.com/dandavison/delta)
 
 On Windows
 
