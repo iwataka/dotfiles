@@ -119,6 +119,8 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] 
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': ['python'] }
 Plug 'tpope/vim-endwise'
 Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
+Plug 'mattn/vim-goaddtags', { 'for': 'go' }
+Plug 'mattn/vim-goimpl', { 'for': 'go' }
 
 " Text Object
 Plug 'kana/vim-textobj-user'
