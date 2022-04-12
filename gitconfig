@@ -90,6 +90,6 @@
 	# the following sentence to .gitconfig.local
 	# [http]
 	# 	proxy = http://user:pwd@proxy_server_adress:port
-    path = ~/.gitconfig.local
+	path = ~/.gitconfig.local
 [init]
 	defaultBranch = main

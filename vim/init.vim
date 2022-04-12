@@ -351,7 +351,7 @@ if has('autocmd')
     autocmd BufRead,BufNewFile *editorconfig* set filetype=jproperties
     autocmd BufRead,BufNewFile *.gpg set filetype=gnupg
     autocmd BufRead,BufNewFile *.json set filetype=javascript
-    autocmd BufRead,BufNewFile *gitconfig* set filetype=sh
+    autocmd BufRead,BufNewFile *gitconfig* set filetype=gitconfig
     autocmd BufRead,BufNewFile *.tmpl set filetype=html
     autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
 
