@@ -119,7 +119,7 @@ cfn-wait =
       stack_name=$(aws cloudformation describe-stacks |jq -r '.Stacks[].StackName' |fzf --header="wait CFn stack update")
     fi
 
-    for i in `seq 60`
+    for i in `seq 600`
     do
       status=$(aws cloudformation describe-stacks --stack-name "$stack_name" |jq -r '.Stacks[0].StackStatus')
       if [ $(echo ${status} |grep _IN_PROGRESS$ |wc -l) -eq 1 ]
@@ -229,11 +229,17 @@ cfn-deploy =
       deploy_cmd="aws cloudformation deploy"
     fi
 
+    args=""
+    if [ ! -z "$parameters" ]
+    then
+      args="--parameter-overrides $parameters $args"
+    fi
+
     cmd="${deploy_cmd} \
       --stack-name $stack_name \
       --template-file $template_file \
-      --parameter-overrides $parameters \
-      --capabilities CAPABILITY_NAMED_IAM"
+      --capabilities CAPABILITY_NAMED_IAM \
+      $args"
     echo $cmd
     $cmd
   }; f
