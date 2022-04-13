@@ -22,6 +22,8 @@ Make sure Git and Python installed and run the following.
 curl https://raw.githubusercontent.com/iwataka/dotfiles/master/bin/dotfiles |python - install
 ```
 
+To update to the latest version, please run `dotfiles update`.
+
 ## Recommended tools
 
 I mainly use the following tools for development.
