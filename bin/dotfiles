@@ -22,7 +22,7 @@ class OS(Enum):
         elif platform.system() == "Windows":
             return OS.WINDOWS
         else:
-            raise Exception(f"Unsupported os name {os.name}")
+            raise Exception(f"Unsupported system name {platform.system()}")
 
 
 class SymLink:
