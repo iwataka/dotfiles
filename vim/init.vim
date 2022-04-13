@@ -1405,14 +1405,17 @@ fu! s:fzf_list_dirs(fullscreen)
   for d in g:fzf_dirs
     call extend(dirs, split(expand(d), '\n'))
   endfor
-  let preview_cmd = 'ls -al --color'
+  call uniq(sort(dirs))
+  let options = ['--prompt', 'Dirs> ']
   if executable('exa')
-    let preview_cmd = 'exa -al'
+    call extend(options, ['--preview', 'exa -al {}'])
+  elseif executable('ls')
+    call extend(options, ['--preview', 'ls -al --color {}'])
   endif
   call fzf#run(fzf#wrap({
         \   'sink': 'Files',
         \   'source': dirs,
-        \   'options': ['--prompt', 'Dirs> ', '--preview', printf('%s {}', preview_cmd)],
+        \   'options': options,
         \ },
         \ a:fullscreen))
 endfu
