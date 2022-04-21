@@ -1596,6 +1596,10 @@ let g:fern#renderer = "nerdfont"
 
 function! s:init_fern() abort
   nmap <buffer> l <Plug>(fern-action-expand)
+  nnoremap <buffer><silent> <Plug>(fern-action-nohlsearch) :<c-u>nohlsearch<cr>
+  nmap <buffer> <Plug>(fern-action-nohlsearch-and-redraw)
+        \ <Plug>(fern-action-nohlsearch)<Plug>(fern-action-redraw)
+  nmap <buffer> <c-l> <Plug>(fern-action-nohlsearch-and-redraw)
 endfunction
 
 augroup my-fern
