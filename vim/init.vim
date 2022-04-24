@@ -1573,13 +1573,34 @@ let g:lightline = {
       \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'gitbranch', 'gitstatus', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
       \   'gitbranch': 'FugitiveHead',
+      \   'gitstatus': 'LightlineSignify',
       \   'filename': 'LightlineFilename',
       \ },
       \ }
+
+function! LightlineSignify()
+  let [added, changed, deleted] = sy#repo#get_stats()
+  let sign_add = get(g:, 'signify_sign_add', '+')
+  let sign_change = get(g:, 'signify_sign_change', '!')
+  let sign_delete = get(g:, 'signify_sign_delete', '-')
+  if added + changed + deleted > 0
+    return printf(
+          \ '%s%d %s%d %s%d',
+          \ sign_add,
+          \ added,
+          \ sign_change,
+          \ changed,
+          \ sign_delete,
+          \ deleted,
+          \ )
+  else
+    return ''
+  endif
+endfunction
 
 fu! LightlineFilename()
   return expand('%') != '' ? expand('%:.') : '[No Name]'
