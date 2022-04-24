@@ -1585,11 +1585,11 @@ let g:lightline = {
       \ }
 
 function! LightlineSignify()
-  let [added, changed, deleted] = sy#repo#get_stats()
-  let sign_add = get(g:, 'signify_sign_add', '+')
-  let sign_change = get(g:, 'signify_sign_change', '!')
-  let sign_delete = get(g:, 'signify_sign_delete', '-')
-  if added + changed + deleted > 0
+  if has_key(b:, 'sy')
+    let [added, changed, deleted] = sy#repo#get_stats()
+    let sign_add = get(g:, 'signify_sign_add', '+')
+    let sign_change = get(g:, 'signify_sign_change', '!')
+    let sign_delete = get(g:, 'signify_sign_delete', '-')
     return printf(
           \ '%s%d %s%d %s%d',
           \ sign_add,

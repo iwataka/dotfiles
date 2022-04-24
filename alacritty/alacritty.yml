@@ -777,6 +777,9 @@ key_bindings:
   - { key: Yen, mods: Alt, chars: "\xA5" }
   # https://github.com/alacritty/alacritty/issues/1703
   - { key: Space, mods: Control, chars: "\x00" }
+  # https://qiita.com/cyrt/items/b3415e892aedf5b21925
+  - { key: "LBracket", mods: Control, chars: "\x1b" }
+
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
