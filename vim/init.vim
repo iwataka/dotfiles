@@ -76,6 +76,7 @@ Plug 'sainnhe/gruvbox-material'
 Plug 'cocopon/iceberg.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'sainnhe/everforest'
+Plug 'joshdick/onedark.vim'
 
 " Visual
 Plug 'itchyny/lightline.vim'
@@ -127,6 +128,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-fold'
 Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-lastpat'
 Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
 
 " Utility
