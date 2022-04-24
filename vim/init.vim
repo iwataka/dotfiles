@@ -1680,17 +1680,12 @@ endif
 " --------------------------------------------------------------
 " startify
 " --------------------------------------------------------------
-let g:startify_bookmarks = [ {'v': expand('<sfile>')}]
-let g:startify_commands = [
-    \ {'d': 'Dirs'     },
-    \ {'p': 'FilesWithRoot'    },
-    \ {'m': 'History'  },
-    \ {'t': '20STerm' },
-    \ ]
-let g:startify_change_to_dir = 0
+let g:startify_bookmarks = [
+      \ {'v': expand('<sfile>')},
+      \ ]
+let g:startify_change_to_dir = 1
 let g:startify_lists = [
       \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-      \ { 'type': 'commands',  'header': ['   Commands']       },
       \ { 'type': 'files',     'header': ['   MRU']            },
       \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
       \ ]
