@@ -71,6 +71,7 @@ def common_symlinks():
     yield SymLink("vim")
     yield SymLink("vimperatorrc")
     yield SymLink("vimrc")
+    yield SymLink("wezterm.lua")
     yield SymLink("wgetrc")
 
 
