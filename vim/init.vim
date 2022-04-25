@@ -1585,8 +1585,8 @@ let g:lightline = {
       \ }
 
 function! LightlineSignify()
-  if has_key(b:, 'sy')
-    let [added, changed, deleted] = sy#repo#get_stats()
+  let [added, changed, deleted] = sy#repo#get_stats()
+  if added + changed + deleted >= 0
     let sign_add = get(g:, 'signify_sign_add', '+')
     let sign_change = get(g:, 'signify_sign_change', '!')
     let sign_delete = get(g:, 'signify_sign_delete', '-')
