@@ -1506,30 +1506,10 @@ nmap gaa ga_
 " --------------------------------------------------------------
 let g:airnote_path = expand('~/Dropbox/memo')
 let g:airnote_enable_cache = 1
-let g:airnote_suffix = 'note.md'
 let g:airnote_mappings_enabled = 1
 let g:airnote_date_format = ''
-let s:airnote_date_format = '%c'
 nnoremap <leader>nn :Note<cr>
 nnoremap <leader>nd :NoteDelete<cr>
-fu! s:airnote_bufnewfile()
-  let time1 = strftime('Created: '.s:airnote_date_format)
-  let time2 = strftime('Last modified: '.s:airnote_date_format)
-  call setline(1, printf(&cms, time1))
-  call setline(2, printf(&cms, time2))
-endfu
-fu! s:airnote_bufwrite()
-  if &modified
-    let time = strftime('Last modified: '.s:airnote_date_format)
-    call setline(2, printf(&cms, time))
-  endif
-endfu
-augroup vimrc-airnote
-  autocmd!
-  autocmd BufNewFile *.note.md call s:airnote_bufnewfile()
-  autocmd BufWrite *.note.md call s:airnote_bufwrite()
-  autocmd QuickFixCmdPost airnote cwindow
-augroup END
 
 " --------------------------------------------------------------
 " FastFold
