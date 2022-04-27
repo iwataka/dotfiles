@@ -134,6 +134,8 @@ Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
 " Utility
 Plug 'junegunn/vim-emoji', { 'on': ['EmojiList'] }
 Plug 'mattn/webapi-vim'
+Plug 'vim-skk/skkeleton'
+Plug 'vim-denops/denops.vim'
 
 call plug#end()
 endif
@@ -1554,10 +1556,11 @@ endfu
 let g:lightline = {
       \ 'colorscheme': 'jellybeans',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
+      \   'left': [ [ 'mode', 'skkmode', 'paste' ],
       \             [ 'gitbranch', 'gitstatus', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
+      \   'skkmode': 'skkeleton#mode',
       \   'gitbranch': 'FugitiveHead',
       \   'gitstatus': 'LightlineSignify',
       \   'filename': 'LightlineFilename',
@@ -1676,6 +1679,22 @@ let g:startify_lists = [
 cabbrev t 20STerm
 com! -nargs=+ Howdoi FTerm howdoi <q-args>
 let g:termex_sync_cwd = 1
+
+" --------------------------------------------------------------
+" skkeleton.vim
+" --------------------------------------------------------------
+function! s:skkeleton_init() abort
+  call skkeleton#config({
+    \ 'globalJisyo': '~/.skk/SKK-JISYO.L',
+    \ })
+endfunction
+augroup skkeleton-initialize-pre
+  autocmd!
+  autocmd User skkeleton-initialize-pre call s:skkeleton_init()
+augroup END
+
+imap <C-j> <Plug>(skkeleton-toggle)
+cmap <C-j> <Plug>(skkeleton-toggle)
 
 " ===============================================================
 " POST PROCESS
