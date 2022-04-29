@@ -65,8 +65,4 @@ RUN sudo apt-get install -y \
         docker-ce-cli \
         containerd.io
 
-# download a large dictionary file for SKK
-RUN mkdir ~/.skk/
-RUN curl https://skk-dev.github.io/dict/SKK-JISYO.L.gz |gunzip > ~/.skk/SKK-JISYO.L
-
 CMD /usr/bin/zsh
