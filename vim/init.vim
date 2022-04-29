@@ -1596,6 +1596,7 @@ set noshowmode
 nnoremap <leader>ee :<c-u>Fern . -drawer -toggle<cr>
 nnoremap <leader>ef :<c-u>Fern . -drawer -reveal=% -toggle<cr>
 let g:fern#renderer = "nerdfont"
+let g:fern#default_hidden = 1
 
 function! s:init_fern() abort
   nmap <buffer> l <Plug>(fern-action-expand)
