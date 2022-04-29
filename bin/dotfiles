@@ -58,6 +58,7 @@ def common_symlinks():
     yield SymLink("ghci")
     yield SymLink("gitconfig")
     yield SymLink("gnupg", recurse=True)
+    yield SymLink("goneovim")
     yield SymLink("hyper.js")
     yield SymLink("ideavimrc")
     yield SymLink("peco")
