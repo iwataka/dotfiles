@@ -427,6 +427,7 @@ cnoremap jk <C-c>
 " xnoremap jk <Esc>
 if has('terminal') || has('nvim')
   tnoremap <ESC> <C-\><C-n>
+  tnoremap <c-[> <C-\><C-n>
 endif
 
 " " Edit vimrc
@@ -1375,6 +1376,18 @@ let g:neovide_transparency = 0.9
 let g:neovide_cursor_vfx_mode = "railgun"
 let g:neovide_cursor_animation_length = 0.03
 
+" nvim-qt settings
+augroup vimrc-nvim-qt
+  autocmd! *
+  autocmd VimEnter * call s:configure_nvim_qt()
+augroup END
+
+fu! s:configure_nvim_qt()
+  if exists(':GuiWindowOpacity')
+    exe 'GuiWindowOpacity 0.9'
+  endif
+endfu
+
 " --------------------------------------------------------------
 " fzf.vim
 " --------------------------------------------------------------
@@ -1505,7 +1518,6 @@ nmap gaa ga_
 " airnote
 " --------------------------------------------------------------
 let g:airnote_path = expand('~/Dropbox/memo')
-let g:airnote_enable_cache = 1
 let g:airnote_mappings_enabled = 1
 let g:airnote_date_format = ''
 nnoremap <leader>nn :Note<cr>
@@ -1606,7 +1618,7 @@ function! s:init_fern() abort
   nmap <buffer> <c-l> <Plug>(fern-action-nohlsearch-and-redraw)
 endfunction
 
-augroup my-fern
+augroup vimrc-fern
   autocmd! *
   autocmd FileType fern call s:init_fern()
 augroup END
