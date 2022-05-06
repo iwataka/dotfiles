@@ -505,7 +505,17 @@ nnoremap <silent> <BS><BS> :<c-u>call <sid>preserve('%s/\s*$//')<cr>
 nnoremap <leader>ct :<c-u>checktime<cr>
 
 " Change the current directory to where the active file exists
-nnoremap <leader>cd :<c-u>cd %:h<cr>
+nnoremap <leader>cd :<c-u>call <sid>change_dir()<cr>
+
+fu! s:change_dir()
+  if &buftype == 'terminal'
+    let cmd = printf("cd '%s'", getcwd())
+    let job_id = b:terminal_job_id
+    call chansend(job_id, printf("\<c-u>%s\<cr>", cmd))
+  else
+    exe 'cd %:h'
+  endif
+endfu
 
 " Some mappings for user-defined commands
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -1690,7 +1700,6 @@ let g:startify_lists = [
 " --------------------------------------------------------------
 cabbrev t 20STerm
 com! -nargs=+ Howdoi FTerm howdoi <q-args>
-let g:termex_sync_cwd = 1
 
 " ===============================================================
 " POST PROCESS
