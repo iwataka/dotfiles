@@ -632,7 +632,7 @@ fu! s:move_to_root(cmd, path)
     echom 'Changes the current directory to: '.root
   endif
 endfu
-let s:root_marker_files = ['package.json', 'pom.xml', 'build.gradle']
+let s:root_marker_files = []
 let s:root_marker_dirs = ['.git', '.hg', '.svn', '.bzr', '_darcs']
 fu! s:root(cwd)
   let f_roots = s:root_marker_files[:]
