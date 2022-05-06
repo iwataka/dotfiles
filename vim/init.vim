@@ -304,80 +304,78 @@ endif
 " AUTOCMD
 " ===============================================================
 
-if has('autocmd')
-  augroup vimrcEx
-    autocmd!
+augroup vimrcEx
+  autocmd!
 
-    " Disable IME when leaving insert mode.
-    " This feature is available only on my Windows, so I've decided not to use.
-    " autocmd InsertEnter * set iminsert=1
-    " autocmd InsertLeave * set iminsert=0
+  " Disable IME when leaving insert mode.
+  " This feature is available only on my Windows, so I've decided not to use.
+  " autocmd InsertEnter * set iminsert=1
+  " autocmd InsertLeave * set iminsert=0
 
-    " Use cursorline only in the focused window.
-    " This doesn't work with NERDTree.
-    " Currently disabled because of performance issue.
-    " autocmd WinEnter * set cursorline
-    " autocmd WinLeave * set nocursorline
+  " Use cursorline only in the focused window.
+  " This doesn't work with NERDTree.
+  " Currently disabled because of performance issue.
+  " autocmd WinEnter * set cursorline
+  " autocmd WinLeave * set nocursorline
 
-    " When editing a file, always jump to the last known cursor position.
-    " do it when the position is invalid or when inside an event handler
-    " (happens when dropping a file on gvim).
-    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+  " When editing a file, always jump to the last known cursor position.
+  " do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-    " filetype-specific
-    autocmd FileType gitcommit
-          \ setlocal textwidth=72 |
-          \ setlocal spell
-    autocmd FileType markdown
-          \ setlocal spell |
-          \ setlocal commentstring=<!--%s--> |
-          \ setlocal foldlevel=1 |
-          \ setlocal comments=b:-,b:+,b:* |
-          \ setlocal formatoptions+=ro |
-          \ inoremap <buffer> <expr> <cr> <sid>enter_on_markdown() |
-          \ let b:AutoPairs = {}
-    autocmd FileType calendar,git,gitv setlocal nolist
-    autocmd FileType dosbatch setlocal commentstring=::%s
-    autocmd FileType dot setlocal commentstring=//%s
-    autocmd FileType c setlocal commentstring=//%s
-    " Close buffers of specified types by just typing q.
-    autocmd FileType help,qf,godoc nnoremap <buffer> q :q<cr>
-    autocmd FileType fugitive nnoremap <buffer> q :q<cr>
-    autocmd BufEnter fugitive://* nnoremap <buffer> q :q<cr>
-    autocmd BufWinEnter * if &buftype == 'terminal' | nnoremap <buffer> q :q<cr> | endif
-    autocmd FileType fern nnoremap <buffer> q :q<cr>
+  " filetype-specific
+  autocmd FileType gitcommit
+        \ setlocal textwidth=72 |
+        \ setlocal spell
+  autocmd FileType markdown
+        \ setlocal spell |
+        \ setlocal commentstring=<!--%s--> |
+        \ setlocal foldlevel=1 |
+        \ setlocal comments=b:-,b:+,b:* |
+        \ setlocal formatoptions+=ro |
+        \ inoremap <buffer> <expr> <cr> <sid>enter_on_markdown() |
+        \ let b:AutoPairs = {}
+  autocmd FileType calendar,git,gitv setlocal nolist
+  autocmd FileType dosbatch setlocal commentstring=::%s
+  autocmd FileType dot setlocal commentstring=//%s
+  autocmd FileType c setlocal commentstring=//%s
+  " Close buffers of specified types by just typing q.
+  autocmd FileType help,qf,godoc nnoremap <buffer> q :q<cr>
+  autocmd FileType fugitive nnoremap <buffer> q :q<cr>
+  autocmd BufEnter fugitive://* nnoremap <buffer> q :q<cr>
+  autocmd BufWinEnter * if &buftype == 'terminal' | nnoremap <buffer> q :q<cr> | endif
+  autocmd FileType fern nnoremap <buffer> q :q<cr>
 
-    " Set filetype
-    autocmd BufRead,BufNewFile *spacemacs* set filetype=lisp
-    autocmd BufRead,BufNewFile *.gradle set filetype=groovy
-    autocmd BufRead,BufNewFile *editorconfig* set filetype=jproperties
-    autocmd BufRead,BufNewFile *.gpg set filetype=gnupg
-    autocmd BufRead,BufNewFile *gitconfig* set filetype=gitconfig
-    autocmd BufRead,BufNewFile *.tmpl set filetype=html
-    autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
+  " Set filetype
+  autocmd BufRead,BufNewFile *spacemacs* set filetype=lisp
+  autocmd BufRead,BufNewFile *.gradle set filetype=groovy
+  autocmd BufRead,BufNewFile *editorconfig* set filetype=jproperties
+  autocmd BufRead,BufNewFile *.gpg set filetype=gnupg
+  autocmd BufRead,BufNewFile *gitconfig* set filetype=gitconfig
+  autocmd BufRead,BufNewFile *.tmpl set filetype=html
+  autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
 
-    " prevent from conflicting multiple edit
-    autocmd SwapExists * let v:swapchoice = 'o'
+  " prevent from conflicting multiple edit
+  autocmd SwapExists * let v:swapchoice = 'o'
 
-    " Fullwidth spaces, merge conflicts and ...
-    autocmd BufRead * call matchadd('Visual', '　')
-    autocmd BufRead * call matchadd('Visual', '\v^\s*\zs\<{7}[^\<]+$\ze')
-    autocmd BufRead * call matchadd('Visual', '\v^\s*\zs\={7}$\ze')
-    autocmd BufRead * call matchadd('Visual', '\v^\s*\zs\>{7}[^\>]+$\ze')
+  " Fullwidth spaces, merge conflicts and ...
+  autocmd BufRead * call matchadd('Visual', '　')
+  autocmd BufRead * call matchadd('Visual', '\v^\s*\zs\<{7}[^\<]+$\ze')
+  autocmd BufRead * call matchadd('Visual', '\v^\s*\zs\={7}$\ze')
+  autocmd BufRead * call matchadd('Visual', '\v^\s*\zs\>{7}[^\>]+$\ze')
 
-    " Automatically open the quickfix window
-    autocmd QuickFixCmdPost grep,Ggrep cwindow
-    autocmd QuickFixCmdPost lgrep,Glgrep lwindow
+  " Automatically open the quickfix window
+  autocmd QuickFixCmdPost grep,Ggrep cwindow
+  autocmd QuickFixCmdPost lgrep,Glgrep lwindow
 
-    autocmd BufReadCmd *.pdf,*.mp3,*.mp4,*.xls,*.xlsx,*.xlsm,*.doc,*.docx,*.docm,*.ppt,*.pptx,*.pptm
-          \ silent call <sid>open(expand('<afile>')) |
-          \ bdelete
+  autocmd BufReadCmd *.pdf,*.mp3,*.mp4,*.xls,*.xlsx,*.xlsm,*.doc,*.docx,*.docm,*.ppt,*.pptx,*.pptm
+        \ silent call <sid>open(expand('<afile>')) |
+        \ bdelete
 
-    " Automatically remove trailing spaces when saving
-    " NOTE: This feature has bad effects for undo function.
-    " autocmd BufWritePre * call s:preserve('%s/\s*$//')
-  augroup END
-endif
+  " Automatically remove trailing spaces when saving
+  " NOTE: This feature has bad effects for undo function.
+  " autocmd BufWritePre * call s:preserve('%s/\s*$//')
+augroup END
 
 " ===============================================================
 " MAPPINGS
@@ -1389,8 +1387,8 @@ let g:neovide_cursor_vfx_mode = "railgun"
 let g:neovide_cursor_animation_length = 0.03
 
 " nvim-qt settings
-augroup vimrc-nvim-qt
-  autocmd! *
+augroup vimrc_nvim_qt
+  autocmd!
   autocmd VimEnter * call s:configure_nvim_qt()
 augroup END
 
@@ -1464,7 +1462,7 @@ nnoremap <silent> gh :<c-u>LspHover<cr>
 nnoremap <silent> [d :<c-u>LspPreviousDiagnostic<cr>
 nnoremap <silent> ]d :<c-u>LspNextDiagnostic<cr>
 
-augroup vimrc-lsp
+augroup vimrc_lsp
   autocmd!
   autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
   autocmd BufWritePre * call s:lsp_format()
@@ -1647,8 +1645,8 @@ function! s:init_fern() abort
   nmap <buffer> <c-l> <Plug>(fern-action-nohlsearch-and-redraw)
 endfunction
 
-augroup vimrc-fern
-  autocmd! *
+augroup vimrc_fern
+  autocmd!
   autocmd FileType fern call s:init_fern()
 augroup END
 
