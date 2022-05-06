@@ -1457,11 +1457,28 @@ endfu
 " --------------------------------------------------------------
 nnoremap <silent> gd :<c-u>LspDefinition<cr>
 nnoremap <silent> gi :<c-u>LspImplementation<cr>
+nnoremap <silent> gr :<c-u>LspReferences<cr>
 nnoremap <silent> <leader>r :<c-u>LspRename<cr>
 nnoremap <silent> <leader>a :<c-u>LspCodeAction<cr>
 nnoremap <silent> gh :<c-u>LspHover<cr>
 nnoremap <silent> [d :<c-u>LspPreviousDiagnostic<cr>
 nnoremap <silent> ]d :<c-u>LspNextDiagnostic<cr>
+
+augroup vimrc-lsp
+  autocmd!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+  autocmd BufWritePre * call s:lsp_format()
+augroup END
+
+fu! s:on_lsp_buffer_enabled()
+  let b:lsp_auto_format_enabled = v:true
+endfu
+
+fu! s:lsp_format()
+  if get(b:, 'lsp_auto_format_enabled', v:false)
+    silent! LspDocumentFormatSync
+  endif
+endfu
 
 " --------------------------------------------------------------
 " Git
