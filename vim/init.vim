@@ -484,6 +484,9 @@ nnoremap - <c-x>
 " Select all.
 nnoremap <c-a> gg^vG$
 
+" Terminal often can't distinguish <tab> and <c-i>
+nnoremap <c-j> <c-i>
+
 " Make <C-u> behave like being on command line
 inoremap <C-u> <C-g>u<C-u>
 
