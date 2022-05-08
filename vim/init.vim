@@ -13,7 +13,6 @@ endif
 silent! if plug#begin('~/.vim/plugged')
 
 " My Plugins
-Plug 'iwataka/minidown.vim'
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown', 'on': ['OpenLinkHistory'] }
 Plug 'iwataka/gitignore.vim', { 'on': ['Gitignore', 'GitignoreUpdatea'] }
@@ -122,6 +121,7 @@ Plug 'tpope/vim-endwise'
 Plug 'junegunn/vader.vim', { 'on': 'Vader', 'for': 'vader' }
 Plug 'mattn/vim-goaddtags', { 'for': 'go' }
 Plug 'mattn/vim-goimpl', { 'for': 'go' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 " Text Object
 Plug 'kana/vim-textobj-user'
