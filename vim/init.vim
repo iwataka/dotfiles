@@ -202,6 +202,8 @@ set conceallevel=0                               " Disable conceal feature
 set allowrevins                                  " Allow to use CTRL-_
 set list lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_,lead:· " Show invisible characters
 set nojoinspaces                                 " No spaces when joining two lines
+set nrformats-=octal
+set nrformats+=unsigned
 if v:version > 704 || v:version == 704 && has('patch092')
   set spelllang=en,cjk
 else
