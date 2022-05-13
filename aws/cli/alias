@@ -32,6 +32,8 @@ clone =
     account_id=$(echo "$info" |jq -r .repositoryMetadata.accountId)
     repo_arn=$(echo "$info" |jq -r .repositoryMetadata.Arn)
     grc_url=$(echo ${repo_arn} |sed -r 's/.+:codecommit:(.+):'${account_id}':(.+)/codecommit::\1:\/\/\2/')
+
+    set -x
     $cmd "${grc_url}"
   }; f
 
@@ -46,7 +48,7 @@ pipeline-check =
       pipeline_name=$(aws codepipeline list-pipelines |jq -r '.pipelines[].name' |fzf --header="check pipeline status")
     fi
 
-    echo "${pipeline_name}"
+    set -x
     aws codepipeline get-pipeline-state --name "$pipeline_name" |
       jq -r '.stageStates[]' |
       jq -r '. |walk(if try todate catch false then todate else . end)' |
@@ -90,7 +92,7 @@ cfn-check =
       stack_name=$(aws cloudformation describe-stacks |jq -r '.Stacks[].StackName' |fzf --header="check CFn stack events")
     fi
 
-    echo "${stack_name}"
+    set -x
     aws cloudformation describe-stack-events --stack-name "$stack_name" |jq -r '.StackEvents[] |select(.ResourceStatus |endswith("FAILED"))'
   }; f
 
@@ -105,6 +107,7 @@ cfn-delete =
       stack_name=$(aws cloudformation describe-stacks |jq -r '.Stacks[].StackName' |fzf --header="DELETE CFn stack")
     fi
 
+    set -x
     aws cloudformation delete-stack --stack-name "$stack_name"
   }; f
 
@@ -167,14 +170,12 @@ cfn-update =
       parameters="$parameters ParameterKey=$p,UsePreviousValue=true"
     done
 
-    cmd="aws cloudformation update-stack \
+    set -x
+    aws cloudformation update-stack \
       --stack-name $stack_name \
       --template-body $template_body \
       --parameters $parameters \
-      --capabilities CAPABILITY_NAMED_IAM"
-
-    echo $cmd
-    $cmd
+      --capabilities CAPABILITY_NAMED_IAM
   }; f
 
 cfn-deploy =
@@ -235,16 +236,10 @@ cfn-deploy =
       args="--parameter-overrides $parameters $args"
     fi
 
-    cmd="${deploy_cmd} \
+    set -x
+    ${deploy_cmd} \
       --stack-name $stack_name \
       --template-file $template_file \
       --capabilities CAPABILITY_NAMED_IAM \
-      $args"
-    echo $cmd
-    $cmd
-  }; f
-
-vault-exec =
-  !f() {
-
+      $args
   }; f
