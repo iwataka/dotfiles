@@ -76,11 +76,15 @@ Plug 'cocopon/iceberg.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'sainnhe/everforest'
 Plug 'joshdick/onedark.vim'
+Plug 'EdenEast/nightfox.nvim'
 
 " Visual
-Plug 'itchyny/lightline.vim'
 if has('nvim')
+  Plug 'nvim-lualine/lualine.nvim'
+  Plug 'kyazdani42/nvim-web-devicons'
   Plug 'lukas-reineke/indent-blankline.nvim'
+else
+  Plug 'itchyny/lightline.vim'
 endif
 
 " Filetype syntax
@@ -1594,44 +1598,48 @@ fu! s:show_emoji_list()
 endfu
 
 " --------------------------------------------------------------
-" lightline
+" statusline
 " --------------------------------------------------------------
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'gitstatus', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead',
-      \   'gitstatus': 'LightlineSignify',
-      \   'filename': 'LightlineFilename',
-      \ },
-      \ }
+if has_key(g:plugs, 'lualine.nvim')
+  exe "lua require('plugins.lualine')"
+else
+  let g:lightline = {
+        \ 'colorscheme': 'jellybeans',
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ],
+        \             [ 'gitbranch', 'gitstatus', 'readonly', 'filename', 'modified' ] ]
+        \ },
+        \ 'component_function': {
+        \   'gitbranch': 'FugitiveHead',
+        \   'gitstatus': 'LightlineSignify',
+        \   'filename': 'LightlineFilename',
+        \ },
+        \ }
 
-function! LightlineSignify()
-  let [added, changed, deleted] = sy#repo#get_stats()
-  if added + changed + deleted >= 0
-    let sign_add = get(g:, 'signify_sign_add', '+')
-    let sign_change = get(g:, 'signify_sign_change', '!')
-    let sign_delete = get(g:, 'signify_sign_delete', '-')
-    return printf(
-          \ '%s%d %s%d %s%d',
-          \ sign_add,
-          \ added,
-          \ sign_change,
-          \ changed,
-          \ sign_delete,
-          \ deleted,
-          \ )
-  else
-    return ''
-  endif
-endfunction
+  function! LightlineSignify()
+    let [added, changed, deleted] = sy#repo#get_stats()
+    if added + changed + deleted >= 0
+      let sign_add = get(g:, 'signify_sign_add', '+')
+      let sign_change = get(g:, 'signify_sign_change', '!')
+      let sign_delete = get(g:, 'signify_sign_delete', '-')
+      return printf(
+            \ '%s%d %s%d %s%d',
+            \ sign_add,
+            \ added,
+            \ sign_change,
+            \ changed,
+            \ sign_delete,
+            \ deleted,
+            \ )
+    else
+      return ''
+    endif
+  endfunction
 
-fu! LightlineFilename()
-  return expand('%') != '' ? expand('%:.') : '[No Name]'
-endfu
+  fu! LightlineFilename()
+    return expand('%') != '' ? expand('%:.') : '[No Name]'
+  endfu
+endif
 
 set noshowmode
 
