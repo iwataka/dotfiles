@@ -36,10 +36,15 @@ endif
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/nerdfont.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'mhinz/vim-startify'
+if has('nvim')
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
+else
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
+endif
 
 " Editing
 Plug 'tpope/vim-repeat'
@@ -1409,32 +1414,15 @@ fu! s:configure_nvim_qt()
 endfu
 
 " --------------------------------------------------------------
-" fzf.vim
+" fuzzy finder
 " --------------------------------------------------------------
-com! -bang FilesWithRoot call <sid>fzf_files_with_root(<bang>0)
-nnoremap <silent> <leader>p :<c-u>FilesWithRoot<cr>
-nnoremap <silent> <leader>b :<c-u>Buffers<cr>
-nnoremap <silent> <leader>m :<c-u>History<cr>
-nnoremap <silent> <leader>: :<c-u>History:<cr>
-nnoremap <silent> <leader>/ :<c-u>History/<cr>
-nnoremap <silent> <leader>d :<c-u>Dirs<cr>
-nnoremap <silent> gt :<c-u>BTags<cr>
-nnoremap <silent> gT :<c-u>Tags<cr>
-nnoremap <silent> <leader>j :<c-u>Lines<cr>
-com! -bang Dirs call <sid>fzf_list_dirs(<bang>0)
-let g:fzf_dirs = [
+let g:fuzzy_finder_dirs = [
       \ '~/projects/*',
       \ '~/.vim/plugged/*',
       \ '~/.dotfiles',
       \ ]
-fu! s:fzf_files_with_root(bang)
-  if &buftype == ''
-    call fzf#vim#files(s:root(expand('%:p:h')), fzf#vim#with_preview(), a:bang)
-  else
-    call fzf#vim#files('', fzf#vim#with_preview(), a:bang)
-  endif
-endfu
-fu! s:fzf_list_dirs(fullscreen)
+
+fu! FuzzyFinderDirs()
   let dirs = []
   if executable('ghq')
     call extend(dirs, split(system('ghq list -p'), '\n'))
@@ -1442,23 +1430,62 @@ fu! s:fzf_list_dirs(fullscreen)
   if executable('zoxide')
     call extend(dirs, split(system('zoxide query -l'), '\n'))
   endif
-  for d in g:fzf_dirs
+  for d in g:fuzzy_finder_dirs
     call extend(dirs, split(expand(d), '\n'))
   endfor
-  call uniq(sort(dirs))
-  let options = ['--prompt', 'Dirs> ']
-  if executable('exa')
-    call extend(options, ['--preview', 'exa -al {}'])
-  elseif executable('ls')
-    call extend(options, ['--preview', 'ls -al --color {}'])
-  endif
-  call fzf#run(fzf#wrap({
-        \   'sink': 'Files',
-        \   'source': dirs,
-        \   'options': options,
-        \ },
-        \ a:fullscreen))
+  return uniq(sort(dirs))
 endfu
+
+fu! s:fuzzy_finder_root()
+  if &buftype == ''
+    return s:root(expand('%:p:h'))
+  else
+    return getcwd()
+  endif
+endfu
+
+if has_key(g:plugs, 'telescope.nvim')
+  lua require('plugins.telescope')
+  nnoremap <silent> <leader>p :<c-u>Telescope find_files cwd=<c-r>=<sid>fuzzy_finder_root()<cr><cr>
+  nnoremap <silent> <leader>b :<c-u>Telescope buffers<cr>
+  nnoremap <silent> <leader>m :<c-u>Telescope oldfiles<cr>
+  nnoremap <silent> <leader>: :<c-u>Telescope commands<cr>
+  nnoremap <silent> <leader>/ :<c-u>Telescope search_history<cr>
+  nnoremap <silent> <leader>d :<c-u>lua require('plugins.telescope').find_dirs()<cr>
+  nnoremap <silent> gt :<c-u>Telescope treesitter<cr>
+  nnoremap <silent> gT :<c-u>Telescope tags<cr>
+  nnoremap <silent> <leader>j :<c-u>Telescope current_buffer_fuzzy_find<cr>
+else
+  com! -bang FilesWithRoot call <sid>fzf_files_with_root(<bang>0)
+  nnoremap <silent> <leader>p :<c-u>FilesWithRoot<cr>
+  nnoremap <silent> <leader>b :<c-u>Buffers<cr>
+  nnoremap <silent> <leader>m :<c-u>History<cr>
+  nnoremap <silent> <leader>: :<c-u>History:<cr>
+  nnoremap <silent> <leader>/ :<c-u>History/<cr>
+  nnoremap <silent> <leader>d :<c-u>Dirs<cr>
+  nnoremap <silent> gt :<c-u>BTags<cr>
+  nnoremap <silent> gT :<c-u>Tags<cr>
+  nnoremap <silent> <leader>j :<c-u>Lines<cr>
+  com! -bang Dirs call <sid>fzf_list_dirs(<bang>0)
+  fu! s:fzf_files_with_root(bang)
+    call fzf#vim#files(s:fuzzy_finder_root(), fzf#vim#with_preview(), a:bang)
+  endfu
+  fu! s:fzf_list_dirs(fullscreen)
+    let dirs = FuzzyFinderDirs()
+    let options = ['--prompt', 'Dirs> ']
+    if executable('exa')
+      call extend(options, ['--preview', 'exa -al {}'])
+    elseif executable('ls')
+      call extend(options, ['--preview', 'ls -al --color {}'])
+    endif
+    call fzf#run(fzf#wrap({
+          \   'sink': 'Files',
+          \   'source': dirs,
+          \   'options': options,
+          \ },
+          \ a:fullscreen))
+  endfu
+endif
 
 " --------------------------------------------------------------
 " LSP
@@ -1601,7 +1628,7 @@ endfu
 " statusline
 " --------------------------------------------------------------
 if has_key(g:plugs, 'lualine.nvim')
-  exe "lua require('plugins.lualine')"
+  lua require('plugins.lualine')
 else
   let g:lightline = {
         \ 'colorscheme': 'jellybeans',
@@ -1615,6 +1642,10 @@ else
         \   'filename': 'LightlineFilename',
         \ },
         \ }
+
+  fu! LightlineFilename()
+    return expand('%') != '' ? expand('%:.') : '[No Name]'
+  endfu
 
   function! LightlineSignify()
     let [added, changed, deleted] = sy#repo#get_stats()
@@ -1635,10 +1666,6 @@ else
       return ''
     endif
   endfunction
-
-  fu! LightlineFilename()
-    return expand('%') != '' ? expand('%:.') : '[No Name]'
-  endfu
 endif
 
 set noshowmode
@@ -1708,7 +1735,7 @@ nmap <leader>w <Plug>(easymotion-overwin-w)
 " nvim-treesitter
 " --------------------------------------------------------------
 if has_key(g:plugs, 'nvim-treesitter')
-  exe "lua require('plugins.treesitter')"
+  lua require('plugins.treesitter')
 endif
 
 " --------------------------------------------------------------
