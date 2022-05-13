@@ -427,6 +427,10 @@ cnoremap jk <C-c>
 if has('terminal') || has('nvim')
   tnoremap <ESC> <C-\><C-n>
   tnoremap <c-[> <C-\><C-n>
+  " On neovim-qt, <s-space> prints ";2u" somehow.
+  " This is a workaround for this.
+  " refer to https://github.com/equalsraf/neovim-qt/issues/728 for details
+  tnoremap <s-space> <space>
 endif
 
 " " Edit vimrc
@@ -1705,7 +1709,6 @@ endif
 let g:startify_bookmarks = [
       \ {'v': expand('<sfile>')},
       \ ]
-let g:startify_change_to_dir = 1
 let g:startify_lists = [
       \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
       \ { 'type': 'files',     'header': ['   MRU']            },
