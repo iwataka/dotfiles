@@ -24,7 +24,7 @@ require('telescope').setup{
         flip_columns = 200,
       },
     },
-    winblend = 30,
+    winblend = 20,
     path_display = {
       shorten = {
         len = 1,
