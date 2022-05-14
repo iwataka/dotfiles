@@ -36,11 +36,11 @@ endif
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/nerdfont.vim'
-Plug 'easymotion/vim-easymotion'
 Plug 'mhinz/vim-startify'
 if has('nvim')
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
+  Plug 'kyazdani42/nvim-web-devicons'
 else
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
@@ -85,12 +85,9 @@ Plug 'EdenEast/nightfox.nvim'
 
 " Visual
 if has('nvim')
-  Plug 'nvim-lualine/lualine.nvim'
-  Plug 'kyazdani42/nvim-web-devicons'
   Plug 'lukas-reineke/indent-blankline.nvim'
-else
-  Plug 'itchyny/lightline.vim'
 endif
+Plug 'itchyny/lightline.vim'
 
 " Filetype syntax
 if has('nvim')
@@ -1455,6 +1452,7 @@ if has_key(g:plugs, 'telescope.nvim')
   nnoremap <silent> gt :<c-u>Telescope treesitter<cr>
   nnoremap <silent> gT :<c-u>Telescope tags<cr>
   nnoremap <silent> <leader>j :<c-u>Telescope current_buffer_fuzzy_find<cr>
+  nnoremap <silent> <leader>f :<c-u>Telescope live_grep cwd=<c-r>=<sid>fuzzy_finder_root()<cr><cr>
 else
   com! -bang FilesWithRoot call <sid>fzf_files_with_root(<bang>0)
   nnoremap <silent> <leader>p :<c-u>FilesWithRoot<cr>
@@ -1466,6 +1464,7 @@ else
   nnoremap <silent> gt :<c-u>BTags<cr>
   nnoremap <silent> gT :<c-u>Tags<cr>
   nnoremap <silent> <leader>j :<c-u>Lines<cr>
+  nnoremap <silent> <leader>f :<c-u>Rg <c-r>=<sid>fzf_grep_prompt()<cr> <c-r>=<sid>fuzzy_finder_root<cr><cr>
   com! -bang Dirs call <sid>fzf_list_dirs(<bang>0)
   fu! s:fzf_files_with_root(bang)
     call fzf#vim#files(s:fuzzy_finder_root(), fzf#vim#with_preview(), a:bang)
@@ -1484,6 +1483,12 @@ else
           \   'options': options,
           \ },
           \ a:fullscreen))
+  endfu
+  fu! s:fzf_grep_prompt()
+    call inputsave()
+    let keyword = input('Grep> ')
+    call inputrestore()
+    return keyword
   endfu
 endif
 
@@ -1627,46 +1632,42 @@ endfu
 " --------------------------------------------------------------
 " statusline
 " --------------------------------------------------------------
-if has_key(g:plugs, 'lualine.nvim')
-  lua require('plugins.lualine')
-else
-  let g:lightline = {
-        \ 'colorscheme': 'jellybeans',
-        \ 'active': {
-        \   'left': [ [ 'mode', 'paste' ],
-        \             [ 'gitbranch', 'gitstatus', 'readonly', 'filename', 'modified' ] ]
-        \ },
-        \ 'component_function': {
-        \   'gitbranch': 'FugitiveHead',
-        \   'gitstatus': 'LightlineSignify',
-        \   'filename': 'LightlineFilename',
-        \ },
-        \ }
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'gitstatus', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead',
+      \   'gitstatus': 'LightlineSignify',
+      \   'filename': 'LightlineFilename',
+      \ },
+      \ }
 
-  fu! LightlineFilename()
-    return expand('%') != '' ? expand('%:.') : '[No Name]'
-  endfu
+fu! LightlineFilename()
+  return expand('%') != '' ? expand('%:.') : '[No Name]'
+endfu
 
-  function! LightlineSignify()
-    let [added, changed, deleted] = sy#repo#get_stats()
-    if added + changed + deleted >= 0
-      let sign_add = get(g:, 'signify_sign_add', '+')
-      let sign_change = get(g:, 'signify_sign_change', '!')
-      let sign_delete = get(g:, 'signify_sign_delete', '-')
-      return printf(
-            \ '%s%d %s%d %s%d',
-            \ sign_add,
-            \ added,
-            \ sign_change,
-            \ changed,
-            \ sign_delete,
-            \ deleted,
-            \ )
-    else
-      return ''
-    endif
-  endfunction
-endif
+function! LightlineSignify()
+  let [added, changed, deleted] = sy#repo#get_stats()
+  if added + changed + deleted >= 0
+    let sign_add = get(g:, 'signify_sign_add', '+')
+    let sign_change = get(g:, 'signify_sign_change', '!')
+    let sign_delete = get(g:, 'signify_sign_delete', '-')
+    return printf(
+          \ '%s%d %s%d %s%d',
+          \ sign_add,
+          \ added,
+          \ sign_change,
+          \ changed,
+          \ sign_delete,
+          \ deleted,
+          \ )
+  else
+    return ''
+  endif
+endfunction
 
 set noshowmode
 
@@ -1714,22 +1715,6 @@ omap aa <Plug>SidewaysArgumentTextobjA
 xmap aa <Plug>SidewaysArgumentTextobjA
 omap ia <Plug>SidewaysArgumentTextobjI
 xmap ia <Plug>SidewaysArgumentTextobjI
-
-" --------------------------------------------------------------
-" vim-easymotion
-" --------------------------------------------------------------
-map <leader> <Plug>(easymotion-prefix)
-" <leader>f{char} to move to {char}
-map  <leader>f <Plug>(easymotion-bd-f)
-nmap <leader>f <Plug>(easymotion-overwin-f)
-
-" Move to line
-map <leader>l <Plug>(easymotion-bd-jk)
-nmap <leader>l <Plug>(easymotion-overwin-line)
-
-" Move to word
-map  <leader>w <Plug>(easymotion-bd-w)
-nmap <leader>w <Plug>(easymotion-overwin-w)
 
 " --------------------------------------------------------------
 " nvim-treesitter
