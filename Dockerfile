@@ -37,8 +37,11 @@ RUN sudo apt-get install -y \
         doxygen
 RUN git clone https://github.com/neovim/neovim ~/projects/neovim
 RUN cd ~/projects/neovim && make CMAKE_BUILD_TYPE=Release && sudo make install
-RUN nvim --headless +'PlugInstall --sync' +qa
-RUN nvim --headless +'TSInstallSync all' +qa
+RUN nvim --headless \
+        +'PlugInstall --sync' \
+        +'call mkdp#util#install()' \
+        +'TSInstallSync all' \
+        +qa
 
 RUN sudo apt-get install -y \
         zsh \
