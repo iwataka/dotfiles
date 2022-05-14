@@ -35,6 +35,11 @@ require('telescope').setup{
 
 local M = {}
 
+local live_grep_for_current_selection = function()
+  local selection = action_state.get_selected_entry()
+  require('telescope.builtin').live_grep({cwd=selection[1]})
+end
+
 -- our picker function: colors
 M.find_dirs = function(opts)
   opts = opts or {}
@@ -44,12 +49,14 @@ M.find_dirs = function(opts)
       results = vim.api.nvim_eval("FuzzyFinderDirs()")
     },
     sorter = conf.generic_sorter(opts),
-    -- TODO: add previewer
-    attach_mappings = function(_)
+    previewer = conf.file_previewer(opts),
+    attach_mappings = function(_, map)
       actions.select_default:replace(function()
         local selection = action_state.get_selected_entry()
         require('telescope.builtin').find_files({cwd=selection[1]})
       end)
+      map("i", "<c-f>", live_grep_for_current_selection)
+      map("n", "<c-f>", live_grep_for_current_selection)
       return true
     end,
   }):find()
