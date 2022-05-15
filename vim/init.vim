@@ -1439,7 +1439,13 @@ endfu
 
 fu! s:fuzzy_finder_root()
   if &buftype == ''
-    return s:root(expand('%:p:h'))
+    let file_dir = expand('%:p:h')
+    let root = s:root(file_dir)
+    if empty(root)
+      return file_dir
+    else
+      return root
+    endif
   else
     return getcwd()
   endif
@@ -1451,6 +1457,7 @@ if has_key(g:plugs, 'telescope.nvim')
   nnoremap <silent> <leader>b :<c-u>Telescope buffers<cr>
   nnoremap <silent> <leader>m :<c-u>Telescope oldfiles<cr>
   nnoremap <silent> <leader>: :<c-u>Telescope commands<cr>
+  nnoremap <silent> <leader>; :<c-u>Telescope commands<cr>
   nnoremap <silent> <leader>/ :<c-u>Telescope search_history<cr>
   nnoremap <silent> <leader>d :<c-u>lua require('plugins.telescope').find_dirs()<cr>
   nnoremap <silent> gt :<c-u>Telescope treesitter<cr>
@@ -1463,6 +1470,7 @@ else
   nnoremap <silent> <leader>b :<c-u>Buffers<cr>
   nnoremap <silent> <leader>m :<c-u>History<cr>
   nnoremap <silent> <leader>: :<c-u>History:<cr>
+  nnoremap <silent> <leader>; :<c-u>History:<cr>
   nnoremap <silent> <leader>/ :<c-u>History/<cr>
   nnoremap <silent> <leader>d :<c-u>Dirs<cr>
   nnoremap <silent> gt :<c-u>BTags<cr>
