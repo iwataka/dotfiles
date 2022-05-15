@@ -1722,13 +1722,13 @@ let g:startify_lists = [
       \ { 'type': 'files',     'header': ['   MRU']            },
       \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
       \ ]
+let g:startify_files_number = 5
 
 " --------------------------------------------------------------
 " termex.vim
 " --------------------------------------------------------------
 cabbrev t 20STerm
 com! -nargs=+ Howdoi FTerm howdoi <q-args>
-let g:termex_winblend = 20
 
 " ===============================================================
 " POST PROCESS
