@@ -25,7 +25,9 @@ Plug 'iwataka/termex.vim'
 
 " Git
 if executable('git')
-  if v:version >= 703
+  if has('nvim')
+    Plug 'lewis6991/gitsigns.nvim'
+  elseif v:version >= 703
     Plug 'mhinz/vim-signify'
   endif
   Plug 'tpope/vim-fugitive'
@@ -81,6 +83,7 @@ Plug 'cocopon/iceberg.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'sainnhe/everforest'
 Plug 'joshdick/onedark.vim'
+Plug 'folke/tokyonight.nvim'
 Plug 'EdenEast/nightfox.nvim'
 
 " Visual
@@ -1391,7 +1394,7 @@ if has("termguicolors")
   set termguicolors
 endif
 
-let g:colorex_default_colorscheme = 'nord'
+let g:colorex_default_colorscheme = 'tokyonight'
 
 " neovide settings
 let g:neovide_transparency = 0.9
@@ -1629,7 +1632,7 @@ endfu
 " statusline
 " --------------------------------------------------------------
 let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
+      \ 'colorscheme': 'tokyonight',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'gitstatus', 'readonly', 'filename', 'modified' ] ]
@@ -1645,27 +1648,42 @@ fu! LightlineFilename()
   return expand('%') != '' ? expand('%:.') : '[No Name]'
 endfu
 
-function! LightlineSignify()
-  let [added, changed, deleted] = sy#repo#get_stats()
-  if added + changed + deleted >= 0
-    let sign_add = get(g:, 'signify_sign_add', '+')
-    let sign_change = get(g:, 'signify_sign_change', '!')
-    let sign_delete = get(g:, 'signify_sign_delete', '-')
-    return printf(
-          \ '%s%d %s%d %s%d',
-          \ sign_add,
-          \ added,
-          \ sign_change,
-          \ changed,
-          \ sign_delete,
-          \ deleted,
-          \ )
+fu! LightlineSignify()
+  if has_key(g:plugs, 'gitsigns.nvim')
+    if has_key(b:, 'gitsigns_status')
+      return b:gitsigns_status
+    else
+      return ''
+    endif
   else
-    return ''
+    let [added, changed, deleted] = sy#repo#get_stats()
+    if added + changed + deleted >= 0
+      let sign_add = get(g:, 'signify_sign_add', '+')
+      let sign_change = get(g:, 'signify_sign_change', '!')
+      let sign_delete = get(g:, 'signify_sign_delete', '-')
+      return printf(
+            \ '%s%d %s%d %s%d',
+            \ sign_add,
+            \ added,
+            \ sign_change,
+            \ changed,
+            \ sign_delete,
+            \ deleted,
+            \ )
+    else
+      return ''
+    endif
   endif
-endfunction
+endfu
 
 set noshowmode
+
+" --------------------------------------------------------------
+" gitsigns.nvim
+" --------------------------------------------------------------
+if has_key(g:plugs, 'gitsigns.nvim')
+  lua require('plugins.gitsigns')
+endif
 
 " --------------------------------------------------------------
 " fern.vim
