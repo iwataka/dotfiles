@@ -1290,6 +1290,15 @@ fu! s:open_file_finder(dir)
   nnoremap <buffer> q :<c-u>quit<cr>
 endfu
 
+com! -nargs=1 -complete=customlist,AWSListProfiles AWSProfile let $AWS_PROFILE = <q-args>
+com! AWSProfileCacheDelete unlet g:vimrc_aws_profile_list
+fu! AWSListProfiles(A, L, P)
+  if !has_key(g:, 'vimrc_aws_profile_list')
+    let g:vimrc_aws_profile_list = split(system('aws configure list-profiles'))
+  endif
+  return filter(g:vimrc_aws_profile_list, 'v:val =~ "^".a:A')
+endfu
+
 " ===============================================================
 " ABBREVIATIONS
 " ===============================================================
@@ -1467,6 +1476,8 @@ if has_key(g:plugs, 'telescope.nvim')
   nnoremap <silent> gT :<c-u>Telescope tags<cr>
   nnoremap <silent> <leader>j :<c-u>Telescope current_buffer_fuzzy_find<cr>
   nnoremap <silent> <leader>f :<c-u>Telescope live_grep cwd=<c-r>=<sid>fuzzy_finder_root()<cr><cr>
+  nnoremap <leader>gl :<c-u>Telescope git_commits<cr>
+  nnoremap <leader>gb :<c-u>Telescope git_bcommits<cr>
 else
   com! -bang FilesWithRoot call <sid>fzf_files_with_root(<bang>0)
   nnoremap <silent> <leader>p :<c-u>FilesWithRoot<cr>
@@ -1480,6 +1491,8 @@ else
   nnoremap <silent> gT :<c-u>Tags<cr>
   nnoremap <silent> <leader>j :<c-u>Lines<cr>
   nnoremap <silent> <leader>f :<c-u>Rg <c-r>=<sid>fzf_grep_prompt()<cr> <c-r>=<sid>fuzzy_finder_root<cr><cr>
+  nnoremap <silent> <leader>gl :<c-u>Commits<cr>
+  nnoremap <silent> <leader>gb :<c-u>BCommits<cr>
   com! -bang Dirs call <sid>fzf_list_dirs(<bang>0)
   fu! s:fzf_files_with_root(bang)
     call fzf#vim#files(s:fuzzy_finder_root(), fzf#vim#with_preview(), a:bang)
@@ -1529,7 +1542,6 @@ nnoremap <leader>gc :<c-u>Gcommit<cr>
 nnoremap <leader>gr :<c-u>Gread<cr>
 nnoremap <leader>gR :<c-u>Gremove<cr>
 nnoremap <leader>gw :<c-u>Gwrite<cr>
-nnoremap <leader>gl :<c-u>Gclog<cr>
 nnoremap <leader>ga :<c-u>Gcommit --amend<cr>
 nnoremap <leader>gA :<c-u>Git add --all<cr>
 
