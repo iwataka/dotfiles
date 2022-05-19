@@ -43,9 +43,7 @@ RUN nvim --headless \
         +'TSInstallSync all' \
         +qa
 
-RUN sudo apt-get install -y \
-        zsh \
-        pandoc
+RUN sudo apt-get install -y zsh
 
 RUN git clone https://github.com/asdf-vm/asdf ~/.asdf
 

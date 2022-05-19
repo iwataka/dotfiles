@@ -14,6 +14,7 @@ declare -a tools=(
     "shellcheck"
     "shfmt"
     "delta"
+    "lazygit"
 )
 
 for tool in "${tools[@]}"; do

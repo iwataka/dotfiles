@@ -1296,7 +1296,7 @@ fu! AWSListProfiles(A, L, P)
   if !has_key(g:, 'vimrc_aws_profile_list')
     let g:vimrc_aws_profile_list = split(system('aws configure list-profiles'))
   endif
-  return filter(g:vimrc_aws_profile_list, 'v:val =~ "^".a:A')
+  return filter(g:vimrc_aws_profile_list[:], 'v:val =~ "^".a:A')
 endfu
 
 " ===============================================================
@@ -1544,6 +1544,7 @@ nnoremap <leader>gR :<c-u>Gremove<cr>
 nnoremap <leader>gw :<c-u>Gwrite<cr>
 nnoremap <leader>ga :<c-u>Gcommit --amend<cr>
 nnoremap <leader>gA :<c-u>Git add --all<cr>
+nnoremap <leader>gg :<c-u>Lazygit<cr>
 
 let g:signify_skip_filetype = { 'help': 1, 'gitcommit': 1 }
 
@@ -1610,11 +1611,6 @@ let g:fastfold_savehook = 0
 let g:fastfold_fold_command_suffixes = []
 let g:fastfold_fold_movement_commands = []
 let g:tex_fold_enabled = 1
-
-" --------------------------------------------------------------
-" minidown
-" --------------------------------------------------------------
-let g:minidown_pandoc_enable_toc = 0
 
 " --------------------------------------------------------------
 " markdown
@@ -1765,8 +1761,9 @@ let g:startify_files_number = 5
 " --------------------------------------------------------------
 " termex.vim
 " --------------------------------------------------------------
-cabbrev t 20STerm
-com! -nargs=+ Howdoi FTerm howdoi <q-args>
+nnoremap <silent> <leader>tt :<c-u>20STerm<cr>
+com! -nargs=* Lazygit FTui lazygit <args>
+let g:termex_winblend = 10
 
 " ===============================================================
 " POST PROCESS

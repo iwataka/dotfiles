@@ -17,23 +17,3 @@ xmodmap() {
         command xmodmap "$@"
     fi
 }
-
-mkup() {
-    if [ $# -eq 0 ]; then
-        for f in *.md; do
-            mkup "$f"
-        done
-        for f in *.mkd; do
-            mkup "$f"
-        done
-        for f in *.markdown; do
-            mkup "$f"
-        done
-    else
-        for f in "$@"; do
-            root_name=${f%.*}
-            pandoc -s -f markdown_github -o "$root_name".html "$f"
-            o "$root_name".html
-        done
-    fi
-}
