@@ -39,6 +39,7 @@ I mainly use the following tools for development.
 - [docker](https://www.docker.com/)
 - [delta](https://github.com/dandavison/delta)
 - [lazygit](https://github.com/jesseduffield/lazygit)
+- [fd](https://github.com/sharkdp/fd)
 
 On Windows
 

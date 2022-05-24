@@ -18,6 +18,7 @@ require('telescope').setup{
         ["<C-k>"] = actions.move_selection_previous,
       }
     },
+    winblend = 20,
     layout_strategy = "flex",
     layout_config = {
       flex = {
@@ -29,6 +30,11 @@ require('telescope').setup{
         len = 1,
         exclude = {1, 2, -2, -1},
       },
+    }
+  },
+  pickers = {
+    find_files = {
+      find_command = { "fd", "--type", "f", "-E", ".git/", "--hidden" }
     }
   },
 }

@@ -1479,12 +1479,11 @@ if has_key(g:plugs, 'telescope.nvim')
   nnoremap <leader>gl :<c-u>Telescope git_commits<cr>
   nnoremap <leader>gb :<c-u>Telescope git_bcommits<cr>
 else
-  com! -bang FilesWithRoot call <sid>fzf_files_with_root(<bang>0)
-  nnoremap <silent> <leader>p :<c-u>FilesWithRoot<cr>
+  nnoremap <silent> <leader>p :<c-u>FZF <c-r>=<sid>fuzzy_finder_root()<cr><cr>
   nnoremap <silent> <leader>b :<c-u>Buffers<cr>
   nnoremap <silent> <leader>m :<c-u>History<cr>
-  nnoremap <silent> <leader>: :<c-u>History:<cr>
-  nnoremap <silent> <leader>; :<c-u>History:<cr>
+  nnoremap <silent> <leader>: :<c-u>Commands<cr>
+  nnoremap <silent> <leader>; :<c-u>Commands<cr>
   nnoremap <silent> <leader>/ :<c-u>History/<cr>
   nnoremap <silent> <leader>d :<c-u>Dirs<cr>
   nnoremap <silent> gt :<c-u>BTags<cr>
@@ -1494,9 +1493,6 @@ else
   nnoremap <silent> <leader>gl :<c-u>Commits<cr>
   nnoremap <silent> <leader>gb :<c-u>BCommits<cr>
   com! -bang Dirs call <sid>fzf_list_dirs(<bang>0)
-  fu! s:fzf_files_with_root(bang)
-    call fzf#vim#files(s:fuzzy_finder_root(), fzf#vim#with_preview(), a:bang)
-  endfu
   fu! s:fzf_list_dirs(fullscreen)
     let dirs = FuzzyFinderDirs()
     let options = ['--prompt', 'Dirs> ']
@@ -1763,7 +1759,7 @@ let g:startify_files_number = 5
 " --------------------------------------------------------------
 nnoremap <silent> <leader>tt :<c-u>20STerm<cr>
 com! -nargs=* Lazygit FTui lazygit <args>
-let g:termex_winblend = 10
+let g:termex_winblend = 20
 
 " ===============================================================
 " POST PROCESS

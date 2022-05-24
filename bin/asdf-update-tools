@@ -15,12 +15,17 @@ declare -a tools=(
     "shfmt"
     "delta"
     "lazygit"
+    "fd"
 )
 
 for tool in "${tools[@]}"; do
-    asdf plugin-add "$tool" || true
+    if [ "$tool" == "zoxide" ]; then
+        # temporary fix
+        asdf plugin add "$tool" https://github.com/iwataka/asdf-zoxide || true
+    else
+        asdf plugin add "$tool" || true
+    fi
     asdf install "$tool" latest
     asdf global "$tool" latest
+    asdf reshim "$tool"
 done
-
-asdf reshim
