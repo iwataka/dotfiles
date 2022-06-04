@@ -40,6 +40,7 @@ I mainly use the following tools for development.
 - [delta](https://github.com/dandavison/delta)
 - [lazygit](https://github.com/jesseduffield/lazygit)
 - [fd](https://github.com/sharkdp/fd)
+- [starship](https://starship.rs/)
 
 On Windows
 
