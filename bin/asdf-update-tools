@@ -3,20 +3,21 @@
 set -e
 
 declare -a tools=(
-    "exa"
-    "ripgrep"
     "bat"
+    "delta"
+    "exa"
+    "fd"
     "fzf"
+    "ghq"
     "github-cli"
-    "zoxide"
     "jq"
-    "yq"
+    "lazygit"
+    "ripgrep"
     "shellcheck"
     "shfmt"
-    "delta"
-    "lazygit"
-    "fd"
     "starship"
+    "yq"
+    "zoxide"
 )
 
 for tool in "${tools[@]}"; do

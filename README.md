@@ -41,6 +41,7 @@ I mainly use the following tools for development.
 - [lazygit](https://github.com/jesseduffield/lazygit)
 - [fd](https://github.com/sharkdp/fd)
 - [starship](https://starship.rs/)
+- [ghq](https://github.com/x-motemen/ghq)
 
 On Windows
 
