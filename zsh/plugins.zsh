@@ -4,7 +4,7 @@ if [ -d ~/.asdf ]; then
 fi
 
 if [[ ! -d ~/.zplug ]]; then
-  git clone https://github.com/zplug/zplug.git ~/.zplug
+  git clone --depth=1 https://github.com/zplug/zplug.git ~/.zplug
 fi
 
 source ~/.zplug/init.zsh

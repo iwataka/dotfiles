@@ -42,6 +42,7 @@ class SymLink:
 
 
 HOME_DIR = os.path.expanduser("~")
+GIT_URL = "https://github.com/iwataka/dotfiles"
 
 
 def common_symlinks():
@@ -161,7 +162,7 @@ def setup_symlinks(root_dir):
 def install(args):
     root_dir = args.root_dir
     if not os.path.exists(root_dir):
-        os.system(f"git clone https://github.com/iwataka/dotfiles {root_dir}")
+        os.system(f"git clone --depth=1 {GIT_URL} {root_dir}")
     setup_symlinks(root_dir)
 
 

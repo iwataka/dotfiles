@@ -35,7 +35,7 @@ RUN sudo apt-get install -y \
         unzip \
         curl \
         doxygen
-RUN git clone https://github.com/neovim/neovim ~/projects/neovim
+RUN git clone --depth=1 https://github.com/neovim/neovim ~/projects/neovim
 RUN cd ~/projects/neovim && make CMAKE_BUILD_TYPE=Release && sudo make install
 RUN nvim --headless \
         +'PlugInstall --sync' \
@@ -45,7 +45,7 @@ RUN nvim --headless \
 
 RUN sudo apt-get install -y zsh
 
-RUN git clone https://github.com/asdf-vm/asdf ~/.asdf
+RUN git clone --depth=1 https://github.com/asdf-vm/asdf ~/.asdf
 
 SHELL ["zsh", "-c"]
 RUN . ~/.asdf/asdf.sh && ~/bin/asdf-update-tools
