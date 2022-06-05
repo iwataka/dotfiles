@@ -5,10 +5,14 @@ command -v xdg-open >/dev/null && alias open='xdg-open'
 command -v wsl-open >/dev/null && alias open='wsl-open'
 command -v cygstart >/dev/null && alias open='cygstart'
 
-command -v nvim >/dev/null && \
-    alias vim='nvim' && \
-    export VISUAL=nvim && \
-    export EDITOR=$VISUAL
+if command -v nvim >/dev/null; then
+    alias vim='nvim'
+    # NOTE: I use nvr until neovim's --remote-wait is implemented
+    if [ -n "$NVIM" ] && command -v nvr >/dev/null; then
+        export EDITOR="nvr --servername $NVIM +'set bufhidden=wipe' --remote-tab-wait"
+        export VISUAL="$EDITOR"
+    fi
+fi
 
 command -v exa >/dev/null && alias ls='exa'
 

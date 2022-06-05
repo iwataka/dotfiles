@@ -17,8 +17,8 @@ if test "$OSTYPE" = "cygwin"; then
 fi
 
 # use vim the visual editor
-export VISUAL=vim
-export EDITOR=$VISUAL
+export VISUAL="vim -u NONE"
+export EDITOR="$VISUAL"
 
 # shellcheck disable=SC2039,SC3028
 test "$OSTYPE" = "linux-musl" &&
