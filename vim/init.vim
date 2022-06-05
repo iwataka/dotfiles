@@ -289,7 +289,11 @@ endif
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 if has('persistent_undo')
-  set undodir=~/.vim/undo
+  if has('nvim')
+    set undodir=~/.vim/undo
+  else
+    set undodir=~/.vim/undo_vim
+  endif
   set undolevels=100
   set undofile
 endif
@@ -879,13 +883,6 @@ fu! s:todo(args)
   let keywords = [
         \ 'TODO',
         \ 'FIXME',
-        \ 'OPTIMIZE',
-        \ 'HACK',
-        \ 'REVIEW',
-        \ 'CHANGED',
-        \ 'XXX',
-        \ 'IDEA',
-        \ 'NOTE'
         \ ]
   let first = 1
   for kw in keywords
@@ -1380,8 +1377,10 @@ nnoremap <F5> :ColorexToggleBackground<cr>
 nnoremap <C-F5> :ColorexSwitchContrast<cr>
 nnoremap <C-S-F5> :ColorexSwitchContrast!<cr>
 
-if has('gui_running')
-  let g:colorex_cache_file_path = expand('~/.vim/.colorscheme.gui.vim')
+if has('nvim')
+  let g:colorex_cache_file_path = expand('~/.vim/.colorscheme.vim')
+else
+  let g:colorex_cache_file_path = expand('~/.vim/.colorscheme_vim.vim')
 endif
 
 if has('gui_macvim')
@@ -1402,8 +1401,6 @@ endfu
 if has("termguicolors")
   set termguicolors
 endif
-
-let g:colorex_default_colorscheme = 'tokyonight'
 
 " neovide settings
 let g:neovide_transparency = 0.9
@@ -1636,7 +1633,6 @@ endfu
 " statusline
 " --------------------------------------------------------------
 let g:lightline = {
-      \ 'colorscheme': 'nordfox',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'gitstatus', 'readonly', 'filename', 'modified' ] ]
@@ -1681,6 +1677,10 @@ fu! LightlineSignify()
 endfu
 
 function! s:set_lightline_colorscheme(name) abort
+  if empty(a:name)
+    echo get(g:lightline, 'colorscheme', 'default')
+    return
+  endif
   let g:lightline.colorscheme = a:name
   call lightline#init()
   call lightline#colorscheme()
@@ -1694,7 +1694,7 @@ function! s:lightline_colorschemes(...) abort
         \ "\n")
 endfunction
 
-command! -nargs=1 -complete=custom,s:lightline_colorschemes LightlineColorscheme
+command! -nargs=? -complete=custom,s:lightline_colorschemes LightlineColorscheme
       \ call s:set_lightline_colorscheme(<q-args>)
 
 set noshowmode
