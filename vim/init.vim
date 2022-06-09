@@ -71,10 +71,20 @@ if has('nvim')
 endif
 
 " LSP
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+if has('nvim')
+  Plug 'williamboman/nvim-lsp-installer'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'hrsh7th/nvim-cmp'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'hrsh7th/cmp-cmdline'
+else
+  Plug 'prabirshrestha/vim-lsp'
+  Plug 'mattn/vim-lsp-settings'
+  Plug 'prabirshrestha/asyncomplete.vim'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+endif
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
@@ -357,6 +367,7 @@ augroup vimrcEx
   " Close buffers of specified types by just typing q.
   autocmd FileType help,qf,godoc nnoremap <buffer> q :q<cr>
   autocmd FileType fugitive nnoremap <buffer> q :q<cr>
+  autocmd FileType lspinfo nnoremap <buffer> q :q<cr>
   autocmd BufEnter fugitive://* nnoremap <buffer> q :q<cr>
   autocmd BufWinEnter * if &buftype == 'terminal' | nnoremap <buffer> q :q<cr> | endif
   autocmd FileType fern nnoremap <buffer> q :q<cr>
@@ -1516,14 +1527,25 @@ endif
 " --------------------------------------------------------------
 " LSP
 " --------------------------------------------------------------
-nnoremap <silent> gd :<c-u>LspDefinition<cr>
-nnoremap <silent> gi :<c-u>LspImplementation<cr>
-nnoremap <silent> gr :<c-u>LspReferences<cr>
-nnoremap <silent> <leader>r :<c-u>LspRename<cr>
-nnoremap <silent> <leader>a :<c-u>LspCodeAction<cr>
-nnoremap <silent> gh :<c-u>LspHover<cr>
-nnoremap <silent> [d :<c-u>LspPreviousDiagnostic<cr>
-nnoremap <silent> ]d :<c-u>LspNextDiagnostic<cr>
+if has_key(g:plugs, 'nvim-lspconfig')
+  lua require('nvim-lsp-installer').setup {}
+  lua require('plugins.lspconfig')
+  lua require('plugins.cmp')
+  let g:copilot_no_tab_map = v:true
+  imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")
+else
+  nnoremap <silent> [d :<c-u>LspPreviousDiagnostic<cr>
+  nnoremap <silent> ]d :<c-u>LspNextDiagnostic<cr>
+  nnoremap <silent> gd :<c-u>LspDefinition<cr>
+  nnoremap <silent> gD :<c-u>LspDeclaration<cr>
+  nnoremap <silent> K :<c-u>LspHover<cr>
+  nnoremap <silent> gi :<c-u>LspImplementation<cr>
+  nnoremap <silent> <leader>r :<c-u>LspRename<cr>
+  nnoremap <silent> <leader>a :<c-u>LspCodeAction<cr>
+  nnoremap <silent> gr :<c-u>LspReferences<cr>
+  nnoremap <silent> <leader>D :<c-u>LspTypeDefinition<cr>
+  nnoremap <silent> <leader>F :<c-u>LspDocumentFormat<cr>
+endif
 
 " --------------------------------------------------------------
 " Git
