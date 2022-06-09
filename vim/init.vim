@@ -15,10 +15,10 @@ silent! if plug#begin('~/.vim/plugged')
 " My Plugins
 Plug 'iwataka/airnote.vim', { 'on': ['Note', 'NoteDelete'] }
 Plug 'iwataka/vim-markdown-ex', { 'for': 'markdown', 'on': ['OpenLinkHistory'] }
-Plug 'iwataka/gitignore.vim', { 'on': ['Gitignore', 'GitignoreUpdatea'] }
-Plug 'iwataka/hello-world.vim', { 'on': ['HelloWorld', 'HelloWorldUpdate'] }
+Plug 'iwataka/gitignore.vim'
+Plug 'iwataka/hello-world.vim'
 Plug 'iwataka/colorex.vim'
-Plug 'iwataka/awesome.vim', { 'on': ['Awesome', 'AwesomeUpdate'] }
+Plug 'iwataka/awesome.vim'
 Plug 'iwataka/github.vim', { 'on': ['GHOpen', 'GHReleases', 'GHSearch'] }
 Plug 'iwataka/vim-replace'
 Plug 'iwataka/termex.vim'
