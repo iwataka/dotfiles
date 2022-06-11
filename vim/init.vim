@@ -93,8 +93,10 @@ Plug 'cocopon/iceberg.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'sainnhe/everforest'
 Plug 'joshdick/onedark.vim'
-Plug 'folke/tokyonight.nvim'
-Plug 'EdenEast/nightfox.nvim'
+if has('nvim')
+  Plug 'folke/tokyonight.nvim'
+  Plug 'EdenEast/nightfox.nvim'
+endif
 
 " Visual
 if has('nvim')
@@ -105,6 +107,7 @@ Plug 'itchyny/lightline.vim'
 " Filetype syntax
 if has('nvim')
   Plug 'nvim-treesitter/nvim-treesitter'
+  Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 else
   Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
   Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
@@ -1298,13 +1301,51 @@ fu! s:open_file_finder(dir)
   nnoremap <buffer> q :<c-u>quit<cr>
 endfu
 
-com! -nargs=1 -complete=customlist,AWSListProfiles AWSProfile let $AWS_PROFILE = <q-args>
+com! -nargs=? -complete=customlist,AWSListProfiles AWSProfile call s:aws_profile(<f-args>)
 com! AWSProfileCacheDelete unlet g:vimrc_aws_profile_list
 fu! AWSListProfiles(A, L, P)
   if !has_key(g:, 'vimrc_aws_profile_list')
     let g:vimrc_aws_profile_list = split(system('aws configure list-profiles'))
   endif
   return filter(g:vimrc_aws_profile_list[:], 'v:val =~ "^".a:A')
+endfu
+fu! s:aws_profile(...)
+  if a:0 == 0
+    let profile = $AWS_PROFILE
+    if empty(profile)
+      echo "No AWS_PROFILE"
+    else
+      echo printf('AWS_PROFILE: %s', profile)
+    endif
+  else
+    let $AWS_PROFILE = a:1
+  endif
+endfu
+
+com! ShowMappings call s:show_mappings()
+fu! s:show_mappings()
+  let lines = sort(split(execute('map <leader>'), "\n"))
+  vnew
+  for l in lines
+    call append(line('$'), l)
+  endfor
+  setlocal buftype=nofile
+  setlocal bufhidden=wipe
+endfu
+
+com! GitOpen call s:git_open()
+fu! s:git_open()
+  let url = split(system('git remote get-url origin'), "\n")[0]
+  echom url
+  call s:open_github_from_uri(url)
+endfu
+
+" NOTE: This supports only GitHub and no plan to support others.
+fu! s:open_git_uri(uri)
+  let uriSegments = split(a:uri, '/')
+  let org = uriSegments[-2]
+  let repo = substitute(uriSegments[-1], '\.git$', '', 'g')
+  call s:open(printf('https://github.com/%s/%s', org, repo))
 endfu
 
 " ===============================================================
@@ -1360,7 +1401,7 @@ com! -nargs=+ -complete=customlist,s:plug_open_complete
 fu! s:plug_open(...)
   for plug in a:000
     let uri = g:plugs[plug]['uri']
-    call s:open(uri)
+    call s:open_github_from_uri(uri)
   endfor
 endfu
 fu! s:plug_open_complete(A, L, P)
@@ -1448,9 +1489,10 @@ fu! FuzzyFinderDirs()
   if executable('ghq')
     call extend(dirs, split(system('ghq list -p'), '\n'))
   endif
-  if executable('zoxide')
-    call extend(dirs, split(system('zoxide query -l'), '\n'))
-  endif
+  " disable it due to performance issue
+  " if executable('zoxide')
+  "   call extend(dirs, split(system('zoxide query -l'), '\n'))
+  " endif
   for d in g:fuzzy_finder_dirs
     call extend(dirs, split(expand(d), '\n'))
   endfor
@@ -1762,16 +1804,6 @@ if has('nvim')
 elseif has('terminal')
   let test#strategy = 'vimterminal'
 endif
-
-" --------------------------------------------------------------
-" sideways.vim
-" --------------------------------------------------------------
-nnoremap <silent> gH :SidewaysLeft<cr>
-nnoremap <silent> gL :SidewaysRight<cr>
-omap aa <Plug>SidewaysArgumentTextobjA
-xmap aa <Plug>SidewaysArgumentTextobjA
-omap ia <Plug>SidewaysArgumentTextobjI
-xmap ia <Plug>SidewaysArgumentTextobjI
 
 " --------------------------------------------------------------
 " nvim-treesitter

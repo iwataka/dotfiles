@@ -3,7 +3,6 @@ local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local conf = require("telescope.config").values
 local action_state = require "telescope.actions.state"
-local previewers = require "telescope.previewers"
 
 require('telescope').setup{
   defaults = {
@@ -49,7 +48,7 @@ end
 -- our picker function: colors
 M.find_dirs = function(opts)
   opts = opts or {}
-  local picker = pickers.new(opts, {
+  pickers.new(opts, {
     prompt_title = "Directory",
     finder = finders.new_table {
       results = vim.api.nvim_eval("FuzzyFinderDirs()")
