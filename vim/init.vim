@@ -1784,6 +1784,7 @@ function! s:init_fern() abort
   nmap <buffer> <Plug>(fern-action-nohlsearch-and-redraw)
         \ <Plug>(fern-action-nohlsearch)<Plug>(fern-action-redraw)
   nmap <buffer> <c-l> <Plug>(fern-action-nohlsearch-and-redraw)
+  nmap <buffer> p <Plug>(fern-action-focus:parent)
 endfunction
 
 augroup vimrc_fern
