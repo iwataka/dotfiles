@@ -79,6 +79,9 @@ if has('nvim')
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/cmp-path'
   Plug 'hrsh7th/cmp-cmdline'
+  Plug 'ray-x/lsp_signature.nvim'
+  Plug 'L3MON4D3/LuaSnip'
+  Plug 'saadparwaiz1/cmp_luasnip'
 else
   Plug 'prabirshrestha/vim-lsp'
   Plug 'mattn/vim-lsp-settings'
@@ -108,6 +111,7 @@ Plug 'itchyny/lightline.vim'
 if has('nvim')
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+  Plug 'lewis6991/spellsitter.nvim'
 else
   Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
   Plug 'pangloss/vim-javascript', { 'for': 'javascript' }

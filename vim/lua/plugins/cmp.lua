@@ -1,6 +1,12 @@
 -- nvim-cmp setup
 local cmp = require 'cmp'
+
 cmp.setup {
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
   mapping = cmp.mapping.preset.insert({
     -- TODO: these two mappings don't work properly somehow
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),

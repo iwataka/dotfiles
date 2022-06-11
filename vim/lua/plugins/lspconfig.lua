@@ -55,3 +55,5 @@ for _, lsp in pairs(servers) do
     capabilities = capabilities,
   }
 end
+
+require("lsp_signature").setup({})
