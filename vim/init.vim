@@ -37,6 +37,7 @@ endif
 " Navigation
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/fern-hijack.vim'
 Plug 'lambdalisue/nerdfont.vim'
 Plug 'mhinz/vim-startify'
 if has('nvim')
@@ -63,7 +64,6 @@ Plug 'chrisbra/unicode.vim'
 " performance. Really nice!
 Plug 'Konfekt/FastFold'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'AndrewRadev/sideways.vim'
 Plug 'vim-test/vim-test'
 Plug 'editorconfig/editorconfig-vim'
 if has('nvim')
