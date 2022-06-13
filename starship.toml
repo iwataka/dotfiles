@@ -1,0 +1,28 @@
+format = """
+$username\
+$hostname\
+$localip\
+$kubernetes\
+$directory\
+$vcsh\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$docker_context\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$cmd_duration\
+$line_break\
+$jobs\
+$shell\
+$character"""
+
+[shell]
+fish_indicator = ""
+powershell_indicator = "_"
+disabled = false

@@ -95,6 +95,10 @@ def specific_symlinks(_os: OS):
             "alacritty",
             os.path.join(HOME_DIR, ".config", "alacritty"),
         )
+        yield SymLink(
+            "starship.toml",
+            os.path.join(HOME_DIR, ".config", "starship.toml"),
+        )
 
     if _os == OS.WINDOWS:
         appdata = os.environ["APPDATA"]
@@ -112,6 +116,7 @@ def specific_symlinks(_os: OS):
             "vim",
             os.path.join(localappdata, "nvim"),
         )
+        # TODO: Starship config
 
 
 def remove_or_backup(path):
