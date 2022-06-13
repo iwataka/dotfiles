@@ -17,7 +17,7 @@ RUN sudo apt-get install -y \
         man \
         manpages-dev \
         less \
-        vim
+        fish
 RUN sudo sh -c 'echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen' && \
         sudo locale-gen en_US.UTF-8
 RUN curl https://raw.githubusercontent.com/iwataka/dotfiles/master/bin/dotfiles |python - install
@@ -42,10 +42,8 @@ RUN nvim --headless \
         +'call mkdp#util#install()' \
         +qa
 
-RUN sudo apt-get install -y zsh
-
 RUN git clone --depth=1 https://github.com/asdf-vm/asdf ~/.asdf
-RUN zsh -c '. ~/.asdf/asdf.sh && ~/bin/asdf-update-tools'
+RUN bash -c 'source ~/.asdf/asdf.sh && ~/bin/asdf-update-tools'
 
 # install Docker
 RUN sudo apt-get install -y \
@@ -63,5 +61,5 @@ RUN sudo apt-get install -y \
         docker-ce-cli \
         containerd.io
 
-ENV SHELL=/usr/bin/zsh
-CMD /usr/bin/zsh
+ENV SHELL=/usr/bin/fish
+CMD /usr/bin/fish

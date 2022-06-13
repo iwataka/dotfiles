@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is my personal dotfiles with Vim and Zsh.
+This is my personal dotfiles with Neovim and fish shell.
 
 ## Quickstart
 
@@ -29,7 +29,7 @@ To update to the latest version, please run `dotfiles update`.
 I mainly use the following tools for development.
 
 - [neovim](https://github.com/neovim/neovim)
-- [zsh](https://www.zsh.org/)
+- [fish](https://fishshell.com/)
 - [zoxide](https://github.com/ajeetdsouza/zoxide)
 - [exa](https://github.com/ogham/exa)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)

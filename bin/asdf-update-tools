@@ -30,4 +30,7 @@ for tool in "${tools[@]}"; do
     asdf install "$tool" latest
     asdf global "$tool" latest
     asdf reshim "$tool"
+    if [ "$tool" == "fzf" ]; then
+        ~/.asdf/installs/fzf/"$(asdf latest fzf)"/install --key-bindings --completion --no-update-rc
+    fi
 done

@@ -23,6 +23,4 @@ $shell\
 $character"""
 
 [shell]
-fish_indicator = ""
-powershell_indicator = "_"
 disabled = false
