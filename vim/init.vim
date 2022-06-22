@@ -66,9 +66,6 @@ Plug 'Konfekt/FastFold'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-test/vim-test'
 Plug 'editorconfig/editorconfig-vim'
-if has('nvim')
-  Plug 'github/copilot.vim'
-endif
 
 " LSP
 if has('nvim')
@@ -1577,8 +1574,6 @@ if has_key(g:plugs, 'nvim-lspconfig')
   lua require('nvim-lsp-installer').setup {}
   lua require('plugins.lspconfig')
   lua require('plugins.cmp')
-  let g:copilot_no_tab_map = v:true
-  imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")
 else
   nnoremap <silent> [d :<c-u>LspPreviousDiagnostic<cr>
   nnoremap <silent> ]d :<c-u>LspNextDiagnostic<cr>

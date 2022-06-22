@@ -28,17 +28,9 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
-    -- for copilot
-    ['<C-f>'] = cmp.mapping(function(fallback)
-      vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
-    end),
   }),
   sources = {
     { name = 'nvim_lsp' },
-  },
-  -- for copilot
-  experimental = {
-    ghost_text = false -- this feature conflict with copilot.vim's preview.
   },
 }
 
