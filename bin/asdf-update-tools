@@ -24,6 +24,7 @@ for tool in "${tools[@]}"; do
     if [ "$tool" == "zoxide" ]; then
         # temporary fix
         asdf plugin add "$tool" https://github.com/iwataka/asdf-zoxide || true
+        asdf plugin update "$tool" feature/support-v0.8.2
     else
         asdf plugin add "$tool" || true
     fi
