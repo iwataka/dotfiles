@@ -40,6 +40,7 @@ Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-hijack.vim'
 Plug 'lambdalisue/nerdfont.vim'
 Plug 'mhinz/vim-startify'
+Plug 'airblade/vim-rooter'
 if has('nvim')
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
@@ -648,40 +649,6 @@ fu! s:is_under(dpath, fpath)
   else
     return a:fpath =~# '^'.a:dpath.'.*'
   endif
-endfu
-
-" Changes the current directory to the project root
-cabbrev r Root
-com! Root call s:move_to_root('cd', expand('%:p:h'))
-com! LRoot call s:move_to_root('lcd', expand('%:p:h'))
-fu! s:move_to_root(cmd, path)
-  let root = s:root(a:path)
-  if empty(root)
-    silent exe a:cmd.' '.a:path
-    echom 'Not in a project'
-  else
-    silent exe a:cmd.' '.root
-    echom 'Changes the current directory to: '.root
-  endif
-endfu
-let s:root_marker_files = []
-let s:root_marker_dirs = ['.git', '.hg', '.svn', '.bzr', '_darcs']
-fu! s:root(cwd)
-  let f_roots = s:root_marker_files[:]
-  let d_roots = s:root_marker_dirs[:]
-  let f_roots = map(f_roots, "findfile(v:val, a:cwd.';')")
-  let d_roots = map(d_roots, "finddir(v:val, a:cwd.';')")
-  let f_roots = filter(f_roots, '!empty(v:val)')
-  let d_roots = filter(d_roots, '!empty(v:val)')
-  let f_roots = map(f_roots, "fnamemodify(v:val, ':p:h')")
-  let d_roots = map(d_roots, "fnamemodify(v:val, ':p:h:h')")
-  let [root, max_len] = ['', 0]
-  for r in f_roots + d_roots
-    if len(r) > max_len
-      let [root, max_len] = [r, len(r)]
-    endif
-  endfor
-  return root
 endfu
 
 fu! s:warn(msg)
@@ -1502,10 +1469,10 @@ endfu
 
 fu! s:fuzzy_finder_root()
   if &buftype == ''
-    let file_dir = expand('%:p:h')
-    let root = s:root(file_dir)
+    " Use FindRootDirectory function from vim-rooter
+    let root = FindRootDirectory()
     if empty(root)
-      return file_dir
+      return expand('%:p:h')
     else
       return root
     endif
@@ -1824,6 +1791,7 @@ let g:startify_lists = [
       \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
       \ ]
 let g:startify_files_number = 5
+let g:startify_change_to_dir = 0
 
 " --------------------------------------------------------------
 " termex.vim
