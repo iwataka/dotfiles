@@ -19,7 +19,7 @@ This image includes dotfiles already installed and recommended tools described b
 Make sure Git and Python installed and run the following.
 
 ```bash
-curl https://raw.githubusercontent.com/iwataka/dotfiles/master/bin/dotfiles |python - install
+curl https://raw.githubusercontent.com/iwataka/dotfiles/master/bin/dotfiles |python3 - install
 ```
 
 To update to the latest version, please run `dotfiles update`.

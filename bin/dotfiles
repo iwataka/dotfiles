@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import os
@@ -98,6 +98,12 @@ def specific_symlinks(_os: OS):
         yield SymLink(
             "starship.toml",
             os.path.join(HOME_DIR, ".config", "starship.toml"),
+        )
+
+    if _os == OS.DARWIN:
+        yield SymLink(
+            "bashrc",
+            os.path.join(HOME_DIR, ".bash_profile"),
         )
 
     if _os == OS.WINDOWS:
