@@ -28,7 +28,9 @@ local on_attach = function(client, bufnr)
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, bufopts)
   vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<leader>F', vim.lsp.buf.formatting, bufopts)
+  vim.keymap.set('n', '<leader>F', function()
+    vim.lsp.buf.format({ async = true })
+  end, bufopts)
 end
 
 -- Add additional capabilities supported by nvim-cmp
@@ -44,6 +46,7 @@ local servers = {
   'jdtls',
   'gopls',
   'sumneko_lua',
+  'tsserver',
 }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
