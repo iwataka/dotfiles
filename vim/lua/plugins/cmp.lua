@@ -7,6 +7,7 @@ cmp.setup {
       require('luasnip').lsp_expand(args.body)
     end,
   },
+  preselect = cmp.PreselectMode.None,
   mapping = cmp.mapping.preset.insert({
     -- TODO: these two mappings don't work properly somehow
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -40,26 +41,5 @@ cmp.setup.filetype('gitcommit', {
     -- { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
   }, {
     { name = 'buffer' },
-  })
-})
-
-local search_config = {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' },
-  }
-}
-
--- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline('/', search_config)
-cmp.setup.cmdline('?', search_config)
-
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
   })
 })
