@@ -70,7 +70,8 @@ Plug 'editorconfig/editorconfig-vim'
 
 " LSP
 if has('nvim')
-  Plug 'williamboman/nvim-lsp-installer'
+  Plug 'williamboman/mason.nvim'
+  Plug 'williamboman/mason-lspconfig.nvim'
   Plug 'neovim/nvim-lspconfig'
   Plug 'hrsh7th/nvim-cmp'
   Plug 'hrsh7th/cmp-nvim-lsp'
@@ -1536,7 +1537,8 @@ endif
 " LSP
 " --------------------------------------------------------------
 if has_key(g:plugs, 'nvim-lspconfig')
-  lua require('nvim-lsp-installer').setup {}
+  lua require('mason').setup()
+  lua require("mason-lspconfig").setup({automatic_installation = true})
   lua require('plugins.lspconfig')
   lua require('plugins.cmp')
 else
