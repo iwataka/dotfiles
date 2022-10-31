@@ -14,6 +14,10 @@ docker run -it --rm iwataka/dotfiles
 
 This image includes dotfiles already installed and recommended tools described below.
 
+```bash
+docker run -it --name dev -v ~/projects:/root/projects -v ~/ghq:/root/ghq iwataka/dotfiles
+```
+
 ## Install
 
 Make sure Git and Python installed and run the following.
