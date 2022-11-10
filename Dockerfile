@@ -61,6 +61,10 @@ RUN apt-get install -y \
         docker-ce-cli \
         containerd.io
 
+# install Rust and tools
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+RUN ~/.cargo/bin/cargo install tealdeer
+
 WORKDIR /root
 ENV SHELL=/usr/bin/fish
 CMD /usr/bin/fish

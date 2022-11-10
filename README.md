@@ -46,6 +46,7 @@ I mainly use the following tools for development.
 - [fd](https://github.com/sharkdp/fd)
 - [starship](https://starship.rs/)
 - [ghq](https://github.com/x-motemen/ghq)
+- [tealdeer](https://github.com/dbrgn/tealdeer)
 
 On Windows
 

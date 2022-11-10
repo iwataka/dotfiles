@@ -1,5 +1,5 @@
 # I don't check the existence of files (e.g. executables) because I want to see
-# the errors explicitly and then install them.
+# the errors explicitly and then install them when needed.
 
 abbr v nvim
 abbr ls exa
@@ -21,6 +21,7 @@ end
 
 test -d ~/.local/bin; and fish_add_path -P ~/.local/bin
 test -d ~/bin; and fish_add_path -P ~/bin
+test -d ~/.cargo/bin; and fish_add_path -P ~/.cargo/bin
 
 # Make MacOS GNU-compatible
 if test (uname -s) = "Darwin"
