@@ -1800,6 +1800,20 @@ nnoremap <silent> <leader>tt :<c-u>20STerm<cr>
 com! -nargs=* Lazygit FTui lazygit <args>
 let g:termex_winblend = 20
 
+" --------------------------------------------------------------
+" vim-rooter
+" --------------------------------------------------------------
+fu! s:rooter_init()
+  call extend(g:rooter_patterns, [
+        \ "go.mod",
+        \ ])
+endfu
+
+augroup vimrc_rooter
+  autocmd!
+  autocmd VimEnter * call s:rooter_init()
+augroup END
+
 " ===============================================================
 " POST PROCESS
 " ===============================================================
