@@ -751,9 +751,16 @@ fu! s:open(...)
   elseif has('unix')
     " This line does not work at all and I don't know the reason.
     " silent exec '!xdg-open '.args
-    call system('xdg-open '.args)
+    if s:is_wsl()
+      call system('wsl-open '.args)
+    else
+      call system('xdg-open '.args)
+    endif
   endif
   redraw!
+endfu
+fu! s:is_wsl()
+    return system('uname -a') =~ '\v.+microsoft-standard-WSL.+'
 endfu
 fu! s:open_win(args)
   silent! exe '!start '.a:args
@@ -1304,7 +1311,7 @@ com! GitOpen call s:git_open()
 fu! s:git_open()
   let url = split(system('git remote get-url origin'), "\n")[0]
   echom url
-  call s:open_github_from_uri(url)
+  call s:open_git_uri(url)
 endfu
 
 " NOTE: This supports only GitHub and no plan to support others.
@@ -1368,7 +1375,7 @@ com! -nargs=+ -complete=customlist,s:plug_open_complete
 fu! s:plug_open(...)
   for plug in a:000
     let uri = g:plugs[plug]['uri']
-    call s:open_github_from_uri(uri)
+    call s:open_git_uri(uri)
   endfor
 endfu
 fu! s:plug_open_complete(A, L, P)
