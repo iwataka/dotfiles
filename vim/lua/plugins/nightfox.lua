@@ -1,3 +1,3 @@
-require('nightfox').init({
+require('nightfox').setup({
   dim_inactive = true,
 })
