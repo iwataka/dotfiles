@@ -36,6 +36,7 @@ end
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+local lspconfig = require('lspconfig')
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = {
@@ -46,9 +47,10 @@ local servers = {
   'gopls',
   'sumneko_lua',
   'tsserver',
+  'denols',
 }
 for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup {
+  local lspconfig_options = {
     on_attach = on_attach,
     flags = {
       -- This will be the default in neovim 0.7+
@@ -56,6 +58,13 @@ for _, lsp in pairs(servers) do
     },
     capabilities = capabilities,
   }
+  if lsp == 'tsserver' then
+    lspconfig_options['root_dir'] = lspconfig.util.root_pattern('package.json')
+  end
+  if lsp == 'denols' then
+    lspconfig_options['root_dir'] = lspconfig.util.root_pattern('deno.json')
+  end
+  lspconfig[lsp].setup(lspconfig_options)
 end
 
-require("lsp_signature").setup({})
+require('lsp_signature').setup({})
