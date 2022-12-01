@@ -1468,7 +1468,11 @@ fu! FuzzyFinderDirs()
   "   call extend(dirs, split(system('zoxide query -l'), '\n'))
   " endif
   for d in g:fuzzy_finder_dirs
-    call extend(dirs, split(expand(d), '\n'))
+    for p in split(expand(d), '\n')
+      if isdirectory(p)
+        call add(dirs, p)
+      endif
+    endfor
   endfor
   return uniq(sort(dirs))
 endfu
