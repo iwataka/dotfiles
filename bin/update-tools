@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+set -e
+
+declare -a asdf_tools=(
+    "fzf"
+    "ghq"
+    "github-cli"
+    "jq"
+    "lazygit"
+    "shellcheck"
+    "shfmt"
+    "yq"
+    "zoxide"
+)
+
+declare -a cargo_tools=(
+    "bat"
+    "git-delta"
+    "exa"
+    "fd-find"
+    "ripgrep"
+    "starship"
+    "tealdeer"
+)
+
+install_asdf_tool() {
+    tool="$1"
+    asdf plugin add "$tool" || true
+    asdf install "$tool" latest
+    asdf global "$tool" latest
+    asdf reshim "$tool"
+    if [ "$tool" == "fzf" ]; then
+        ~/.asdf/installs/fzf/"$(asdf latest fzf)"/install --key-bindings --completion --no-update-rc
+    fi
+}
+
+install_asdf_tools() {
+    for tool in "${asdf_tools[@]}"; do
+        install_asdf_tool "$tool"
+    done
+
+    for tool in "$@"; do
+        install_asdf_tool "$tool"
+    done
+}
+
+install_cargo_tools() {
+    for tool in "${cargo_tools[@]}"; do
+        cargo install --locked "$tool"
+    done
+
+    for tool in "$@"; do
+        cargo install --locked "$tool"
+    done
+
+    cargo install --locked cargo-update
+    cargo install-update --all
+}
+
+help() {
+    exe="$(basename "$0")"
+    echo "Usage: $exe (asdf|cargo) [tool ...]"
+}
+
+if [ $# -eq 0 ]; then
+    help
+    exit 1
+fi
+
+command=$1
+shift
+
+case "$command" in
+asdf | cargo) install_"${command}"_tools "$@" ;;
+*)
+    help
+    exit 1
+    ;;
+esac

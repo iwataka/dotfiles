@@ -34,7 +34,7 @@ RUN nvim --headless \
 
 # instal asdf and tools
 RUN git clone --depth=1 https://github.com/asdf-vm/asdf ~/.asdf
-RUN bash -c 'source ~/.asdf/asdf.sh && ~/bin/asdf-update-tools golang nodejs'
+RUN bash -c 'source ~/.asdf/asdf.sh && ~/bin/update-tools asdf golang nodejs'
 
 # install fish
 RUN echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_11/ /' |\
@@ -63,7 +63,7 @@ RUN apt-get install -y \
 
 # install Rust and tools
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-RUN ~/.cargo/bin/cargo install tealdeer
+RUN bash -c 'PATH=$PATH:/root/.cargo/bin ~/bin/update-tools cargo'
 
 WORKDIR /root
 ENV SHELL=/usr/bin/fish
