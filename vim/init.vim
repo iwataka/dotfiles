@@ -101,8 +101,10 @@ endif
 " Visual
 if has('nvim')
   Plug 'lukas-reineke/indent-blankline.nvim'
+  Plug 'nvim-lualine/lualine.nvim'
+else
+  Plug 'itchyny/lightline.vim'
 endif
-Plug 'itchyny/lightline.vim'
 
 " Filetype syntax
 if has('nvim')
@@ -1673,70 +1675,74 @@ endfu
 " --------------------------------------------------------------
 " statusline
 " --------------------------------------------------------------
-let g:lightline = {
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'gitstatus', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead',
-      \   'gitstatus': 'LightlineSignify',
-      \   'filename': 'LightlineFilename',
-      \ },
-      \ }
+if has_key(g:plugs, 'lualine.nvim')
+  lua require('lualine').setup()
+else
+  let g:lightline = {
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ],
+        \             [ 'gitbranch', 'gitstatus', 'readonly', 'filename', 'modified' ] ]
+        \ },
+        \ 'component_function': {
+        \   'gitbranch': 'FugitiveHead',
+        \   'gitstatus': 'LightlineSignify',
+        \   'filename': 'LightlineFilename',
+        \ },
+        \ }
 
-fu! LightlineFilename()
-  return expand('%') != '' ? expand('%:.') : '[No Name]'
-endfu
+  fu! LightlineFilename()
+    return expand('%') != '' ? expand('%:.') : '[No Name]'
+  endfu
 
-fu! LightlineSignify()
-  if has_key(g:plugs, 'gitsigns.nvim')
-    if has_key(b:, 'gitsigns_status')
-      return b:gitsigns_status
+  fu! LightlineSignify()
+    if has_key(g:plugs, 'gitsigns.nvim')
+      if has_key(b:, 'gitsigns_status')
+        return b:gitsigns_status
+      else
+        return ''
+      endif
     else
-      return ''
+      let [added, changed, deleted] = sy#repo#get_stats()
+      if added + changed + deleted >= 0
+        let sign_add = get(g:, 'signify_sign_add', '+')
+        let sign_change = get(g:, 'signify_sign_change', '!')
+        let sign_delete = get(g:, 'signify_sign_delete', '-')
+        return printf(
+              \ '%s%d %s%d %s%d',
+              \ sign_add,
+              \ added,
+              \ sign_change,
+              \ changed,
+              \ sign_delete,
+              \ deleted,
+              \ )
+      else
+        return ''
+      endif
     endif
-  else
-    let [added, changed, deleted] = sy#repo#get_stats()
-    if added + changed + deleted >= 0
-      let sign_add = get(g:, 'signify_sign_add', '+')
-      let sign_change = get(g:, 'signify_sign_change', '!')
-      let sign_delete = get(g:, 'signify_sign_delete', '-')
-      return printf(
-            \ '%s%d %s%d %s%d',
-            \ sign_add,
-            \ added,
-            \ sign_change,
-            \ changed,
-            \ sign_delete,
-            \ deleted,
-            \ )
-    else
-      return ''
+  endfu
+
+  function! s:set_lightline_colorscheme(name) abort
+    if empty(a:name)
+      echo get(g:lightline, 'colorscheme', 'default')
+      return
     endif
-  endif
-endfu
+    let g:lightline.colorscheme = a:name
+    call lightline#init()
+    call lightline#colorscheme()
+    call lightline#update()
+  endfunction
 
-function! s:set_lightline_colorscheme(name) abort
-  if empty(a:name)
-    echo get(g:lightline, 'colorscheme', 'default')
-    return
-  endif
-  let g:lightline.colorscheme = a:name
-  call lightline#init()
-  call lightline#colorscheme()
-  call lightline#update()
-endfunction
+  function! s:lightline_colorschemes(...) abort
+    return join(map(
+          \ globpath(&rtp, 'autoload/lightline/colorscheme/*.vim', 1, 1),
+          \ "fnamemodify(v:val,':t:r')"),
+          \ "\n")
+  endfunction
 
-function! s:lightline_colorschemes(...) abort
-  return join(map(
-        \ globpath(&rtp, 'autoload/lightline/colorscheme/*.vim', 1, 1),
-        \ "fnamemodify(v:val,':t:r')"),
-        \ "\n")
-endfunction
-
-command! -nargs=? -complete=custom,s:lightline_colorschemes LightlineColorscheme
-      \ call s:set_lightline_colorscheme(<q-args>)
+  command! -nargs=? -complete=custom,s:lightline_colorschemes LightlineColorscheme
+        \ call s:set_lightline_colorscheme(<q-args>)
+endif
 
 set noshowmode
 
