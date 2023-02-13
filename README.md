@@ -47,6 +47,7 @@ I mainly use the following tools for development.
 - [starship](https://starship.rs/)
 - [ghq](https://github.com/x-motemen/ghq)
 - [tealdeer](https://github.com/dbrgn/tealdeer)
+- [zellij](https://zellij.dev/)
 
 On Windows
 
