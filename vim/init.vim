@@ -1676,7 +1676,7 @@ endfu
 " statusline
 " --------------------------------------------------------------
 if has_key(g:plugs, 'lualine.nvim')
-  lua require('lualine').setup()
+  lua require('plugins.lualine')
 else
   let g:lightline = {
         \ 'active': {
