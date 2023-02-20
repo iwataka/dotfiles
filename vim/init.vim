@@ -268,11 +268,6 @@ if has('win32')
   set imsearch=-1
 endif
 
-set clipboard=unnamed
-if has('unnamedplus') || has('nvim')
-  set clipboard+=unnamedplus
-endif
-
 " Some features are disabled to improve scrolling performance
 let g:loaded_matchparen = 1
 " set number
@@ -329,6 +324,36 @@ endif
 
 if has('win32') && executable('mingw32-make')
   set makeprg=mingw32-make
+endif
+
+if has('wsl')
+  let g:netrw_browsex_viewer = "cmd.exe /C start"
+endif
+
+set clipboard=unnamed
+if has('wsl') && has('nvim')
+  let s:copy_command_for_wsl = executable('win32yank.exe') ?
+        \ 'win32yank.exe -i --crlf' :
+        \ 'clip.exe'
+  let s:paste_command_for_wsl = executable('win32yank.exe') ?
+        \ 'win32yank.exe -o --lf' :
+        \ 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))'
+  let g:clipboard = {
+        \ 'name': 'WslClipboard',
+        \ 'copy': {
+        \   '+': s:copy_command_for_wsl,
+        \   '*': s:copy_command_for_wsl,
+        \  },
+        \ 'paste': {
+        \   '+': s:paste_command_for_wsl,
+        \   '*': s:paste_command_for_wsl,
+        \ },
+        \ 'cache_enabled': 0,
+        \ }
+else
+  if has('unnamedplus') || has('nvim')
+    set clipboard+=unnamedplus
+  endif
 endif
 
 " ==============================================================
@@ -753,16 +778,13 @@ fu! s:open(...)
   elseif has('unix')
     " This line does not work at all and I don't know the reason.
     " silent exec '!xdg-open '.args
-    if s:is_wsl()
+    if has('wsl')
       call system('wsl-open '.args)
     else
       call system('xdg-open '.args)
     endif
   endif
   redraw!
-endfu
-fu! s:is_wsl()
-    return system('uname -a') =~ '\v.+microsoft-standard-WSL.+'
 endfu
 fu! s:open_win(args)
   silent! exe '!start '.a:args
