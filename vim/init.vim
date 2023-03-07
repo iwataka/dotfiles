@@ -332,7 +332,7 @@ if has('wsl')
 endif
 
 set clipboard=unnamed
-if has('wsl') && has('nvim')
+if has('wsl') && has('nvim') && !has('gui_running')
   let s:copy_command_for_wsl = executable('win32yank.exe') ?
         \ 'win32yank.exe -i --crlf' :
         \ 'clip.exe'
@@ -352,7 +352,7 @@ if has('wsl') && has('nvim')
         \ 'cache_enabled': 0,
         \ }
 else
-  if has('unnamedplus') || has('nvim')
+  if has('unnamedplus')
     set clipboard+=unnamedplus
   endif
 endif
@@ -1453,10 +1453,12 @@ if has("termguicolors")
   set termguicolors
 endif
 
-" neovide settings
+" Neovide settings
+" * disable animations for performance
 let g:neovide_transparency = 0.9
-let g:neovide_cursor_vfx_mode = "railgun"
-let g:neovide_cursor_animation_length = 0.03
+let g:neovide_cursor_vfx_mode = ""
+let g:neovide_cursor_animation_length = 0.0
+let g:neovide_cursor_trail_size = 0.0
 
 " nvim-qt settings
 augroup vimrc_nvim_qt
