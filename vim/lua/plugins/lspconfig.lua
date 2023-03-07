@@ -45,7 +45,7 @@ local servers = {
   'vimls',
   'jdtls',
   'gopls',
-  'sumneko_lua',
+  'lua_ls',
   'tsserver',
   'denols',
 }

@@ -39,7 +39,6 @@ Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-hijack.vim'
 Plug 'lambdalisue/nerdfont.vim'
-Plug 'mhinz/vim-startify'
 Plug 'airblade/vim-rooter'
 if has('nvim')
   Plug 'nvim-lua/plenary.nvim'
@@ -96,6 +95,7 @@ Plug 'joshdick/onedark.vim'
 if has('nvim')
   Plug 'folke/tokyonight.nvim'
   Plug 'EdenEast/nightfox.nvim'
+  Plug 'rebelot/kanagawa.nvim'
 endif
 
 " Visual
@@ -159,6 +159,7 @@ Plug 'rbonvall/vim-textobj-latex', { 'for': 'tex' }
 " Utility
 Plug 'junegunn/vim-emoji', { 'on': ['EmojiList'] }
 Plug 'mattn/webapi-vim'
+Plug 'lambdalisue/suda.vim', { 'on': ['SudaRead', 'SudaWrite'] }
 
 call plug#end()
 endif
@@ -397,7 +398,7 @@ augroup vimrcEx
   autocmd FileType c setlocal commentstring=//%s
   " Close buffers of specified types by just typing q.
   autocmd FileType help,qf,godoc nnoremap <buffer> q :q<cr>
-  autocmd FileType fugitive nnoremap <buffer> q :q<cr>
+  autocmd FileType fugitive,fugitiveblame nnoremap <buffer> q :q<cr>
   autocmd FileType lspinfo nnoremap <buffer> q :q<cr>
   autocmd BufEnter fugitive://* nnoremap <buffer> q :q<cr>
   autocmd BufWinEnter * if &buftype == 'terminal' | nnoremap <buffer> q :q<cr> | endif
@@ -1723,7 +1724,8 @@ else
       else
         return ''
       endif
-    else
+    endif
+    if exists('sy#repo#get_stats')
       let [added, changed, deleted] = sy#repo#get_stats()
       if added + changed + deleted >= 0
         let sign_add = get(g:, 'signify_sign_add', '+')
@@ -1742,6 +1744,7 @@ else
         return ''
       endif
     endif
+    return ''
   endfu
 
   function! s:set_lightline_colorscheme(name) abort
