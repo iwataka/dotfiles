@@ -102,6 +102,7 @@ endif
 if has('nvim')
   Plug 'lukas-reineke/indent-blankline.nvim'
   Plug 'nvim-lualine/lualine.nvim'
+  Plug 'folke/zen-mode.nvim'
 else
   Plug 'itchyny/lightline.vim'
 endif
@@ -390,6 +391,7 @@ augroup vimrcEx
         \ setlocal foldlevel=1 |
         \ setlocal comments=b:-,b:+,b:* |
         \ setlocal formatoptions+=ro |
+        \ setlocal colorcolumn= |
         \ inoremap <buffer> <expr> <cr> <sid>enter_on_markdown() |
         \ let b:AutoPairs = {}
   autocmd FileType calendar,git,gitv setlocal nolist
