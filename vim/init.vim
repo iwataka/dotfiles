@@ -1860,6 +1860,13 @@ augroup vimrc_rooter
   autocmd VimEnter * call s:rooter_init()
 augroup END
 
+" --------------------------------------------------------------
+" zen-mode.nvim
+" --------------------------------------------------------------
+if has_key(g:plugs, 'zen-mode.nvim')
+  lua require('plugins.zen-mode')
+endif
+
 " ===============================================================
 " POST PROCESS
 " ===============================================================
