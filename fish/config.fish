@@ -33,6 +33,9 @@ end
 
 # Loading asdf should be at the end of this file to place asdf and its
 # executables at the highest priority in PATH environment variable.
-source ~/.asdf/asdf.fish
+if test -z "$ASDF_DIR"
+    # Prevent to load twice. It may cause PATH override
+    source ~/.asdf/asdf.fish
+end
 starship init fish |source
 zoxide init fish |source
