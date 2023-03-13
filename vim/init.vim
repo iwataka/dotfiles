@@ -334,18 +334,39 @@ endif
 
 set clipboard=unnamed
 if has('wsl') && has('nvim') && !has('gui_running')
+  let s:lock_for_wsl_clipboard = tempname()
   let s:copy_command_for_wsl = executable('win32yank.exe') ?
         \ 'win32yank.exe -i --crlf' :
         \ 'clip.exe'
+  " This must be a function, not a simple string command (but I don't
+  " understand the reason).
+  fu! s:copy_for_wsl(cmd, lock, lines, regtype)
+    " Execute copy command in non-blocking manner by using &.
+    " Nvim job control doesn't work properly instead of &.
+    " It may disturb the order of copy and paste because there's a bit time
+    " lag between jobstart() and actual command execution.
+    call system(
+          \ printf('flock -x -w 3 %s %s &',
+          \   a:lock,
+          \   a:cmd),
+          \ a:lines)
+  endfu
+  let s:copy_command_for_wsl = function(
+        \ 's:copy_for_wsl',
+        \ [s:copy_command_for_wsl, s:lock_for_wsl_clipboard])
   let s:paste_command_for_wsl = executable('win32yank.exe') ?
         \ 'win32yank.exe -o --lf' :
         \ 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))'
+  let s:paste_command_for_wsl = printf(
+        \ 'flock -s %s %s',
+        \ s:lock_for_wsl_clipboard,
+        \ s:paste_command_for_wsl)
   let g:clipboard = {
         \ 'name': 'WslClipboard',
         \ 'copy': {
         \   '+': s:copy_command_for_wsl,
         \   '*': s:copy_command_for_wsl,
-        \  },
+        \ },
         \ 'paste': {
         \   '+': s:paste_command_for_wsl,
         \   '*': s:paste_command_for_wsl,
