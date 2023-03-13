@@ -131,6 +131,7 @@ endif
 " Filetypes not supported by treesitter
 Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+Plug 'dkarter/bullets.vim', { 'for': ['markdown', 'text', 'gitcommit'] }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'dmix/elvish.vim', { 'for': 'elvish' }
 Plug 'keith/swift.vim', { 'for': 'swift' }
@@ -413,7 +414,6 @@ augroup vimrcEx
         \ setlocal comments=b:-,b:+,b:* |
         \ setlocal formatoptions+=ro |
         \ setlocal colorcolumn= |
-        \ inoremap <buffer> <expr> <cr> <sid>enter_on_markdown() |
         \ let b:AutoPairs = {}
   autocmd FileType calendar,git,gitv setlocal nolist
   autocmd FileType dosbatch setlocal commentstring=::%s
@@ -506,6 +506,7 @@ cnoremap jk <C-c>
 if has('terminal') || has('nvim')
   tnoremap <ESC> <C-\><C-n>
   tnoremap <c-[> <C-\><C-n>
+  tnoremap jk <C-\><C-n>
   " On neovim-qt, <s-space> prints ";2u" somehow.
   " This is a workaround for this.
   " refer to https://github.com/equalsraf/neovim-qt/issues/728 for details
@@ -739,44 +740,6 @@ fu! s:get_visual_selection()
   let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
   let lines[0] = lines[0][col1 - 1 :]
   return lines
-endfu
-
-" Returns:
-" A key sequence to indent/unindent a bullet on the current line
-" Empty string if the cursor is NOT on a bullet
-fu! s:indent_bullet(forward)
-  let on_bullet = s:on_bullet()
-  if on_bullet
-    if on_bullet == 1 && !a:forward
-      return " \<bs>"
-    endif
-    let key = a:forward ? "\<tab>" : "\<bs>"
-    return "a\<c-o>^".key."\<c-o>w\<c-o>x"
-  endif
-  return ""
-endfu
-
-" Returns:
-" 2 if the cursor is on a bullet with leading spaces
-" 1 if the cursor is on a bullet without any leading spaces
-" 0 if the cursor is NOT on a bullet
-fu! s:on_bullet()
-  let line = getline('.')[0:getpos('.')[2]-2]
-  if line =~ '^\s\+[-+*]\s*$'
-    return 2
-  elseif line =~ '^[-+*]\s*$'
-    return 1
-  else
-    return 0
-  endif
-endfu
-
-fu! s:enter_on_markdown()
-  if s:on_bullet()
-    return "\<esc>0C"
-  else
-    return "\<cr>"
-  endif
 endfu
 
 cabbrev o Open
