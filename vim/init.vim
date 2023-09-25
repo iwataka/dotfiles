@@ -111,7 +111,6 @@ endif
 if has('nvim')
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-  Plug 'lewis6991/spellsitter.nvim'
 else
   Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
   Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
