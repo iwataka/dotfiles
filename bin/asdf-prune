@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+for plugin in $(asdf plugin list); do
+    for version in $(asdf list $plugin); do
+        if [ "$(asdf current $plugin |awk '{ print $2 }')" != "$version" ]; then
+            asdf uninstall $plugin $version
+        fi
+    done
+done

@@ -43,7 +43,7 @@ Plug 'airblade/vim-rooter'
 if has('nvim')
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
-  Plug 'kyazdani42/nvim-web-devicons'
+  Plug 'nvim-tree/nvim-web-devicons'
 else
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
@@ -66,6 +66,7 @@ Plug 'Konfekt/FastFold'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-test/vim-test'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'github/copilot.vim'
 
 " LSP
 if has('nvim')
@@ -765,7 +766,7 @@ fu! s:open(...)
     " This line does not work at all and I don't know the reason.
     " silent exec '!xdg-open '.args
     if has('wsl')
-      call system('wsl-open '.args)
+      call s:open_win(args)
     else
       call system('xdg-open '.args)
     endif
@@ -773,10 +774,7 @@ fu! s:open(...)
   redraw!
 endfu
 fu! s:open_win(args)
-  silent! exe '!start '.a:args
-  if v:shell_error
-    silent exec '!rundll32 url.dll,FileProtocolHandler '.a:args
-  endif
+  silent exec '!rundll32.exe url.dll,FileProtocolHandler '.a:args
 endfu
 fu! s:quote_path_or_url(str)
   let path = expand(a:str)
@@ -1849,6 +1847,12 @@ augroup END
 if has_key(g:plugs, 'zen-mode.nvim')
   lua require('plugins.zen-mode')
 endif
+
+" --------------------------------------------------------------
+" copilot.vim
+" --------------------------------------------------------------
+imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
 
 " ===============================================================
 " POST PROCESS
