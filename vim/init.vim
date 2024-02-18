@@ -751,15 +751,7 @@ fu! s:open(...)
   if has('win32unix') && executable('cygstart')
     call system('cygstart '.args)
   elseif has('win32') || has('win32unix')
-    if filereadable(args[1:-2]) || isdirectory(args[1:-2])
-      let cwd = getcwd()
-      call s:cd_or_lcd(fnamemodify(args[1:-2], ':h'))
-      let args = fnamemodify(args[1:-2], ':t')
-      call s:open_win(args)
-      call s:cd_or_lcd(cwd)
-    else
-      call s:open_win(args)
-    endif
+    call s:open_win(args)
   elseif has('mac')
     silent exec '!open '.args
   elseif has('unix')
@@ -774,6 +766,18 @@ fu! s:open(...)
   redraw!
 endfu
 fu! s:open_win(args)
+  let args = a:args
+  if filereadable(a:args[1:-2]) || isdirectory(args[1:-2])
+    let cwd = getcwd()
+    call s:cd_or_lcd(fnamemodify(args[1:-2], ':h'))
+    let args = fnamemodify(args[1:-2], ':t')
+    call s:open_win_without_fnamemodify(args)
+    call s:cd_or_lcd(cwd)
+  else
+    call s:open_win_without_fnamemodify(args)
+  endif
+endfu
+fu! s:open_win_without_fnamemodify(args)
   silent exec '!rundll32.exe url.dll,FileProtocolHandler '.a:args
 endfu
 fu! s:quote_path_or_url(str)
