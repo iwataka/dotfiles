@@ -1,0 +1,61 @@
+import = ['~/.alacritty.toml']
+
+[colors]
+transparent_background_colors = false
+
+[colors.bright]
+black = "0x928374"
+blue = "0x7daea3"
+cyan = "0x89b482"
+green = "0xa9b665"
+magenta = "0xd3869b"
+red = "0xea6962"
+white = "0xdfbf8e"
+yellow = "0xe3a84e"
+
+[colors.normal]
+black = "0x665c54"
+blue = "0x7daea3"
+cyan = "0x89b482"
+green = "0xa9b665"
+magenta = "0xd3869b"
+red = "0xea6962"
+white = "0xdfbf8e"
+yellow = "0xe78a4e"
+
+[colors.primary]
+foreground = "0xdfbf8e"
+
+[font]
+builtin_box_drawing = true
+size = 11.0
+
+[font.normal]
+family = "Hack Nerd Font Mono"
+
+[[keyboard.bindings]]
+chars = "\u0000"
+key = "Space"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = "\u001B"
+key = "LBracket"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "F11"
+
+[[keyboard.bindings]]
+action = "ToggleViMode"
+key = "Q"
+mode = "Vi|~Search"
+
+[window]
+opacity = 0.95
+startup_mode = "Maximized"
+
+[window.padding]
+x = 10
+y = 10
