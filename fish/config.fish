@@ -2,10 +2,10 @@
 # the errors explicitly and then install them when needed.
 
 abbr v nvim
-abbr ls exa
-abbr la exa -a
-abbr ll exa -l
-abbr lla exa -al
+abbr ls eza
+abbr la eza -a
+abbr ll eza -l
+abbr lla eza -al
 abbr cat bat
 abbr d docker
 abbr g git
@@ -31,12 +31,18 @@ if test (uname -s) = "Darwin"
     fish_add_path -P (brew --prefix gawk)/bin
 end
 
+if test -d /home/linuxbrew/.linuxbrew
+    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+end
+
 # Loading asdf should be at the end of this file to place asdf and its
 # executables at the highest priority in PATH environment variable.
 if test -z "$ASDF_DIR"
     # Prevent to load twice. It may cause PATH override
     source ~/.asdf/asdf.fish
 end
+
+fzf --fish |source
 starship init fish |source
 zoxide init fish |source
 

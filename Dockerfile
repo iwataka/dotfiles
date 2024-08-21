@@ -32,9 +32,15 @@ RUN nvim --headless \
         +'call mkdp#util#install()' \
         +qa
 
-# instal asdf and tools
+# instal asdf
 RUN git clone --depth=1 https://github.com/asdf-vm/asdf ~/.asdf
-RUN bash -c 'source ~/.asdf/asdf.sh && ~/bin/update-tools asdf golang nodejs'
+
+# install homebrew and tools.
+# Before installation, create .dockerenv file for resolving the issue like below.
+# https://github.com/Homebrew/install/issues/621
+RUN test -f /.dockerenv || touch /.dockerenv
+RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+RUN bash -c 'PATH=/home/linuxbrew/.linuxbrew/bin:$PATH ~/bin/update-tools'
 
 # install fish
 RUN echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_11/ /' |\
@@ -60,10 +66,6 @@ RUN apt-get install -y \
         docker-ce \
         docker-ce-cli \
         containerd.io
-
-# install Rust and tools
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-RUN bash -c 'PATH=$PATH:/root/.cargo/bin ~/bin/update-tools cargo'
 
 WORKDIR /root
 ENV SHELL=/usr/bin/fish

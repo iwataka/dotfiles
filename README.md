@@ -41,12 +41,11 @@ I mainly use the following tools for development.
 - [fzf](https://github.com/junegunn/fzf)
 - [asdf](https://asdf-vm.com/)
 - [docker](https://www.docker.com/)
-- [delta](https://github.com/dandavison/delta)
 - [lazygit](https://github.com/jesseduffield/lazygit)
 - [fd](https://github.com/sharkdp/fd)
 - [starship](https://starship.rs/)
 - [ghq](https://github.com/x-motemen/ghq)
-- [tealdeer](https://github.com/dbrgn/tealdeer)
+- [homebrew](https://docs.brew.sh/Homebrew-on-Linux)
 
 On Windows
 

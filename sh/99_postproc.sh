@@ -14,6 +14,6 @@ if command -v nvim >/dev/null; then
     fi
 fi
 
-command -v exa >/dev/null && alias ls='exa'
+command -v eza >/dev/null && alias ls='eza'
 
 command -v bat >/dev/null && alias cat='bat'
