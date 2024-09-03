@@ -28,6 +28,14 @@ curl https://raw.githubusercontent.com/iwataka/dotfiles/master/bin/dotfiles |pyt
 
 To update to the latest version, please run `dotfiles update`.
 
+## Uninstall
+
+Run the following command and delete `.dotfiles` directory manually.
+
+```bash
+dotfiles uninstall
+```
+
 ## Recommended tools
 
 I mainly use the following tools for development.

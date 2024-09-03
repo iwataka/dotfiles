@@ -125,56 +125,74 @@ def specific_symlinks(_os: OS):
         # TODO: Starship config
 
 
-def remove_or_backup(path):
-    remove_symlink(path)
-    if os.path.isfile(path):
-        shutil.move(src=path, dst=f"{path}.bak")
-        print(f"backup {path}")
+def remove_or_backup(src, dst):
+    remove_symlink_nonrecursively(src, dst)
+    if os.path.isfile(dst):
+        shutil.move(src=dst, dst=f"{dst}.bak")
+        print(f"backup {dst}")
 
 
-def remove_symlink(path):
-    if os.path.islink(path):
-        os.remove(path)
+def remove_symlink(root_dir, sl: SymLink):
+    operate_symlink(
+        root_dir, sl, remove_symlink_recursively, remove_symlink_nonrecursively
+    )
 
 
-def symlink(root_dir, src_name, dst, recurse=False):
-    src = os.path.join(root_dir, src_name)
-    if recurse:
-        symlink_path_recursively(src, dst)
+def remove_symlink_nonrecursively(_, dst):
+    if os.path.islink(dst):
+        os.remove(dst)
+
+
+def remove_symlink_recursively(src, dst):
+    operate_files_recursively(src, dst, remove_symlink_nonrecursively)
+
+
+def symlink(root_dir, sl: SymLink):
+    operate_symlink(root_dir, sl, symlink_recursively, symlink_nonrecursively)
+
+
+def operate_symlink(root_dir, sl: SymLink, op_recursively, op_nonrecursively):
+    src = os.path.join(root_dir, sl.name)
+    if sl.recurse:
+        op_recursively(src, sl.dest)
     else:
-        symlink_path(src, dst)
+        op_nonrecursively(src, sl.dest)
 
 
-def symlink_path(src, dst):
-    remove_or_backup(dst)
+def symlink_nonrecursively(src, dst):
+    remove_or_backup(src, dst)
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     os.symlink(src, dst)
 
 
-def symlink_path_recursively(src, dst):
-    remove_symlink(dst)
-    for dir, dnames, fnames in os.walk(src):
+def symlink_recursively(src, dst):
+    remove_symlink_nonrecursively(src, dst)
+    operate_files_recursively(src, dst, symlink_nonrecursively)
+
+
+def operate_files_recursively(src, dst, op):
+    for dir, _, fnames in os.walk(src):
         for fname in fnames:
             src_file = os.path.abspath(os.path.join(dir, fname))
             dst_file = os.path.abspath(
                 os.path.join(dst, os.path.relpath(src_file, src))
             )
-            symlink_path(src_file, dst_file)
+            op(src_file, dst_file)
 
 
-def setup_symlinks(root_dir):
+def operate_all_symlinks(root_dir, op):
     for sl in common_symlinks():
-        symlink(root_dir, sl.name, sl.dest, recurse=sl.recurse)
+        op(root_dir, sl)
 
     for sl in specific_symlinks(OS.check()):
-        symlink(root_dir, sl.name, sl.dest, recurse=sl.recurse)
+        op(root_dir, sl)
 
 
 def install(args):
     root_dir = args.root_dir
     if not os.path.exists(root_dir):
         os.system(f"git clone --depth=1 {GIT_URL} {root_dir}")
-    setup_symlinks(root_dir)
+    operate_all_symlinks(root_dir, symlink)
 
 
 def update(args):
@@ -182,6 +200,12 @@ def update(args):
     if os.path.exists(root_dir):
         os.system(f"git -C {root_dir} pull")
     install(args)
+
+
+def uninstall(args):
+    root_dir = args.root_dir
+    operate_all_symlinks(root_dir, remove_symlink)
+    print(f"Please delete {root_dir} manually to uninstall completely.")
 
 
 if __name__ == "__main__":
@@ -206,6 +230,12 @@ if __name__ == "__main__":
         help="update dotfiles",
     )
     update_parser.set_defaults(func=update)
+
+    uninstall_parser = subparsers.add_parser(
+        "uninstall",
+        help="uninstall dotfiles",
+    )
+    uninstall_parser.set_defaults(func=uninstall)
 
     args = parser.parse_args()
     args.func(args)
