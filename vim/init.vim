@@ -187,7 +187,6 @@ if exists(':language')
   language en_US.UTF-8
 endif
 set fileencodings=utf-8,sjis                     " UTF8 is first, SJIS is second
-set termencoding=utf-8
 set colorcolumn=81
 set fileformats=unix,dos,mac                     " Unix format has highest priority
 set timeout                                      " Enable timeout settings
@@ -743,7 +742,8 @@ fu! s:get_visual_selection()
 endfu
 
 cabbrev o Open
-com! -nargs=* -complete=file Open call s:open(<f-args>)
+" Remove due to newly added netrw#Open and Open command mapped to it
+" com! -nargs=* -complete=file Open call s:open(<f-args>)
 fu! s:open(...)
   let args = join(map(copy(a:000), 's:quote_path_or_url(v:val)'), ' ')
   let args = empty(args) ? '"'.expand('%:p').'"' : args

@@ -46,7 +46,7 @@ local servers = {
   'jdtls',
   'gopls',
   'lua_ls',
-  'tsserver',
+  'ts_ls',
   'denols',
 }
 for _, lsp in pairs(servers) do
@@ -58,7 +58,7 @@ for _, lsp in pairs(servers) do
     },
     capabilities = capabilities,
   }
-  if lsp == 'tsserver' then
+  if lsp == 'ts_ls' then
     lspconfig_options['root_dir'] = lspconfig.util.root_pattern('package.json')
   end
   if lsp == 'denols' then
