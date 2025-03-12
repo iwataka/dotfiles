@@ -26,7 +26,6 @@ gnupg/*
 
 # fish
 fish/*
-!fish/fish_plugins
 !fish/config.fish
 
 # elvish
