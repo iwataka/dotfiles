@@ -4,20 +4,6 @@
 
 This is my personal dotfiles with Neovim and fish shell.
 
-## Quickstart
-
-Make sure Docker is installed and just run the following command.
-
-```bash
-docker run -it --rm iwataka/dotfiles
-```
-
-This image includes dotfiles already installed and recommended tools described below.
-
-```bash
-docker run -it --name dev -v ~/projects:/root/projects -v ~/ghq:/root/ghq iwataka/dotfiles
-```
-
 ## Install
 
 Make sure Git and Python installed and run the following.
@@ -40,19 +26,19 @@ dotfiles uninstall
 
 I mainly use the following tools for development.
 
+- [docker](https://www.docker.com/)
 - [neovim](https://github.com/neovim/neovim)
 - [fish](https://fishshell.com/)
-- [zoxide](https://github.com/ajeetdsouza/zoxide)
-- [eza](https://eza.rocks/)
-- [ripgrep](https://github.com/BurntSushi/ripgrep)
-- [bat](https://github.com/sharkdp/bat)
-- [fzf](https://github.com/junegunn/fzf)
 - [mise](https://mise.jdx.dev/)
-- [docker](https://www.docker.com/)
-- [lazygit](https://github.com/jesseduffield/lazygit)
+- [bat](https://github.com/sharkdp/bat)
+- [eza](https://eza.rocks/)
 - [fd](https://github.com/sharkdp/fd)
-- [starship](https://starship.rs/)
+- [fzf](https://github.com/junegunn/fzf)
 - [ghq](https://github.com/x-motemen/ghq)
+- [lazygit](https://github.com/jesseduffield/lazygit)
+- [ripgrep](https://github.com/BurntSushi/ripgrep)
+- [starship](https://starship.rs/)
+- [zoxide](https://github.com/ajeetdsouza/zoxide)
 
 On Windows
 
