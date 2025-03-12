@@ -34,7 +34,6 @@ I mainly use the following tools for development.
 - [eza](https://eza.rocks/)
 - [fd](https://github.com/sharkdp/fd)
 - [fzf](https://github.com/junegunn/fzf)
-- [ghq](https://github.com/x-motemen/ghq)
 - [lazygit](https://github.com/jesseduffield/lazygit)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [starship](https://starship.rs/)
