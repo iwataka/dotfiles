@@ -32,15 +32,9 @@ RUN nvim --headless \
         +'call mkdp#util#install()' \
         +qa
 
-# instal asdf
-RUN git clone --depth=1 https://github.com/asdf-vm/asdf ~/.asdf
-
-# install homebrew and tools.
-# Before installation, create .dockerenv file for resolving the issue like below.
-# https://github.com/Homebrew/install/issues/621
-RUN test -f /.dockerenv || touch /.dockerenv
-RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-RUN bash -c 'PATH=/home/linuxbrew/.linuxbrew/bin:$PATH ~/bin/update-tools'
+# instal mise and tools
+RUN curl https://mise.run | sh
+RUN ~/bin/update-tools
 
 # install fish
 RUN echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_11/ /' |\
@@ -50,22 +44,6 @@ RUN curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/
         tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
 RUN apt-get update -y
 RUN apt-get install -y fish
-
-# install Docker
-RUN apt-get install -y \
-        ca-certificates \
-        curl \
-        gnupg \
-        lsb-release
-RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-RUN echo \
-        "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
-        $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-RUN apt-get update
-RUN apt-get install -y \
-        docker-ce \
-        docker-ce-cli \
-        containerd.io
 
 WORKDIR /root
 ENV SHELL=/usr/bin/fish

@@ -1,6 +1,5 @@
-if [ -d ~/.asdf ]; then
-  . $HOME/.asdf/asdf.sh
-  fpath=(${ASDF_DIR}/completions $fpath)
+if mise --version &>/dev/null; then
+  eval "$(~/.local/bin/mise activate zsh)"
 fi
 
 if [[ ! -d ~/.zplug ]]; then

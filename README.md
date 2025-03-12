@@ -43,17 +43,16 @@ I mainly use the following tools for development.
 - [neovim](https://github.com/neovim/neovim)
 - [fish](https://fishshell.com/)
 - [zoxide](https://github.com/ajeetdsouza/zoxide)
-- [exa](https://github.com/ogham/exa)
+- [eza](https://eza.rocks/)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [bat](https://github.com/sharkdp/bat)
 - [fzf](https://github.com/junegunn/fzf)
-- [asdf](https://asdf-vm.com/)
+- [mise](https://mise.jdx.dev/)
 - [docker](https://www.docker.com/)
 - [lazygit](https://github.com/jesseduffield/lazygit)
 - [fd](https://github.com/sharkdp/fd)
 - [starship](https://starship.rs/)
 - [ghq](https://github.com/x-motemen/ghq)
-- [homebrew](https://docs.brew.sh/Homebrew-on-Linux)
 
 On Windows
 

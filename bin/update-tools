@@ -19,4 +19,5 @@ declare -a tools_to_install=(
     "zoxide"
 )
 
-brew install "${tools_to_install[@]}"
+mise use -g "${tools_to_install[@]}"
+mise upgrade "${tools_to_install[@]}"

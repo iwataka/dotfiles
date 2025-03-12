@@ -23,25 +23,8 @@ test -d ~/.local/bin; and fish_add_path -P ~/.local/bin
 test -d ~/bin; and fish_add_path -P ~/bin
 test -d ~/.cargo/bin; and fish_add_path -P ~/.cargo/bin
 
-# Make MacOS GNU-compatible
-if test (uname -s) = "Darwin"
-    for cmd in coreutils findutils gnu-sed grep gnu-tar
-        fish_add_path -P (brew --prefix $cmd)/libexec/gnubin
-    end
-    fish_add_path -P (brew --prefix gawk)/bin
-end
-
-if test -d /home/linuxbrew/.linuxbrew
-    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-end
-
-# Loading asdf should be at the end of this file to place asdf and its
-# executables at the highest priority in PATH environment variable.
-if test -z "$ASDF_DIR"
-    # Prevent to load twice. It may cause PATH override
-    source ~/.asdf/asdf.fish
-end
-
+mise activate fish |source
+mise completion fish |source
 fzf --fish |source
 starship init fish |source
 zoxide init fish |source
