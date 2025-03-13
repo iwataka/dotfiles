@@ -79,6 +79,7 @@ if has('nvim')
   Plug 'ray-x/lsp_signature.nvim'
   Plug 'L3MON4D3/LuaSnip'
   Plug 'saadparwaiz1/cmp_luasnip'
+  Plug 'CopilotC-Nvim/CopilotChat.nvim'
 else
   Plug 'prabirshrestha/vim-lsp'
   Plug 'mattn/vim-lsp-settings'
@@ -1857,6 +1858,13 @@ endif
 " --------------------------------------------------------------
 imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
 let g:copilot_no_tab_map = v:true
+
+" --------------------------------------------------------------
+" CopilotChat.vim
+" --------------------------------------------------------------
+if has_key(g:plugs, 'CopilotChat.nvim')
+  lua require('plugins.copilotchat')
+endif
 
 " ===============================================================
 " POST PROCESS
