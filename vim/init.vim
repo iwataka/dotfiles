@@ -1496,14 +1496,11 @@ fu! s:fuzzy_finder_root()
   if &buftype == ''
     " Use FindRootDirectory function from vim-rooter
     let root = FindRootDirectory()
-    if empty(root)
-      return expand('%:p:h')
-    else
+    if !empty(root)
       return root
     endif
-  else
-    return getcwd()
   endif
+  return getcwd()
 endfu
 
 if has_key(g:plugs, 'telescope.nvim')
