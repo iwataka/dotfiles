@@ -23,8 +23,10 @@ test -d ~/.local/bin; and fish_add_path -P ~/.local/bin
 test -d ~/bin; and fish_add_path -P ~/bin
 test -d ~/.cargo/bin; and fish_add_path -P ~/.cargo/bin
 
+set -x MISE_IDIOMATIC_VERSION_FILE false
 mise activate fish |source
 mise completion fish |source
+
 fzf --fish |source
 starship init fish |source
 zoxide init fish |source
