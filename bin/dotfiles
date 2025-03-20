@@ -99,6 +99,10 @@ def specific_symlinks(_os: OS):
             "starship.toml",
             os.path.join(HOME_DIR, ".config", "starship.toml"),
         )
+        yield SymLink(
+            "lazygit",
+            os.path.join(HOME_DIR, ".config", "lazygit"),
+        )
 
     if _os == OS.DARWIN:
         yield SymLink(
