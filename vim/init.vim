@@ -1821,7 +1821,8 @@ endif
 " --------------------------------------------------------------
 " copilot.vim
 " --------------------------------------------------------------
-imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+" Map fish-shell like key bindings to accept Copilot's suggestions.
+imap <silent><script><expr> <C-F> copilot#Accept("\<CR>")
 let g:copilot_no_tab_map = v:true
 
 " --------------------------------------------------------------
