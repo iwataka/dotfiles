@@ -1471,20 +1471,9 @@ fu! FuzzyFinderDirs()
   return uniq(sort(dirs))
 endfu
 
-fu! s:fuzzy_finder_root()
-  if &buftype == ''
-    " Use FindRootDirectory function from vim-rooter
-    let root = FindRootDirectory()
-    if !empty(root)
-      return root
-    endif
-  endif
-  return getcwd()
-endfu
-
 if has_key(g:plugs, 'telescope.nvim')
   lua require('plugins.telescope')
-  nnoremap <silent> <leader>p :<c-u>Telescope find_files cwd=<c-r>=<sid>fuzzy_finder_root()<cr><cr>
+  nnoremap <silent> <leader>p :<c-u>Telescope find_files<cr>
   nnoremap <silent> <leader>b :<c-u>Telescope buffers<cr>
   nnoremap <silent> <leader>m :<c-u>Telescope oldfiles<cr>
   nnoremap <silent> <leader>: :<c-u>Telescope commands<cr>
@@ -1494,11 +1483,11 @@ if has_key(g:plugs, 'telescope.nvim')
   nnoremap <silent> gt :<c-u>Telescope treesitter<cr>
   nnoremap <silent> gT :<c-u>Telescope tags<cr>
   nnoremap <silent> <leader>j :<c-u>Telescope current_buffer_fuzzy_find<cr>
-  nnoremap <silent> <leader>f :<c-u>Telescope live_grep cwd=<c-r>=<sid>fuzzy_finder_root()<cr><cr>
+  nnoremap <silent> <leader>f :<c-u>Telescope live_grep<cr>
   nnoremap <leader>gl :<c-u>Telescope git_commits<cr>
   nnoremap <leader>gb :<c-u>Telescope git_bcommits<cr>
 else
-  nnoremap <silent> <leader>p :<c-u>FZF <c-r>=<sid>fuzzy_finder_root()<cr><cr>
+  nnoremap <silent> <leader>p :<c-u>FZF<cr>
   nnoremap <silent> <leader>b :<c-u>Buffers<cr>
   nnoremap <silent> <leader>m :<c-u>History<cr>
   nnoremap <silent> <leader>: :<c-u>Commands<cr>
@@ -1508,7 +1497,7 @@ else
   nnoremap <silent> gt :<c-u>BTags<cr>
   nnoremap <silent> gT :<c-u>Tags<cr>
   nnoremap <silent> <leader>j :<c-u>Lines<cr>
-  nnoremap <silent> <leader>f :<c-u>Rg <c-r>=<sid>fzf_grep_prompt()<cr> <c-r>=<sid>fuzzy_finder_root<cr><cr>
+  nnoremap <silent> <leader>f :<c-u>Rg <c-r>=<sid>fzf_grep_prompt()<cr><cr>
   nnoremap <silent> <leader>gl :<c-u>Commits<cr>
   nnoremap <silent> <leader>gb :<c-u>BCommits<cr>
   com! -bang Dirs call <sid>fzf_list_dirs(<bang>0)
