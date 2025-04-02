@@ -35,10 +35,15 @@ if executable('git')
 endif
 
 " Navigation
-Plug 'lambdalisue/fern-renderer-nerdfont.vim'
-Plug 'lambdalisue/fern.vim'
-Plug 'lambdalisue/fern-hijack.vim'
-Plug 'lambdalisue/nerdfont.vim'
+if has('nvim')
+  Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': '3.x' }
+  Plug 'MunifTanjim/nui.nvim'
+else
+  Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+  Plug 'lambdalisue/fern.vim'
+  Plug 'lambdalisue/fern-hijack.vim'
+  Plug 'lambdalisue/nerdfont.vim'
+endif
 Plug 'airblade/vim-rooter'
 if has('nvim')
   Plug 'nvim-lua/plenary.nvim'
@@ -1734,26 +1739,31 @@ if has_key(g:plugs, 'gitsigns.nvim')
 endif
 
 " --------------------------------------------------------------
-" fern.vim
+" file explorer
 " --------------------------------------------------------------
-nnoremap <leader>ee :<c-u>Fern . -drawer -toggle<cr>
-nnoremap <leader>ef :<c-u>Fern . -drawer -reveal=% -toggle<cr>
-let g:fern#renderer = "nerdfont"
-let g:fern#default_hidden = 1
+if has_key(g:plugs, 'neo-tree.nvim')
+  nnoremap <leader>ee :Neotree toggle<cr>
+  nnoremap <leader>ef :Neotree reveal_force_cwd<cr>
+else
+  nnoremap <leader>ee :<c-u>Fern . -drawer -toggle<cr>
+  nnoremap <leader>ef :<c-u>Fern . -drawer -reveal=%<cr>
+  let g:fern#renderer = "nerdfont"
+  let g:fern#default_hidden = 1
 
-function! s:init_fern() abort
-  nmap <buffer> l <Plug>(fern-action-expand)
-  nnoremap <buffer><silent> <Plug>(fern-action-nohlsearch) :<c-u>nohlsearch<cr>
-  nmap <buffer> <Plug>(fern-action-nohlsearch-and-redraw)
-        \ <Plug>(fern-action-nohlsearch)<Plug>(fern-action-redraw)
-  nmap <buffer> <c-l> <Plug>(fern-action-nohlsearch-and-redraw)
-  nmap <buffer> p <Plug>(fern-action-focus:parent)
-endfunction
+  function! s:init_fern() abort
+    nmap <buffer> l <Plug>(fern-action-expand)
+    nnoremap <buffer><silent> <Plug>(fern-action-nohlsearch) :<c-u>nohlsearch<cr>
+    nmap <buffer> <Plug>(fern-action-nohlsearch-and-redraw)
+          \ <Plug>(fern-action-nohlsearch)<Plug>(fern-action-redraw)
+    nmap <buffer> <c-l> <Plug>(fern-action-nohlsearch-and-redraw)
+    nmap <buffer> p <Plug>(fern-action-focus:parent)
+  endfunction
 
-augroup vimrc_fern
-  autocmd!
-  autocmd FileType fern call s:init_fern()
-augroup END
+  augroup vimrc_fern
+    autocmd!
+    autocmd FileType fern call s:init_fern()
+  augroup END
+endif
 
 " --------------------------------------------------------------
 " vim-test
