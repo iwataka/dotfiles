@@ -12,6 +12,11 @@ abbr g git
 abbr reload exec $SHELL
 abbr ? gh copilot suggest --target shell
 
+# For opening files from terminal in WSL
+if type -q rundll32.exe
+    abbr open rundll32.exe url.dll,FileProtocolHandler
+end
+
 set -x EDITOR nvim -u NONE
 set -x VISUAL $EDITOR
 
