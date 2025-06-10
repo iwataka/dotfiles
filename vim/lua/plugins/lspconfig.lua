@@ -33,12 +33,10 @@ local on_attach = function(client, bufnr)
   end, bufopts)
 end
 
--- Add additional capabilities supported by nvim-cmp
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-local lspconfig = require('lspconfig')
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
+vim.lsp.config('*', {
+  on_attach = on_attach,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+})
 local servers = {
   'pyright',
   'rust_analyzer',
@@ -47,24 +45,15 @@ local servers = {
   'gopls',
   'lua_ls',
   'ts_ls',
-  'denols',
 }
-for _, lsp in pairs(servers) do
-  local lspconfig_options = {
-    on_attach = on_attach,
-    flags = {
-      -- This will be the default in neovim 0.7+
-      debounce_text_changes = 150,
-    },
-    capabilities = capabilities,
-  }
-  if lsp == 'ts_ls' then
-    lspconfig_options['root_dir'] = lspconfig.util.root_pattern('package.json')
-  end
-  if lsp == 'denols' then
-    lspconfig_options['root_dir'] = lspconfig.util.root_pattern('deno.json')
-  end
-  lspconfig[lsp].setup(lspconfig_options)
+for _, server in ipairs(servers) do
+  vim.lsp.enable(server)
 end
 
 require('lsp_signature').setup({})
+
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = servers,
+  automatic_enable = false,
+})

@@ -36,7 +36,7 @@ endif
 
 " Navigation
 if has('nvim')
-  Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': '3.x' }
+  Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v3.x' }
   Plug 'MunifTanjim/nui.nvim'
 else
   Plug 'lambdalisue/fern-renderer-nerdfont.vim'
@@ -1533,8 +1533,6 @@ endif
 " LSP
 " --------------------------------------------------------------
 if has_key(g:plugs, 'nvim-lspconfig')
-  lua require('mason').setup()
-  lua require("mason-lspconfig").setup({automatic_installation = true})
   lua require('plugins.lspconfig')
   lua require('plugins.cmp')
 else
