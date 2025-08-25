@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+target="$1"
+if test -e "$target"; then
+    target="$(wslpath -w "$target")"
+fi
+
+rundll32.exe url.dll,FileProtocolHandler "$target"
