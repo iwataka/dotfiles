@@ -116,7 +116,9 @@ endif
 
 " Filetype syntax
 if has('nvim')
-  Plug 'nvim-treesitter/nvim-treesitter'
+  " Due to incompatible updates (nvim-treesitter.configs changes to
+  " nvim-treesitter) in main branch, so I temporarily specify tag version
+  Plug 'nvim-treesitter/nvim-treesitter', { 'tag': 'v0.10.0' }
   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 else
   Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
