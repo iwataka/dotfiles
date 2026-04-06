@@ -10,7 +10,6 @@ abbr cat bat
 abbr d docker
 abbr g git
 abbr reload exec $SHELL
-abbr ? gh copilot suggest --target shell
 
 set -x EDITOR nvim -u NONE
 set -x VISUAL $EDITOR
