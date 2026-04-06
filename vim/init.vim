@@ -1740,6 +1740,7 @@ endif
 " file explorer
 " --------------------------------------------------------------
 if has_key(g:plugs, 'neo-tree.nvim')
+  lua require('plugins.neo-tree')
   nnoremap <leader>ee :Neotree toggle<cr>
   nnoremap <leader>ef :Neotree reveal_force_cwd<cr>
 else
